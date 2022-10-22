@@ -3,7 +3,7 @@
     <h2>home view</h2>
     <p>{{ $route.path }}</p>
     <button class="btn btn-primary" @click="$router.push('/about')">
-      about으로 이동
+      about으로 이동sdfsdfsdfd
     </button>
   </div>
 </template>
