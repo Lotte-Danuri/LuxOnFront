@@ -18,21 +18,23 @@ function buttonClick() {
   <TheView></TheView>
 
   <TheChat
-    style="position: fixed; z-index: 999; right: 100px; bottom: 50px"
+    style="position: fixed; z-index: 999; right: 50px; bottom: 50px"
     @click="buttonClick"
   ></TheChat>
   <Transition>
     <TheChatApp
-      class="border border-3"
+      class="border border-3 rounded"
       v-if="chatShow"
       style="
         position: fixed;
-        width: 80%;
-        height: 80%;
-        left: 10%;
-        top: 10%;
+        width: 30%;
+        height: 60%;
+        right: 130px;
+        bottom: 130px;
         z-index: 999;
         background-color: grey;
+        min-height: 800px;
+        min-width: 600px;
       "
     ></TheChatApp>
   </Transition>
