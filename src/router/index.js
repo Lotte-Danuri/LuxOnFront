@@ -1,15 +1,32 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
-import AboutView from '@/views/AboutView.vue';
+
+// import HomeView from '@/views/luxon/HomeView.vue';
+import LuxOn from '@/layouts/luxon/Index.vue';
+import MyMain from '@/views/luxon/MyMain.vue';
+import MyAdmin from '@/views/admin/DashBoard.vue';
 
 const routes = [
   {
     path: '/',
-    component: HomeView,
+    component: LuxOn,
+    children: [
+      {
+        path: '/MyMain',
+        name: 'MyMain',
+        component: MyMain,
+      },
+    ],
   },
   {
-    path: '/about',
-    component: AboutView,
+    path: '/admin',
+    component: MyAdmin,
+    children: [
+      {
+        path: '/DashBoard',
+        name: 'DashBoard',
+        component: MyAdmin,
+      },
+    ],
   },
 ];
 
