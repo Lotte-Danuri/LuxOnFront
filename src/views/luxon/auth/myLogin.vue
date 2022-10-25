@@ -1,6 +1,6 @@
 <template>
   <section style="margin-top: 50px; margin-left: 100px">
-    <div class="container_grid">
+    <div class="login_grid">
       <div>
         <img
           style="width: 100%; height: 100%"
@@ -8,6 +8,7 @@
         />
       </div>
       <div class="inputDiv">
+        <br />
         <h4>로그인</h4>
         <br />
         <input placeholder="아이디" />
@@ -28,7 +29,7 @@
         <img src="@/assets/loginBtn/naver_login.png" />
         <img src="@/assets/loginBtn/google_login.png" />
         <br />
-        <router-link to="/auth/signup">
+        <router-link to="/auth/MySignup">
           <button
             style="
               background-color: white;
@@ -46,7 +47,6 @@
 </template>
 <script>
 export default {
-  name: '',
   components: {},
   data() {
     return {
@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style>
-.container_grid {
+.login_grid {
   display: grid;
   grid-template-columns: 60% 40%;
   grid-template-rows: 100%;
@@ -88,7 +88,7 @@ export default {
 }
 .inputDiv img {
   width: 300px;
-  height: 60px;
+  height: 50px;
   margin-bottom: 20px;
   border-radius: 10px;
 }

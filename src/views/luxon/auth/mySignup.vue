@@ -9,8 +9,8 @@ birthDate: this.birthDate -->
 
 <template>
   <section style="margin-top: 50px; margin-left: 100px; margin-right: 100px">
-    <div class="container_grid">
-      <div class="inputDiv">
+    <div class="signup_grid">
+      <div class="signDiv">
         <br />
         <h4>회원가입</h4>
         <br />
@@ -48,7 +48,6 @@ birthDate: this.birthDate -->
 </template>
 <script>
 export default {
-  name: '',
   components: {},
   data() {
     return {
@@ -68,12 +67,12 @@ export default {
 </script>
 
 <style>
-.container_grid {
+.signup_grid {
   display: grid;
   grid-template-columns: 40% 60%;
   grid-template-rows: 100%;
 }
-.inputDiv {
+.signDiv {
   background-color: rgb(245, 245, 245);
   width: 80%;
   display: absolute;
@@ -83,14 +82,14 @@ export default {
   align-items: center;
   flex-direction: column;
 }
-.inputDiv input {
+.signDiv input {
   width: 300px;
   height: 40px;
   margin-bottom: 20px;
 }
-.inputDiv img {
+.signDiv img {
   width: 300px;
-  height: 60px;
+  height: 45px;
   margin-bottom: 20px;
 }
 </style>

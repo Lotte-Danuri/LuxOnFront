@@ -22,7 +22,7 @@
 
       <ul class="navbar__icons">
         <li>
-          <router-link to="/auth/login">
+          <router-link to="/auth/MyLogin">
             <i class="fa-solid fa-right-to-bracket"></i>
             <p>로그인</p>
           </router-link>
