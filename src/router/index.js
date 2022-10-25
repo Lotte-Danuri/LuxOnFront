@@ -7,6 +7,7 @@ import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
 import MyLogin from '@/views/luxon/auth/myLogin.vue';
 import MySignup from '@/views/luxon/auth/mySignup.vue';
+import KaKaoLogin from '@/components/social_login/kakaoLogin.vue';
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
         path: '/login',
         name: 'login',
         component: MyLogin,
+      },
+      {
+        path:'/login/kakao',
+        name: 'kakaoLogin',
+        component: KaKaoLogin
       },
       {
         path: '/signup',
