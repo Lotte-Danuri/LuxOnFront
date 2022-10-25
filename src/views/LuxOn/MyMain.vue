@@ -22,7 +22,7 @@
             <div class="bg-text">
               <h2>Winter LuxOn</h2>
               <h1 style="font-size: 50px">Luxury On</h1>
-              <p>겨울 컬렉션</p>
+              <p>겨울 test</p>
             </div>
             <div style="postion: absolute; margini-top: -100px">
               <img
