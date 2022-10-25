@@ -1,5 +1,8 @@
 <template>
   <div class="form">
+    <button class="btn">
+      <i class="bi bi-image" style="color: grey"></i>
+    </button>
     <input
       class="form__input"
       type="text"

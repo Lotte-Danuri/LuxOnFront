@@ -4,7 +4,7 @@
       <button class="btn" @click="backButton">
         <i class="bi bi-chevron-left"></i>
       </button>
-      <p class="app__brand">이름 오는곳</p>
+      <p class="app__brand">{{ roomDatas[0].userName }}</p>
       <button class="btn" @click="$emit('closeBtn')">
         <i class="bi bi-x-lg"></i>
       </button>
@@ -14,18 +14,16 @@
         v_for="conversation in props.conversations"
         :key="conversation.id"
         class="chat_room_list"
-        :class="[props.conversationId === conversation.id && 'active']"
+        :class="[roomDatas.chatRoomId === roomDatas.chatRoomId && 'active']"
         tabindex="0"
         @keydown.space.prevent="
           () => {
             emit('update:conversationId', conversation.id);
-            emit('toggleMobileConversation');
           }
         "
         @click="
           () => {
             emit('update:conversationId', conversation.id);
-            emit('toggleMobileConversation');
           }
         "
       ></div>
@@ -35,15 +33,61 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
+import ChatList from '@/components/chat/ChatList.vue';
+import ChatForm from '@/components/chat/ChatForm.vue';
 export default {
   data: function () {
     return {
       showChat: true,
+      roomDatas: [
+        {
+          chatRoomId: '634cfc1d6e1d7300ef16e8f7',
+          userName: '챙',
+          lastChatContent: '테스트 메세지',
+          lastChatCreatedAt: '2022-10-17T17:35:28.273',
+          valid: true,
+          roomType: 'chat',
+          updateAt: '2022-10-17T17:35:28.273',
+          receiverId: 'Test2',
+          countNewChats: 3,
+          userId: null,
+        },
+        {
+          chatRoomId: '634d00746e1d7300ef16e8f8',
+          userName: '박',
+          lastChatContent: null,
+          lastChatCreatedAt: null,
+          valid: true,
+          roomType: 'chat',
+          updateAt: '2022-10-17T16:12:52.61',
+          receiverId: 'Test3',
+          countNewChats: 0,
+          userId: null,
+        },
+      ],
     };
+  },
+  components: {
+    ChatList,
+    ChatForm,
+  },
+  methods: {
+    fetchData: function () {
+      axios
+        .get('http://localhost:8080/user/Test1')
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
 };
 function backButton() {
   this.showChat = !this.showChat;
+  this.fetchData();
 }
 </script>
 <style scoped>
