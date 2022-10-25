@@ -1,11 +1,12 @@
 <template>
   <div class="chatContents">
-    <button class="btn p-1" type="button" @click="buttonClick">
-      <img
-        src="@/assets/logo/chat_icon.png"
-        style="height: 70px; width: 70px"
-        alt="chatButton"
-      />
+    <button
+      class="btn"
+      type="button"
+      style="border-radius: 50%; box-shadow: 0px 1px 20px #9c9cc855"
+      @click="buttonClick"
+    >
+      <i class="bi bi-chat-left-dots" style="font-size: xx-large"></i>
     </button>
   </div>
 </template>
