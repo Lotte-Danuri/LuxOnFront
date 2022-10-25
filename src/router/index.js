@@ -5,6 +5,7 @@ import LuxOn from '@/layouts/luxon/Index.vue';
 import MyMain from '@/views/luxon/MyMain.vue';
 import MyAdmin from '@/views/admin/DashBoard.vue';
 import MyLogin from '@/views/luxon/auth/login.vue';
+import MySignup from '@/views/luxon/auth/signup.vue';
 
 const routes = [
   {
@@ -20,6 +21,11 @@ const routes = [
         path: '/auth/login',
         name: 'login',
         component: MyLogin,
+      },
+      {
+        path: '/auth/signup',
+        name: 'signup',
+        component: MySignup,
       },
     ],
   },
