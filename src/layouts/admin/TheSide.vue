@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div>sidebar dsfsdfsdf</div>
+    <div>sidebar</div>
   </main>
 </template>
 <script>

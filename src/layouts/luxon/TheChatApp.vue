@@ -104,11 +104,7 @@ export default {
       this.fetchData();
     },
   },
-  computed: {
-    ...mapState({
-      msgData: state => state.socket.msgData,
-    }),
-  },
+  computed: {},
 };
 </script>
 <style scoped>

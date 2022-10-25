@@ -1,5 +1,5 @@
 <template>
-  <main>headgergsdgdfgg</main>
+  <main>header</main>
 </template>
 <script>
 export default {
