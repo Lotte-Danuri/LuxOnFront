@@ -25,7 +25,9 @@
           로그인
         </button>
         <br />
-        <img src="@/assets/loginBtn/kakao_login.png" />
+        <button @click="kakaoLogin">
+          <img src="@/assets/loginBtn/kakao_login.png" />
+        </button>
         <img src="@/assets/loginBtn/naver_login.png" />
         <img src="@/assets/loginBtn/google_login.png" />
         <br />
@@ -46,12 +48,20 @@
   </section>
 </template>
 <script>
+import axios from 'axios';
 export default {
   components: {},
   data() {
     return {
       example: '',
     };
+  },
+  methods: {
+    kakaoLogin(){
+      axios.get("localhost:8000/auth/oauth2/authorization/kakao").then((response)=>{
+        console.log(response)
+      })
+    }
   },
   beforeCreate() {},
   created() {},
@@ -61,7 +71,6 @@ export default {
   updated() {},
   beforeUnmount() {},
   unmounted() {},
-  methods: {},
 };
 </script>
 
