@@ -1,16 +1,15 @@
 <template>
-  <div class="chat_app_wrapper">
-    <div class="chat_app_header border" v-if="showChat">
-      <button class="btn" @click="backButton">
-        <i class="bi bi-chevron-left"></i>
-      </button>
-      <p class="app__brand">{{ roomDatas[0].userName }}</p>
-      <button class="btn" @click="$emit('closeBtn')">
-        <i class="bi bi-x-lg"></i>
-      </button>
-    </div>
-    <div v-if="!showChat" class="chat_app_body border">
-      <div
+  <div>
+    <!-- 채팅방 -->
+    <div class="chat_app_wrapper" v-if="!showChat">
+      <div class="chat_app_header border">
+        <span style="margin-left: 28px"></span>
+        <div><img src="@/assets/logo/logo_white.png" /></div>
+        <button class="btn" @click="$emit('closeBtn')">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <CharRoom
         v_for="conversation in props.conversations"
         :key="roomDatas.chatRoomId"
         class="chat_room_list"
@@ -26,16 +25,32 @@
             emit('update:conversationId', roomDatas.chatRoomId);
           }
         "
-      ></div>
+      ></CharRoom>
+      <ChatRoom :rooms="roomDatas"></ChatRoom>
     </div>
-    <chat-list v-if="showChat"></chat-list>
-    <ChatForm @submitMessage="sendMessage" v-if="showChat"></ChatForm>
+    <!-- 채팅창 -->
+    <div class="chat_app_wrapper" v-if="showChat">
+      <div class="chat_app_header border">
+        <button class="btn" @click="backButton">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <p class="app__brand">{{ roomDatas[0].userName }}</p>
+        <button class="btn" @click="$emit('closeBtn')">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div v-if="!showChat" class="chat_app_body border"></div>
+
+      <chat-list></chat-list>
+      <ChatForm @submitMessage="sendMessage"></ChatForm>
+    </div>
   </div>
 </template>
 <script>
 import axios from 'axios';
 import ChatList from '@/components/chat/ChatList.vue';
 import ChatForm from '@/components/chat/ChatForm.vue';
+import ChatRoom from '@/components/chat/ChatRoom.vue';
 export default {
   data: function () {
     return {
@@ -71,11 +86,12 @@ export default {
   components: {
     ChatList,
     ChatForm,
+    ChatRoom,
   },
   methods: {
     fetchData: function () {
       axios
-        .get('https://sbbro.xyz/chat/user/Test1')
+        .get('http://localhost:8080/user/Test1')
         .then(function (response) {
           console.log(response);
         })
@@ -87,6 +103,11 @@ export default {
       this.showChat = !this.showChat;
       this.fetchData();
     },
+  },
+  computed: {
+    ...mapState({
+      msgData: state => state.socket.msgData,
+    }),
   },
 };
 </script>
