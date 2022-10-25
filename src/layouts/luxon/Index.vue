@@ -1,3 +1,36 @@
+<script>
+import TheHeader from '@/layouts/luxon/TheHeader.vue';
+import TheView from '@/layouts/luxon/TheView.vue';
+import TheChat from '@/layouts/luxon/TheChat.vue';
+import TheChatApp from '@/layouts/luxon/TheChatApp.vue';
+import { ref } from 'vue';
+
+export default {
+  name: 'DefaultLayout',
+  components: {
+    TheHeader,
+    TheView,
+    TheChat,
+    TheChatApp,
+  },
+  created() {
+    if (window.location.pathname == '/') {
+      location.href = '/MyMain';
+    }
+  },
+  data: function () {
+    return {
+      chatShow: false,
+    };
+  },
+  methods: {
+    buttonClick() {
+      this.chatShow = !this.chatShow;
+    },
+  },
+};
+</script>
+
 <template>
   <the-header></the-header>
 
@@ -15,40 +48,6 @@
     ></TheChatApp>
   </Transition>
 </template>
-
-<script>
-import TheHeader from '@/layouts/luxon/TheHeader.vue';
-import TheView from '@/layouts/luxon/TheView.vue';
-import TheChat from '@/layouts/luxon/TheChat.vue';
-import TheChatApp from '@/layouts/luxon/TheChatApp.vue';
-import router from '@/router';
-// import { ref } from 'vue';
-
-export default {
-  name: 'DefaultLayout',
-  components: {
-    TheHeader,
-    TheView,
-    TheChat,
-    TheChatApp,
-  },
-  created() {
-    if (window.location.pathname == '/') {
-      router.push('/main');
-    }
-  },
-  data: function () {
-    return {
-      chatShow: false,
-    };
-  },
-  methods: {
-    buttonClick() {
-      this.chatShow = !this.chatShow;
-    },
-  },
-};
-</script>
 
 <style>
 .v-enter-active,

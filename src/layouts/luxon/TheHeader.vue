@@ -2,7 +2,7 @@
   <section class="header_top">
     <nav class="navbar">
       <div class="navbar__logo">
-        <a href="/MyMain"><img src="@/assets/logo/logo_black.png" /></a>
+        <a href="/MyMain"><img src="public/logo_black.png" /></a>
       </div>
       <ul class="navbar__menu">
         <div class="wrap">
@@ -22,10 +22,8 @@
 
       <ul class="navbar__icons">
         <li>
-          <router-link to="/auth/MyLogin">
-            <i class="fa-solid fa-right-to-bracket"></i>
-            <p>로그인</p>
-          </router-link>
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <p>로그인</p>
         </li>
         <li>
           <i class="fa-solid fa-phone"></i>
