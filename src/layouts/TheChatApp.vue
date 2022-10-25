@@ -12,18 +12,18 @@
     <div v-if="!showChat" class="chat_app_body border">
       <div
         v_for="conversation in props.conversations"
-        :key="conversation.id"
+        :key="roomDatas.chatRoomId"
         class="chat_room_list"
         :class="[roomDatas.chatRoomId === roomDatas.chatRoomId && 'active']"
         tabindex="0"
         @keydown.space.prevent="
           () => {
-            emit('update:conversationId', conversation.id);
+            emit('update:conversationId', roomDatas.chatRoomId);
           }
         "
         @click="
           () => {
-            emit('update:conversationId', conversation.id);
+            emit('update:conversationId', roomDatas.chatRoomId);
           }
         "
       ></div>
@@ -75,7 +75,7 @@ export default {
   methods: {
     fetchData: function () {
       axios
-        .get('http://localhost:8080/user/Test1')
+        .get('https://sbbro.xyz/chat/user/Test1')
         .then(function (response) {
           console.log(response);
         })
@@ -83,12 +83,12 @@ export default {
           console.log(error);
         });
     },
+    backButton: function () {
+      this.showChat = !this.showChat;
+      this.fetchData();
+    },
   },
 };
-function backButton() {
-  this.showChat = !this.showChat;
-  this.fetchData();
-}
 </script>
 <style scoped>
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
@@ -111,6 +111,7 @@ body {
 .app__brand {
   display: flex;
   flex-direction: column;
+  align-self: center;
   align-items: center;
 }
 .chat_app_wrapper {
