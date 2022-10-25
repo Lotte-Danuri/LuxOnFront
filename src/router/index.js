@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LuxOn from '@/layouts/luxon/Index.vue';
 import MyMain from '@/views/luxon/MyMain.vue';
 import MyAdmin from '@/views/admin/DashBoard.vue';
+import MyLogin from '@/views/luxon/auth/login.vue';
 
 const routes = [
   {
@@ -14,6 +15,11 @@ const routes = [
         path: '/MyMain',
         name: 'MyMain',
         component: MyMain,
+      },
+      {
+        path: '/auth/login',
+        name: 'login',
+        component: MyLogin,
       },
     ],
   },
