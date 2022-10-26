@@ -8,6 +8,7 @@ import DashBoard from '@/views/admin/dashBoard.vue';
 import MyLogin from '@/views/luxon/auth/myLogin.vue';
 import MySignup from '@/views/luxon/auth/mySignup.vue';
 import KaKaoLogin from '@/components/social_login/kakaoLogin.vue';
+import MyPage from '@/views/user/myPage.vue';
 
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
         path: '/signup',
         name: 'signup',
         component: MySignup,
+      },
+      {
+        path: '/mypage',
+        name: 'mypage',
+        component: MyPage,
       },
     ],
   },
