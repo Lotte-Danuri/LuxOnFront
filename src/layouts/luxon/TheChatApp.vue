@@ -9,24 +9,10 @@
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
-      <CharRoom
-        v_for="conversation in props.conversations"
-        :key="roomDatas.chatRoomId"
-        class="chat_room_list"
-        :class="[roomDatas.chatRoomId === roomDatas.chatRoomId && 'active']"
-        tabindex="0"
-        @keydown.space.prevent="
-          () => {
-            emit('update:conversationId', roomDatas.chatRoomId);
-          }
-        "
-        @click="
-          () => {
-            emit('update:conversationId', roomDatas.chatRoomId);
-          }
-        "
-      ></CharRoom>
-      <ChatRoom :rooms="roomDatas"></ChatRoom>
+      <!-- <ChatRoom v-model:chatRoomId="selectedchatRoomId" :rooms="rooms" /> -->
+      <div class="chatroom_area">
+        <ChatRoom v-bind:rooms="rooms"></ChatRoom>
+      </div>
     </div>
     <!-- 채팅창 -->
     <div class="chat_app_wrapper" v-if="showChat">
@@ -34,13 +20,11 @@
         <button class="btn" @click="backButton">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <p class="app__brand">{{ roomDatas[0].userName }}</p>
+        <p class="app__brand">이름 들어가는곳</p>
         <button class="btn" @click="$emit('closeBtn')">
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
-      <div v-if="!showChat" class="chat_app_body border"></div>
-
       <chat-list></chat-list>
       <ChatForm @submitMessage="sendMessage"></ChatForm>
     </div>
@@ -52,35 +36,11 @@ import ChatList from '@/components/chat/ChatList.vue';
 import ChatForm from '@/components/chat/ChatForm.vue';
 import ChatRoom from '@/components/chat/ChatRoom.vue';
 export default {
-  data: function () {
+  name: 'theChatApp',
+  data() {
     return {
       showChat: true,
-      roomDatas: [
-        {
-          chatRoomId: '634cfc1d6e1d7300ef16e8f7',
-          userName: '챙',
-          lastChatContent: '테스트 메세지',
-          lastChatCreatedAt: '2022-10-17T17:35:28.273',
-          valid: true,
-          roomType: 'chat',
-          updateAt: '2022-10-17T17:35:28.273',
-          receiverId: 'Test2',
-          countNewChats: 3,
-          userId: null,
-        },
-        {
-          chatRoomId: '634d00746e1d7300ef16e8f8',
-          userName: '박',
-          lastChatContent: null,
-          lastChatCreatedAt: null,
-          valid: true,
-          roomType: 'chat',
-          updateAt: '2022-10-17T16:12:52.61',
-          receiverId: 'Test3',
-          countNewChats: 0,
-          userId: null,
-        },
-      ],
+      rooms: [],
     };
   },
   components: {
@@ -89,20 +49,15 @@ export default {
     ChatRoom,
   },
   methods: {
-    fetchData: function () {
-      axios
-        .get('http://localhost:8080/user/Test1')
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
     backButton: function () {
       this.showChat = !this.showChat;
-      this.fetchData();
     },
+  },
+  beforeCreate() {
+    axios
+      .get('http://localhost:8080/user/Test1')
+      .then(res => (this.rooms = res.data))
+      .catch(err => console.log(err));
   },
   computed: {},
 };
@@ -152,6 +107,16 @@ body {
   flex-direction: row;
   justify-content: space-between;
   height: 70px;
+}
+.chatroom_area {
+  border-right: 1px solid black;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
 }
 .chat__header__greetings {
   color: #292929;
