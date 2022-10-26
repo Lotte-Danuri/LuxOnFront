@@ -25,9 +25,13 @@
           로그인
         </button>
         <br />
-        <img src="@/assets/loginBtn/kakao_login.png" />
-        <img src="@/assets/loginBtn/naver_login.png" />
-        <img src="@/assets/loginBtn/google_login.png" />
+        <kakaoLogin></kakaoLogin>
+        <button class="socialButton">
+          <img src="@/assets/loginBtn/naver_login.png" />
+        </button>
+        <button class="socialButton">
+          <img src="@/assets/loginBtn/google_login.png" />
+        </button>
         <br />
         <router-link to="/auth/MySignup">
           <button
@@ -46,22 +50,27 @@
   </section>
 </template>
 <script>
+import axios from 'axios';
+import { useRoute } from 'vue-router';
+import kakaoLogin from '@/components/social_login/kakaoLogin.vue';
 export default {
-  components: {},
+  components: {kakaoLogin},
   data() {
     return {
       example: '',
     };
   },
+  methods: {
+  },
   beforeCreate() {},
-  created() {},
+  created() {
+  },
   beforeMount() {},
   mounted() {},
   beforeUpdate() {},
   updated() {},
   beforeUnmount() {},
   unmounted() {},
-  methods: {},
 };
 </script>
 
@@ -91,5 +100,8 @@ export default {
   height: 50px;
   margin-bottom: 20px;
   border-radius: 10px;
+}
+.socialButton {
+  border : none;
 }
 </style>
