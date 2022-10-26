@@ -2,7 +2,9 @@
   <section class="header_top">
     <nav class="navbar">
       <div class="navbar__logo">
-        <a href="/MyMain"><img src="@/assets/logo/logo_black.png" /></a>
+        <router-link to="/main"
+          ><img src="@/assets/logo/logo_black.png"
+        /></router-link>
       </div>
       <ul class="navbar__menu">
         <div class="wrap">
@@ -98,7 +100,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 :root {
   /* --text-color:
   --background-color:

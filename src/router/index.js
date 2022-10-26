@@ -25,9 +25,9 @@ const routes = [
         component: MyLogin,
       },
       {
-        path:'/login/kakao',
+        path: '/login/kakao',
         name: 'kakaoLogin',
-        component: KaKaoLogin
+        component: KaKaoLogin,
       },
       {
         path: '/signup',

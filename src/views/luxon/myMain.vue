@@ -153,7 +153,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .firstSwiper {
   width: 100%;
   height: 700px;

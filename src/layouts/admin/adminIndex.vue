@@ -1,12 +1,62 @@
 <template>
-  <the-header></the-header>
-  <the-side></the-side>
-  <admin-view></admin-view>
+  <div class="dashContainer">
+    <aside>
+      <div class="top">
+        <div class="logo">
+          <img
+            src="@/assets/logo/logo_black.png"
+            style="width: 180px; height: 120px; margin-left: 5%"
+          />
+          <!-- <h2 class="text-muted">Lux<span class="danger">ON</span></h2> -->
+        </div>
+        <!-- <div class="close" id="close-btn">
+          <span class="material-icons-sharp">close</span>
+        </div> -->
+      </div>
+      <div class="sidebar" style="height: 1000px">
+        <a href="#">
+          <span class="material-icons-sharp">grid_view</span>
+          <h3>메인 센터</h3>
+        </a>
+        <a href="#">
+          <span class="material-icons-sharp">insights</span>
+          <h3>통계</h3>
+        </a>
+        <a href="#">
+          <span class="material-icons-sharp">receipt_long</span>
+          <h3>상품 관리</h3>
+        </a>
+        <a href="#">
+          <span class="material-icons-sharp"> done_outline </span>
+          <h3>상품 등록</h3>
+        </a>
+        <a href="#">
+          <span class="material-icons-sharp"> published_with_changes </span>
+          <h3>상품 수정</h3>
+        </a>
+        <a href="#">
+          <span class="material-icons-sharp"> offline_bolt </span>
+          <h3>프로모션</h3>
+          <!-- <span class="message-count">26</span> -->
+        </a>
+        <a href="#">
+          <span class="material-icons-sharp">settings</span>
+          <h3>환경설정</h3>
+        </a>
+        <a href="#">
+          <span class="material-icons-sharp">logout</span>
+          <h3>Logout</h3>
+        </a>
+      </div>
+    </aside>
+    <!-- --------------------------------------- END OF ASIDE ---------------------------- -->
+    <admin-view></admin-view>
+  </div>
 </template>
 
 <script>
-import TheHeader from '@/layouts/admin/TheHeader.vue';
-import TheSide from '@/layouts/admin/TheSide.vue';
+import TheHeader from '@/layouts/admin/theHeader.vue';
+import TheSide from '@/layouts/admin/theSide.vue';
 import AdminView from '@/layouts/admin/adminView.vue';
 
 export default {
@@ -29,8 +79,8 @@ export default {
   --color-info-dark: #7d8da1;
   --color-info-light: #dce1eb;
   --color-dark: #363949;
-  --color-light: rgba(132, 139, 200, 0.18);
-  --color-primary-variant: #111e88;
+  --color-light: rgba(183, 183, 184, 0.18);
+  --color-primary-variant: #929292;
   --color-dark-variant: #677483;
   --color-background: #f6f6f9;
 
@@ -49,7 +99,7 @@ export default {
   margin: 0;
   padding: 0;
   outline: 0;
-  apperance: none;
+  appearance: none;
   border: 0;
   text-decoration: none;
   list-style: none;
@@ -90,27 +140,27 @@ img {
 
 h1 {
   font-weight: 800;
-  font-size: 1.8rem;
+  font-size: 3rem;
 }
 
 h2 {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
 }
 
 h3 {
-  font-size: 0.87rem;
+  font-size: 1.2rem;
 }
 
 h4 {
-  font-size: 0.8rem;
+  font-size: 1.1rem;
 }
 
 h5 {
-  font-size: 0.77rem;
+  font-size: 1rem;
 }
 
 small {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 .profile-photo {
@@ -150,7 +200,7 @@ b {
 
 aside {
   height: 100vh;
-  background: gray;
+  background: rgb(255, 255, 255);
 }
 
 aside .top {
@@ -250,16 +300,26 @@ main {
   margin-top: 1.4rem;
 }
 
+main div {
+  margin-bottom: 30px;
+}
+
 main .date {
   display: inline-block;
   background: var(--color-light);
   border-radius: var(--border-radius-1);
   margin-top: 1rem;
   padding: 0.5rem 1.6rem;
+  width: 250px;
+  height: 50px;
+  margin: 0px;
+  position: relative;
+  margin-left: 80%;
 }
 
 main .date input[type='date'] {
   background: transparent;
+  font-size: x-large;
   color: var(--color-dark);
 }
 
@@ -549,6 +609,10 @@ main .recent-orders a {
   font-weight: 600;
 }
 
+/* canvas #bar-chart {
+  width: 100px;
+  height: 100px;
+} */
 /* ================== MEDIA QUERIES ============= */
 @media screen and (max-width: 1200px) {
   .dashContainer {

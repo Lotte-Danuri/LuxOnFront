@@ -66,7 +66,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .signup_grid {
   display: grid;
   grid-template-columns: 40% 60%;
