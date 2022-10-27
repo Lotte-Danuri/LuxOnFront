@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Index from '@/layouts/luxon/index.vue';
 import MyMain from '@/views/luxon/myMain.vue';
 import MyList from '@/views/luxon/myList.vue';
+import MyProduct from '@/views/luxon/product/myProduct.vue';
 import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
 import MyLogin from '@/views/luxon/auth/myLogin.vue';
@@ -24,6 +25,11 @@ const routes = [
         path: '/list',
         name: 'MyList',
         component: MyList,
+      },
+      {
+        path: '/product/myProduct',
+        name: 'MyProduct',
+        component: MyProduct,
       },
       {
         path: '/login',
