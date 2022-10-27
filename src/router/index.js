@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 // import HomeView from '@/views/luxon/HomeView.vue';
 import Index from '@/layouts/luxon/index.vue';
 import MyMain from '@/views/luxon/myMain.vue';
+import MyList from '@/views/luxon/myList.vue';
 import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
 import MyLogin from '@/views/luxon/auth/myLogin.vue';
@@ -18,6 +19,11 @@ const routes = [
         path: '/main',
         name: 'MyMain',
         component: MyMain,
+      },
+      {
+        path: '/list',
+        name: 'MyList',
+        component: MyList,
       },
       {
         path: '/login',
