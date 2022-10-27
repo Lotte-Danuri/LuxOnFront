@@ -22,7 +22,7 @@
         <button class="btn" @click="backButton">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <p class="app__brand">이름 들어가는곳 {{ selectedChatRoomId }}</p>
+        <p class="app__brand">{{ rooms[0].userName }}</p>
         <button class="btn" @click="$emit('closeBtn')">
           <i class="bi bi-x-lg"></i>
         </button>

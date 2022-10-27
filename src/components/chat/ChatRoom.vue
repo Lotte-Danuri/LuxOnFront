@@ -43,7 +43,11 @@ export default {
         <div class="room_message">
           {{ room.lastChatContent }}
         </div>
-        <span class="room_date">{{ room.lastChatCreatedAt }}</span>
+        <span class="room_date">{{
+          room.lastChatCreatedAt !== null
+            ? room.lastChatCreatedAt.substr(11, 8)
+            : room.lastChatCreatedAt
+        }}</span>
 
         <hr />
       </div>

@@ -19,12 +19,11 @@ export default {
   },
   props: ['msgs'],
 };
-console.log(this.props);
 </script>
 
 <style>
 .chat__body {
-  padding: 2rem;
+  padding: 1rem;
   overflow: scroll;
   scroll-behavior: smooth;
 }
