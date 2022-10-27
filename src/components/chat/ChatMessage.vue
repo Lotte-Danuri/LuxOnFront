@@ -13,7 +13,6 @@ export default {
   data() {
     return {
       isSame: false,
-      avatar: require('../assets/avatar.svg'),
     };
   },
   methods: {},

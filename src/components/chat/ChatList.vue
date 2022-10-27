@@ -1,12 +1,12 @@
 <template>
   <div class="chat__body" id="chat__body">
-    <chat-message
+    <ChatMessage
       v-for="(msg, index) in msgs"
       :key="index"
       :msg="msg"
       :prev="[index == 0 ? null : msgs[index - 1]]"
     >
-    </chat-message>
+    </ChatMessage>
   </div>
 </template>
 
@@ -19,6 +19,7 @@ export default {
   },
   props: ['msgs'],
 };
+console.log(this.props);
 </script>
 
 <style>

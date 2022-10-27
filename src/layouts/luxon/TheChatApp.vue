@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 채팅방 -->
-    <div class="chat_app_wrapper" v-if="!showChat">
+    <div class="chat_app_wrapper" v-if="showChat">
       <div class="chat_app_header border">
         <span style="margin-left: 28px"></span>
         <div><img src="@/assets/logo/logo_white.png" /></div>
@@ -9,24 +9,26 @@
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
-      <!-- <ChatRoom v-model:chatRoomId="selectedchatRoomId" :rooms="rooms" /> -->
       <div class="chatroom_area">
-        <ChatRoom v-bind:rooms="rooms"></ChatRoom>
+        <ChatRoom
+          v-bind:rooms="rooms"
+          @selectChatRoom="selectChatRoom"
+        ></ChatRoom>
       </div>
     </div>
     <!-- 채팅창 -->
-    <div class="chat_app_wrapper" v-if="showChat">
+    <div class="chat_app_wrapper_chat" v-if="!showChat">
       <div class="chat_app_header border">
         <button class="btn" @click="backButton">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <p class="app__brand">이름 들어가는곳</p>
+        <p class="app__brand">이름 들어가는곳 {{ selectedChatRoomId }}</p>
         <button class="btn" @click="$emit('closeBtn')">
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
-      <chat-list></chat-list>
-      <ChatForm @submitMessage="sendMessage"></ChatForm>
+      <ChatList :msgs="msgData"></ChatList>
+      <ChatForm></ChatForm>
     </div>
   </div>
 </template>
@@ -40,7 +42,9 @@ export default {
   data() {
     return {
       showChat: true,
+      selectedChatRoomId: '',
       rooms: [],
+      msgData: [],
     };
   },
   components: {
@@ -52,6 +56,11 @@ export default {
     backButton: function () {
       this.showChat = !this.showChat;
     },
+    selectChatRoom: function (roomId) {
+      console.log(roomId);
+      this.selectedChatRoomId = roomId;
+      this.showChat = !this.showChat;
+    },
   },
   beforeCreate() {
     axios
@@ -59,7 +68,15 @@ export default {
       .then(res => (this.rooms = res.data))
       .catch(err => console.log(err));
   },
-  computed: {},
+  watch: {
+    selectedChatRoomId: function (val) {
+      axios
+        .get('http://localhost:8080/chatRoom/chats/Test2/' + val)
+        .then(res => (this.msgData = res.data))
+        .catch(err => console.log(err));
+      console.log(this.msgData);
+    },
+  },
 };
 </script>
 <style scoped>
@@ -93,10 +110,22 @@ body {
   margin: 5rem auto 0rem;
   border-radius: 1.5rem;
   box-shadow: 0px 1px 20px #9c9cc855;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
+.chat_app_wrapper_chat {
+  width: 375px;
+  height: 812px;
+  background-color: #ffffff;
+  margin: 5rem auto 0rem;
+  border-radius: 1.5rem;
+  box-shadow: 0px 1px 20px #9c9cc855;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+}
+
 .chat_app_header {
   background: #ffffff;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
@@ -112,7 +141,6 @@ body {
   border-right: 1px solid black;
   overflow-y: auto;
   overflow-x: hidden;
-  display: flex;
   flex-direction: column;
   position: relative;
   width: 100%;
