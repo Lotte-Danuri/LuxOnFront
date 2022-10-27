@@ -54,17 +54,15 @@ import axios from 'axios';
 import { useRoute } from 'vue-router';
 import kakaoLogin from '@/components/social_login/kakaoLogin.vue';
 export default {
-  components: {kakaoLogin},
+  components: { kakaoLogin },
   data() {
     return {
       example: '',
     };
   },
-  methods: {
-  },
+  methods: {},
   beforeCreate() {},
-  created() {
-  },
+  created() {},
   beforeMount() {},
   mounted() {},
   beforeUpdate() {},
@@ -74,7 +72,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .login_grid {
   display: grid;
   grid-template-columns: 60% 40%;
@@ -102,6 +100,6 @@ export default {
   border-radius: 10px;
 }
 .socialButton {
-  border : none;
+  border: none;
 }
 </style>
