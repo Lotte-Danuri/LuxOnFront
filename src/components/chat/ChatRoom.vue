@@ -45,11 +45,11 @@ export default {
         </div>
         <span class="room_date">{{
           room.lastChatCreatedAt !== null
-            ? room.lastChatCreatedAt.substr(11, 8)
+            ? room.lastChatCreatedAt.substr(11, 5)
             : room.lastChatCreatedAt
         }}</span>
 
-        <hr />
+        <hr style="margin-top: 25px; color: lightgrey" />
       </div>
     </div>
   </div>
@@ -69,6 +69,10 @@ export default {
   background-color: rgb(197, 195, 195);
 }
 
+.room:hover {
+  background-color: rgb(237, 235, 235);
+}
+
 .room_detail {
   height: 24px;
 }
@@ -77,11 +81,13 @@ export default {
   padding-left: 14px;
   height: 24px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .room_message {
   padding-left: 70px;
+  font-size: 14px;
+  margin-top: 5px;
   height: 24px;
 }
 
@@ -97,12 +103,13 @@ export default {
   background-color: black;
   border: 1px solid black;
   border-radius: 50%;
-  height: 33px;
-  width: 33px;
+  height: 24px;
+  width: 24px;
+  font-size: 12px;
   padding-top: 3px;
   text-align: center;
   vertical-align: middle;
   color: white;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 </style>

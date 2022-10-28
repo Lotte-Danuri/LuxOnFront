@@ -5,7 +5,7 @@
       class="chat__mymessage"
       :class="[isSame ? '' : 'chat__first']"
     >
-      <p class="chat__mymessage__time">{{ msg.createdAt.substr(11, 8) }}</p>
+      <p class="chat__mymessage__time">{{ msg.createdAt.substr(11, 5) }}</p>
       <p class="chat__mymessage__paragraph">{{ msg.content }}</p>
     </div>
     <div
@@ -19,7 +19,7 @@
           <p class="chat__yourmessage__paragraph">
             {{ msg.content }}
           </p>
-          <p class="chat__mymessage__time">{{ msg.createdAt.substr(11, 8) }}</p>
+          <p class="chat__mymessage__time">{{ msg.createdAt.substr(11, 5) }}</p>
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .chat__mymessage {
   display: flex;
   justify-content: right;
@@ -63,7 +63,7 @@ export default {
   margin: 0.4rem 0 0 1rem;
   border-radius: 20px 20px 0px 20px;
   max-width: 180px;
-  background-color: #bbc4ef;
+  background-color: black;
   color: #ffffff;
   padding: 0.8rem;
   font-size: 14px;
