@@ -31,7 +31,7 @@
         </button>
       </div>
       <ChatList :msgs="msgData"></ChatList>
-      <ChatForm></ChatForm>
+      <ChatForm @submitMessage="sendMessage"></ChatForm>
     </div>
   </div>
 </template>
@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     backButton: function () {
+      clearInterval();
       this.showChat = !this.showChat;
     },
     selectChatRoom: function (roomId) {
@@ -66,20 +67,57 @@ export default {
     },
     getRoomDatas: function () {
       axios
-        .get('http://localhost:8080/user/Test1')
+        .get('https://sbbro.xyz/api/chat/user/Test1', {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
         .then(res => (this.rooms = res.data))
         .catch(err => console.log(err));
     },
     getChatDatas: function (val) {
       axios
-        .get('http://localhost:8080/chatRoom/chats/Test1/' + val)
+        .get('https://sbbro.xyz/api/chat/chatRoom/chats/Test1/' + val, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
         .then(res => (this.msgData = res.data))
         .catch(err => console.log(err));
     },
     getNewMessages: function async(val) {
-      console.log('실행중');
       axios
-        .get('http://localhost:8080/chatRoom/newChats/Test1/' + val)
+        .get('https://sbbro.xyz/api/chat/chatRoom/newChats/Test1/' + val, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
+        .then(res =>
+          res.data.length !== 0
+            ? res.data.reverse().forEach(element => this.msgData.push(element))
+            : console.log(res.data),
+        )
+        .catch(err => console.log(err));
+    },
+    sendMessage(msg) {
+      let data = {
+        content: msg,
+        contentType: '메세지',
+        id: '634cfc1d6e1d7300ef16e8f7',
+        sendBy: 'Test1',
+        sendTo: 'Test2',
+        source: 'string',
+      };
+      axios
+        .post('https://sbbro.xyz/api/chat/chatRoom/chat', data, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
         .then(res =>
           res.data.length !== 0
             ? res.data.forEach(element => this.msgData.push(element))
