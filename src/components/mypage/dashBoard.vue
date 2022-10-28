@@ -1,49 +1,83 @@
 <template>
   <div class="mypage-dashboard">
-		<!-- 마이페이지 대시보드 -->
-		<div class="mypage-dashboard__info">
-			<div class="mypage-dashboard__row">
-				<div class="col-2">
-					<div class="info-grade">
-						<div class="level">
-							<span class="lv welcome">등급</span>
-							<span class="user">
-								<div class="mem">
-									<em class="grade">WELCOME</em>
-								
-								
-								</div> 
-								<span class="name"> 
-									<strong>박세훈님</strong>
-									<button class="btn-arrow" id="nextMonthGrade">다음달 예상 등급</button>
-								</span>
-							</span>
-						</div>
-	
-					</div>
-					<ul class="info-disc">
-					
-					
-					</ul>
-				</div>
-				<div class="col-2">
-					<ul class="info-point">
-						<li><span class="tit">S.I.포인트</span> <em class="won"><a href="javascript:;" onclick="overpass.mypage.searchSIPoint()" id="siPoint"></a>P</em></li>
-						<li><span class="tit">e포인트</span> <em class="won"><a href="javascript:;" onclick="overpass.mypage.searchEPoint()" id="ePoint"></a>P</em></li>
-						<li><span class="tit">쿠폰</span> <em class="won"><a href="javascript:;" onclick="overpass.mypage.searchCpn()" id="couponCnt"></a>장</em></li>
-						<li><span class="tit">리뷰</span> <em class="won"><a href="javascript:;" onclick="overpass.mypage.goReviewList()" id="reviewCnt"></a>개</em></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<!-- //마이페이지 대시보드 -->
-	</div>
+    <!-- 마이페이지 대시보드 -->
+    <div class="mypage-dashboard__info">
+      <div class="mypage-dashboard__row">
+        <div class="col-2">
+          <div class="info-grade">
+            <div class="level">
+              <span class="lv welcome">등급</span>
+              <span class="user">
+                <div class="mem">
+                  <em class="grade">WELCOME</em>
+                </div>
+                <span class="name">
+                  <strong>박세훈님</strong>
+                  <button class="btn-arrow" id="nextMonthGrade">
+                    다음달 예상 등급
+                  </button>
+                </span>
+              </span>
+            </div>
+          </div>
+          <ul class="info-disc"></ul>
+        </div>
+        <div class="col-2">
+          <ul class="info-point">
+            <li>
+              <span class="tit">S.I.포인트</span>
+              <em class="won"
+                ><a
+                  href="javascript:;"
+                  onclick="overpass.mypage.searchSIPoint()"
+                  id="siPoint"
+                ></a
+                >P</em
+              >
+            </li>
+            <li>
+              <span class="tit">e포인트</span>
+              <em class="won"
+                ><a
+                  href="javascript:;"
+                  onclick="overpass.mypage.searchEPoint()"
+                  id="ePoint"
+                ></a
+                >P</em
+              >
+            </li>
+            <li>
+              <span class="tit">쿠폰</span>
+              <em class="won"
+                ><a
+                  href="javascript:;"
+                  onclick="overpass.mypage.searchCpn()"
+                  id="couponCnt"
+                ></a
+                >장</em
+              >
+            </li>
+            <li>
+              <span class="tit">리뷰</span>
+              <em class="won"
+                ><a
+                  href="javascript:;"
+                  onclick="overpass.mypage.goReviewList()"
+                  id="reviewCnt"
+                ></a
+                >개</em
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- //마이페이지 대시보드 -->
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
@@ -122,7 +156,8 @@ export default {
   color: #404040;
   font-size: 14px;
   line-height: 24px;
-  background: url("../../image/ico_arrow_gray_border_right.svg") no-repeat center right/14px;
+  background: url("../../image/ico_arrow_gray_border_right.svg") no-repeat
+    center right/14px;
 }
 .mypage-dashboard__row .info-grade .mem:after {
   content: "";
