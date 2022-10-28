@@ -26,9 +26,7 @@
         </button>
         <br />
         <kakaoLogin></kakaoLogin>
-        <button class="socialButton">
-          <img src="@/assets/loginBtn/naver_login.png" />
-        </button>
+        <naver-login></naver-login>
         <button class="socialButton">
           <img src="@/assets/loginBtn/google_login.png" />
         </button>
@@ -53,8 +51,10 @@
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import kakaoLogin from '@/components/social_login/kakaoLogin.vue';
+import NaverLogin from '@/components/social_login/naverLogin.vue';
+import router from '@/router';
 export default {
-  components: {kakaoLogin},
+  components: {kakaoLogin, NaverLogin},
   data() {
     return {
       example: '',
@@ -64,6 +64,9 @@ export default {
   },
   beforeCreate() {},
   created() {
+    if(localStorage.getItem('token')){
+      router.push('/main')
+    }
   },
   beforeMount() {},
   mounted() {},

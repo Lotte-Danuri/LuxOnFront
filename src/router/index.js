@@ -8,7 +8,7 @@ import DashBoard from '@/views/admin/dashBoard.vue';
 import MyLogin from '@/views/luxon/auth/myLogin.vue';
 import MySignup from '@/views/luxon/auth/mySignup.vue';
 import KaKaoLogin from '@/components/social_login/kakaoLogin.vue';
-import MyPage from '@/views/user/myPage.vue';
+import MyPage from '@/views/luxon/user/myPage.vue';
 
 const routes = [
   {
