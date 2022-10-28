@@ -26,10 +26,10 @@ export default {
         .then((response) => {
           console.log(response);
           localStorage.setItem("token", response.data.accessToken);
-          localStorage.setItem("userName", response.data.userName);
+          localStorage.setItem("userName", response.data.encodedName);
         })
         .finally(() => {
-          router.push("/main");
+          window.location.href = "/main"
         });
     }
   },

@@ -82,6 +82,7 @@ export default {
         if(response.status == 200){
           console.log(response)
           localStorage.setItem('token',response.headers.access_token)
+          localStorage.setItem('userName',decodeURIComponent(escape(window.atob(response.headers.name))))
           window.location.href="/main"
         }
       }).catch((response)=>{

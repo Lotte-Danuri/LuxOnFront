@@ -50,10 +50,7 @@ export default {
     onMounted(() => {
       axios.get("https://sbbro.xyz/api/member/orders", {
         headers: {
-        //   Authorization: `Bearer ` + localStorage.getItem("token"),
-          Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNjY2OTI5MTg1fQ.lr_hAunxtoGOqNY6We_1xcVwmwhAL6WAsfN1Sr3d0pZpDuMk_o-48E2L9RYS6CbawpOlObOqZZQdOKgMhpIDPA`,
-        //   "Access-Control-Allow-Origin": "*",
-        //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          Authorization: `Bearer ` + localStorage.getItem("token"),
         },
       }).then((response) =>{
         console.log(response)
