@@ -15,9 +15,18 @@
 <script>
 import leftBar from '@/components/mypage/leftBar.vue'
 import MainContent from '@/components/mypage/mainContent.vue'
+import { onBeforeMount } from '@vue/runtime-core'
+import router from '@/router'
 export default {
   components: { leftBar, MainContent },
-
+  setup() {
+    onBeforeMount(()=>{
+      router.push('/mypage/order')
+    })
+    return {
+      
+    }
+  },
 }
 </script>
 
