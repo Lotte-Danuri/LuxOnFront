@@ -1,7 +1,6 @@
 <template>
     <section class="ee-contents mypage-shopping"><br>
         <div class="pc-wrap">
-            <dash-board></dash-board>
             <div class="mypage-shopping__container">
                 <left-bar></left-bar>
 
@@ -16,9 +15,8 @@
 <script>
 import leftBar from '@/components/mypage/leftBar.vue'
 import MainContent from '@/components/mypage/mainContent.vue'
-import DashBoard from '@/components/mypage/dashBoard.vue'
 export default {
-  components: { leftBar, MainContent, DashBoard },
+  components: { leftBar, MainContent },
 
 }
 </script>

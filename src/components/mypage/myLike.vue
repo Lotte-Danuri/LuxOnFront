@@ -3,7 +3,7 @@
       <form id="searchForm" method="post">
         <input type="hidden" name="page_idx" value="1" />
       </form>
-      <h2 class="page-title">주문/배송 조회</h2>
+      <h2 class="page-title">찜 목록</h2>
       <br />
       <div class="product hide-scroll">
         <ul class="product__list thum--4 gap--mid">
@@ -75,8 +75,8 @@
     onMounted(() => {
       axios.post("https://sbbro.xyz/api/member/like",null, {
         headers: {
-        //   Authorization: `Bearer ` + localStorage.getItem("token"),
-          Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNjY2OTI5MTg1fQ.lr_hAunxtoGOqNY6We_1xcVwmwhAL6WAsfN1Sr3d0pZpDuMk_o-48E2L9RYS6CbawpOlObOqZZQdOKgMhpIDPA`,
+          Authorization: `Bearer ` + localStorage.getItem("token"),
+          // Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNjY2OTI5MTg1fQ.lr_hAunxtoGOqNY6We_1xcVwmwhAL6WAsfN1Sr3d0pZpDuMk_o-48E2L9RYS6CbawpOlObOqZZQdOKgMhpIDPA`,
         //   "Access-Control-Allow-Origin": "*",
         //   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         },

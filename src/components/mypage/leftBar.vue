@@ -42,16 +42,10 @@
 
           <li><a>SNS 연결 관리</a></li>
 
-          <li><a>배송지/환불계좌 관리</a></li>
           <li><a>회원탈퇴</a></li>
         </ul>
       </div>
 
-      <div class="shinsegae">
-        <p>
-          <a>신세계인터내셔날 멤버십 안내</a>
-        </p>
-      </div>
     </nav>
     <!-- //LNB -->
   </div>
