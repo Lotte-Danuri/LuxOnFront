@@ -1,6 +1,6 @@
 <template>
-  <button class="socialButton" @click="kakaoLogin">
-    <img src="@/assets/loginBtn/kakao_login_large_narrow.png" />
+  <button class="socialButton" @click="naverLogin">
+    <img src="@/assets/loginBtn/naver_login.png" />
   </button>
 </template>
 
@@ -10,11 +10,13 @@ import { useRoute } from "vue-router";
 import router from "@/router";
 export default {
   methods: {
-    kakaoLogin() {
-      axios.get("https://sbbro.xyz/api/auth/oauth/code/kakao").then((response) => {
-        console.log(response);
-        window.location.href = response.data;
-      });
+    naverLogin() {
+      axios
+        .get("https://sbbro.xyz/api/auth/oauth/code/naver")
+        .then((response) => {
+          console.log(response);
+          window.location.href = response.data;
+        });
     },
   },
   created() {
@@ -22,7 +24,11 @@ export default {
     if (route.query.code != null) {
       localStorage.setItem("userinfo", route.query.code);
       axios
-        .get("https://sbbro.xyz/api/auth/oauth/token?code=" + route.query.code+"&service=kakao")
+        .get(
+          "https://sbbro.xyz/api/auth/oauth/token?code=" +
+            route.query.code +
+            "&service=naver"
+        )
         .then((response) => {
           console.log(response);
           localStorage.setItem("token", response.data.accessToken);
@@ -39,13 +45,13 @@ export default {
 <style>
 .socialButton {
   border: none;
-  width : 350px;
-  height : 20px;
+  width: 350px;
+  height: 20px;
   margin-bottom: 20px;
 }
-.socialButton img{
-  width : 100%;
-  height : 60px;
+.socialButton img {
+  width: 100%;
+  height: 60px;
   margin-bottom: 20px;
 }
 </style>
