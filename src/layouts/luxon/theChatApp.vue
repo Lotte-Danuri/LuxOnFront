@@ -2,7 +2,7 @@
   <div>
     <!-- 채팅방 -->
     <div class="chat_app_wrapper" v-if="showChat">
-      <div class="chat_app_header">
+      <div class="chat_app_header border">
         <div style="margin-left: 28px"></div>
         <div>
           <img class="chat_app_brand" src="@/assets/logo/logo_white.png" />
@@ -40,6 +40,7 @@ import axios from 'axios';
 import ChatList from '@/components/chat/chatList.vue';
 import ChatForm from '@/components/chat/chatForm.vue';
 import ChatRoom from '@/components/chat/chatRoom.vue';
+import { element } from 'prop-types';
 export default {
   name: 'theChatApp',
   data() {
@@ -75,6 +76,17 @@ export default {
         .then(res => (this.msgData = res.data))
         .catch(err => console.log(err));
     },
+    getNewMessages: function async(val) {
+      console.log('실행중');
+      axios
+        .get('http://localhost:8080/chatRoom/newChats/Test1/' + val)
+        .then(res =>
+          res.data.length !== 0
+            ? res.data.forEach(element => this.msgData.push(element))
+            : console.log(res.data),
+        )
+        .catch(err => console.log(err));
+    },
   },
   mounted() {
     this.getRoomDatas();
@@ -82,7 +94,9 @@ export default {
   watch: {
     selectedChatRoomId(val) {
       console.log('val:' + val);
-      return this.getChatDatas(val);
+      return setInterval(() => {
+        this.getNewMessages(val);
+      }, 1000);
     },
   },
 };
