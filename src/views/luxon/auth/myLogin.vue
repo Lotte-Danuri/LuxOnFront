@@ -11,10 +11,11 @@
         <br />
         <h4>로그인</h4>
         <br />
-        <input placeholder="아이디" />
-        <input placeholder="비밀번호" />
+        <input placeholder="아이디" v-model="state.id" />
+        <input placeholder="비밀번호" v-model="state.password" />
         <br />
         <button
+          @click="login"
           style="
             background-color: black;
             color: white;
@@ -52,31 +53,47 @@
   </section>
 </template>
 <script>
-import axios from 'axios';
-import { useRoute } from 'vue-router';
-import kakaoLogin from '@/components/social_login/kakaoLogin.vue';
-import NaverLogin from '@/components/social_login/naverLogin.vue';
-import router from '@/router';
+import axios from "axios";
+import { useRoute } from "vue-router";
+import kakaoLogin from "@/components/social_login/kakaoLogin.vue";
+import NaverLogin from "@/components/social_login/naverLogin.vue";
+import router from "@/router";
+import { reactive } from "@vue/reactivity";
+import { onBeforeMount } from "@vue/runtime-core";
+
 export default {
-  components: {kakaoLogin, NaverLogin},
-  data() {
+  components: { kakaoLogin, NaverLogin },
+  setup() {
+    const state = reactive({
+      id: "",
+      password: "",
+    });
+    onBeforeMount(() => {
+      if (localStorage.getItem("token")) {
+        router.push("/main");
+      }
+    });
+
+    const login = ()=>{
+      axios.post("https://sbbro.xyz/api/auth/login",{
+        id : state.id,
+        password : state.password,
+      }).then((response)=>{
+        if(response.status == 200){
+          console.log(response)
+          localStorage.setItem('token',response.headers.access_token)
+          window.location.href="/main"
+        }
+      }).catch((response)=>{
+        console.log(response)
+        alert('로그인 실패')
+      })
+    }
+
     return {
-      example: '',
+      state, login
     };
   },
-  methods: {},
-  beforeCreate() {},
-  created() {
-    if(localStorage.getItem('token')){
-      router.push('/main')
-    }
-  },
-  beforeMount() {},
-  mounted() {},
-  beforeUpdate() {},
-  updated() {},
-  beforeUnmount() {},
-  unmounted() {},
 };
 </script>
 
