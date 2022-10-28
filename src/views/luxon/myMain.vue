@@ -242,48 +242,16 @@
         </swiper-slide>
         <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
           <div class="container_grid">
-            <div class="item color5">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/621/211201001837621.jpg?RS=350&SP=1"
-                alt="image"
-              />
+            <div
+              class="item color5"
+              v-for="(recommend, i) in recommendList"
+              :key="i"
+              @click="showAlert"
+            >
+              <img :src="`${recommend.thumbnailUrl}`" alt="image" />
               <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color6">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/523/221017003322523.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color7">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/705/221019003338705.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color8">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/621/211201001837621.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
+                <p>{{ recommend.productName }}</p>
+                <p>{{ recommend.price }}</p>
               </span>
             </div>
           </div>
@@ -373,11 +341,30 @@ export default {
     ]);
     return { swiperTextBase, swiperTextBase2 };
   },
+  data() {
+    return {
+      productList: [],
+      recommendList: [],
+    };
+  },
+  created() {
+    this.getProductList();
+    this.getRecommendList();
+  },
   methods: {
+    async getProductList() {
+      this.productList = await this.$api('/product/products');
+      console.log(this.productList);
+    },
+    async getRecommendList() {
+      this.recommendList = await this.$api('/recommend/recommends/list/1');
+      console.log(this.recommendList);
+    },
     showAlert() {
       // Use sweetalert2
       this.$swal('준비중 입니다');
     },
+    // https://sbbro.xyz/api/product/products
   },
 };
 </script>
