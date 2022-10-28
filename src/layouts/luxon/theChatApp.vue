@@ -15,6 +15,7 @@
         <ChatRoom
           v-bind:rooms="rooms"
           @selectChatRoom="selectChatRoom"
+          @click="getChatDatas(selectedChatRoomId)"
         ></ChatRoom>
       </div>
     </div>
@@ -59,24 +60,29 @@ export default {
       this.showChat = !this.showChat;
     },
     selectChatRoom: function (roomId) {
-      console.log(roomId);
       this.selectedChatRoomId = roomId;
       this.showChat = !this.showChat;
     },
-  },
-  beforeCreate() {
-    axios
-      .get('http://localhost:8080/user/Test1')
-      .then(res => (this.rooms = res.data))
-      .catch(err => console.log(err));
-  },
-  watch: {
-    selectedChatRoomId: function (val) {
+    getRoomDatas: function () {
       axios
-        .get('http://localhost:8080/chatRoom/chats/Test2/' + val)
+        .get('http://localhost:8080/user/Test1')
+        .then(res => (this.rooms = res.data))
+        .catch(err => console.log(err));
+    },
+    getChatDatas: function (val) {
+      axios
+        .get('http://localhost:8080/chatRoom/chats/Test1/' + val)
         .then(res => (this.msgData = res.data))
         .catch(err => console.log(err));
-      console.log(this.msgData);
+    },
+  },
+  mounted() {
+    this.getRoomDatas();
+  },
+  watch: {
+    selectedChatRoomId(val) {
+      console.log('val:' + val);
+      return this.getChatDatas(val);
     },
   },
 };
