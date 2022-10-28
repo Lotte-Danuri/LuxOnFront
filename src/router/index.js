@@ -12,6 +12,8 @@ import MySignup from '@/views/luxon/auth/mySignup.vue';
 import KaKaoLogin from '@/components/social_login/kakaoLogin.vue';
 import NaverLogin from '@/components/social_login/naverLogin.vue';
 import MyPage from '@/views/luxon/user/myPage.vue';
+import MyOrder from '@/components/mypage/myOrder.vue';
+import MyLike from '@/components/mypage/myLike.vue';
 
 const routes = [
   {
@@ -57,6 +59,18 @@ const routes = [
         path: '/mypage',
         name: 'mypage',
         component: MyPage,
+        children: [
+          {
+            path:'order',
+            name:'order',
+            component: MyOrder
+          },
+          {
+            path:'like',
+            name:'like',
+            component: MyLike
+          },
+        ]
       },
     ],
   },

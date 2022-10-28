@@ -4,7 +4,10 @@
             <dash-board></dash-board>
             <div class="mypage-shopping__container">
                 <left-bar></left-bar>
-                <main-content></main-content>
+
+                <router-view>
+                </router-view>
+                
             </div>
         </div>
     </section>

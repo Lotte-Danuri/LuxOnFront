@@ -9,7 +9,11 @@
         <br />
         <p class="menu-title">나의 쇼핑정보</p>
         <ul>
-          <li><a>주문/배송 조회</a></li>
+          <li>
+            <router-link to="/mypage/order">
+              <a>주문/배송 조회</a>
+            </router-link>
+          </li>
           <li><a>취소/반품/교환 조회</a></li>
         </ul>
       </div>
@@ -23,7 +27,11 @@
       <div class="menu">
         <p class="menu-title">나의 관심정보</p>
         <ul>
-          <li><a>찜</a></li>
+          <li>
+            <router-link to="/mypage/like">
+              <a>찜</a>
+            </router-link>
+          </li>
         </ul>
       </div>
       <div class="menu">

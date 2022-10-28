@@ -83,6 +83,7 @@ export default {};
 <style>
 .mypage-dashboard {
   width: 100%;
+  height: 150px;
   margin-bottom: 24px;
   box-sizing: border-box;
   border: 1px solid #e0e0e0;
