@@ -74,6 +74,48 @@
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }"
+      >
+        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
+          <div class="container_grid">
+            <div
+              class="item color1"
+              v-for="product in productList"
+              v-bind:key="product"
+            >
+              <router-link
+                :to="{
+                  path: '/product/myProduct',
+                  query: { productCode: product.productCode },
+                }"
+              >
+                <img :src="product.thumbnailUrl" alt="image" />
+                <span>
+                  <!-- <p>J.LINDEBERG</p> -->
+                  <p>{{ product.productName }}</p>
+                  <p>{{ comma(product.price) }}</p>
+                </span>
+              </router-link>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper>
+    </div>
+  </section>
+  <section>
+    <div class="container" style="margin-left: 15%">
+      <h1 style="margin-left: -200px">Recommended</h1>
+      <br /><br />
+      <swiper
+        class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
+        :modules="moudles"
+        :space-between="20"
+        :loop="true"
+        :pagination="{ clickable: true }"
+        :autoplay="{
+          delay: 2000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }"
         @click="showAlert"
       >
         <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
@@ -172,74 +214,6 @@
             </div>
           </div>
         </swiper-slide>
-      </swiper>
-    </div>
-  </section>
-  <section>
-    <div class="container" style="margin-left: 15%">
-      <h1 style="margin-left: -200px">Recommended</h1>
-      <br /><br />
-      <swiper
-        class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-        :modules="moudles"
-        :space-between="20"
-        :loop="true"
-        :pagination="{ clickable: true }"
-        :autoplay="{
-          delay: 2000,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }"
-        @click="showAlert"
-      >
-        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
-          <div class="container_grid">
-            <div class="item color1">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color2">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color3">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color4">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-          </div>
-        </swiper-slide>
         <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
           <div class="container_grid">
             <div
@@ -261,11 +235,11 @@
   </section>
 </template>
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import SwiperCore, { EffectCube, Pagination, Autoplay } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import { ref } from 'vue';
+import { Swiper, SwiperSlide } from "swiper/vue";
+import SwiperCore, { EffectCube, Pagination, Autoplay } from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+import { ref } from "vue";
 
 SwiperCore.use([EffectCube, Pagination, Autoplay]);
 
@@ -274,72 +248,75 @@ export default {
   setup() {
     const swiperTextBase = ref([
       {
-        author: 'Elon Musk',
-        description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/90/812/00/221000000299812.jpg',
+        author: "Elon Musk",
+        description: "ghjhgjgj",
+        img: "https://image.sivillage.com/upload/C00001/dspl/banner/90/812/00/221000000299812.jpg",
       },
       {
-        author: 'Elon Musk',
-        description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/034/00/220900000284034.jpg?cVer=21032552',
+        author: "Elon Musk",
+        description: "ghjhgjgj",
+        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/034/00/220900000284034.jpg?cVer=21032552",
       },
       {
-        author: 'Elon Musk',
-        description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/196/00/221000000297196.jpg?cVer=20035850',
+        author: "Elon Musk",
+        description: "ghjhgjgj",
+        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/196/00/221000000297196.jpg?cVer=20035850",
       },
     ]);
     const swiperTextBase2 = ref([
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
     ]);
-    return { swiperTextBase, swiperTextBase2 };
+    const comma = (val) => {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+    return { swiperTextBase, swiperTextBase2, comma };
   },
   data() {
     return {
@@ -353,16 +330,16 @@ export default {
   },
   methods: {
     async getProductList() {
-      this.productList = await this.$api('/product/products');
-      console.log(this.productList);
+      this.productList = await this.$api("/product/products");
     },
+
     async getRecommendList() {
-      this.recommendList = await this.$api('/recommend/recommends/list/1');
+      this.recommendList = await this.$api("/recommend/recommends/list/1");
       console.log(this.recommendList);
     },
     showAlert() {
       // Use sweetalert2
-      this.$swal('준비중 입니다');
+      this.$swal("준비중 입니다");
     },
     // https://sbbro.xyz/api/product/products
   },
