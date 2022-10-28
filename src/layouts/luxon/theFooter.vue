@@ -1,8 +1,16 @@
 <template>
   <main>
-    <div>
-      <h2>게시글 상세</h2>
-      {{ $route.params }}
+    <div
+      style="
+        background-color: black;
+        width: 100%;
+        height: 300px;
+        color: white;
+        font-size: 100px;
+        text-align: center;
+      "
+    >
+      footer
     </div>
   </main>
 </template>
