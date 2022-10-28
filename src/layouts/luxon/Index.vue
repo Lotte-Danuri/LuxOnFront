@@ -14,6 +14,7 @@
       style="position: fixed; right: 30px; bottom: 30px; z-index: 999"
     ></TheChatApp>
   </Transition>
+  <the-footer></the-footer>
 </template>
 
 <script>
@@ -21,6 +22,7 @@ import TheHeader from '@/layouts/luxon/theHeader.vue';
 import TheView from '@/layouts/luxon/theView.vue';
 import TheChat from '@/layouts/luxon/theChat.vue';
 import TheChatApp from '@/layouts/luxon/theChatApp.vue';
+import TheFooter from '@/layouts/luxon/theFooter.vue';
 import router from '@/router';
 // import { ref } from 'vue';
 
@@ -31,6 +33,7 @@ export default {
     TheView,
     TheChat,
     TheChatApp,
+    TheFooter,
   },
   created() {
     if (window.location.pathname == '/') {

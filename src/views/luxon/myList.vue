@@ -374,7 +374,7 @@
             :loop="true"
             :pagination="{ clickable: true }"
             :autoplay="{
-              delay: 70,
+              delay: 2000,
               disableOnInteraction: false,
               pauseOnMouseEnter: true,
             }"
@@ -412,7 +412,7 @@
             :loop="true"
             :pagination="{ clickable: true }"
             :autoplay="{
-              delay: 70,
+              delay: 2000,
               disableOnInteraction: false,
               pauseOnMouseEnter: true,
             }"
@@ -443,39 +443,47 @@
           </swiper>
         </div>
       </div>
+      <br />
+      <br />
       <div class="all_procut" style="margin-top: -100px">
         <h2 style="font-weight: bold">All Product</h2>
         <br />
         <div class="product_grid">
           <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/423/211102001634423.jpg?RS=350&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
+            <router-link to="/product/myProduct">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/423/211102001634423.jpg?RS=350&SP=1"
+              />
+              <span>
+                <p>SACAI</p>
+                <p>언발 집업 하이넥 패딩 점퍼</p>
+                <p>￦1,790,000</p>
+              </span>
+            </router-link>
           </div>
           <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/546/211015001544546.jpg?RS=350&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
+            <router-link to="/product/myProduct">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/546/211015001544546.jpg?RS=350&SP=1"
+              />
+              <span>
+                <p>SACAI</p>
+                <p>언발 집업 하이넥 패딩 점퍼</p>
+                <p>￦1,790,000</p>
+              </span>
+            </router-link>
           </div>
           <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/266/211019001559266.jpg?RS=350&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
+            <router-link to="/product/myProduct">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/266/211019001559266.jpg?RS=350&SP=1"
+              />
+              <span>
+                <p>SACAI</p>
+                <p>언발 집업 하이넥 패딩 점퍼</p>
+                <p>￦1,790,000</p>
+              </span>
+            </router-link>
           </div>
           <div>
             <img
@@ -668,7 +676,7 @@ export default {
 }
 .side_menu div ul li {
   margin-bottom: 5px;
-  font-size: 5px;
+  font-size: 13px;
 }
 
 /* sidebar css */

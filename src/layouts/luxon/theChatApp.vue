@@ -1,91 +1,82 @@
 <template>
-  <div class="chat_app_wrapper">
-    <div class="chat_app_header border" v-if="showChat">
-      <button class="btn" @click="backButton">
-        <i class="bi bi-chevron-left"></i>
-      </button>
-      <p class="app__brand">{{ roomDatas[0].userName }}</p>
-      <button class="btn" @click="$emit('closeBtn')">
-        <i class="bi bi-x-lg"></i>
-      </button>
+  <div>
+    <!-- 채팅방 -->
+    <div class="chat_app_wrapper" v-if="showChat">
+      <div class="chat_app_header">
+        <div style="margin-left: 28px"></div>
+        <div>
+          <img class="chat_app_brand" src="@/assets/logo/logo_white.png" />
+        </div>
+        <button class="btn" @click="$emit('closeBtn')">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="chatroom_area">
+        <ChatRoom
+          v-bind:rooms="rooms"
+          @selectChatRoom="selectChatRoom"
+        ></ChatRoom>
+      </div>
     </div>
-    <div v-if="!showChat" class="chat_app_body border">
-      <div
-        v_for="conversation in props.conversations"
-        :key="roomDatas.chatRoomId"
-        class="chat_room_list"
-        :class="[roomDatas.chatRoomId === roomDatas.chatRoomId && 'active']"
-        tabindex="0"
-        @keydown.space.prevent="
-          () => {
-            emit('update:conversationId', roomDatas.chatRoomId);
-          }
-        "
-        @click="
-          () => {
-            emit('update:conversationId', roomDatas.chatRoomId);
-          }
-        "
-      ></div>
+    <!-- 채팅창 -->
+    <div class="chat_app_wrapper_chat" v-if="!showChat">
+      <div class="chat_app_header border">
+        <button class="btn" @click="backButton">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <p class="app__brand">{{ rooms[0].userName }}</p>
+        <button class="btn" @click="$emit('closeBtn')">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <ChatList :msgs="msgData"></ChatList>
+      <ChatForm></ChatForm>
     </div>
-    <chat-list v-if="showChat"></chat-list>
-    <ChatForm @submitMessage="sendMessage" v-if="showChat"></ChatForm>
   </div>
 </template>
 <script>
 import axios from 'axios';
-import ChatList from '@/components/chat/ChatList.vue';
-import ChatForm from '@/components/chat/ChatForm.vue';
+import ChatList from '@/components/chat/chatList.vue';
+import ChatForm from '@/components/chat/chatForm.vue';
+import ChatRoom from '@/components/chat/chatRoom.vue';
 export default {
-  data: function () {
+  name: 'theChatApp',
+  data() {
     return {
       showChat: true,
-      roomDatas: [
-        {
-          chatRoomId: '634cfc1d6e1d7300ef16e8f7',
-          userName: '챙',
-          lastChatContent: '테스트 메세지',
-          lastChatCreatedAt: '2022-10-17T17:35:28.273',
-          valid: true,
-          roomType: 'chat',
-          updateAt: '2022-10-17T17:35:28.273',
-          receiverId: 'Test2',
-          countNewChats: 3,
-          userId: null,
-        },
-        {
-          chatRoomId: '634d00746e1d7300ef16e8f8',
-          userName: '박',
-          lastChatContent: null,
-          lastChatCreatedAt: null,
-          valid: true,
-          roomType: 'chat',
-          updateAt: '2022-10-17T16:12:52.61',
-          receiverId: 'Test3',
-          countNewChats: 0,
-          userId: null,
-        },
-      ],
+      selectedChatRoomId: '',
+      rooms: [],
+      msgData: [],
     };
   },
   components: {
     ChatList,
     ChatForm,
+    ChatRoom,
   },
   methods: {
-    fetchData: function () {
-      axios
-        .get('https://sbbro.xyz/chat/user/Test1')
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
     backButton: function () {
       this.showChat = !this.showChat;
-      this.fetchData();
+    },
+    selectChatRoom: function (roomId) {
+      console.log(roomId);
+      this.selectedChatRoomId = roomId;
+      this.showChat = !this.showChat;
+    },
+  },
+  beforeCreate() {
+    axios
+      .get('http://localhost:8080/user/Test1')
+      .then(res => (this.rooms = res.data))
+      .catch(err => console.log(err));
+  },
+  watch: {
+    selectedChatRoomId: function (val) {
+      axios
+        .get('http://localhost:8080/chatRoom/chats/Test2/' + val)
+        .then(res => (this.msgData = res.data))
+        .catch(err => console.log(err));
+      console.log(this.msgData);
     },
   },
 };
@@ -114,6 +105,11 @@ body {
   align-self: center;
   align-items: center;
 }
+
+.chat_app_brand {
+  height: 70px;
+}
+
 .chat_app_wrapper {
   width: 375px;
   height: 812px;
@@ -121,10 +117,22 @@ body {
   margin: 5rem auto 0rem;
   border-radius: 1.5rem;
   box-shadow: 0px 1px 20px #9c9cc855;
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
+.chat_app_wrapper_chat {
+  width: 375px;
+  height: 812px;
+  background-color: #ffffff;
+  margin: 5rem auto 0rem;
+  border-radius: 1.5rem;
+  box-shadow: 0px 1px 20px #9c9cc855;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+}
+
 .chat_app_header {
   background: #ffffff;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
@@ -132,9 +140,19 @@ body {
   font-size: 16px;
   font-weight: 700;
   display: flex;
+
   flex-direction: row;
   justify-content: space-between;
   height: 70px;
+}
+.chatroom_area {
+  border-right: 1px solid black;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
 }
 .chat__header__greetings {
   color: #292929;

@@ -1,16 +1,20 @@
 <template>
-  <div>
-    <h2>home view</h2>
-    <!-- <p>{{ $route.path }}</p> -->
-    <button class="btn btn-primary" @click="$router.push('/about')">
-      about으로 이동@@@@@@
-    </button>
-  </div>
+  <main>
+    <div
+      style="
+        background-color: black;
+        width: 100%;
+        height: 300px;
+        color: white;
+        font-size: 100px;
+        text-align: center;
+      "
+    >
+      footer
+    </div>
+  </main>
 </template>
-
 <script>
-// console.log('route.path ', route.path);
-
 export default {
   components: {},
   data() {
@@ -29,5 +33,3 @@ export default {
   methods: {},
 };
 </script>
-
-<style lang="scss" scoped></style>

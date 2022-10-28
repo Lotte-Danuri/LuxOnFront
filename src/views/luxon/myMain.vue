@@ -7,10 +7,11 @@
       :loop="true"
       :pagination="{ clickable: true }"
       :autoplay="{
-        delay: 70,
+        delay: 2000,
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       }"
+      @click="showAlert"
     >
       <swiper-slide
         v-for="text in swiperTextBase"
@@ -58,75 +59,215 @@
       </swiper-slide>
     </swiper>
   </section>
-  <section style="margin-top: 100px">
-    <div class="container" style="margin-left: 25%">
+  <section style="margin-top: 50px">
+    <div class="container" style="margin-left: 15%">
       <h1 style="margin-left: -200px">Favorite Brand</h1>
-      <br /><br /><br /><br />
-      <div class="container_grid">
-        <div class="item color1">
-          <img
-            src="https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1"
-            alt="image"
-          />
-        </div>
-        <div class="item color2">
-          <img
-            src="https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1"
-            alt="image"
-          />
-        </div>
-        <div class="item color3">
-          <img
-            src="https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1"
-            alt="image"
-          />
-        </div>
-        <div class="item color4">
-          <img
-            src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
-            alt="image"
-          />
-        </div>
-        <div class="item color5">
-          <img
-            src="https://image.sivillage.com/upload/C00001/goods/org/621/211201001837621.jpg?RS=350&SP=1"
-            alt="image"
-          />
-        </div>
-        <div class="item color6">
-          <img
-            src="https://image.sivillage.com/upload/C00001/goods/org/523/221017003322523.jpg?RS=350&SP=1"
-            alt="image"
-          />
-        </div>
-        <div class="item color7">
-          <img
-            src="https://image.sivillage.com/upload/C00001/goods/org/705/221019003338705.jpg?RS=350&SP=1"
-            alt="image"
-          />
-        </div>
-        <div class="item color8">
-          <img
-            src="https://image.sivillage.com/upload/C00001/goods/org/621/211201001837621.jpg?RS=350&SP=1"
-            alt="image"
-          />
-        </div>
-        <div class="item color9">
-          <img
-            src="https://image.sivillage.com/upload/C00001/goods/org/177/220811002943177.png?RS=350&SP=1"
-            alt="image"
-          />
-        </div>
-      </div>
+      <br /><br />
+      <swiper
+        class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
+        :modules="moudles"
+        :space-between="20"
+        :loop="true"
+        :pagination="{ clickable: true }"
+        :autoplay="{
+          delay: 2000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }"
+        @click="showAlert"
+      >
+        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
+          <div class="container_grid">
+            <div class="item color1">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+            <div class="item color2">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+            <div class="item color3">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+            <div class="item color4">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+          </div>
+        </swiper-slide>
+        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
+          <div class="container_grid">
+            <div class="item color5">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/621/211201001837621.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+            <div class="item color6">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/523/221017003322523.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+            <div class="item color7">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/705/221019003338705.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+            <div class="item color8">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/621/211201001837621.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper>
+    </div>
+  </section>
+  <section>
+    <div class="container" style="margin-left: 15%">
+      <h1 style="margin-left: -200px">Recommended</h1>
+      <br /><br />
+      <swiper
+        class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
+        :modules="moudles"
+        :space-between="20"
+        :loop="true"
+        :pagination="{ clickable: true }"
+        :autoplay="{
+          delay: 2000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }"
+        @click="showAlert"
+      >
+        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
+          <div class="container_grid">
+            <div class="item color1">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+            <div class="item color2">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+            <div class="item color3">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+            <div class="item color4">
+              <img
+                src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>J.LINDEBERG</p>
+                <p>[Women] 에블리나 봄버 자켓</p>
+                <p>390,000</p>
+              </span>
+            </div>
+          </div>
+        </swiper-slide>
+        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
+          <div class="container_grid">
+            <div
+              class="item color5"
+              v-for="(recommend, i) in recommendList"
+              :key="i"
+              @click="showAlert"
+            >
+              <img :src="`${recommend.thumbnailUrl}`" alt="image" />
+              <span>
+                <p>{{ recommend.productName }}</p>
+                <p>{{ recommend.price }}</p>
+              </span>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper>
     </div>
   </section>
 </template>
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Autoplay, Pagination } from 'swiper';
+import SwiperCore, { EffectCube, Pagination, Autoplay } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { ref } from 'vue';
+
+SwiperCore.use([EffectCube, Pagination, Autoplay]);
 
 export default {
   components: { Swiper, SwiperSlide },
@@ -148,7 +289,82 @@ export default {
         img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/196/00/221000000297196.jpg?cVer=20035850',
       },
     ]);
-    return { modules: [Pagination, Autoplay], swiperTextBase };
+    const swiperTextBase2 = ref([
+      {
+        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
+        brand: 'Elon Musk',
+        name: 'ghjhgjgj',
+        price: '390000',
+      },
+      {
+        img: 'https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1',
+        brand: 'Elon Musk',
+        name: 'ghjhgjgj',
+        price: '390000',
+      },
+      {
+        img: 'https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1',
+        brand: 'Elon Musk',
+        name: 'ghjhgjgj',
+        price: '390000',
+      },
+      {
+        img: 'https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1',
+        brand: 'Elon Musk',
+        name: 'ghjhgjgj',
+        price: '390000',
+      },
+      {
+        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
+        brand: 'Elon Musk',
+        name: 'ghjhgjgj',
+        price: '390000',
+      },
+      {
+        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
+        brand: 'Elon Musk',
+        name: 'ghjhgjgj',
+        price: '390000',
+      },
+      {
+        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
+        brand: 'Elon Musk',
+        name: 'ghjhgjgj',
+        price: '390000',
+      },
+      {
+        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
+        brand: 'Elon Musk',
+        name: 'ghjhgjgj',
+        price: '390000',
+      },
+    ]);
+    return { swiperTextBase, swiperTextBase2 };
+  },
+  data() {
+    return {
+      productList: [],
+      recommendList: [],
+    };
+  },
+  created() {
+    this.getProductList();
+    this.getRecommendList();
+  },
+  methods: {
+    async getProductList() {
+      this.productList = await this.$api('/product/products');
+      console.log(this.productList);
+    },
+    async getRecommendList() {
+      this.recommendList = await this.$api('/recommend/recommends/list/1');
+      console.log(this.recommendList);
+    },
+    showAlert() {
+      // Use sweetalert2
+      this.$swal('준비중 입니다');
+    },
+    // https://sbbro.xyz/api/product/products
   },
 };
 </script>
@@ -156,8 +372,7 @@ export default {
 <style scoped>
 .firstSwiper {
   width: 100%;
-  height: 700px;
-  postion: absolute;
+  height: 600px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -186,12 +401,17 @@ export default {
 
 .container_grid {
   display: grid;
-  grid-template-columns: 400px 400px 400px;
-  grid-template-rows: 500px 500px 500px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  grid-auto-rows: minmax(25px, auto);
 }
 
 .container_grid img {
   width: 300px;
-  height: 300px;
+  height: 400px;
+}
+
+.container_grid div span p {
+  margin: 0px;
 }
 </style>
