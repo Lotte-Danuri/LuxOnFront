@@ -1,35 +1,25 @@
 <template>
   <div>
     <div
-      v-if="msg.from.name === 'DevplaCalledMe'"
+      v-if="msg.sendBy === 'Test1'"
       class="chat__mymessage"
       :class="[isSame ? '' : 'chat__first']"
     >
-      <!-- <p class="chat__yourmessage__time">23:38</p> -->
-      <p class="chat__mymessage__paragraph">{{ msg.msg }}</p>
+      <p class="chat__mymessage__time">{{ msg.createdAt.substr(11, 5) }}</p>
+      <p class="chat__mymessage__paragraph">{{ msg.content }}</p>
     </div>
     <div
       v-else
       class="chat__yourmessage"
       :class="[isSame ? '' : 'chat__first']"
     >
-      <div class="chat__yourmessage__avartar">
-        <img
-          :src="avatar"
-          alt=""
-          v-if="!isSame"
-          class="chat__yourmessage__img"
-        />
-      </div>
       <div>
-        <p class="chat__yourmessage__user" v-if="!isSame">
-          {{ msg.from.name }}
-        </p>
+        <p class="chat__yourmessage__user" v-if="!isSame">{{}}</p>
         <div class="chat__yourmessage__p">
           <p class="chat__yourmessage__paragraph">
-            {{ msg.msg }}
+            {{ msg.content }}
           </p>
-          <!-- <p class="chat__yourmessage__time">23:38</p> -->
+          <p class="chat__mymessage__time">{{ msg.createdAt.substr(11, 5) }}</p>
         </div>
       </div>
     </div>
@@ -42,14 +32,13 @@ export default {
   data() {
     return {
       isSame: false,
-      avatar: require('../assets/avatar.svg'),
     };
   },
   methods: {
     isSamePerson(msg, prev) {
       if (prev === null) {
         return false;
-      } else if (prev[0]?.from.name == msg?.from.name) {
+      } else if (prev[0]?.sendBy == msg?.sendBy) {
         return true;
       } else {
         return false;
@@ -58,14 +47,10 @@ export default {
   },
   created() {
     this.isSame = this.isSamePerson(this.msg, this.prev);
-    if (this.msg?.from.avatar) {
-      this.avatar = this.msg?.from.avatar;
-    }
   },
 };
 </script>
-
-<style>
+<style scoped>
 .chat__mymessage {
   display: flex;
   justify-content: right;
@@ -74,37 +59,34 @@ export default {
   min-height: 40px;
   line-break: anywhere;
 }
-
 .chat__mymessage__paragraph {
   margin: 0.4rem 0 0 1rem;
   border-radius: 20px 20px 0px 20px;
   max-width: 180px;
-  background-color: #bbc4ef;
+  background-color: black;
   color: #ffffff;
   padding: 0.8rem;
   font-size: 14px;
 }
 
+.chat__mymessage__time {
+  margin: 0;
+  font-size: 12px;
+  color: #9c9c9c;
+}
+
 .chat__first {
   margin-top: 2rem;
 }
-
 .chat__yourmessage {
   display: flex;
 }
-
-.chat__yourmessage__avartar {
-  width: 40px;
-  margin-right: 1rem;
-}
-
 .chat__yourmessage__img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
 }
-
 .chat__yourmessage__user {
   font-size: 14px;
   font-weight: 700;
@@ -112,13 +94,11 @@ export default {
   margin-top: 0;
   margin-block-end: 0rem;
 }
-
 .chat__yourmessage__p {
   display: flex;
   align-items: flex-end;
   line-break: anywhere;
 }
-
 .chat__yourmessage__paragraph {
   margin: 0.4rem 1rem 0 0;
   border-radius: 0px 20px 20px 20px;
@@ -128,7 +108,6 @@ export default {
   padding: 0.8rem;
   font-size: 14px;
 }
-
 .chat__yourmessage__time {
   margin: 0;
   font-size: 12px;
