@@ -5,6 +5,7 @@ import Index from '@/layouts/luxon/index.vue';
 import MyMain from '@/views/luxon/myMain.vue';
 import MyList from '@/views/luxon/myList.vue';
 import MyProduct from '@/views/luxon/product/myProduct.vue';
+import InitOrder from '@/views/luxon/product/initOrder.vue';
 import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
 import MyLogin from '@/views/luxon/auth/myLogin.vue';
@@ -30,6 +31,11 @@ const routes = [
         path: '/product/myProduct',
         name: 'MyProduct',
         component: MyProduct,
+      },
+      {
+        path: '/product/initOrder',
+        name: 'initOrder',
+        component: InitOrder,
       },
       {
         path: '/login',

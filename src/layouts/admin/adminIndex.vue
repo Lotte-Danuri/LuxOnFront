@@ -55,7 +55,6 @@
 </template>
 
 <script>
-import TheHeader from '@/layouts/admin/theHeader.vue';
 import TheSide from '@/layouts/admin/theSide.vue';
 import AdminView from '@/layouts/admin/adminView.vue';
 
@@ -63,7 +62,6 @@ export default {
   name: 'DefaultLayout',
   components: {
     TheSide,
-    TheHeader,
     AdminView,
   },
 };
@@ -99,7 +97,7 @@ export default {
   margin: 0;
   padding: 0;
   outline: 0;
-  appearance: none;
+  /* appearance: none; */
   border: 0;
   text-decoration: none;
   list-style: none;

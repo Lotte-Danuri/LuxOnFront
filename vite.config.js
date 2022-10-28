@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue';
 
 // const path = require('path');
 
+// const target = 'https://sbbro.xyz/api/product';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
@@ -14,4 +15,16 @@ export default defineConfig({
       // '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
     },
   },
+  // devServer: {
+  //   proxy: {
+  //     '/products': {
+  //       target,
+  //       changeOrigin: true,
+  //     },
+  //     '/categories': {
+  //       target,
+  //       changeOrigin: true,
+  //     },
+  //   },
+  // },
 });
