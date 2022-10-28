@@ -35,7 +35,7 @@
           <img src="@/assets/loginBtn/google_login.png" />
         </button>
         <br />
-        <router-link to="/auth/MySignup">
+        <router-link to="/signup">
           <button
             style="
               background-color: white;
