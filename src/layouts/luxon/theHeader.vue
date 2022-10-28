@@ -23,10 +23,16 @@
       </ul>
 
       <ul class="navbar__icons">
-        <li>
-          <router-link to="/auth/MyLogin">
+        <li v-if="state.localStorage.token==null">
+          <router-link to="/login" >
             <i class="fa-solid fa-right-to-bracket"></i>
             <p>로그인</p>
+          </router-link>
+        </li>
+        <li v-else>
+          <router-link to="/logout" >
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <p>로그아웃</p>
           </router-link>
         </li>
         <li>
@@ -34,8 +40,10 @@
           <p>고객센터</p>
         </li>
         <li>
-          <i class="fa-solid fa-user"></i>
-          <p>마이페이지</p>
+          <router-link to="/mypage">
+            <i class="fa-solid fa-user"></i>
+            <p>마이페이지</p>
+          </router-link>
         </li>
         <li>
           <i class="fa-regular fa-clock"></i>
@@ -71,32 +79,34 @@
   </section>
 </template>
 <script>
+import { reactive } from '@vue/reactivity';
+import { onMounted } from '@vue/runtime-core';
+
 // const toggleBtn = document.querySelector('.navbar__toogleBtn');
 const menu = document.querySelector('.navbar__menu');
 const icons = document.querySelector('.navbar__icons');
 
 export default {
   components: {},
-  data() {
-    return {
-      example: '',
-    };
-  },
-  beforeCreate() {},
-  created() {},
-  beforeMount() {},
-  mounted() {},
-  beforeUpdate() {},
-  updated() {},
-  beforeUnmount() {},
-  unmounted() {},
-  methods: {
-    btnClick() {
+  setup(){
+    const state = reactive({
+      localStorage : '',
+    })
+
+    onMounted(()=>{
+      state.localStorage = localStorage
+    })
+
+    const btnClick = ()=>{
       alert('test');
       menu.classList.toggle('active');
       icons.classList.toggle('active');
-    },
-  },
+    }
+
+    return {
+      state, btnClick
+    }
+  }
 };
 </script>
 

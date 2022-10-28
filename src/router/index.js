@@ -7,6 +7,7 @@ import MyList from '@/views/luxon/myList.vue';
 import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
 import MyLogin from '@/views/luxon/auth/myLogin.vue';
+import MyLogout from '@/views/luxon/auth/myLogout.vue';
 import MySignup from '@/views/luxon/auth/mySignup.vue';
 import KaKaoLogin from '@/components/social_login/kakaoLogin.vue';
 import NaverLogin from '@/components/social_login/naverLogin.vue';
@@ -31,6 +32,11 @@ const routes = [
         path: '/login',
         name: 'login',
         component: MyLogin,
+      },
+      {
+        path: '/logout',
+        name: 'logout',
+        component: MyLogout,
       },
       {
         path: '/login/kakao',
