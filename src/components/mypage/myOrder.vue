@@ -7,6 +7,7 @@
     <br />
     <div class="product hide-scroll">
       <ul class="product__list thum--4 gap--mid">
+
         <li class="product__item">
           <div class="product__thum gray">
             <button style="border: none">
@@ -36,6 +37,7 @@
           </a>
           <p class="product__data__delivery">신상</p>
         </li>
+
       </ul>
     </div>
   </div>
@@ -43,11 +45,16 @@
 </template>
 
 <script>
-import { onMounted } from "@vue/runtime-core";
+import { reactive } from "@vue/reactivity";
+import { onBeforeMount } from "@vue/runtime-core";
 import axios from "axios";
 export default {
   setup() {
-    onMounted(() => {
+    const state = reactive({
+      orders : []
+    })
+
+    onBeforeMount(() => {
       axios.get("https://sbbro.xyz/api/member/orders", {
         headers: {
           Authorization: `Bearer ` + localStorage.getItem("token"),
@@ -56,7 +63,8 @@ export default {
         console.log(response)
       });
     });
-    return {};
+
+    return {state};
   },
 };
 </script>
