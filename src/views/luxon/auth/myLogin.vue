@@ -26,7 +26,11 @@
         </button>
         <br />
         <kakaoLogin></kakaoLogin>
+        <br />
+        <br />
         <naver-login></naver-login>
+        <br />
+        <br />
         <button class="socialButton">
           <img src="@/assets/loginBtn/google_login.png" />
         </button>
@@ -60,8 +64,7 @@ export default {
       example: '',
     };
   },
-  methods: {
-  },
+  methods: {},
   beforeCreate() {},
   created() {
     if(localStorage.getItem('token')){
@@ -77,7 +80,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .login_grid {
   display: grid;
   grid-template-columns: 60% 40%;
@@ -103,8 +106,5 @@ export default {
   height: 50px;
   margin-bottom: 20px;
   border-radius: 10px;
-}
-.socialButton {
-  border : none;
 }
 </style>

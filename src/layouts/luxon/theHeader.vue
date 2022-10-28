@@ -2,7 +2,9 @@
   <section class="header_top">
     <nav class="navbar">
       <div class="navbar__logo">
-        <a href="/MyMain"><img src="@/assets/logo/logo_black.png" /></a>
+        <router-link to="/main"
+          ><img src="@/assets/logo/logo_black.png"
+        /></router-link>
       </div>
       <ul class="navbar__menu">
         <div class="wrap">
@@ -53,14 +55,14 @@
   <section class="header_bottom">
     <nav class="navbar_bottom">
       <ul class="navbar__menu" style="margin-left: 200px; font-size: 15px">
-        <li><a href="#">여성</a></li>
-        <li><a href="#">남성</a></li>
-        <li><a href="#">패션잡화</a></li>
-        <li><a href="#">뷰티</a></li>
-        <li><a href="#">골프</a></li>
-        <li><a href="#">리빙</a></li>
-        <li><a href="#">컬쳐</a></li>
-        <li><a href="#">아동</a></li>
+        <li><router-link to="/list">여성</router-link></li>
+        <li><router-link to="/list">남성</router-link></li>
+        <li><router-link to="/list">패션잡화</router-link></li>
+        <li><router-link to="/list">뷰티</router-link></li>
+        <li><router-link to="/list">골프</router-link></li>
+        <li><router-link to="/list">리빙</router-link></li>
+        <li><router-link to="/list">컬쳐</router-link></li>
+        <li><router-link to="/list">아동</router-link></li>
       </ul>
       <a href="#" class="navbar__toogleBtn" @click="btnClick">
         <i class="fas fa-bars"></i>
@@ -98,7 +100,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 :root {
   /* --text-color:
   --background-color:

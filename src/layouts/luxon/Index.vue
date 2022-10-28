@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import TheHeader from '@/layouts/luxon/TheHeader.vue';
-import TheView from '@/layouts/luxon/TheView.vue';
-import TheChat from '@/layouts/luxon/TheChat.vue';
-import TheChatApp from '@/layouts/luxon/TheChatApp.vue';
+import TheHeader from '@/layouts/luxon/theHeader.vue';
+import TheView from '@/layouts/luxon/theView.vue';
+import TheChat from '@/layouts/luxon/theChat.vue';
+import TheChatApp from '@/layouts/luxon/theChatApp.vue';
 import router from '@/router';
 // import { ref } from 'vue';
 
@@ -50,7 +50,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;

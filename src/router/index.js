@@ -3,11 +3,13 @@ import { createRouter, createWebHistory } from 'vue-router';
 // import HomeView from '@/views/luxon/HomeView.vue';
 import Index from '@/layouts/luxon/index.vue';
 import MyMain from '@/views/luxon/myMain.vue';
+import MyList from '@/views/luxon/myList.vue';
 import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
 import MyLogin from '@/views/luxon/auth/myLogin.vue';
 import MySignup from '@/views/luxon/auth/mySignup.vue';
 import KaKaoLogin from '@/components/social_login/kakaoLogin.vue';
+import NaverLogin from '@/components/social_login/naverLogin.vue';
 import MyPage from '@/views/luxon/user/myPage.vue';
 
 const routes = [
@@ -21,14 +23,24 @@ const routes = [
         component: MyMain,
       },
       {
+        path: '/list',
+        name: 'MyList',
+        component: MyList,
+      },
+      {
         path: '/login',
         name: 'login',
         component: MyLogin,
       },
       {
-        path:'/login/kakao',
+        path: '/login/kakao',
         name: 'kakaoLogin',
-        component: KaKaoLogin
+        component: KaKaoLogin,
+      },
+      {
+        path: '/login/naver',
+        name: 'naverLogin',
+        component: NaverLogin,
       },
       {
         path: '/signup',

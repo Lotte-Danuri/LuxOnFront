@@ -36,4 +36,16 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.socialButton {
+  border: none;
+  width : 350px;
+  height : 20px;
+  margin-bottom: 20px;
+}
+.socialButton img{
+  width : 100%;
+  height : 60px;
+  margin-bottom: 20px;
+}
+</style>
