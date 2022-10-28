@@ -75,7 +75,9 @@
           </div>
           <div class="actionBtn">
             <button style="background-color: gray">장바구니</button>
-            <button style="">바로구매</button>
+            <button @click="initOrder" style="margin-left: 10%">
+              바로구매
+            </button>
           </div>
         </div>
       </div>
@@ -115,6 +117,9 @@ export default {
     },
     plusBtn() {
       document.getElementById('countValue').value++;
+    },
+    initOrder() {
+      this.$router.push('initOrder');
     },
   },
 };
@@ -177,7 +182,7 @@ export default {
 }
 
 .actionBtn button {
-  width: 300px;
+  width: 250px;
   height: 70px;
   font-size: 20px;
   background-color: black;

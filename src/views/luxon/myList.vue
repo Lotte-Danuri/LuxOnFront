@@ -676,7 +676,7 @@ export default {
 }
 .side_menu div ul li {
   margin-bottom: 5px;
-  font-size: 5px;
+  font-size: 13px;
 }
 
 /* sidebar css */
