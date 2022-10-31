@@ -8,6 +8,7 @@ import MyProduct from '@/views/luxon/product/myProduct.vue';
 import InitOrder from '@/views/luxon/product/initOrder.vue';
 import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
+import Registration from '@/views/admin/registration.vue';
 import MyLogin from '@/views/luxon/auth/myLogin.vue';
 import MyLogout from '@/views/luxon/auth/myLogout.vue';
 import MySignup from '@/views/luxon/auth/mySignup.vue';
@@ -94,6 +95,11 @@ const routes = [
         path: '/admin/dashboard',
         name: 'Dashboard',
         component: DashBoard,
+      },
+      {
+        path: '/admin/registration',
+        name: 'Registration',
+        component: Registration,
       },
     ],
   },

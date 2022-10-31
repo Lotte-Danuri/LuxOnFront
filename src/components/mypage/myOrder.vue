@@ -7,7 +7,6 @@
     <br />
     <div class="product hide-scroll">
       <ul class="product__list thum--4 gap--mid">
-
         <li class="product__item">
           <div class="product__thum gray">
             <button style="border: none">
@@ -37,7 +36,6 @@
           </a>
           <p class="product__data__delivery">신상</p>
         </li>
-
       </ul>
     </div>
   </div>
@@ -45,26 +43,28 @@
 </template>
 
 <script>
-import { reactive } from "@vue/reactivity";
-import { onBeforeMount } from "@vue/runtime-core";
-import axios from "axios";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
 export default {
   setup() {
     const state = reactive({
-      orders : []
-    })
-
-    onBeforeMount(() => {
-      axios.get("https://sbbro.xyz/api/member/orders", {
-        headers: {
-          Authorization: `Bearer ` + localStorage.getItem("token"),
-        },
-      }).then((response) =>{
-        console.log(response)
-      });
+      orders: [],
     });
 
-    return {state};
+    onBeforeMount(() => {
+      axios
+        .get('https://sbbro.xyz/api/member/orders', {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+          },
+        })
+        .then(response => {
+          console.log(response);
+        });
+    });
+
+    return { state };
   },
 };
 </script>
@@ -180,7 +180,7 @@ export default {
   bottom: 0;
   box-sizing: border-box;
   border: 1px solid #d99c63;
-  content: "";
+  content: '';
 }
 .module-cody-recom__tab .product__list.type-w80px .product__thum > a img {
   opacity: 0.5;

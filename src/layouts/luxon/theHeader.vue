@@ -23,14 +23,14 @@
       </ul>
 
       <ul class="navbar__icons">
-        <li v-if="state.localStorage.token==null">
-          <router-link to="/login" >
+        <li v-if="state.localStorage.token == null">
+          <router-link to="/login">
             <i class="fa-solid fa-right-to-bracket"></i>
             <p>로그인</p>
           </router-link>
         </li>
         <li v-else>
-          <router-link to="/logout" >
+          <router-link to="/logout">
             <i class="fa-solid fa-right-to-bracket"></i>
             <p>로그아웃</p>
           </router-link>
@@ -79,8 +79,8 @@
   </section>
 </template>
 <script>
-import { reactive } from '@vue/reactivity';
-import { onMounted } from '@vue/runtime-core';
+import { reactive } from 'vue';
+import { onMounted } from 'vue';
 
 // const toggleBtn = document.querySelector('.navbar__toogleBtn');
 const menu = document.querySelector('.navbar__menu');
@@ -88,25 +88,26 @@ const icons = document.querySelector('.navbar__icons');
 
 export default {
   components: {},
-  setup(){
+  setup() {
     const state = reactive({
-      localStorage : '',
-    })
+      localStorage: '',
+    });
 
-    onMounted(()=>{
-      state.localStorage = localStorage
-    })
+    onMounted(() => {
+      state.localStorage = localStorage;
+    });
 
-    const btnClick = ()=>{
+    const btnClick = () => {
       alert('test');
       menu.classList.toggle('active');
       icons.classList.toggle('active');
-    }
+    };
 
     return {
-      state, btnClick
-    }
-  }
+      state,
+      btnClick,
+    };
+  },
 };
 </script>
 

@@ -614,11 +614,11 @@
   </main>
 </template>
 <script>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay, Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
-import { ref } from "vue";
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay, Pagination } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { ref } from 'vue';
 
 export default {
   components: { Swiper, SwiperSlide },
@@ -632,57 +632,57 @@ export default {
   },
   methods: {
     async getProductList() {
-      this.productList = await this.$api("/product/products");
+      this.productList = await this.$api('/product/products');
     },
   },
   setup() {
     const swiperTextBase = ref([
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/496/00/221000000288496.jpg?cVer=12125857&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/496/00/221000000288496.jpg?cVer=12125857&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/519/00/221000000296519.jpg?cVer=19044659&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/519/00/221000000296519.jpg?cVer=19044659&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1',
       },
     ]);
     const swiperTextBase2 = ref([
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/225/00/220900000284225.jpg?cVer=10023119&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/374/00/221000000288374.jpg?cVer=17020031&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/374/00/221000000288374.jpg?cVer=17020031&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/225/00/220900000284225.jpg?cVer=10023119&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/519/00/221000000296519.jpg?cVer=19044659&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/519/00/221000000296519.jpg?cVer=19044659&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1',
       },
     ]);
 
-    const comma = (val) => {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const comma = val => {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
     return {
       modules: [Pagination, Autoplay],
