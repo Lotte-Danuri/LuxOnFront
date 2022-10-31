@@ -2,7 +2,7 @@
   <div>
     <!-- 채팅방 -->
     <div class="chat_app_wrapper" v-if="showChat">
-      <div class="chat_app_header">
+      <div class="chat_app_header border">
         <div style="margin-left: 28px"></div>
         <div>
           <img class="chat_app_brand" src="@/assets/logo/logo_white.png" />
@@ -15,6 +15,7 @@
         <ChatRoom
           v-bind:rooms="rooms"
           @selectChatRoom="selectChatRoom"
+          @click="getChatDatas(selectedChatRoomId)"
         ></ChatRoom>
       </div>
     </div>
@@ -30,7 +31,7 @@
         </button>
       </div>
       <ChatList :msgs="msgData"></ChatList>
-      <ChatForm></ChatForm>
+      <ChatForm @submitMessage="sendMessage"></ChatForm>
     </div>
   </div>
 </template>
@@ -39,6 +40,7 @@ import axios from 'axios';
 import ChatList from '@/components/chat/chatList.vue';
 import ChatForm from '@/components/chat/chatForm.vue';
 import ChatRoom from '@/components/chat/chatRoom.vue';
+import { element } from 'prop-types';
 export default {
   name: 'theChatApp',
   data() {
@@ -47,6 +49,7 @@ export default {
       selectedChatRoomId: '',
       rooms: [],
       msgData: [],
+      userId: 'Test1',
     };
   },
   components: {
@@ -56,27 +59,90 @@ export default {
   },
   methods: {
     backButton: function () {
+      clearInterval(this.loading);
       this.showChat = !this.showChat;
     },
     selectChatRoom: function (roomId) {
-      console.log(roomId);
       this.selectedChatRoomId = roomId;
       this.showChat = !this.showChat;
     },
-  },
-  beforeCreate() {
-    axios
-      .get('http://localhost:8080/user/Test1')
-      .then(res => (this.rooms = res.data))
-      .catch(err => console.log(err));
-  },
-  watch: {
-    selectedChatRoomId: function (val) {
+    getRoomDatas: function () {
       axios
-        .get('http://localhost:8080/chatRoom/chats/Test2/' + val)
+        .get('https://sbbro.xyz/api/chat/user/' + this.userId, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
+        .then(res => (this.rooms = res.data))
+        .catch(err => console.log(err));
+    },
+    getChatDatas: function (val) {
+      axios
+        .get(
+          'https://sbbro.xyz/api/chat/chatRoom/chats/' +
+            this.userId +
+            '/' +
+            val,
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
+            },
+          },
+        )
         .then(res => (this.msgData = res.data))
         .catch(err => console.log(err));
-      console.log(this.msgData);
+    },
+    getNewMessages: function async(val) {
+      axios
+        .get('https://sbbro.xyz/api/chat/chatRoom/newChats/Test1/' + val, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
+        .then(res =>
+          res.data.length !== 0
+            ? res.data.reverse().forEach(element => this.msgData.push(element))
+            : console.log(res.data),
+        )
+        .catch(err => console.log(err));
+    },
+    sendMessage(msg) {
+      let data = {
+        content: msg,
+        contentType: '메세지',
+        id: this.selectedChatRoomId,
+        sendBy: 'Test1',
+        sendTo: 'Test2',
+        source: 'string',
+      };
+      axios
+        .post('https://sbbro.xyz/api/chat/chatRoom/chat', data, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
+        .then(res =>
+          res.data.length !== 0
+            ? res.data.forEach(element => this.msgData.push(element))
+            : console.log(res.data),
+        )
+        .catch(err => console.log(err));
+    },
+  },
+  mounted() {
+    this.getRoomDatas();
+  },
+  watch: {
+    selectedChatRoomId(val) {
+      console.log('val:' + val);
+      this.loading = setInterval(() => {
+        this.getNewMessages(val);
+      }, 1000);
+      return this.loading;
     },
   },
 };
