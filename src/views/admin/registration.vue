@@ -2,82 +2,48 @@
   <main>
     <div class="regi">
       <h2>상품 등록</h2>
-      <label for="id"><b>id</b></label>
-      <input type="text" placeholder="Enter id" name="id" id="id" required />
+
       <br />
-      <label for="productName"><b>productName</b></label>
       <input
         type="text"
-        placeholder="Enter productName"
+        placeholder="상품명을 입력하세요"
         name="productName"
         id="productName"
         required
       />
       <br />
-      <label for="thumbnailUrl"><b>thumbnailUrl</b></label>
       <input
         type="text"
-        placeholder="Enter thumbnailUrl"
-        name="thumbnailUrl"
-        id="thumbnailUrl"
-        required
-      />
-      <br />
-      <label for="price"><b>price</b></label>
-      <input
-        type="text"
-        placeholder="Enter price"
+        placeholder="가격을 입력하세요"
         name="price"
         id="price"
         required
       />
       <br />
-      <label for="stock"><b>stock</b></label>
       <input
         type="text"
-        placeholder="Enter stock"
+        placeholder="재고를 입력하세요"
         name="stock"
         id="stock"
         required
       />
       <br />
-      <label for="storeId"><b>storeId</b></label>
       <input
         type="text"
-        placeholder="Enter storeId"
+        placeholder="스토어 ID를 입력하세요"
         name="storeId"
         id="storeId"
         required
       />
       <br />
-      <label for="likeCount"><b>likeCount</b></label>
       <input
         type="text"
-        placeholder="Enter likeCount"
-        name="likeCount"
-        id="likeCount"
-        required
-      />
-      <br />
-      <label for="productCode"><b>productCode</b></label>
-      <input
-        type="text"
-        placeholder="Enter productCode"
+        placeholder="상품 코드를 입력하세요"
         name="productCode"
         id="productCode"
         required
       />
       <br />
-      <label for="warranty"><b>warranty</b></label>
-      <input
-        type="text"
-        placeholder="Enter warranty"
-        name="warranty"
-        id="warranty"
-        required
-      />
-      <br />
-      <label for="categoryFirstId"><b>categoryFirstId</b></label>
       <input
         type="text"
         placeholder="Enter categoryFirstId"
@@ -85,8 +51,12 @@
         id="categoryFirstId"
         required
       />
+      <select>
+        <option v-for="category in categoryList" :key="i">
+          {{ category.id }}
+        </option>
+      </select>
       <br />
-      <label for="categorySecondId"><b>categorySecondId</b></label>
       <input
         type="text"
         placeholder="Enter categorySecondId"
@@ -94,8 +64,12 @@
         id="categorySecondId"
         required
       />
+      <select>
+        <option v-for="categorySecondDtoList in category" :key="j">
+          {{ categorySecondDtoList.id }}
+        </option>
+      </select>
       <br />
-      <label for="categoryThirdId"><b>categoryThirdId</b></label>
       <input
         type="text"
         placeholder="Enter categoryThirdId"
@@ -103,43 +77,115 @@
         id="categoryThirdId"
         required
       />
+      <select>
+        <option v-for="categoryThirdDtoList in categorySecondDtoList" :key="k">
+          {{ categorySecondDtoList.id }}
+        </option>
+      </select>
       <br />
-      <label for="updatedDate"><b>updatedDate</b></label>
+      <br />
       <input
         type="text"
-        placeholder="Enter updatedDate"
-        name="updatedDate"
-        id="updatedDate"
+        placeholder="보증기간을 입력하세요"
+        name="warranty"
+        id="warranty"
         required
       />
       <br />
-      <input type="file" id="file-upload" />
+      <input
+        multiple="multiple"
+        type="file"
+        id="file-upload"
+        ref="serveImage"
+      />
       <br />
-      <button>전송</button>
+      <button
+        style="
+          width: 100px;
+          height: 50px;
+          background-color: black;
+          color: white;
+        "
+        @click="regiProduct"
+      >
+        전송
+      </button>
+    </div>
+    <div>
+      {{ categoryList }}
     </div>
     <div></div>
-    <div>
-      {{ productList }}
-    </div>
   </main>
 </template>
 <script>
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      productList: [],
+      categoryList: [],
     };
   },
+  created() {
+    this.getCategoryList();
+  },
   methods: {
-    async getProductList() {
-      this.productList = await this.$api('/product/products');
-      console.log(this.productList);
+    async getCategoryList() {
+      this.categoryList = await this.$api('/product/categories');
+      console.log(this.categoryList);
     },
-    async postProductList() {
-      this.productList = await this.$api('/product/products');
-      console.log(this.productList);
+    regiProduct() {
+      const formdata = new FormData();
+      formdata.append(
+        'categoryFirstId',
+        document.getElementById('categoryFirstId').value,
+      );
+      formdata.append(
+        'categorySecondId',
+        document.getElementById('categorySecondId').value,
+      );
+      formdata.append(
+        'categoryThirdId',
+        document.getElementById('categoryThirdId').value,
+      );
+      formdata.append(
+        'productName',
+        document.getElementById('productName').value,
+      );
+      formdata.append('price', document.getElementById('price').value);
+      formdata.append('stock', document.getElementById('stock').value);
+      formdata.append('storeId', document.getElementById('storeId').value);
+      formdata.append(
+        'productCode',
+        document.getElementById('productCode').value,
+      );
+      const file_length = this.$refs.serveImage.files.length;
+
+      var object = {};
+      formdata.forEach((value, key) => (object[key] = value));
+
+      const fd = new FormData();
+      const js2 = JSON.stringify(object);
+      const blob = new Blob([js2], { type: 'application/json' });
+      fd.append('productDto', blob);
+      for (let i = 0; i < file_length; i++) {
+        fd.append('imageList', this.$refs.serveImage.files[i]);
+      }
+
+      axios
+        .post('https://sbbro.xyz/api/product/sellers/products', fd, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(response => {
+          console.log(response);
+          console.log(formdata);
+        });
     },
-    // https://sbbro.xyz/api/product/products
   },
 };
 </script>

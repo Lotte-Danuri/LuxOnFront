@@ -244,7 +244,7 @@
           <div class="container_grid">
             <div
               class="item color5"
-              v-for="(recommend, i) in recommendList"
+              v-for="(recommend, i) in state.products"
               :key="i"
               @click="showAlert"
             >
@@ -266,6 +266,10 @@ import SwiperCore, { EffectCube, Pagination, Autoplay } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { ref } from 'vue';
+
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
 
 SwiperCore.use([EffectCube, Pagination, Autoplay]);
 
@@ -339,26 +343,38 @@ export default {
         price: '390000',
       },
     ]);
-    return { swiperTextBase, swiperTextBase2 };
+
+    const state = reactive({
+      products: [],
+    });
+
+    onBeforeMount(() => {
+      axios
+        .get('https://sbbro.xyz/api/recommend/recommends/list', {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+          },
+        })
+        .then(response => {
+          console.log(response);
+          state.products = response.data;
+        });
+    });
+
+    return { swiperTextBase, swiperTextBase2, state };
   },
   data() {
     return {
       productList: [],
-      recommendList: [],
     };
   },
   created() {
     this.getProductList();
-    this.getRecommendList();
   },
   methods: {
     async getProductList() {
       this.productList = await this.$api('/product/products');
       console.log(this.productList);
-    },
-    async getRecommendList() {
-      this.recommendList = await this.$api('/recommend/recommends/list/1');
-      console.log(this.recommendList);
     },
     showAlert() {
       // Use sweetalert2
