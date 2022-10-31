@@ -449,15 +449,18 @@
         <h2 style="font-weight: bold">All Product</h2>
         <br />
         <div class="product_grid">
-          <div>
-            <router-link to="/product/myProduct">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/423/211102001634423.jpg?RS=350&SP=1"
-              />
+          <div v-for="product in productList" v-bind:key="product">
+            <router-link
+              :to="{
+                path: '/product/myProduct',
+                query: { productCode: product.productCode },
+              }"
+            >
+              <img :src="product.thumbnailUrl" />
               <span>
-                <p>SACAI</p>
-                <p>언발 집업 하이넥 패딩 점퍼</p>
-                <p>￦1,790,000</p>
+                <!-- <p>SACAI</p> -->
+                <p>{{ product.productName }}</p>
+                <p>￦{{ comma(product.price) }}</p>
               </span>
             </router-link>
           </div>
@@ -619,6 +622,19 @@ import { ref } from 'vue';
 
 export default {
   components: { Swiper, SwiperSlide },
+  data() {
+    return {
+      productList: [],
+    };
+  },
+  created() {
+    this.getProductList();
+  },
+  methods: {
+    async getProductList() {
+      this.productList = await this.$api('/product/products');
+    },
+  },
   setup() {
     const swiperTextBase = ref([
       {
@@ -664,7 +680,16 @@ export default {
         img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1',
       },
     ]);
-    return { modules: [Pagination, Autoplay], swiperTextBase, swiperTextBase2 };
+
+    const comma = val => {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+    return {
+      modules: [Pagination, Autoplay],
+      swiperTextBase,
+      swiperTextBase2,
+      comma,
+    };
   },
 };
 </script>
