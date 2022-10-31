@@ -49,6 +49,7 @@ export default {
       selectedChatRoomId: '',
       rooms: [],
       msgData: [],
+      userId: 'Test1',
     };
   },
   components: {
@@ -58,7 +59,7 @@ export default {
   },
   methods: {
     backButton: function () {
-      clearInterval();
+      clearInterval(this.loading);
       this.showChat = !this.showChat;
     },
     selectChatRoom: function (roomId) {
@@ -67,7 +68,7 @@ export default {
     },
     getRoomDatas: function () {
       axios
-        .get('https://sbbro.xyz/api/chat/user/Test1', {
+        .get('https://sbbro.xyz/api/chat/user/' + this.userId, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',
@@ -78,12 +79,18 @@ export default {
     },
     getChatDatas: function (val) {
       axios
-        .get('https://sbbro.xyz/api/chat/chatRoom/chats/Test1/' + val, {
-          headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            contentType: 'application/json',
+        .get(
+          'https://sbbro.xyz/api/chat/chatRoom/chats/' +
+            this.userId +
+            '/' +
+            val,
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
+            },
           },
-        })
+        )
         .then(res => (this.msgData = res.data))
         .catch(err => console.log(err));
     },
@@ -106,7 +113,7 @@ export default {
       let data = {
         content: msg,
         contentType: '메세지',
-        id: '634cfc1d6e1d7300ef16e8f7',
+        id: this.selectedChatRoomId,
         sendBy: 'Test1',
         sendTo: 'Test2',
         source: 'string',
@@ -132,9 +139,10 @@ export default {
   watch: {
     selectedChatRoomId(val) {
       console.log('val:' + val);
-      return setInterval(() => {
+      this.loading = setInterval(() => {
         this.getNewMessages(val);
       }, 1000);
+      return this.loading;
     },
   },
 };
