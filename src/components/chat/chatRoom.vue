@@ -22,18 +22,21 @@ export default {
       tabindex="0"
       @click="$emit('selectChatRoom', room.chatRoomId)"
     >
-      <div
-        style="
-          border-radius: 30%;
-          width: 55px;
-          height: 55px;
-          padding: auto;
-          background-color: lightgray;
-          text-align: center;
-          vertical-align: middle;
-          float: left;
-        "
-      ></div>
+      <div>
+        <img
+          src="@/assets/img/avatar.png"
+          style="
+            border-radius: 30%;
+            width: 55px;
+            height: 55px;
+            padding: auto;
+            background-color: lightgray;
+            text-align: center;
+            vertical-align: middle;
+            float: left;
+          "
+        />
+      </div>
       <div class="room_detail">
         <span class="room_username">{{ room.userName }}</span>
         <span class="room_count" v-if="room.countNewChats !== 0">{{
@@ -49,7 +52,7 @@ export default {
             : room.lastChatCreatedAt
         }}</span>
 
-        <hr style="margin-top: 25px; color: lightgrey" />
+        <hr style="margin-top: 25px; color: grey" />
       </div>
     </div>
   </div>
