@@ -12,7 +12,6 @@
 
 <script>
 import ChatMessage from '@/components/chat/chatMessage.vue';
-import axios from 'axios';
 
 export default {
   data() {
