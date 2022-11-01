@@ -20,7 +20,7 @@ export default {
       :key="room.chatRoomId"
       class="room"
       tabindex="0"
-      @click="$emit('selectChatRoom', room.chatRoomId)"
+      @click="$emit('selectChatRoom', room)"
     >
       <div>
         <img
