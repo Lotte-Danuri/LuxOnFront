@@ -59,7 +59,7 @@
       </swiper-slide>
     </swiper>
   </section>
-  <section style="margin-top: 50px">
+  <section style="margin-top: 50px" class="favorite_cls">
     <div class="container" style="margin-left: 15%">
       <h1 style="margin-left: -200px">Favorite Brand</h1>
       <br /><br />
@@ -370,11 +370,28 @@ export default {
   },
   created() {
     this.getProductList();
+    window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
     async getProductList() {
       this.productList = await this.$api('/product/products');
       console.log(this.productList);
+    },
+    handleScroll(event) {
+      // alert(event);
+      // var header = document.getElementsByClassName('favorite_cls');
+      // var range = 200;
+      // var scrollTop = event.scrollTop(),
+      //   height = header.outerHeight(),
+      //   offset = height / 2,
+      //   calc = 1 - (scrollTop - offset + range) / range;
+      // header.css({ opacity: calc });
+      // if (calc > '1') {
+      //   header.css({ opacity: 1 });
+      // } else if (calc < '0') {
+      //   header.css({ opacity: 0 });
+      // }
+      // alert(event);
     },
     showAlert() {
       // Use sweetalert2
@@ -429,5 +446,20 @@ export default {
 
 .container_grid div span p {
   margin: 0px;
+}
+
+.favorite_cls {
+  opacity: 0.5;
+  transform: translateY(150px);
+  transition: 2s all ease;
+  /* transition-timing-function: ease;
+  transition-duration: 1.5s;
+  transition-property: opacity, transform; */
+}
+
+.favorite_cls.active {
+  opacity: 1;
+  transform: translateY(0);
+  /* transition-timing-function: ease; */
 }
 </style>

@@ -53,46 +53,60 @@
   </section>
 </template>
 <script>
-import axios from "axios";
-import { useRoute } from "vue-router";
-import kakaoLogin from "@/components/social_login/kakaoLogin.vue";
-import NaverLogin from "@/components/social_login/naverLogin.vue";
-import router from "@/router";
-import { reactive } from "@vue/reactivity";
-import { onBeforeMount } from "@vue/runtime-core";
+import axios from 'axios';
+import { useRoute } from 'vue-router';
+import kakaoLogin from '@/components/social_login/kakaoLogin.vue';
+import NaverLogin from '@/components/social_login/naverLogin.vue';
+import router from '@/router';
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
 
 export default {
   components: { kakaoLogin, NaverLogin },
   setup() {
     const state = reactive({
-      id: "",
-      password: "",
+      id: '',
+      password: '',
     });
     onBeforeMount(() => {
-      if (localStorage.getItem("token")) {
-        router.push("/main");
+      if (localStorage.getItem('token')) {
+        router.push('/main');
       }
     });
 
-    const login = ()=>{
-      axios.post("https://sbbro.xyz/api/auth/login",{
-        id : state.id,
-        password : state.password,
-      }).then((response)=>{
-        if(response.status == 200){
-          console.log(response)
-          localStorage.setItem('token',response.headers.access_token)
-          localStorage.setItem('userName',decodeURIComponent(escape(window.atob(response.headers.name))))
-          window.location.href="/main"
-        }
-      }).catch((response)=>{
-        console.log(response)
-        alert('로그인 실패')
-      })
-    }
+    const login = () => {
+      axios
+        .post('https://sbbro.xyz/api/auth/login', {
+          id: state.id,
+          password: state.password,
+        })
+        .then(response => {
+          if (response.status == 200) {
+            console.log(response);
+            localStorage.setItem('token', response.headers.access_token);
+            localStorage.setItem(
+              'userName',
+              decodeURIComponent(escape(window.atob(response.headers.name))),
+            );
+            localStorage.setItem('role', response.headers.role);
+            localStorage.setItem('store_id', response.headers.store_id);
+            if (response.headers.role != 1) {
+              window.location.href = '/main';
+            } else {
+              window.location.href = '/admin/dashboard';
+            }
+            // console.log(response.headers);
+          }
+        })
+        .catch(response => {
+          console.log(response);
+          alert('로그인 실패');
+        });
+    };
 
     return {
-      state, login
+      state,
+      login,
     };
   },
 };

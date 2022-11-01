@@ -40,7 +40,7 @@ import axios from 'axios';
 import ChatList from '@/components/chat/chatList.vue';
 import ChatForm from '@/components/chat/chatForm.vue';
 import ChatRoom from '@/components/chat/chatRoom.vue';
-import { element } from 'prop-types';
+// import { element } from 'prop-types';
 export default {
   name: 'theChatApp',
   data() {

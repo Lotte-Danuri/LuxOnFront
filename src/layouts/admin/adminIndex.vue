@@ -34,11 +34,11 @@
           <span class="material-icons-sharp"> published_with_changes </span>
           <h3>상품 수정</h3>
         </a>
-        <a href="#">
+        <router-link to="/admin/regiCoupon">
           <span class="material-icons-sharp"> offline_bolt </span>
           <h3>프로모션</h3>
           <!-- <span class="message-count">26</span> -->
-        </a>
+        </router-link>
         <a href="#">
           <span class="material-icons-sharp">settings</span>
           <h3>환경설정</h3>
