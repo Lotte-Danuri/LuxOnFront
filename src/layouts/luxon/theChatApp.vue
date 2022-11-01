@@ -15,7 +15,7 @@
         <ChatRoom
           v-bind:rooms="rooms"
           @selectChatRoom="selectChatRoom"
-          @click="getChatDatas(selectedChatRoomId)"
+          @click="getChatDatas(selectedChatRoom.chatRoomId)"
         ></ChatRoom>
       </div>
     </div>
@@ -25,7 +25,7 @@
         <button class="btn" @click="backButton">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <p class="app__brand">{{ rooms[0].userName }}</p>
+        <p class="app__brand">{{ selectedChatRoom.userName }}</p>
         <button class="btn" @click="$emit('closeBtn')">
           <i class="bi bi-x-lg"></i>
         </button>
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       showChat: true,
-      selectedChatRoomId: '',
+      selectedChatRoom: {},
       rooms: [],
       msgData: [],
       userId: '',
@@ -58,11 +58,12 @@ export default {
   },
   methods: {
     backButton: function () {
-      clearInterval(this.loading);
+      clearInterval(this.chatLoading);
       this.showChat = !this.showChat;
     },
-    selectChatRoom: function (roomId) {
-      this.selectedChatRoomId = roomId;
+    selectChatRoom: function (room) {
+      this.selectedChatRoom = room;
+      console.log(room);
       this.showChat = !this.showChat;
     },
     getRoomDatas: function () {
@@ -118,9 +119,9 @@ export default {
       let data = {
         content: msg,
         contentType: '메세지',
-        id: this.selectedChatRoomId,
+        id: this.selectedChatRoom.chatRoomId,
         sendBy: this.userId,
-        sendTo: 'Test2',
+        sendTo: this.selectChatRoom.receiverId,
         source: '',
       };
       axios
@@ -141,16 +142,22 @@ export default {
   mounted() {
     this.userId = localStorage.getItem('loginId');
     console.log(localStorage.getItem('loginId'));
-    this.getRoomDatas();
+    this.listLoading = setInterval(() => {
+      this.getRoomDatas();
+    }, 1000);
   },
   watch: {
-    selectedChatRoomId(val) {
-      console.log('val:' + val);
-      this.loading = setInterval(() => {
-        this.getNewMessages(val);
+    selectedChatRoom(val) {
+      console.log('val:' + val.chatRoomId);
+      this.chatLoading = setInterval(() => {
+        this.getNewMessages(val.chatRoomId);
       }, 1000);
-      return this.loading;
+      return this.chatLoading;
     },
+  },
+  beforeUnmount: function () {
+    clearInterval(this.chatLoading);
+    clearInterval(this.listLoading);
   },
 };
 </script>
