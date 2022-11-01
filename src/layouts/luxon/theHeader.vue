@@ -40,7 +40,7 @@
           <p>고객센터</p>
         </li>
         <li>
-          <router-link to="/mypage">
+          <router-link to="/mypage/order">
             <i class="fa-solid fa-user"></i>
             <p>마이페이지</p>
           </router-link>
@@ -50,8 +50,10 @@
           <p>최근본상품</p>
         </li>
         <li>
-          <i class="fa-solid fa-bag-shopping"></i>
-          <p>쇼핑백</p>
+          <router-link :to="{name : 'cart'}">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <p>쇼핑백</p>
+          </router-link>
         </li>
       </ul>
 
