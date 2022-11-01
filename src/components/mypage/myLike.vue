@@ -52,6 +52,7 @@ export default {
         .post('https://sbbro.xyz/api/member/like', null, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
+            "Content-Type": 'application/json'
           },
         })
         .then(response => {
