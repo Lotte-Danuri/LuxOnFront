@@ -16,9 +16,7 @@
             <button style="border: none">
               <i class="fa-regular fa-heart"></i>
             </button>
-            <a
-              onclick=""
-            >
+            <a onclick="">
               <img
                 :src="product.thumbnailUrl"
                 :alt="product.productName"
@@ -26,10 +24,7 @@
               />
             </a>
           </div>
-          <a
-            class="product__data"
-            onclick=""
-          >
+          <a class="product__data" onclick="">
             <p class="product__data-brand">{{ product.storeId }}</p>
             <p class="product__data-name">
               {{ product.productName }}
@@ -44,9 +39,9 @@
 </template>
 
 <script>
-import { reactive } from "@vue/reactivity";
-import { onBeforeMount } from "@vue/runtime-core";
-import axios from "axios";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
 export default {
   setup() {
     const state = reactive({
@@ -54,19 +49,19 @@ export default {
     });
     onBeforeMount(() => {
       axios
-        .post("https://sbbro.xyz/api/member/like", null, {
+        .post('https://sbbro.xyz/api/member/like', null, {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
+            Authorization: `Bearer ` + localStorage.getItem('token'),
           },
         })
-        .then((response) => {
+        .then(response => {
           console.log(response);
           state.products = response.data;
         });
     });
 
-    const comma = (val) => {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const comma = val => {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
     return { state, comma };
@@ -185,7 +180,7 @@ export default {
   bottom: 0;
   box-sizing: border-box;
   border: 1px solid #d99c63;
-  content: "";
+  content: '';
 }
 .module-cody-recom__tab .product__list.type-w80px .product__thum > a img {
   opacity: 0.5;

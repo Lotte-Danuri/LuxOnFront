@@ -14,10 +14,10 @@
         </div> -->
       </div>
       <div class="sidebar" style="height: 1000px">
-        <a href="#">
+        <router-link to="/admin/dashBoard">
           <span class="material-icons-sharp">grid_view</span>
           <h3>메인 센터</h3>
-        </a>
+        </router-link>
         <a href="#">
           <span class="material-icons-sharp">insights</span>
           <h3>통계</h3>
@@ -26,10 +26,10 @@
           <span class="material-icons-sharp">receipt_long</span>
           <h3>상품 관리</h3>
         </a>
-        <a href="#">
+        <router-link to="/admin/registration">
           <span class="material-icons-sharp"> done_outline </span>
           <h3>상품 등록</h3>
-        </a>
+        </router-link>
         <a href="#">
           <span class="material-icons-sharp"> published_with_changes </span>
           <h3>상품 수정</h3>
