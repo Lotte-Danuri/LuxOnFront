@@ -40,7 +40,6 @@ import axios from 'axios';
 import ChatList from '@/components/chat/chatList.vue';
 import ChatForm from '@/components/chat/chatForm.vue';
 import ChatRoom from '@/components/chat/chatRoom.vue';
-import { element } from 'prop-types';
 export default {
   name: 'theChatApp',
   data() {
@@ -49,7 +48,7 @@ export default {
       selectedChatRoomId: '',
       rooms: [],
       msgData: [],
-      userId: 'Test1',
+      userId: '',
     };
   },
   components: {
@@ -96,12 +95,18 @@ export default {
     },
     getNewMessages: function async(val) {
       axios
-        .get('https://sbbro.xyz/api/chat/chatRoom/newChats/Test1/' + val, {
-          headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            contentType: 'application/json',
+        .get(
+          'https://sbbro.xyz/api/chat/chatRoom/newChats/' +
+            this.userId +
+            '/' +
+            val,
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
+            },
           },
-        })
+        )
         .then(res =>
           res.data.length !== 0
             ? res.data.reverse().forEach(element => this.msgData.push(element))
@@ -114,9 +119,9 @@ export default {
         content: msg,
         contentType: '메세지',
         id: this.selectedChatRoomId,
-        sendBy: 'Test1',
+        sendBy: this.userId,
         sendTo: 'Test2',
-        source: 'string',
+        source: '',
       };
       axios
         .post('https://sbbro.xyz/api/chat/chatRoom/chat', data, {
@@ -134,6 +139,8 @@ export default {
     },
   },
   mounted() {
+    this.userId = localStorage.getItem('loginId');
+    console.log(localStorage.getItem('loginId'));
     this.getRoomDatas();
   },
   watch: {
