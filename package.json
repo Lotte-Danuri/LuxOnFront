@@ -14,6 +14,7 @@
     "bootstrap-vue": "^2.22.0",
     "chart.js": "^3.9.1",
     "swiper": "^8.4.4",
+    "v-pagination-3": "^0.1.7",
     "vite-plugin-vue2": "^2.0.2",
     "vue": "^3.2.41",
     "vue-axios-cors": "^1.0.1",
@@ -22,7 +23,9 @@
     "vue-loader": "^17.0.0",
     "vue-router": "^4.1.5",
     "vue-sweetalert2": "^5.0.5",
-    "vueify": "^9.4.1"
+    "vue3-pagination": "^1.0.16",
+    "vueify": "^9.4.1",
+    "vuejs-paginate-next": "^1.0.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",

@@ -634,6 +634,9 @@ export default {
     async getProductList() {
       this.productList = await this.$api('/product/products');
     },
+    clickCallback(pageNum) {
+      console.log(pageNum);
+    },
   },
   setup() {
     const swiperTextBase = ref([
@@ -695,6 +698,14 @@ export default {
 </script>
 
 <style scoped>
+/* Adopt bootstrap pagination stylesheet. */
+@import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css';
+
+/* Write your own CSS for pagination */
+.pagination {
+}
+.page-item {
+}
 .side_menu div h3 {
   margin-bottom: 10px;
   font-weight: bold;
@@ -781,7 +792,7 @@ export default {
 
 .product_grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 5px;
   grid-auto-rows: minmax(5px, auto);
   margin-right: 20%;
@@ -789,13 +800,13 @@ export default {
 
 .product_grid div {
   background-color: rgb(238, 238, 238);
-  width: 200px;
-  height: 300px;
+  width: 250px;
+  height: 400px;
   margin-bottom: 80px;
 }
 
 .product_grid div img {
-  height: 300px;
+  height: 400px;
 }
 
 .product_grid div span p {

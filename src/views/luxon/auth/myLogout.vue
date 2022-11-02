@@ -11,6 +11,7 @@ export default {
       localStorage.removeItem('userName');
       localStorage.removeItem('role');
       localStorage.removeItem('store_id');
+      localStorage.removeItem('userinfo');
       window.location.href = '/main';
     });
     return {};

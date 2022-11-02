@@ -3,9 +3,7 @@
     <div class="list_contents">
       <div class="div_top">
         <div>
-          <img
-            :src="state.products[0]?.imageList[0]"
-          />
+          <img :src="state.products[0]?.imageList[0]" />
         </div>
         <div style="margin-left: 10%">
           <span>
@@ -59,8 +57,10 @@
             <div class="option_name">
               <h3>지점</h3>
             </div>
-            <div class="size_div" style="float: left" >
-              <button v-for="product in state.products" v-bind:key="product">{{product.storeName}}</button>
+            <div class="size_div" style="float: left">
+              <button v-for="product in state.products" v-bind:key="product">
+                {{ product.storeName }}
+              </button>
             </div>
           </div>
           <hr />
@@ -80,7 +80,9 @@
               <h3>판매가</h3>
             </div>
             <div class="size_div" style="float: left">
-              <h2 style="margin-left: 50%; font-weight: bold">{{comma(state.sumPrice)}} 원</h2>
+              <h2 style="margin-left: 50%; font-weight: bold">
+                {{ comma(state.sumPrice) }} 원
+              </h2>
             </div>
           </div>
           <div class="actionBtn">
@@ -93,66 +95,71 @@
       </div>
       <div>
         <h1>상품상세</h1>
-        <div style="margin-right: 20%" v-for="productImg in state.products[0]?.imageList" v-bind:key="productImg">
-          <img
-            :src="productImg"
-            alt="/"
-          />
+        <div
+          style="margin-right: 20%"
+          v-for="productImg in state.products[0]?.imageList"
+          v-bind:key="productImg"
+        >
+          <img :src="productImg" alt="/" />
         </div>
       </div>
     </div>
   </main>
 </template>
 <script>
-import { reactive } from "@vue/reactivity";
-import { onBeforeMount } from "@vue/runtime-core";
-import { useRoute } from "vue-router";
-import axios from "axios";
-import router from "@/router";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import { useRoute } from 'vue-router';
+import axios from 'axios';
+import router from '@/router';
 
 export default {
   components: {},
   setup() {
     const state = reactive({
-      productCode: "",
+      productCode: '',
       products: [],
-      sumPrice: 0
+      sumPrice: 0,
     });
 
     onBeforeMount(() => {
       var route = useRoute();
       state.productCode = route.query.productCode;
       axios
-        .get("https://sbbro.xyz/api/product/products/list/" + state.productCode)
-        .then((response) => {
+        .get('https://sbbro.xyz/api/product/products/list/' + state.productCode)
+        .then(response => {
           if (response.status == 200) {
             state.products = response.data;
             console.log(state.products);
-            state.sumPrice = document.getElementById("countValue").value * state.products[0].price
+            state.sumPrice =
+              document.getElementById('countValue').value *
+              state.products[0].price;
           }
         })
         .catch(() => {
-          alert("해당 상품은 조회할 수 없습니다.");
+          alert('해당 상품은 조회할 수 없습니다.');
           router.push(-1);
         });
     });
 
-    const comma = (val) => {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const comma = val => {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
     const minusBtn = () => {
-      if (document.getElementById("countValue").value > 0) {
-        document.getElementById("countValue").value--;
-        state.sumPrice = document.getElementById("countValue").value * state.products[0].price
+      if (document.getElementById('countValue').value > 0) {
+        document.getElementById('countValue').value--;
+        state.sumPrice =
+          document.getElementById('countValue').value * state.products[0].price;
       }
     };
     const plusBtn = () => {
-      document.getElementById("countValue").value++;
-      state.sumPrice = document.getElementById("countValue").value * state.products[0].price
+      document.getElementById('countValue').value++;
+      state.sumPrice =
+        document.getElementById('countValue').value * state.products[0].price;
     };
     const initOrder = () => {
-      this.$router.push("initOrder");
+      this.$router.push('initOrder');
     };
     return { state, minusBtn, plusBtn, initOrder, comma };
   },

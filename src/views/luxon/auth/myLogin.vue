@@ -32,9 +32,9 @@
         <naver-login></naver-login>
         <br />
         <br />
-        <button class="socialButton">
+        <!-- <button class="socialButton">
           <img src="@/assets/loginBtn/google_login.png" />
-        </button>
+        </button> -->
         <br />
         <router-link to="/signup">
           <button

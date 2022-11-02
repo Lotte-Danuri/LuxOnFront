@@ -59,7 +59,7 @@
       </swiper-slide>
     </swiper>
   </section>
-  <section style="margin-top: 50px" class="favorite_cls">
+  <section style="margin-top: 50px" class="favorite_cls" id="favorite_cls">
     <div class="container" style="margin-left: 15%">
       <h1 style="margin-left: -200px">Favorite Brand</h1>
       <br /><br />
@@ -175,7 +175,7 @@
       </swiper>
     </div>
   </section>
-  <section>
+  <section id="recommend_cls" class="recommend_cls">
     <div class="container" style="margin-left: 15%">
       <h1 style="margin-left: -200px">Recommended</h1>
       <br /><br />
@@ -377,27 +377,34 @@ export default {
       this.productList = await this.$api('/product/products');
       console.log(this.productList);
     },
-    handleScroll(event) {
-      // alert(event);
-      // var header = document.getElementsByClassName('favorite_cls');
-      // var range = 200;
-      // var scrollTop = event.scrollTop(),
-      //   height = header.outerHeight(),
-      //   offset = height / 2,
-      //   calc = 1 - (scrollTop - offset + range) / range;
-      // header.css({ opacity: calc });
-      // if (calc > '1') {
-      //   header.css({ opacity: 1 });
-      // } else if (calc < '0') {
-      //   header.css({ opacity: 0 });
-      // }
-      // alert(event);
+    handleScroll() {
+      // console.log(document.querySelector('html').scrollTop);
+      let nowScroll = document.querySelector('html').scrollTop;
+      if (nowScroll < 500) {
+        document.getElementById('favorite_cls').style.opacity = '0';
+        document.getElementById('favorite_cls').style.transform =
+          'translateY(150px)';
+      }
+      if (nowScroll > 500) {
+        document.getElementById('favorite_cls').style.opacity = '1';
+        document.getElementById('favorite_cls').style.transform =
+          'translateY(0)';
+      }
+      if (nowScroll < 700) {
+        document.getElementById('recommend_cls').style.opacity = '0';
+        document.getElementById('recommend_cls').style.transform =
+          'translateY(150px)';
+      }
+      if (nowScroll > 1000) {
+        document.getElementById('recommend_cls').style.opacity = '1';
+        document.getElementById('recommend_cls').style.transform =
+          'translateY(0)';
+      }
     },
     showAlert() {
       // Use sweetalert2
       this.$swal('준비중 입니다');
     },
-    // https://sbbro.xyz/api/product/products
   },
 };
 </script>
@@ -449,7 +456,7 @@ export default {
 }
 
 .favorite_cls {
-  opacity: 0.5;
+  opacity: 0;
   transform: translateY(150px);
   transition: 2s all ease;
   /* transition-timing-function: ease;
@@ -458,8 +465,17 @@ export default {
 }
 
 .favorite_cls.active {
-  opacity: 1;
-  transform: translateY(0);
+  /* opacity: 0; */
+  /* transform: translateY(0); */
   /* transition-timing-function: ease; */
+}
+
+.recommend_cls {
+  opacity: 0;
+  transform: translateY(150px);
+  transition: 2s all ease;
+  /* transition-timing-function: ease;
+  transition-duration: 1.5s;
+  transition-property: opacity, transform; */
 }
 </style>

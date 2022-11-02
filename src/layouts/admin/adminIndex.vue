@@ -3,17 +3,19 @@
     <aside>
       <div class="top">
         <div class="logo">
-          <img
-            src="@/assets/logo/logo_black.png"
-            style="width: 180px; height: 120px; margin-left: 5%"
-          />
+          <router-link to="/main">
+            <img
+              src="@/assets/logo/logo_black.png"
+              style="width: 180px; height: 120px; margin-left: 5%"
+            />
+          </router-link>
           <!-- <h2 class="text-muted">Lux<span class="danger">ON</span></h2> -->
         </div>
         <!-- <div class="close" id="close-btn">
           <span class="material-icons-sharp">close</span>
         </div> -->
       </div>
-      <div class="sidebar" style="height: 1000px">
+      <div class="sidebar" style="height: 1000px; width: 200px">
         <router-link to="/admin/dashBoard">
           <span class="material-icons-sharp">grid_view</span>
           <h3>메인 센터</h3>

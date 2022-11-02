@@ -1,8 +1,7 @@
 <template>
   <main>
     <div class="regi">
-      <h2>상품 등록</h2>
-
+      <h1>상품 등록</h1>
       <br />
       <input
         type="text"
@@ -27,14 +26,6 @@
         id="stock"
         required
       />
-      <br />
-      <!-- <input
-        type="text"
-        placeholder="스토어 ID를 입력하세요"
-        name="storeId"
-        id="storeId"
-        required
-      /> -->
       <br />
       <input
         type="text"
@@ -115,8 +106,6 @@
   </main>
 </template>
 <script>
-// import { reactive } from 'vue';
-// import { onBeforeMount } from 'vue';
 import axios from 'axios';
 
 export default {
