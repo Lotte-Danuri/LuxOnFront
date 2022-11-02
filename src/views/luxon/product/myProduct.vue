@@ -3,9 +3,7 @@
     <div class="list_contents">
       <div class="div_top">
         <div>
-          <img
-            :src="state.products[0]?.imageList[0]"
-          />
+          <img :src="state.products[0]?.imageList[0]" />
         </div>
         <div style="margin-left: 10%">
           <span>
@@ -55,12 +53,31 @@
             </div>
           </div>
           <hr />
+
           <div class="option_grid">
             <div class="option_name">
               <h3>지점</h3>
             </div>
-            <div class="size_div" style="float: left" >
-              <button v-for="product in state.products" v-bind:key="product">{{product.storeName}}</button>
+            <div class="size_div" style="float: left">
+              <div
+                v-for="(product, index) in state.products"
+                v-bind:key="index"
+                class="form-check form-check-inline form-check-size mb-2"
+              >
+                <input
+                  :id="'문자열' + index"
+                  v-model="state.productId"
+                  type="radio"
+                  class="form-check-input"
+                  name="sizeRadio"
+                  :value="product.id"
+                  data-toggle="form-caption"
+                  data-target="#sizeCaption"
+                />
+                <label class="form-check-label" :for="'문자열' + index">{{
+                  product.storeName
+                }}</label>
+              </div>
             </div>
           </div>
           <hr />
@@ -70,7 +87,11 @@
             </div>
             <div class="count">
               <button @click="minusBtn">-</button>
-              <input id="countValue" value="0" style="text-align: center" />
+              <input
+                id="countValue"
+                :value="state.quantity"
+                style="text-align: center"
+              />
               <button @click="plusBtn">+</button>
             </div>
           </div>
@@ -80,11 +101,15 @@
               <h3>판매가</h3>
             </div>
             <div class="size_div" style="float: left">
-              <h2 style="margin-left: 50%; font-weight: bold">{{comma(state.sumPrice)}} 원</h2>
+              <h2 style="margin-left: 50%; font-weight: bold">
+                {{ comma(state.sumPrice) }} 원
+              </h2>
             </div>
           </div>
           <div class="actionBtn">
-            <button style="background-color: gray">장바구니</button>
+            <button style="background-color: gray" @click="addCart">
+              장바구니
+            </button>
             <button @click="initOrder" style="margin-left: 10%">
               바로구매
             </button>
@@ -93,11 +118,12 @@
       </div>
       <div>
         <h1>상품상세</h1>
-        <div style="margin-right: 20%" v-for="productImg in state.products[0]?.imageList" v-bind:key="productImg">
-          <img
-            :src="productImg"
-            alt="/"
-          />
+        <div
+          style="margin-right: 20%"
+          v-for="productImg in state.products[0]?.imageList"
+          v-bind:key="productImg"
+        >
+          <img :src="productImg" alt="/" />
         </div>
       </div>
     </div>
@@ -109,6 +135,7 @@ import { onBeforeMount } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import router from "@/router";
+import Swal from "sweetalert2";
 
 export default {
   components: {},
@@ -116,7 +143,9 @@ export default {
     const state = reactive({
       productCode: "",
       products: [],
-      sumPrice: 0
+      sumPrice: 0,
+      productId: "",
+      quantity: 0,
     });
 
     onBeforeMount(() => {
@@ -128,12 +157,14 @@ export default {
           if (response.status == 200) {
             state.products = response.data;
             console.log(state.products);
-            state.sumPrice = document.getElementById("countValue").value * state.products[0].price
+            state.sumPrice =
+              document.getElementById("countValue").value *
+              state.products[0].price;
           }
         })
         .catch(() => {
           alert("해당 상품은 조회할 수 없습니다.");
-          history.back()
+          history.back();
         });
     });
 
@@ -142,23 +173,100 @@ export default {
     };
 
     const minusBtn = () => {
-      if (document.getElementById("countValue").value > 0) {
-        document.getElementById("countValue").value--;
-        state.sumPrice = document.getElementById("countValue").value * state.products[0].price
+      if (state.quantity > 0) {
+        state.quantity--;
+        state.sumPrice = state.quantity * state.products[0].price;
       }
     };
     const plusBtn = () => {
-      document.getElementById("countValue").value++;
-      state.sumPrice = document.getElementById("countValue").value * state.products[0].price
+      state.quantity++;
+      state.sumPrice = state.quantity * state.products[0].price;
     };
     const initOrder = () => {
-      this.$router.push("initOrder");
+      // this.$router.push("initOrder");
+      if(loginCheck()){
+        
+      }
+
+
     };
-    return { state, minusBtn, plusBtn, initOrder, comma };
+
+    const loginCheck=() =>{
+      if (localStorage.getItem('token')==null){
+        Swal.fire({
+          title : "로그인 해주세요",
+          icon:"error",
+          showCancelButton:false,
+          confirmButtonText:"확인"
+        }).then(()=>{
+          return false;
+        })
+      }
+      else{
+        return true;
+      }
+    }
+
+    const addCart = () => {
+      if(loginCheck() == true){
+        axios
+          .post(
+            "https://sbbro.xyz/api/member/cart",
+            {
+              productId: state.productId,
+              quantity: state.quantity,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            }
+          )
+          .then((response) => {
+            if (response.status == 200) {
+              Swal.fire({
+                title: "상품이 장바구니에 담겼습니다.",
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonText: "장바구니로 이동",
+                cancelButtonText: "계속 쇼핑하기",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  router.push("/cart");
+                }
+              });
+            }
+          });
+      }
+
+    };
+
+    return { state, minusBtn, plusBtn, initOrder, comma, addCart };
   },
 };
 </script>
 <style scoped>
+input[type="radio"] {
+  display: none;
+  margin: 10px;
+}
+
+input[type="radio"] + label {
+  display: inline-block;
+  margin: -2px;
+  padding: 8px 19px;
+  background-color: #ffffff;
+  border: 1px solid rgb(0, 0, 0);
+  font-size: 13px !important;
+  width: 130px;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+input[type="radio"]:checked + label {
+  background-color: #38363656;
+}
 .list_contents {
   margin-left: 20%;
   margin-top: 5%;
