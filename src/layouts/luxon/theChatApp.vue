@@ -63,7 +63,6 @@ export default {
     },
     selectChatRoom: function (room) {
       this.selectedChatRoom = room;
-      console.log(room);
       this.showChat = !this.showChat;
     },
     getRoomDatas: function () {
@@ -111,7 +110,7 @@ export default {
         .then(res =>
           res.data.length !== 0
             ? res.data.reverse().forEach(element => this.msgData.push(element))
-            : console.log(res.data),
+            : console.log(),
         )
         .catch(err => console.log(err));
     },
@@ -134,21 +133,19 @@ export default {
         .then(res =>
           res.data.length !== 0
             ? res.data.forEach(element => this.msgData.push(element))
-            : console.log(res.data),
+            : console.log(),
         )
         .catch(err => console.log(err));
     },
   },
   mounted() {
     this.userId = localStorage.getItem('loginId');
-    console.log(localStorage.getItem('loginId'));
     this.listLoading = setInterval(() => {
       this.getRoomDatas();
     }, 1000);
   },
   watch: {
     selectedChatRoom(val) {
-      console.log('val:' + val.chatRoomId);
       this.chatLoading = setInterval(() => {
         this.getNewMessages(val.chatRoomId);
       }, 1000);
