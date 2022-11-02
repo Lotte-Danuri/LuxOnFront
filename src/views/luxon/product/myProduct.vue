@@ -133,7 +133,7 @@ export default {
         })
         .catch(() => {
           alert("해당 상품은 조회할 수 없습니다.");
-          router.push(-1);
+          history.back()
         });
     });
 
