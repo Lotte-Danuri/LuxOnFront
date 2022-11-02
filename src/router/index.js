@@ -5,7 +5,6 @@ import Index from '@/layouts/luxon/index.vue';
 import MyMain from '@/views/luxon/myMain.vue';
 import MyList from '@/views/luxon/myList.vue';
 import MyProduct from '@/views/luxon/product/myProduct.vue';
-import InitOrder from '@/views/luxon/product/initOrder.vue';
 import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
 import Registration from '@/views/admin/registration.vue';
@@ -21,6 +20,7 @@ import MyLike from '@/components/mypage/myLike.vue';
 const routes = [
   {
     path: '/',
+    name:"home",
     component: Index,
     children: [
       {
@@ -39,9 +39,9 @@ const routes = [
         component: MyProduct,
       },
       {
-        path: '/product/initOrder',
+        path: '/product/order',
         name: 'initOrder',
-        component: InitOrder,
+        component: ()=>import('@/views/luxon/product/initOrder.vue'),
       },
       {
         path: '/login',
@@ -67,6 +67,11 @@ const routes = [
         path: '/signup',
         name: 'signup',
         component: MySignup,
+      },
+      {
+        path : 'cart',
+        name : 'cart',
+        component: ()=> import('@/views/luxon/user/myCart.vue'),
       },
       {
         path: '/mypage',

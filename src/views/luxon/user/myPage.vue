@@ -21,7 +21,9 @@ export default {
   components: { leftBar, MainContent },
   setup() {
     onBeforeMount(()=>{
-      router.push('/mypage/order')
+      if (window.location.pathname == '/mypage') {
+      router.push('/mypage/order');
+    }
     })
     return {
       
