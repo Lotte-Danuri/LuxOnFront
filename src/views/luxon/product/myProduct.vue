@@ -7,7 +7,12 @@
         </div>
         <div style="margin-left: 10%">
           <span>
-            <p>상품코드 {{ state.productCode }}</p>
+            <div style="display: flex; justify-content: space-between;">
+              <p>상품코드 {{ state.productCode }}</p>
+              <button>
+                <like-button></like-button>
+              </button>
+            </div>
             <h1>{{ state.products[0]?.productName }}</h1>
             <h2 style="font-weight: bold">
               ￦{{ comma(state.products[0]?.price) }}원
@@ -136,9 +141,10 @@ import { useRoute } from "vue-router";
 import axios from "axios";
 import router from "@/router";
 import Swal from "sweetalert2";
+import LikeButton from '@/components/button/likeButton.vue';
 
 export default {
-  components: {},
+  components: {LikeButton},
   setup() {
     const state = reactive({
       productCode: "",
@@ -184,31 +190,27 @@ export default {
     };
     const initOrder = () => {
       // this.$router.push("initOrder");
-      if(loginCheck()){
-        
+      if (loginCheck()) {
       }
-
-
     };
 
-    const loginCheck=() =>{
-      if (localStorage.getItem('token')==null){
+    const loginCheck = () => {
+      if (localStorage.getItem("token") == null) {
         Swal.fire({
-          title : "로그인 해주세요",
-          icon:"error",
-          showCancelButton:false,
-          confirmButtonText:"확인"
-        }).then(()=>{
+          title: "로그인 해주세요",
+          icon: "error",
+          showCancelButton: false,
+          confirmButtonText: "확인",
+        }).then(() => {
           return false;
-        })
-      }
-      else{
+        });
+      } else {
         return true;
       }
-    }
+    };
 
     const addCart = () => {
-      if(loginCheck() == true){
+      if (loginCheck() == true) {
         axios
           .post(
             "https://sbbro.xyz/api/member/cart",
@@ -238,7 +240,6 @@ export default {
             }
           });
       }
-
     };
 
     return { state, minusBtn, plusBtn, initOrder, comma, addCart };
