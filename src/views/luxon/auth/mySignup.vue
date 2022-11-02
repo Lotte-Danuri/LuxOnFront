@@ -77,7 +77,7 @@ export default {
         })
         .then(response => {
           axios
-            .post('https://sbbro.xyz/api/auth/chat/user', {
+            .post('https://sbbro.xyz/api/chat/user', {
               userId: state.id,
               userName: state.name,
             })

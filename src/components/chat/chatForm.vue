@@ -1,6 +1,6 @@
 <template>
   <div class="form">
-    <button class="btn">
+    <button class="btn" @click="submitMessage">
       <i class="bi bi-image" style="color: grey"></i>
     </button>
     <input
