@@ -29,7 +29,7 @@
             <p class="product__data-name">
               {{ product.productName }}
             </p>
-            <p class="product__data-price">{{ comma(product.price) }}원</p>
+            <p class="product__data-price">{{ self.$comma(product.price) }}원</p>
           </a>
         </li>
       </ul>
@@ -42,7 +42,13 @@
 import { reactive } from 'vue';
 import { onBeforeMount } from 'vue';
 import axios from 'axios';
+
+let self;
+
 export default {
+  created(){
+    self = this;
+  },
   setup() {
     const state = reactive({
       products: [],
@@ -52,6 +58,7 @@ export default {
         .post('https://sbbro.xyz/api/member/like', null, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
+            "Content-Type": 'application/json'
           },
         })
         .then(response => {
@@ -60,11 +67,7 @@ export default {
         });
     });
 
-    const comma = val => {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    };
-
-    return { state, comma };
+    return { state, self };
   },
 };
 </script>
