@@ -121,7 +121,7 @@ export default {
         contentType: '메세지',
         id: this.selectedChatRoom.chatRoomId,
         sendBy: this.userId,
-        sendTo: this.selectChatRoom.receiverId,
+        sendTo: this.selectedChatRoom.receiverId,
         source: '',
       };
       axios
