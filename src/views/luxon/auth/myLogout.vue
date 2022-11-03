@@ -10,6 +10,7 @@ export default {
       localStorage.removeItem('token');
       localStorage.removeItem('userName');
       localStorage.removeItem('role');
+      localStorage.removeItem('login_id');
       localStorage.removeItem('store_id');
       localStorage.removeItem('userinfo');
       window.location.href = '/main';

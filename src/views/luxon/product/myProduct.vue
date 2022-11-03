@@ -190,8 +190,8 @@ export default {
     };
     const initOrder = () => {
       // this.$router.push("initOrder");
-      if (loginCheck()) {
-      }
+      // if (loginCheck()) {
+      // }
     };
 
     const loginCheck = () => {
