@@ -9,9 +9,14 @@ import { reactive, ref } from '@vue/reactivity';
 import { onBeforeMount } from '@vue/runtime-core';
 import likeImg from '@/assets/img/heart_icon.png';
 import unLikeImg from '@/assets/img/heart_icon_unlike.png';
+import axios from 'axios';
+import { prop } from 'dom7';
 
 export default {
-  setup() {
+  props:{
+    productCode : String
+  },
+  setup(props) {
     const state = reactive({
         buttonCheck : false,
         imgSrc :'',
@@ -26,6 +31,16 @@ export default {
     })
 
     const checkLike = ()=>{
+      axios.get("https://sbbro.xyz/api/member/likes/check",{
+        productCode : props.productCode
+      },{
+        headers : {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        }
+      }).then((response)=>{
+        console.log(response)
+      })
+      
         return state.buttonCheck;
     }
 
