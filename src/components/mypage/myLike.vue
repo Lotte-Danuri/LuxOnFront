@@ -13,23 +13,34 @@
           v-bind:key="product"
         >
           <div class="product__thum gray">
-            <button style="border: none">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <a onclick="">
+            <router-link
+              :to="{
+                path: '/product/myProduct',
+                query: { productCode: product.productCode },
+              }"
+            >
               <img
                 :src="product.thumbnailUrl"
                 :alt="product.productName"
                 onError="this.src='https://image.sivillage.com/upload/C00001/common/noimg.jpg?RS=300&SP=1'"
               />
-            </a>
+            </router-link>
           </div>
           <a class="product__data" onclick="">
-            <p class="product__data-brand">{{ product.storeId }}</p>
-            <p class="product__data-name">
-              {{ product.productName }}
+            <p class="product__data-brand">{{ product.brandName }}</p>
+            <router-link
+              :to="{
+                path: '/product/myProduct',
+                query: { productCode: product.productCode },
+              }"
+            >
+              <p class="product__data-name">
+                {{ product.productName }}
+              </p>
+            </router-link>
+            <p class="product__data-price">
+              {{ self.$comma(product.price) }}원
             </p>
-            <p class="product__data-price">{{ self.$comma(product.price) }}원</p>
           </a>
         </li>
       </ul>
@@ -39,14 +50,14 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
-import { onBeforeMount } from 'vue';
-import axios from 'axios';
+import { reactive } from "vue";
+import { onBeforeMount } from "vue";
+import axios from "axios";
 
 let self;
 
 export default {
-  created(){
+  created() {
     self = this;
   },
   setup() {
@@ -55,13 +66,13 @@ export default {
     });
     onBeforeMount(() => {
       axios
-        .post('https://sbbro.xyz/api/member/like', null, {
+        .post("https://sbbro.xyz/api/member/like", null, {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            "Content-Type": 'application/json'
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+            "Content-Type": "application/json",
           },
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           state.products = response.data;
         });
@@ -183,7 +194,7 @@ export default {
   bottom: 0;
   box-sizing: border-box;
   border: 1px solid #d99c63;
-  content: '';
+  content: "";
 }
 .module-cody-recom__tab .product__list.type-w80px .product__thum > a img {
   opacity: 0.5;
