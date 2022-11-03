@@ -1,12 +1,38 @@
 <template>
   <div>
     <div
-      v-if="msg.sendBy === state.localStorage.loginId"
+      v-if="msg.sendBy === state.localStorage.login_id"
       class="chat__mymessage"
       :class="[isSame ? '' : 'chat__first']"
     >
       <p class="chat__mymessage__time">{{ msg.createdAt.substr(11, 5) }}</p>
-      <p class="chat__mymessage__paragraph">{{ msg.content }}</p>
+      <div
+        class="chat__mymessage__paragraph"
+        v-if="msg.contentType == '메세지'"
+      >
+        {{ msg.content }}
+      </div>
+      <div
+        class="chat__mymessage__image"
+        v-else-if="msg.contentType == '이미지'"
+      >
+        <div class="image-container">
+          <img v-if="msg.source" :src="`${msg.source}`" />
+        </div>
+      </div>
+      <div
+        class="chat__mymessage__paragraph"
+        v-else-if="msg.contentType == '쿠폰'"
+        @load="getCouponInfo(msg.source)"
+      >
+        <div class="chat__mymessage__coupon">
+          <p>{{ coupon.name }}</p>
+        </div>
+      </div>
+      <div
+        class="chat__mymessage__paragraph"
+        v-else-if="msg.contentType == '프로모션'"
+      ></div>
     </div>
     <div
       v-else
@@ -16,10 +42,23 @@
       <div>
         <p class="chat__yourmessage__user" v-if="!isSame">{{}}</p>
         <div class="chat__yourmessage__p">
-          <p class="chat__yourmessage__paragraph">
+          <div
+            class="chat__yourmessage__paragraph"
+            v-if="msg.contentType == '메세지'"
+          >
             {{ msg.content }}
+          </div>
+          <div
+            class="chat__yourmessage__image"
+            v-else-if="msg.contentType == '이미지'"
+          >
+            <div class="image-container">
+              <img v-if="msg.source" :src="`${msg.source}`" />
+            </div>
+          </div>
+          <p class="chat__yourmessage__time">
+            {{ msg.createdAt.substr(11, 5) }}
           </p>
-          <p class="chat__mymessage__time">{{ msg.createdAt.substr(11, 5) }}</p>
         </div>
       </div>
     </div>
@@ -46,6 +85,7 @@ export default {
   data() {
     return {
       isSame: false,
+      coupon: {},
     };
   },
   methods: {
@@ -58,6 +98,7 @@ export default {
         return false;
       }
     },
+    getCouponInfo(couponId) {},
   },
   created() {
     this.isSame = this.isSamePerson(this.msg, this.prev);
@@ -126,5 +167,19 @@ export default {
   margin: 0;
   font-size: 12px;
   color: #9c9c9c;
+}
+
+.image-container {
+  position: relative;
+  border-radius: 3px;
+  max-width: 180px;
+}
+
+.chat__mymessage__image {
+  object-fit: contain;
+}
+
+.chat__yourmessage__image {
+  object-fit: contain;
 }
 </style>
