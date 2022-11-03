@@ -15,7 +15,7 @@
         <ChatRoom
           v-bind:rooms="rooms"
           @selectChatRoom="selectChatRoom"
-          @click="getChatDatas(selectedChatRoomId)"
+          @click="getChatDatas(selectedChatRoom.chatRoomId)"
         ></ChatRoom>
       </div>
     </div>
@@ -25,7 +25,7 @@
         <button class="btn" @click="backButton">
           <i class="bi bi-chevron-left"></i>
         </button>
-        <p class="app__brand">{{ rooms[0].userName }}</p>
+        <p class="app__brand">{{ selectedChatRoom.userName }}</p>
         <button class="btn" @click="$emit('closeBtn')">
           <i class="bi bi-x-lg"></i>
         </button>
@@ -40,16 +40,15 @@ import axios from 'axios';
 import ChatList from '@/components/chat/chatList.vue';
 import ChatForm from '@/components/chat/chatForm.vue';
 import ChatRoom from '@/components/chat/chatRoom.vue';
-// import { element } from 'prop-types';
 export default {
   name: 'theChatApp',
   data() {
     return {
       showChat: true,
-      selectedChatRoomId: '',
+      selectedChatRoom: {},
       rooms: [],
       msgData: [],
-      userId: 'Test1',
+      userId: '',
     };
   },
   components: {
@@ -59,11 +58,12 @@ export default {
   },
   methods: {
     backButton: function () {
-      clearInterval(this.loading);
+      clearInterval(this.chatLoading);
       this.showChat = !this.showChat;
     },
-    selectChatRoom: function (roomId) {
-      this.selectedChatRoomId = roomId;
+    selectChatRoom: function (room) {
+      this.selectedChatRoom = room;
+      console.log(room);
       this.showChat = !this.showChat;
     },
     getRoomDatas: function () {
@@ -96,12 +96,18 @@ export default {
     },
     getNewMessages: function async(val) {
       axios
-        .get('https://sbbro.xyz/api/chat/chatRoom/newChats/Test1/' + val, {
-          headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            contentType: 'application/json',
+        .get(
+          'https://sbbro.xyz/api/chat/chatRoom/newChats/' +
+            this.userId +
+            '/' +
+            val,
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
+            },
           },
-        })
+        )
         .then(res =>
           res.data.length !== 0
             ? res.data.reverse().forEach(element => this.msgData.push(element))
@@ -113,10 +119,10 @@ export default {
       let data = {
         content: msg,
         contentType: '메세지',
-        id: this.selectedChatRoomId,
-        sendBy: 'Test1',
-        sendTo: 'Test2',
-        source: 'string',
+        id: this.selectedChatRoom.chatRoomId,
+        sendBy: this.userId,
+        sendTo: this.selectedChatRoom.receiverId,
+        source: '',
       };
       axios
         .post('https://sbbro.xyz/api/chat/chatRoom/chat', data, {
@@ -134,16 +140,24 @@ export default {
     },
   },
   mounted() {
-    this.getRoomDatas();
+    this.userId = localStorage.getItem('loginId');
+    console.log(localStorage.getItem('loginId'));
+    this.listLoading = setInterval(() => {
+      this.getRoomDatas();
+    }, 1000);
   },
   watch: {
-    selectedChatRoomId(val) {
-      console.log('val:' + val);
-      this.loading = setInterval(() => {
-        this.getNewMessages(val);
+    selectedChatRoom(val) {
+      console.log('val:' + val.chatRoomId);
+      this.chatLoading = setInterval(() => {
+        this.getNewMessages(val.chatRoomId);
       }, 1000);
-      return this.loading;
+      return this.chatLoading;
     },
+  },
+  beforeUnmount: function () {
+    clearInterval(this.chatLoading);
+    clearInterval(this.listLoading);
   },
 };
 </script>

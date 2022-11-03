@@ -383,7 +383,7 @@ export default {
       if (nowScroll < 500) {
         document.getElementById('favorite_cls').style.opacity = '0';
         document.getElementById('favorite_cls').style.transform =
-          'translateY(150px)';
+          'translateY(0)';
       }
       if (nowScroll > 500) {
         document.getElementById('favorite_cls').style.opacity = '1';
@@ -392,8 +392,6 @@ export default {
       }
       if (nowScroll < 700) {
         document.getElementById('recommend_cls').style.opacity = '0';
-        document.getElementById('recommend_cls').style.transform =
-          'translateY(150px)';
       }
       if (nowScroll > 1000) {
         document.getElementById('recommend_cls').style.opacity = '1';

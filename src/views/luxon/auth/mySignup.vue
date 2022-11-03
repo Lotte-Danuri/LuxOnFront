@@ -48,34 +48,44 @@ birthDate: this.birthDate -->
   </section>
 </template>
 <script>
-import { reactive } from "@vue/reactivity";
-import axios from "axios";
+import { reactive } from 'vue';
+import axios from 'axios';
 
 export default {
   setup() {
     const state = reactive({
-      id: "",
-      password: "",
-      name: "",
-      gender: "",
-      phone: "",
-      address: "",
-      birthday: "",
+      id: '',
+      password: '',
+      name: '',
+      gender: '',
+      phone: '',
+      address: '',
+      birthday: '',
     });
 
     const signUp = () => {
-      axios.post("https://sbbro.xyz/api/auth/users", {
-        id: state.id,
-        password: state.password,
-        name: state.name,
-        gender: state.gender,
-        role: 1,
-        birthDate: "19970831",
-        phoneNumber: state.phoneNumber,
-        address: state.address,
-      }).then((response)=>{
-        console.log(response)
-      })
+      axios
+        .post('https://sbbro.xyz/api/auth/users', {
+          id: state.id,
+          password: state.password,
+          name: state.name,
+          gender: state.gender,
+          role: 1,
+          birthDate: state.birthday,
+          phoneNumber: state.phoneNumber,
+          address: state.address,
+        })
+        .then(response => {
+          axios
+            .post('https://sbbro.xyz/api/chat/user', {
+              userId: state.id,
+              userName: state.name,
+            })
+            .then(response => {
+              console.log(response);
+            });
+          console.log(response);
+        });
     };
     return { state, signUp };
   },

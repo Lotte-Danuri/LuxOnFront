@@ -41,7 +41,7 @@
             <p>고객센터</p>
           </li>
           <li>
-            <router-link to="/mypage">
+            <router-link to="/mypage/order">
               <i class="fa-solid fa-user"></i>
               <p>마이페이지</p>
             </router-link>
@@ -51,8 +51,10 @@
             <p>최근본상품</p>
           </li>
           <li>
-            <i class="fa-solid fa-bag-shopping"></i>
-            <p>쇼핑백</p>
+            <router-link :to="{ name: 'cart' }">
+              <i class="fa-solid fa-bag-shopping"></i>
+              <p>쇼핑백</p>
+            </router-link>
           </li>
         </ul>
 
@@ -83,6 +85,9 @@
 <script>
 import { reactive } from 'vue';
 import { onMounted } from 'vue';
+// import { initializeApp } from 'firebase/app';
+// import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import axios from 'axios';
 
 // const toggleBtn = document.querySelector('.navbar__toogleBtn');
 const menu = document.querySelector('.navbar__menu');
@@ -97,6 +102,73 @@ export default {
 
     onMounted(() => {
       state.localStorage = localStorage;
+      if (localStorage.getItem('loginId') !== null) {
+        // const cors = require('cors')
+
+        // const corsOption = {
+        //   origin: 'http://localhost:8080',
+        //   credentials: true
+        // }
+
+        // createApp(App).use(cors(corsOption))
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: 'AIzaSyAHFnEL7qoOi2fQB9opoZeOFFy9MUH7GDM',
+          authDomain: 'luxon-c4fb2.firebaseapp.com',
+          projectId: 'luxon-c4fb2',
+          storageBucket: 'luxon-c4fb2.appspot.com',
+          messagingSenderId: '626968263040',
+          appId: '1:626968263040:web:874cdbaa275151e4daa965',
+          measurementId: 'G-ST05ZTCPJB',
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const messaging = getMessaging(app);
+        Notification.requestPermission().then(permission => {
+          console.log('permission ', permission);
+          if (permission !== 'granted') {
+            alert('알림을 허용해주세요');
+          }
+        });
+
+        // TODO: Send token to server for send notification
+        getToken(messaging, {
+          vapidKey:
+            'BOX3DLO4QFmqhmQwbOUtXGFXqeGizpGhDx5GQ1WnkDTqp9nFRDc5WC1YK8VpJQ23SgOiiYvgygoQK2HvJ9b_U5c',
+        })
+          .then(currentToken => {
+            if (currentToken) {
+              axios
+                .post(
+                  'https://sbbro.xyz/api/chat/user/fcmToken',
+                  {
+                    userId: localStorage.getItem('loginId'),
+                    fcmToken: currentToken,
+                  },
+                  {
+                    headers: {
+                      Authorization: `Bearer ` + localStorage.getItem('token'),
+                      contentType: 'application/json',
+                    },
+                  },
+                )
+                .catch(err => console.log(err));
+            } else {
+              console.log(
+                'No registration token available. Request permission to generate one.',
+              );
+            }
+          })
+          .catch(err => {
+            console.log('An error occurred while retrieving token. ', err);
+          });
+
+        // Handle received push notification at foreground
+        onMessage(messaging, payload => {
+          console.log(payload);
+          alert(payload.data.message);
+        });
+      }
     });
 
     const btnClick = () => {

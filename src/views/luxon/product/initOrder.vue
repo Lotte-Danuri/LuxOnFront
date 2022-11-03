@@ -15,7 +15,7 @@
             <div>
               <div class="small_grid">
                 받는분
-                <p id="insertAddress">주소를 입력해 주세요</p>
+                <p id="insertAddress">{{ state.userInfo.address }}</p>
                 <button
                   style="
                     width: 100px;
@@ -87,12 +87,12 @@
             <div class="custom_info">
               <div class="small_grid">
                 이름
-                <input value="양준혁" />
+                <input :value="state.userInfo.name" />
               </div>
-              <div class="small_grid">
+              <!-- <div class="small_grid">
                 이메일 주소
                 <input value="lotte@luxon.com" />
-              </div>
+              </div> -->
               <div class="small_grid">
                 휴대폰 번호
                 <div>
@@ -105,7 +105,7 @@
                   </select>
                   <input
                     style="margin-left: 10px; width: 323px"
-                    value="양준혁"
+                    :value="state.userInfo.phoneNumber"
                   />
                 </div>
               </div>
@@ -120,20 +120,24 @@
             <h2 style="font-weight: bold">주문상품</h2>
             <hr />
             <br />
-            <div class="order_product_grid">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/696/221019003338696.jpg?RS=120&SP=1"
-              />
+            <div
+              class="order_product_grid"
+              v-for="product in products"
+              :key="product"
+            >
+              <img :src="product.productDto.thumbnailUrl" />
               <div>
-                <p style="font-weight: bold">PHILIPP PLEIN GOLF</p>
-                <p>[Men] 샤인 헤비 다운 베스트</p>
+                <p style="font-weight: bold">{{ product.brandName }}</p>
+                <p>{{ product.productDto.productName }}</p>
                 <p>블랙/S</p>
               </div>
               <div>
-                <p>1개 주문</p>
+                <p>{{ product.quantity }}개 주문</p>
               </div>
               <div>
-                <p style="font-weight: bold">1,150,000원</p>
+                <p style="font-weight: bold">
+                  {{ comma(product.productDto.price * product.quantity) }}원
+                </p>
               </div>
             </div>
             <hr style="border: 3px solid gray" />
@@ -143,12 +147,12 @@
           <br />
           <div class="small_aside_grid">
             <div style="font-weight: bold; color: gray">상품금액</div>
-            <div style="margin-left: 30%">1,000,000원</div>
+            <div style="margin-left: 30%">{{ comma(state.totalPrice) }} 원</div>
           </div>
           <hr />
           <div class="small_aside_grid">
             <div style="font-weight: bold; color: gray">배송비</div>
-            <div style="margin-left: 30%">0원</div>
+            <div style="margin-left: 30%">{{ comma(state.delivaryFee) }}원</div>
           </div>
           <hr style="border: 4px solid black" />
           <br /><br />
@@ -162,7 +166,7 @@
                 color: goldenrod;
               "
             >
-              2,000,000원
+              {{ comma(state.totalPrice + state.delivaryFee) }}원
             </div>
           </div>
           <hr />
@@ -175,6 +179,7 @@
               margin-left: 15%;
               color: white;
             "
+            @click="order"
           >
             결제하기
           </button>
@@ -184,34 +189,124 @@
   </main>
 </template>
 <script>
+import { computed, reactive } from "@vue/reactivity";
+import { onBeforeMount } from "@vue/runtime-core";
+import axios from "axios";
+import router from "@/router";
+import Swal from "sweetalert2";
+import { useRoute } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
+
 export default {
   components: {},
-  data() {
-    return {
-      example: '',
+  setup() {
+    const route = useRoute();
+    const products = computed(() => JSON.parse(route.params.products));
+    const state = reactive({
+      userInfo: "",
+      order: "",
+      totalPrice: 0,
+      totalQuantity: 0,
+      delivaryFee: 5000,
+    });
+
+    onBeforeMount(async () => {
+      await router.isReady();
+
+      console.log(router.params);
+      if (localStorage.getItem("token") == null) {
+        Swal.fire("로그인 해주세요").then(() => {
+          router.push("/login");
+        });
+      }
+
+      axios
+        .get("https://sbbro.xyz/api/member/members", {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          state.userInfo = response.data;
+        });
+    });
+
+    onMounted(async () => {
+      await router.isReady();
+      console.log(products);
+      state.totalPrice = 0;
+      state.totalQuantity = 0;
+      for (var index in products.value) {
+        state.totalPrice +=
+          products.value[index].quantity *
+          products.value[index].productDto.price;
+        state.totalQuantity += products.value[index].quantity;
+      }
+    });
+
+    const order = () => {
+      Swal.fire({
+        title: "결제 하시겠습니까?",
+        icon: "success",
+        showCancelButton: true,
+        confirmButtonText: "네",
+        cancelButtonText: "아니요",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          var orderDataDtoList = new Array();
+          for (var index in products.value) {
+            var jsonTemp = new Object();
+            jsonTemp.productId = products.value[index].productDto.id;
+            jsonTemp.productName = products.value[index].productDto.productName;
+            jsonTemp.productQuantity = products.value[index].quantity;
+            jsonTemp.productPrice = products.value[index].productDto.price;
+            orderDataDtoList.push(jsonTemp);
+          }
+          axios
+            .post(
+              `https://sbbro.xyz/api/order/orders/pays`,
+              {
+                buyerId: state.userInfo.id,
+                totalPrice: state.totalPrice,
+                totalQuantity: state.totalQuantity,
+                orderDataDtoList: orderDataDtoList,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ` + localStorage.getItem("token"),
+                },
+              }
+            )
+            .then((response) => {
+              alert("주문 완료되었습니다.");
+              router.push("/main");
+            });
+        }
+      });
     };
-  },
-  beforeCreate() {},
-  created() {},
-  beforeMount() {},
-  mounted() {},
-  beforeUpdate() {},
-  updated() {},
-  beforeUnmount() {},
-  unmounted() {},
-  methods: {
-    openPost() {
-      new daum.Postcode({
-        oncomplete: function (data) {
-          console.log(data);
-          document.getElementById('insertAddress').innerText = data.address;
-        },
-      }).open();
-    },
-    showAlert() {
-      // Use sweetalert2
-      this.$swal('적용 되었습니다');
-    },
+
+    const showAlert = () => {
+      this.$swal("적용 되었습니다");
+    };
+
+    const comma = (val) => {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+    const calculatePrice = (product, cnt) => {
+      product.quantity = product.quantity + cnt;
+      if (product.quantity < 1) product.quantity = 1;
+    };
+
+    return {
+      state,
+      products,
+      comma,
+      showAlert,
+      calculatePrice,
+      order,
+    };
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-if="msg.sendBy === 'Test1'"
+      v-if="msg.sendBy === state.localStorage.loginId"
       class="chat__mymessage"
       :class="[isSame ? '' : 'chat__first']"
     >
@@ -27,7 +27,21 @@
 </template>
 
 <script>
+import { reactive } from 'vue';
+import { onMounted } from 'vue';
 export default {
+  setup() {
+    const state = reactive({
+      localStorage: '',
+    });
+    onMounted(() => {
+      state.localStorage = localStorage;
+    });
+
+    return {
+      state,
+    };
+  },
   props: ['msg', 'prev'],
   data() {
     return {
