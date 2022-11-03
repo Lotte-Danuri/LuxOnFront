@@ -26,8 +26,7 @@ messaging.setBackgroundMessageHandler(payload => {
   // Customize notification here
   const notificationTitle = 'Background Message Title';
   const notificationOptions = {
-    body: 'Background Message body.',
-    icon: '/firebase-logo.png',
+    sound: './src/assets/so-proud-notification.mp3',
   };
 
   return self.registration.showNotification(
