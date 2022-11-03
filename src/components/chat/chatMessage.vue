@@ -1,26 +1,38 @@
 <template>
   <div>
     <div
-      v-if="msg.sendBy === state.localStorage.loginId"
+      v-if="msg.sendBy === state.localStorage.login_id"
       class="chat__mymessage"
       :class="[isSame ? '' : 'chat__first']"
     >
       <p class="chat__mymessage__time">{{ msg.createdAt.substr(11, 5) }}</p>
-      <p class="chat__mymessage__paragraph" v-if="msg.contentType == '메세지'">
+      <div
+        class="chat__mymessage__paragraph"
+        v-if="msg.contentType == '메세지'"
+      >
         {{ msg.content }}
-      </p>
-      <div class="chat__mymessage__image" v-if="msg.contentType == '이미지'">
+      </div>
+      <div
+        class="chat__mymessage__image"
+        v-else-if="msg.contentType == '이미지'"
+      >
         <div class="image-container">
           <img v-if="msg.source" :src="`${msg.source}`" />
         </div>
       </div>
       <div
         class="chat__mymessage__paragraph"
-        v-if="msg.contentType == '쿠폰'"
+        v-else-if="msg.contentType == '쿠폰'"
         @load="getCouponInfo(msg.source)"
       >
-        <div class="chat__mymessage__coupon"></div>
+        <div class="chat__mymessage__coupon">
+          <p>{{ coupon.name }}</p>
+        </div>
       </div>
+      <div
+        class="chat__mymessage__paragraph"
+        v-else-if="msg.contentType == '프로모션'"
+      ></div>
     </div>
     <div
       v-else

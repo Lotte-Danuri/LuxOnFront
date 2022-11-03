@@ -156,7 +156,7 @@ export default {
     },
   },
   mounted() {
-    this.userId = localStorage.getItem('loginId');
+    this.userId = localStorage.getItem('login_id');
     this.listLoading = setInterval(() => {
       this.getRoomDatas();
     }, 1000);
