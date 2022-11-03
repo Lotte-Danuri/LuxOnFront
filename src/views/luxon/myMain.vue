@@ -175,9 +175,128 @@
       </swiper>
     </div>
   </section>
+  <section style="margin-top: 50px" class="coupon_cls" id="coupon_cls">
+    <div class="container" style="margin-left: 15%">
+      <h1 style="margin-left: -200px">Coupon</h1>
+      <br /><br />
+      <swiper
+        class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
+        :modules="moudles"
+        :space-between="20"
+        :loop="true"
+        :pagination="{ clickable: true }"
+        :autoplay="{
+          delay: 2000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }"
+        @click="showAlert"
+        style="width: 2356px; margin-left: calc(-100vw + 110%) !important"
+      >
+        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
+          <div class="coupon_grid">
+            <div class="item color1">
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>쿠폰8</p>
+              </span>
+            </div>
+            <div class="item color2">
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>쿠폰2</p>
+              </span>
+            </div>
+            <div class="item color3">
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/042/00/220900000284042.jpg?cVer=31105127&RS=400&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>쿠폰3</p>
+              </span>
+            </div>
+            <div class="item color4">
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>쿠폰4</p>
+              </span>
+            </div>
+            <div class="item color5">
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>쿠폰5</p>
+              </span>
+            </div>
+          </div>
+        </swiper-slide>
+        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
+          <div class="coupon_grid">
+            <div class="item color5">
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>쿠폰6</p>
+              </span>
+            </div>
+            <div class="item color6">
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/042/00/220900000284042.jpg?cVer=31105127&RS=400&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>쿠폰7</p>
+              </span>
+            </div>
+            <div class="item color7">
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>쿠폰7</p>
+              </span>
+            </div>
+            <div class="item color8">
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>쿠폰8</p>
+              </span>
+            </div>
+            <div class="item color9">
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
+                alt="image"
+              />
+              <span>
+                <p>쿠폰9</p>
+              </span>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper>
+    </div>
+  </section>
   <section id="recommend_cls" class="recommend_cls">
     <div class="container" style="margin-left: 15%">
-      <h1 style="margin-left: -200px">Recommended</h1>
+      <h1 style="margin-left: -200px">Recommend</h1>
       <br /><br />
       <swiper
         class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
@@ -263,8 +382,8 @@
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import SwiperCore, { EffectCube, Pagination, Autoplay } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/pagination';
+// import 'swiper/css';
+// import 'swiper/css/pagination';
 import { ref } from 'vue';
 
 import { reactive } from 'vue';
@@ -390,10 +509,10 @@ export default {
         document.getElementById('favorite_cls').style.transform =
           'translateY(0)';
       }
-      if (nowScroll < 700) {
+      if (nowScroll < 1000) {
         document.getElementById('recommend_cls').style.opacity = '0';
       }
-      if (nowScroll > 1000) {
+      if (nowScroll > 2000) {
         document.getElementById('recommend_cls').style.opacity = '1';
         document.getElementById('recommend_cls').style.transform =
           'translateY(0)';
@@ -407,6 +526,12 @@ export default {
 };
 </script>
 
+<style>
+.swiper-pagination-bullets span {
+  background-color: black;
+}
+</style>
+
 <style scoped>
 .firstSwiper {
   width: 100%;
@@ -416,9 +541,9 @@ export default {
   background-size: cover;
 }
 
-.firstSwiper img {
+/* .firstSwiper img {
   margin-left: 1000px;
-}
+} */
 
 /* Position text in the middle of the page/image */
 .bg-text {
@@ -441,6 +566,12 @@ export default {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
+  grid-auto-rows: minmax(25px, auto);
+}
+.coupon_grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
   grid-auto-rows: minmax(25px, auto);
 }
 
