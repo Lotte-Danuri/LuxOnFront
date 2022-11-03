@@ -93,11 +93,12 @@ export default {
               decodeURIComponent(escape(window.atob(response.headers.name))),
             );
             localStorage.setItem('role', response.headers.role);
-            localStorage.setItem('store_id', response.headers.store_id);
+            localStorage.setItem('login_id', response.headers.role);
             if (response.headers.role != 1) {
               window.location.href = '/main';
             } else {
               window.location.href = '/admin/dashboard';
+              localStorage.setItem('store_id', response.headers.store_id);
             }
             // console.log(response.headers);
           }
