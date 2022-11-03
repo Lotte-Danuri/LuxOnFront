@@ -8,6 +8,8 @@ import MyProduct from '@/views/luxon/product/myProduct.vue';
 import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
 import Registration from '@/views/admin/registration.vue';
+import RegiCoupon from '@/views/admin/regiCoupon.vue';
+import GetCoupon from '@/views/admin/getCoupon.vue';
 import MyLogin from '@/views/luxon/auth/myLogin.vue';
 import MyLogout from '@/views/luxon/auth/myLogout.vue';
 import MySignup from '@/views/luxon/auth/mySignup.vue';
@@ -79,16 +81,16 @@ const routes = [
         component: MyPage,
         children: [
           {
-            path:'order',
-            name:'order',
-            component: MyOrder
+            path: 'order',
+            name: 'order',
+            component: MyOrder,
           },
           {
-            path:'like',
-            name:'like',
-            component: MyLike
+            path: 'like',
+            name: 'like',
+            component: MyLike,
           },
-        ]
+        ],
       },
     ],
   },
@@ -105,6 +107,16 @@ const routes = [
         path: '/admin/registration',
         name: 'Registration',
         component: Registration,
+      },
+      {
+        path: '/admin/regiCoupon',
+        name: 'RegiCoupon',
+        component: RegiCoupon,
+      },
+      {
+        path: '/admin/getCoupon',
+        name: 'GetCoupon',
+        component: GetCoupon,
       },
     ],
   },

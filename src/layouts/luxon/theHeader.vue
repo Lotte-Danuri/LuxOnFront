@@ -1,84 +1,86 @@
 <template>
-  <section class="header_top">
-    <nav class="navbar">
-      <div class="navbar__logo">
-        <router-link to="/main"
-          ><img style="margin-left: 10%" src="@/assets/logo/logo_black.png"
-        /></router-link>
-      </div>
-      <ul class="navbar__menu">
-        <div class="wrap">
-          <div class="search">
-            <input
-              type="text"
-              style="height: 36px"
-              class="searchTerm"
-              placeholder="검색어를 입력하세요"
-            />
-            <button type="submit" class="searchButton">
-              <i class="fa fa-search"></i>
-            </button>
-          </div>
+  <header>
+    <section class="header_top">
+      <nav class="navbar">
+        <div class="navbar__logo">
+          <router-link to="/main"
+            ><img style="margin-left: 10%" src="@/assets/logo/logo_black.png"
+          /></router-link>
         </div>
-      </ul>
+        <ul class="navbar__menu">
+          <div class="wrap">
+            <div class="search">
+              <input
+                type="text"
+                style="height: 36px"
+                class="searchTerm"
+                placeholder="검색어를 입력하세요"
+              />
+              <button type="submit" class="searchButton">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </ul>
 
-      <ul class="navbar__icons">
-        <li v-if="state.localStorage.token == null">
-          <router-link to="/login">
-            <i class="fa-solid fa-right-to-bracket"></i>
-            <p>로그인</p>
-          </router-link>
-        </li>
-        <li v-else>
-          <router-link to="/logout">
-            <i class="fa-solid fa-right-to-bracket"></i>
-            <p>로그아웃</p>
-          </router-link>
-        </li>
-        <li>
-          <i class="fa-solid fa-phone"></i>
-          <p>고객센터</p>
-        </li>
-        <li>
-          <router-link to="/mypage/order">
-            <i class="fa-solid fa-user"></i>
-            <p>마이페이지</p>
-          </router-link>
-        </li>
-        <li>
-          <i class="fa-regular fa-clock"></i>
-          <p>최근본상품</p>
-        </li>
-        <li>
-          <router-link :to="{name : 'cart'}">
-            <i class="fa-solid fa-bag-shopping"></i>
-            <p>쇼핑백</p>
-          </router-link>
-        </li>
-      </ul>
+        <ul class="navbar__icons">
+          <li v-if="state.localStorage.token == null">
+            <router-link to="/login">
+              <i class="fa-solid fa-right-to-bracket"></i>
+              <p>로그인</p>
+            </router-link>
+          </li>
+          <li v-else>
+            <router-link to="/logout">
+              <i class="fa-solid fa-right-to-bracket"></i>
+              <p>로그아웃</p>
+            </router-link>
+          </li>
+          <li>
+            <i class="fa-solid fa-phone"></i>
+            <p>고객센터</p>
+          </li>
+          <li>
+            <router-link to="/mypage/order">
+              <i class="fa-solid fa-user"></i>
+              <p>마이페이지</p>
+            </router-link>
+          </li>
+          <li>
+            <i class="fa-regular fa-clock"></i>
+            <p>최근본상품</p>
+          </li>
+          <li>
+            <router-link :to="{ name: 'cart' }">
+              <i class="fa-solid fa-bag-shopping"></i>
+              <p>쇼핑백</p>
+            </router-link>
+          </li>
+        </ul>
 
-      <a href="#" class="navbar__toogleBtn" @click="btnClick">
-        <i class="fas fa-bars"></i>
-      </a>
-    </nav>
-  </section>
-  <section class="header_bottom">
-    <nav class="navbar_bottom">
-      <ul class="navbar__menu" style="margin-left: 200px; font-size: 15px">
-        <li><router-link to="/list">여성</router-link></li>
-        <li><router-link to="/list">남성</router-link></li>
-        <li><router-link to="/list">패션잡화</router-link></li>
-        <li><router-link to="/list">뷰티</router-link></li>
-        <li><router-link to="/list">골프</router-link></li>
-        <li><router-link to="/list">리빙</router-link></li>
-        <li><router-link to="/list">컬쳐</router-link></li>
-        <li><router-link to="/list">아동</router-link></li>
-      </ul>
-      <a href="#" class="navbar__toogleBtn" @click="btnClick">
-        <i class="fas fa-bars"></i>
-      </a>
-    </nav>
-  </section>
+        <a href="#" class="navbar__toogleBtn" @click="btnClick">
+          <i class="fas fa-bars"></i>
+        </a>
+      </nav>
+    </section>
+    <section class="header_bottom">
+      <nav class="navbar_bottom">
+        <ul class="navbar__menu" style="margin-left: 200px; font-size: 15px">
+          <li><router-link to="/list">여성</router-link></li>
+          <li><router-link to="/list">남성</router-link></li>
+          <li><router-link to="/list">패션잡화</router-link></li>
+          <li><router-link to="/list">뷰티</router-link></li>
+          <li><router-link to="/list">골프</router-link></li>
+          <li><router-link to="/list">리빙</router-link></li>
+          <li><router-link to="/list">컬쳐</router-link></li>
+          <li><router-link to="/list">아동</router-link></li>
+        </ul>
+        <a href="#" class="navbar__toogleBtn" @click="btnClick">
+          <i class="fas fa-bars"></i>
+        </a>
+      </nav>
+    </section>
+  </header>
 </template>
 <script>
 import { reactive } from 'vue';
@@ -100,7 +102,7 @@ export default {
 
     onMounted(() => {
       state.localStorage = localStorage;
-      if (localStorage.getItem('loginId') !== null) {
+      if (localStorage.getItem('login_id') !== null) {
         // const cors = require('cors')
 
         // const corsOption = {
@@ -140,7 +142,7 @@ export default {
                 .post(
                   'https://sbbro.xyz/api/chat/user/fcmToken',
                   {
-                    userId: localStorage.getItem('loginId'),
+                    userId: localStorage.getItem('login_id'),
                     fcmToken: currentToken,
                   },
                   {
@@ -188,6 +190,12 @@ export default {
   /* --text-color:
   --background-color:
   --accent-color: */
+}
+
+header {
+  position: sticky;
+  top: 0px;
+  z-index: 999;
 }
 
 .header_bottom {

@@ -5,43 +5,94 @@
 </template>
 
 <script>
-import { reactive, ref } from '@vue/reactivity';
-import { onBeforeMount } from '@vue/runtime-core';
-import likeImg from '@/assets/img/heart_icon.png';
-import unLikeImg from '@/assets/img/heart_icon_unlike.png';
+import { reactive, ref } from "@vue/reactivity";
+import { onBeforeMount } from "@vue/runtime-core";
+import likeImg from "@/assets/img/heart_icon.png";
+import unLikeImg from "@/assets/img/heart_icon_unlike.png";
+import axios from "axios";
+import { prop } from "dom7";
+import { onMounted } from "@vue/runtime-core";
 
 export default {
-  setup() {
+  props: {
+    productCode: String,
+  },
+  setup(props) {
     const state = reactive({
-        buttonCheck : false,
-        imgSrc :'',
-    })
+      buttonCheck: false,
+      imgSrc: "",
+      checkingLike: "",
+      token: localStorage.getItem("token"),
+    });
 
-    onBeforeMount(()=>{
-        if(checkLike()){
+    onBeforeMount(async () => {
+      await checkLike();
+      if (state.checkingLike == true) {
+        state.imgSrc = likeImg;
+        state.buttonCheck = true;
+      } else {
+        state.imgSrc = unLikeImg;
+      }
+    });
+
+    const checkLike = async () => {
+      await axios
+        .post(
+          "https://sbbro.xyz/api/member/likes/check",
+          {
+            productCode: props.productCode,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          state.checkingLike = response.data;
+        });
+    };
+
+    const clickButton = async () => {
+      console.log(state.buttonCheck);
+      if (state.buttonCheck == false) {
+        await axios
+          .post(
+            "https://sbbro.xyz/api/member/likes",
+            {
+              productCode: props.productCode,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + state.token,
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response);
+            state.buttonCheck = !state.buttonCheck;
             state.imgSrc = likeImg;
-        }else{
+          });
+      } else {
+        await axios
+          .delete("https://sbbro.xyz/api/member/likes", {
+            data: {
+              productCode: props.productCode,
+            },
+            headers: {
+              Authorization: "Bearer " + state.token,
+            },
+          })
+          .then((response) => {
+            console.log(response);
+            state.buttonCheck = !state.buttonCheck;
             state.imgSrc = unLikeImg;
-        }
-    })
+          });
+      }
+    };
 
-    const checkLike = ()=>{
-        return state.buttonCheck;
-    }
-
-    const clickButton= ()=>{
-        console.log(state.buttonCheck)
-        if(state.buttonCheck == false){
-            state.buttonCheck = !state.buttonCheck
-            state.imgSrc = likeImg
-        }
-        else{
-            state.buttonCheck = !state.buttonCheck
-            state.imgSrc = unLikeImg;
-        }
-    }
-
-    return {state, clickButton, checkLike,};
+    return { state, clickButton, checkLike };
   },
 };
 </script>

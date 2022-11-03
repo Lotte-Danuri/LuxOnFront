@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style scoped>
-.v-enter-active,
+/* .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
 }
@@ -62,5 +62,5 @@ export default {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
-}
+} */
 </style>
