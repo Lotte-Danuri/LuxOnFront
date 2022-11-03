@@ -93,7 +93,7 @@ export default {
               decodeURIComponent(escape(window.atob(response.headers.name))),
             );
             localStorage.setItem('role', response.headers.role);
-            localStorage.setItem('login_id', response.headers.role);
+            localStorage.setItem('login_id', response.headers.login_id);
             if (response.headers.role != 1) {
               window.location.href = '/main';
             } else {
