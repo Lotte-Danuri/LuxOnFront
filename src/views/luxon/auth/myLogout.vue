@@ -9,7 +9,9 @@ export default {
     onBeforeMount(() => {
       localStorage.removeItem('token');
       localStorage.removeItem('userName');
-      localStorage.removeItem('loginId');
+      localStorage.removeItem('role');
+      localStorage.removeItem('store_id');
+      localStorage.removeItem('userinfo');
       window.location.href = '/main';
     });
     return {};

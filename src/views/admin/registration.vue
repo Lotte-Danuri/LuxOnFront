@@ -1,8 +1,7 @@
 <template>
   <main>
     <div class="regi">
-      <h2>상품 등록</h2>
-
+      <h1>상품 등록</h1>
       <br />
       <input
         type="text"
@@ -30,58 +29,47 @@
       <br />
       <input
         type="text"
-        placeholder="스토어 ID를 입력하세요"
-        name="storeId"
-        id="storeId"
-        required
-      />
-      <br />
-      <input
-        type="text"
         placeholder="상품 코드를 입력하세요"
         name="productCode"
         id="productCode"
         required
       />
       <br />
-      <input
-        type="text"
-        placeholder="Enter categoryFirstId"
-        name="categoryFirstId"
-        id="categoryFirstId"
-        required
-      />
-      <select>
-        <option v-for="category in categoryList" :key="i">
-          {{ category.id }}
+      <select @change="changeCategoryFirst($event)" id="first_select">
+        <option>첫번째 카테고리를 선택해주세요</option>
+        <option v-for="(category, i) in categoryList" :key="i" :value="i">
+          <p>{{ category.categoryName }}</p>
+          <div :id="`${category.id}`" style="dispaly: none"></div>
         </option>
       </select>
       <br />
-      <input
-        type="text"
-        placeholder="Enter categorySecondId"
-        name="categorySecondId"
-        id="categorySecondId"
-        required
-      />
-      <select>
-        <option v-for="categorySecondDtoList in category" :key="j">
-          {{ categorySecondDtoList.id }}
+      <br />
+      <select @change="changeCategorySecond($event)" id="second_select">
+        <option>두번째 카테고리를 선택해주세요</option>
+        <option
+          v-for="(categorySecond, i) in categorySecondList"
+          :key="i"
+          :value="i"
+        >
+          <p>{{ categorySecond.categoryName }}</p>
+          <p :id="`${categorySecond.id}`" style="dispaly: none"></p>
         </option>
       </select>
       <br />
-      <input
-        type="text"
-        placeholder="Enter categoryThirdId"
-        name="categoryThirdId"
-        id="categoryThirdId"
-        required
-      />
-      <select>
-        <option v-for="categoryThirdDtoList in categorySecondDtoList" :key="k">
-          {{ categorySecondDtoList.id }}
+      <br />
+      <select id="third_select" @change="changeCategoryThird()">
+        <option>세번째 카테고리를 선택해주세요</option>
+        <option
+          v-for="(categoryThird, i) in categoryThirdList"
+          :key="i"
+          :value="i"
+        >
+          <p>{{ categoryThird.categoryName }}</p>
+          <p :id="`${categoryThird.id}`" style="dispaly: none"></p>
         </option>
       </select>
+      <br />
+      <br />
       <br />
       <br />
       <input
@@ -118,14 +106,14 @@
   </main>
 </template>
 <script>
-import { reactive } from 'vue';
-import { onBeforeMount } from 'vue';
 import axios from 'axios';
 
 export default {
   data() {
     return {
       categoryList: [],
+      categorySecondList: [],
+      categoryThirdList: [],
     };
   },
   created() {
@@ -137,26 +125,24 @@ export default {
       console.log(this.categoryList);
     },
     regiProduct() {
+      let sel_1 = document.getElementById('first_select');
+      let fistValue = sel_1.options[sel_1.selectedIndex].childNodes[1].id;
+      let sel_2 = document.getElementById('second_select');
+      let secondValue = sel_2.options[sel_2.selectedIndex].childNodes[1].id;
+      let sel_3 = document.getElementById('third_select');
+      let thirdValue = sel_3.options[sel_3.selectedIndex].childNodes[1].id;
+
       const formdata = new FormData();
-      formdata.append(
-        'categoryFirstId',
-        document.getElementById('categoryFirstId').value,
-      );
-      formdata.append(
-        'categorySecondId',
-        document.getElementById('categorySecondId').value,
-      );
-      formdata.append(
-        'categoryThirdId',
-        document.getElementById('categoryThirdId').value,
-      );
+      formdata.append('categoryFirstId', fistValue);
+      formdata.append('categorySecondId', secondValue);
+      formdata.append('categoryThirdId', thirdValue);
       formdata.append(
         'productName',
         document.getElementById('productName').value,
       );
       formdata.append('price', document.getElementById('price').value);
       formdata.append('stock', document.getElementById('stock').value);
-      formdata.append('storeId', document.getElementById('storeId').value);
+      formdata.append('storeId', localStorage.getItem('store_id'));
       formdata.append(
         'productCode',
         document.getElementById('productCode').value,
@@ -185,6 +171,22 @@ export default {
           console.log(response);
           console.log(formdata);
         });
+    },
+    changeCategoryFirst(event) {
+      this.categorySecondList =
+        this.categoryList[event.target.value].categorySecondDtoList;
+      let sel = document.getElementById('first_select');
+      alert(sel.options[sel.selectedIndex].childNodes[1].id);
+    },
+    changeCategorySecond(event) {
+      this.categoryThirdList =
+        this.categorySecondList[event.target.value].categoryThirdDtoList;
+      let sel = document.getElementById('second_select');
+      alert(sel.options[sel.selectedIndex].childNodes[1].id);
+    },
+    changeCategoryThird() {
+      let sel = document.getElementById('third_select');
+      alert(sel.options[sel.selectedIndex].childNodes[1].id);
     },
   },
 };

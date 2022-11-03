@@ -7,7 +7,7 @@
         </div>
         <div style="margin-left: 10%">
           <span>
-            <div style="display: flex; justify-content: space-between;">
+            <div style="display: flex; justify-content: space-between">
               <p>상품코드 {{ state.productCode }}</p>
               <button>
                 <like-button v-bind:productCode ="state.productCode"></like-button>
@@ -135,22 +135,22 @@
   </main>
 </template>
 <script>
-import { reactive } from "@vue/reactivity";
-import { onBeforeMount } from "@vue/runtime-core";
-import { useRoute } from "vue-router";
-import axios from "axios";
-import router from "@/router";
-import Swal from "sweetalert2";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import { useRoute } from 'vue-router';
+import axios from 'axios';
+import router from '@/router';
+import Swal from 'sweetalert2';
 import LikeButton from '@/components/button/likeButton.vue';
 
 export default {
-  components: {LikeButton},
+  components: { LikeButton },
   setup() {
     const state = reactive({
-      productCode: "",
+      productCode: '',
       products: [],
       sumPrice: 0,
-      productId: "",
+      productId: '',
       quantity: 0,
     });
 
@@ -158,24 +158,24 @@ export default {
       var route = useRoute();
       state.productCode = route.query.productCode;
       axios
-        .get("https://sbbro.xyz/api/product/products/list/" + state.productCode)
-        .then((response) => {
+        .get('https://sbbro.xyz/api/product/products/list/' + state.productCode)
+        .then(response => {
           if (response.status == 200) {
             state.products = response.data;
             console.log(state.products);
             state.sumPrice =
-              document.getElementById("countValue").value *
+              document.getElementById('countValue').value *
               state.products[0].price;
           }
         })
         .catch(() => {
-          alert("해당 상품은 조회할 수 없습니다.");
+          alert('해당 상품은 조회할 수 없습니다.');
           history.back();
         });
     });
 
-    const comma = (val) => {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const comma = val => {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
     const minusBtn = () => {
@@ -195,12 +195,12 @@ export default {
     };
 
     const loginCheck = () => {
-      if (localStorage.getItem("token") == null) {
+      if (localStorage.getItem('token') == null) {
         Swal.fire({
-          title: "로그인 해주세요",
-          icon: "error",
+          title: '로그인 해주세요',
+          icon: 'error',
           showCancelButton: false,
-          confirmButtonText: "확인",
+          confirmButtonText: '확인',
         }).then(() => {
           return false;
         });
@@ -213,28 +213,28 @@ export default {
       if (loginCheck() == true) {
         axios
           .post(
-            "https://sbbro.xyz/api/member/cart",
+            'https://sbbro.xyz/api/member/cart',
             {
               productId: state.productId,
               quantity: state.quantity,
             },
             {
               headers: {
-                Authorization: "Bearer " + localStorage.getItem("token"),
+                Authorization: 'Bearer ' + localStorage.getItem('token'),
               },
-            }
+            },
           )
-          .then((response) => {
+          .then(response => {
             if (response.status == 200) {
               Swal.fire({
-                title: "상품이 장바구니에 담겼습니다.",
-                icon: "success",
+                title: '상품이 장바구니에 담겼습니다.',
+                icon: 'success',
                 showCancelButton: true,
-                confirmButtonText: "장바구니로 이동",
-                cancelButtonText: "계속 쇼핑하기",
-              }).then((result) => {
+                confirmButtonText: '장바구니로 이동',
+                cancelButtonText: '계속 쇼핑하기',
+              }).then(result => {
                 if (result.isConfirmed) {
-                  router.push("/cart");
+                  router.push('/cart');
                 }
               });
             }
@@ -247,12 +247,12 @@ export default {
 };
 </script>
 <style scoped>
-input[type="radio"] {
+input[type='radio'] {
   display: none;
   margin: 10px;
 }
 
-input[type="radio"] + label {
+input[type='radio'] + label {
   display: inline-block;
   margin: -2px;
   padding: 8px 19px;
@@ -265,7 +265,7 @@ input[type="radio"] + label {
   white-space: nowrap;
 }
 
-input[type="radio"]:checked + label {
+input[type='radio']:checked + label {
   background-color: #38363656;
 }
 .list_contents {

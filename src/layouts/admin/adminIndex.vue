@@ -3,17 +3,19 @@
     <aside>
       <div class="top">
         <div class="logo">
-          <img
-            src="@/assets/logo/logo_black.png"
-            style="width: 180px; height: 120px; margin-left: 5%"
-          />
+          <router-link to="/main">
+            <img
+              src="@/assets/logo/logo_black.png"
+              style="width: 180px; height: 120px; margin-left: 5%"
+            />
+          </router-link>
           <!-- <h2 class="text-muted">Lux<span class="danger">ON</span></h2> -->
         </div>
         <!-- <div class="close" id="close-btn">
           <span class="material-icons-sharp">close</span>
         </div> -->
       </div>
-      <div class="sidebar" style="height: 1000px">
+      <div class="sidebar" style="height: 1000px; width: 200px">
         <router-link to="/admin/dashBoard">
           <span class="material-icons-sharp">grid_view</span>
           <h3>메인 센터</h3>
@@ -34,11 +36,11 @@
           <span class="material-icons-sharp"> published_with_changes </span>
           <h3>상품 수정</h3>
         </a>
-        <a href="#">
+        <router-link to="/admin/regiCoupon">
           <span class="material-icons-sharp"> offline_bolt </span>
           <h3>프로모션</h3>
           <!-- <span class="message-count">26</span> -->
-        </a>
+        </router-link>
         <a href="#">
           <span class="material-icons-sharp">settings</span>
           <h3>환경설정</h3>
