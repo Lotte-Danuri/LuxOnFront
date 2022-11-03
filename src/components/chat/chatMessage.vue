@@ -14,6 +14,13 @@
           <img v-if="msg.source" :src="`${msg.source}`" />
         </div>
       </div>
+      <div
+        class="chat__mymessage__paragraph"
+        v-if="msg.contentType == '쿠폰'"
+        @load="getCouponInfo(msg.source)"
+      >
+        <div class="chat__mymessage__coupon"></div>
+      </div>
     </div>
     <div
       v-else
@@ -66,6 +73,7 @@ export default {
   data() {
     return {
       isSame: false,
+      coupon: {},
     };
   },
   methods: {
@@ -78,6 +86,7 @@ export default {
         return false;
       }
     },
+    getCouponInfo(couponId) {},
   },
   created() {
     this.isSame = this.isSamePerson(this.msg, this.prev);
