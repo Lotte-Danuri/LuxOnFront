@@ -12,7 +12,11 @@
         <h4>로그인</h4>
         <br />
         <input placeholder="아이디" v-model="state.id" />
-        <input placeholder="비밀번호" v-model="state.password" v-on:keyup.enter="login"/>
+        <input
+          placeholder="비밀번호"
+          v-model="state.password"
+          v-on:keyup.enter="login"
+        />
         <br />
         <button
           @click="login"
@@ -32,9 +36,9 @@
         <naver-login></naver-login>
         <br />
         <br />
-        <button class="socialButton">
+        <!-- <button class="socialButton">
           <img src="@/assets/loginBtn/google_login.png" />
-        </button>
+        </button> -->
         <br />
         <router-link to="/signup">
           <button
@@ -88,8 +92,14 @@ export default {
               'userName',
               decodeURIComponent(escape(window.atob(response.headers.name))),
             );
-            localStorage.setItem('loginId', response.headers.loginid);
-            window.location.href = '/main';
+            localStorage.setItem('role', response.headers.role);
+            localStorage.setItem('store_id', response.headers.store_id);
+            if (response.headers.role != 1) {
+              window.location.href = '/main';
+            } else {
+              window.location.href = '/admin/dashboard';
+            }
+            // console.log(response.headers);
           }
         })
         .catch(response => {
