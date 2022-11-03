@@ -67,7 +67,7 @@
             <th>아이디</th>
         </tr>
         <tr v-for="(user,i) in userList" :key="i">
-            <td><input type="checkbox" :value="user.id" id="i"/></td>
+            <td><input type="checkbox" v-model="userCheckVmodel" :value="user.loginId" id="i"/></td>
             <td>{{ user.name }}</td>
             <td>{{ user.loginId }}</td>
         </tr>
@@ -85,6 +85,7 @@
         couponList: [],
         productList: [],
         couponCheckVmodel: [],
+        userCheckVmodel: [],
         userList: [],
         nickName:"",
       };
@@ -134,27 +135,58 @@
       CouponToUser(){
         if (this.couponCheckVmodel.length>1) {
             alert('사용자에게 최대 한개 쿠폰 발급이 가능합니다.');
-            
+            return;
         }
-        console.log("hihi");
-        // axios
-        //   .post(
-        //     'https://sbbro.xyz/api/chat/chatRoom/chat',
-        //     {
-        //         storeId: localStorage.getItem('store_id'),
-        //         couponList: this.couponCheckVmodel
-        //     },
-        //     {
-        //       headers: {
-        //         Authorization: `Bearer ` + localStorage.getItem('token'),
-        //         'Content-Type': 'application/json',
-        //       },
-        //     },
-        //   )
-        //   .then(response => {
-        //     alert("사용자에게 뿌리기 성공!");
-        //   });
-        //  console.log(this.couponCheckVmodel);
+        if (this.userCheckVmodel.length<2) {
+            axios
+            .post(
+                'https://sbbro.xyz/api/chat/chatRoom/chat',
+                {
+                    id:null,
+                    content: "쿠폰이 도착했습니다",
+                    contentType: "쿠폰",
+                    sendBy: localStorage.getItem("login_id"),
+                    sendTo: this.userCheckVmodel[0],
+                    source: String(this.couponCheckVmodel[0])
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ` + localStorage.getItem('token'),
+                        'Content-Type': 'application/json',
+                    },
+                },
+            )
+            .then(response => {
+                console.log(this.userCheckVmodel);
+                alert("사용자 한명에게 뿌리기 성공!");
+                this.userCheckVmodel = []
+            });
+        }
+        else{
+            axios
+            .post(
+                'https://sbbro.xyz/api/chat/chatRoom/chats',
+                {
+                    id:null,
+                    content: "쿠폰이 도착했습니다",
+                    contentType: "쿠폰",
+                    sendBy: localStorage.getItem("login_id"),
+                    sendTo: this.userCheckVmodel,
+                    source: String(this.couponCheckVmodel[0])
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ` + localStorage.getItem('token'),
+                        'Content-Type': 'application/json',
+                    },
+                },
+            )
+            .then(response => {
+                console.log(this.userCheckVmodel);
+                alert("사용자 여러명에게 뿌리기 성공!");
+                this.userCheckVmodel = []
+            });
+        }
       },
 
       showProduct(coupon){
@@ -178,7 +210,6 @@
           )
           .then(response => {
             this.userList = response.data
-            console.log(this.userList);
           });        
       }
     }
