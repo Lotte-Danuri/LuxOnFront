@@ -114,28 +114,45 @@ export default {
         )
         .catch(err => console.log(err));
     },
-    sendMessage(msg) {
+    sendMessage(msg, type, file) {
       let data = {
         content: msg,
-        contentType: '메세지',
+        contentType: type,
         id: this.selectedChatRoom.chatRoomId,
         sendBy: this.userId,
         sendTo: this.selectedChatRoom.receiverId,
         source: '',
       };
-      axios
-        .post('https://sbbro.xyz/api/chat/chatRoom/chat', data, {
-          headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            contentType: 'application/json',
-          },
-        })
-        .then(res =>
-          res.data.length !== 0
-            ? res.data.forEach(element => this.msgData.push(element))
-            : console.log(),
-        )
-        .catch(err => console.log(err));
+      if (type == '메세지') {
+        axios
+          .post('https://sbbro.xyz/api/chat/chatRoom/chat', data, {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
+            },
+          })
+          .then(res =>
+            res.data.length !== 0
+              ? res.data.forEach(element => this.msgData.push(element))
+              : console.log(),
+          )
+          .catch(err => console.log(err));
+      } else if (type == '이미지') {
+        const fd = new FormData();
+        const js2 = JSON.stringify(data);
+        const blob = new Blob([js2], { type: 'application/json' });
+        fd.append('chatVo', blob);
+        fd.append('imageFile', file);
+        axios
+          .post('https://sbbro.xyz/api/chat/chatRoom/image', fd, {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'multipart/form-data',
+            },
+          })
+          .then(console.log('image send success'))
+          .catch(err => console.log(err));
+      }
     },
   },
   mounted() {
