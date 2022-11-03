@@ -1,5 +1,6 @@
 <template>
-  <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+  <div class="mypage col-12 col-md-9 col-lg-8 offset-lg-1">
+    <h2>주문/배송 조회</h2>
     <!-- Order -->
     <div class="card card-lg mb-5 border">
       <div
@@ -141,4 +142,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.mypage{
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  width:1182px;
+  min-height: 1467px;
+  padding: 40px;
+  box-sizing: border-box;
+  margin-left: 0;
+}
+</style>
