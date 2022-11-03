@@ -211,6 +211,14 @@ export default {
 
     const addCart = () => {
       if (loginCheck() == true) {
+        if(!state.productId){
+          Swal.fire('지점을 선택해주세요')
+          return;
+        }
+        if(state.quantity == 0){
+          Swal.fire('수량을 선택해주세요')
+          return;
+        }
         axios
           .post(
             'https://sbbro.xyz/api/member/cart',
