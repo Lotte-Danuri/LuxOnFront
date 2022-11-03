@@ -20,20 +20,29 @@
               <div class="row align-items-center">
                 <div class="col-3">
                   <!-- Image -->
-                  <a href="htts://sbbro.xyz">
+                  <router-link
+                    :to="{
+                      path: '/product/myProduct',
+                      query: { productCode: product.productDto.productCode },
+                    }"
+                  >
                     <img
                       :src="product.productDto.thumbnailUrl"
                       alt="..."
                       class="img-fluid"
                     />
-                  </a>
+                  </router-link>
                 </div>
                 <div class="col">
                   <!-- Title -->
                   <div class="d-flex mb-2 fw-bold">
-                    <a class="text-body" href="product.html">{{
-                      product.productDto.productName
-                    }}</a>
+                    <router-link
+                      :to="{
+                        path: '/product/myProduct',
+                        query: { productCode: product.productDto.productCode },
+                      }"
+                      >{{ product.productDto.productName }}</router-link
+                    >
                     <span class="ms-auto"
                       >{{ comma(product.productDto.price) }} 원</span
                     >
@@ -91,41 +100,6 @@
               </div>
             </li>
           </ul>
-
-          <!-- Footer -->
-          <div
-            class="row align-items-end justify-content-between mb-10 mb-md-0"
-          >
-            <div class="col-12 col-md-7">
-              <!-- Coupon -->
-              <form class="mb-7 mb-md-0">
-                <label class="form-label fs-sm fw-bold" for="cartCouponCode">
-                  Coupon code:
-                </label>
-                <div class="row row gx-5">
-                  <div class="col">
-                    <!-- Input -->
-                    <input
-                      id="cartCouponCode"
-                      class="form-control form-control-sm"
-                      type="text"
-                      placeholder="Enter coupon code*"
-                    />
-                  </div>
-                  <div class="col-auto">
-                    <!-- Button -->
-                    <button class="btn btn-sm btn-dark" type="submit">
-                      Apply
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="col-12 col-md-auto">
-              <!-- Button -->
-              <button class="btn btn-sm btn-outline-dark">Update Cart</button>
-            </div>
-          </div>
         </div>
         <div class="col-12 col-md-5 col-lg-4 offset-lg-1">
           <!-- Total -->
@@ -165,11 +139,6 @@
           >
             주문하기
           </button>
-
-          <!-- Link -->
-          <a class="btn btn-link btn-sm px-0 text-body" href="shop.html">
-            <i class="fe fe-arrow-left me-2"></i> Continue Shopping
-          </a>
         </div>
       </div>
     </div>
@@ -238,6 +207,8 @@ export default {
     };
 
     const removeProduct = (index) => {
+      console.log(index);
+      console.log(state.products[index].id);
       Swal.fire({
         title: "삭제하시겠습니까?",
         text: "",
@@ -249,30 +220,42 @@ export default {
         cancelButtonText: "아니요",
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("장바구니에서 삭제되었습니다.", "", "success");
-          state.products.pop(index);
+          axios
+            .delete("https://sbbro.xyz/api/member/cart", {
+              data: {
+                id: state.products[index].id,
+              },
+              headers: {
+                Authorization: `Bearer ` + localStorage.getItem("token"),
+              },
+            })
+            .then(() => {
+              Swal.fire("장바구니에서 삭제되었습니다.", "", "success");
+              state.products = state.products.filter(function (product) {
+                return product.id != state.products[index].id;
+              });
+            });
         }
       });
     };
 
     const addOrder = (products) => {
-        Swal.fire({
-            title: "주문 하시겠습니까?",
+      Swal.fire({
+        title: "주문 하시겠습니까?",
         icon: "success",
         showCancelButton: true,
         confirmButtonText: "네",
         cancelButtonText: "아니요",
-    }).then((result) => {
+      }).then((result) => {
         if (result.isConfirmed) {
-            router.push({
-              name: "initOrder",
-              params: {
-            products : JSON.stringify(state.products)},
-            });
+          router.push({
+            name: "initOrder",
+            params: {
+              products: JSON.stringify(state.products),
+            },
+          });
         }
       });
-
-      
     };
 
     return {
