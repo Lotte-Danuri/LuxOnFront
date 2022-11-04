@@ -38,7 +38,12 @@
         </a>
         <router-link to="/admin/regiCoupon">
           <span class="material-icons-sharp"> offline_bolt </span>
-          <h3>프로모션</h3>
+          <h3>쿠폰 등록</h3>
+          <!-- <span class="message-count">26</span> -->
+        </router-link>
+        <router-link to="/admin/getCoupon">
+          <span class="material-icons-sharp"> offline_bolt </span>
+          <h3>쿠폰 뿌리기</h3>
           <!-- <span class="message-count">26</span> -->
         </router-link>
         <a href="#">
