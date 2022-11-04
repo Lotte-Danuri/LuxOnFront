@@ -85,8 +85,8 @@
 <script>
 import { reactive } from 'vue';
 import { onMounted } from 'vue';
-// import { initializeApp } from 'firebase/app';
-// import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { initializeApp } from 'firebase/app';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import axios from 'axios';
 
 // const toggleBtn = document.querySelector('.navbar__toogleBtn');
@@ -102,7 +102,7 @@ export default {
 
     onMounted(() => {
       state.localStorage = localStorage;
-      if (localStorage.getItem('loginId') !== null) {
+      if (localStorage.getItem('login_id') !== null) {
         // const cors = require('cors')
 
         // const corsOption = {
@@ -142,7 +142,7 @@ export default {
                 .post(
                   'https://sbbro.xyz/api/chat/user/fcmToken',
                   {
-                    userId: localStorage.getItem('loginId'),
+                    userId: localStorage.getItem('login_id'),
                     fcmToken: currentToken,
                   },
                   {

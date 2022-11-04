@@ -1,8 +1,9 @@
 <template>
   <div class="form">
-    <button class="btn" @click="submitMessage">
+    <input class="btn" id="img-input" type="file" @change="submitImage" />
+    <label for="img-input" accept="image/*">
       <i class="bi bi-image" style="color: grey"></i>
-    </button>
+    </label>
     <input
       class="form__input"
       type="text"
@@ -51,10 +52,14 @@ export default {
   methods: {
     submitMessage() {
       if (this.msg) {
-        this.$emit('submitMessage', this.msg);
+        this.$emit('submitMessage', this.msg, '메세지', null);
         this.msg = '';
       }
       return;
+    },
+    submitImage(e) {
+      var photoFile = e.target.files;
+      this.$emit('submitMessage', '이미지 파일', '이미지', photoFile[0]);
     },
   },
 };
@@ -93,5 +98,21 @@ svg {
 
 svg:hover {
   fill: #999999;
+}
+
+label {
+  padding-top: 6px;
+  font-size: large;
+}
+
+input[type='file'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 </style>
