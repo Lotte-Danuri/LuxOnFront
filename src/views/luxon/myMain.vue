@@ -2,7 +2,6 @@
   <section>
     <swiper
       class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-      :modules="moudles"
       :space-between="20"
       :loop="true"
       :pagination="{ clickable: true }"
@@ -65,7 +64,6 @@
       <br /><br />
       <swiper
         class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-        :modules="moudles"
         :space-between="20"
         :loop="true"
         :pagination="{ clickable: true }"
@@ -112,7 +110,7 @@
               </span>
             </div>
             <div class="item color4">
-              <button
+              <!-- <button
                 style="
                   position: absolute;
                   right: 0px;
@@ -121,7 +119,7 @@
                 "
               >
                 <like-button></like-button>
-              </button>
+              </button> -->
               <img
                 src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
                 alt="image"
@@ -191,7 +189,6 @@
       <br /><br />
       <swiper
         class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-        :modules="moudles"
         :space-between="20"
         :loop="true"
         :pagination="{ clickable: true }"
@@ -310,7 +307,6 @@
       <br /><br />
       <swiper
         class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-        :modules="moudles"
         :space-between="20"
         :loop="true"
         :pagination="{ clickable: true }"
@@ -395,17 +391,17 @@ import SwiperCore, { EffectCube, Pagination, Autoplay } from 'swiper';
 // import 'swiper/css';
 // import 'swiper/css/pagination';
 import { ref } from 'vue';
-
+// import router from '@/router';
 import { reactive } from 'vue';
 import { onBeforeMount } from 'vue';
 import axios from 'axios';
 
-import LikeButton from '@/components/button/likeButton.vue';
+// import LikeButton from '@/components/button/likeButton.vue';
 
 SwiperCore.use([EffectCube, Pagination, Autoplay]);
 
 export default {
-  components: { Swiper, SwiperSlide, LikeButton },
+  components: { Swiper, SwiperSlide },
   setup() {
     const swiperTextBase = ref([
       {
@@ -480,16 +476,16 @@ export default {
     });
 
     onBeforeMount(() => {
-      axios
-        .get('https://sbbro.xyz/api/recommend/recommends/list', {
-          headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-          },
-        })
-        .then(response => {
-          console.log(response);
-          state.products = response.data;
-        });
+      // axios
+      //   .get('https://sbbro.xyz/api/recommend/recommends/list', {
+      //     headers: {
+      //       Authorization: `Bearer ` + localStorage.getItem('token'),
+      //     },
+      //   })
+      //   .then(response => {
+      //     console.log(response);
+      //     state.products = response.data;
+      //   });
     });
 
     return { swiperTextBase, swiperTextBase2, state };
@@ -510,24 +506,26 @@ export default {
     },
     handleScroll() {
       // console.log(document.querySelector('html').scrollTop);
-      let nowScroll = document.querySelector('html').scrollTop;
-      if (nowScroll < 500) {
-        document.getElementById('favorite_cls').style.opacity = '0';
-        document.getElementById('favorite_cls').style.transform =
-          'translateY(0)';
-      }
-      if (nowScroll > 500) {
-        document.getElementById('favorite_cls').style.opacity = '1';
-        document.getElementById('favorite_cls').style.transform =
-          'translateY(0)';
-      }
-      if (nowScroll < 1000) {
-        document.getElementById('recommend_cls').style.opacity = '0';
-      }
-      if (nowScroll > 2000) {
-        document.getElementById('recommend_cls').style.opacity = '1';
-        document.getElementById('recommend_cls').style.transform =
-          'translateY(0)';
+      if (window.location.href.includes('main')) {
+        let nowScroll = document.querySelector('html').scrollTop;
+        if (nowScroll < 500) {
+          document.getElementById('favorite_cls').style.opacity = '0';
+          document.getElementById('favorite_cls').style.transform =
+            'translateY(0)';
+        }
+        if (nowScroll > 500) {
+          document.getElementById('favorite_cls').style.opacity = '1';
+          document.getElementById('favorite_cls').style.transform =
+            'translateY(0)';
+        }
+        if (nowScroll < 1000) {
+          document.getElementById('recommend_cls').style.opacity = '0';
+        }
+        if (nowScroll > 2000) {
+          document.getElementById('recommend_cls').style.opacity = '1';
+          document.getElementById('recommend_cls').style.transform =
+            'translateY(0)';
+        }
       }
     },
     showAlert() {
@@ -539,6 +537,10 @@ export default {
 </script>
 
 <style>
+.coupon_cls .swiper-pagination-bullets span {
+  display: none;
+}
+
 .swiper-pagination-bullets span {
   background-color: black;
 }

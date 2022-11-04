@@ -1,9 +1,6 @@
 <template>
   <!-- FOOTER -->
-  <footer
-    class="bg-dark bg-cover"
-    style="background-image: url(./assets/img/patterns/pattern-2.svg)"
-  >
+  <footer class="bg-dark bg-cover" style="">
     <div class="py-12 border-bottom border-gray-700">
       <div class="container" style="height: 200px">
         <div class="row justify-content-center">
@@ -52,10 +49,10 @@
             <!-- Links -->
             <ul class="list-unstyled mb-7 mb-sm-0">
               <li>
-                <a class="text-gray-300" href="./contact-us.html">Contact Us</a>
+                <a class="text-gray-300" href="">Contact Us</a>
               </li>
               <li>
-                <a class="text-gray-300" href="./faq.html">FAQs</a>
+                <a class="text-gray-300" href="">FAQs</a>
               </li>
               <li>
                 <a
@@ -66,9 +63,7 @@
                 >
               </li>
               <li>
-                <a class="text-gray-300" href="./shipping-and-returns.html"
-                  >Shipping & Returns</a
-                >
+                <a class="text-gray-300" href="">Shipping & Returns</a>
               </li>
             </ul>
           </div>
@@ -79,16 +74,16 @@
             <!-- Links -->
             <ul class="list-unstyled mb-7 mb-sm-0">
               <li>
-                <a class="text-gray-300" href="./shop.html">여성</a>
+                <a class="text-gray-300" href="">여성</a>
               </li>
               <li>
-                <a class="text-gray-300" href="./shop.html">남성</a>
+                <a class="text-gray-300" href="">남성</a>
               </li>
               <li>
-                <a class="text-gray-300" href="./shop.html">패션잡화</a>
+                <a class="text-gray-300" href="">패션잡화</a>
               </li>
               <li>
-                <a class="text-gray-300" href="./shop.html">Accessory</a>
+                <a class="text-gray-300" href="">Accessory</a>
               </li>
             </ul>
           </div>
@@ -99,7 +94,7 @@
             <!-- Links -->
             <ul class="list-unstyled mb-0">
               <li>
-                <a class="text-gray-300" href="./about.html">Our Story</a>
+                <a class="text-gray-300" href="">Our Story</a>
               </li>
               <li>
                 <a class="text-gray-300" href="#!">Careers</a>

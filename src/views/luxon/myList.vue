@@ -369,7 +369,6 @@
         <div class="leftSwiper">
           <swiper
             class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-            :modules="moudles"
             :space-between="20"
             :loop="true"
             :pagination="{ clickable: true }"
@@ -407,7 +406,6 @@
         <div class="rightSwiper">
           <swiper
             class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-            :modules="moudles"
             :space-between="20"
             :loop="true"
             :pagination="{ clickable: true }"
@@ -579,7 +577,7 @@ export default {
 
 <style scoped>
 /* Adopt bootstrap pagination stylesheet. */
-@import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css';
+/* @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'; */
 
 /* Write your own CSS for pagination */
 
