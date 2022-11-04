@@ -10,8 +10,6 @@
         <input type="datetime-local" data-placeholder="시작일" id="startDate" />
         <input type="datetime-local" data-placeholder="종료일" id="endDate" />
         <br />
-        <input placeholder="최소주문금액" id="minOrderPrice" />
-        <input placeholder="최대할인금액" id="maxDiscountPrice" />
         <br />
         <!-- <input placeholder="상품선택" /> -->
         <br />
@@ -192,8 +190,6 @@ export default {
       discountRate: 0.0,
       startDate: '',
       endDate: '',
-      minOrderPrice: 0,
-      maxDiscountPrice: 0,
       productIdList: [],
     };
   },
@@ -304,8 +300,6 @@ export default {
       this.discountRate = document.getElementById('discountRate').value;
       this.startDate = Date.parse(document.getElementById('startDate').value);
       this.endDate = Date.parse(document.getElementById('endDate').value);
-      this.minOrderPrice = document.getElementById('minOrderPrice').value;
-      this.maxDiscountPrice = document.getElementById('maxDiscountPrice').value;
       console.log(localStorage.getItem('store_id'));
       axios
         .post(
@@ -317,8 +311,6 @@ export default {
             startDate: new Date(this.startDate),
             endDate: new Date(this.endDate),
             discountRate: this.discountRate,
-            minOrderPrice: this.minOrderPrice,
-            maxDiscountPrice: this.maxDiscountPrice,
             productId: this.productIdList,
           },
           {
@@ -329,8 +321,7 @@ export default {
           },
         )
         .then(response => {
-          console.log(response.data);
-          this.productList = response.data;
+          alert("쿠폰이 등록되었습니다");
         });
     },
     selectAll(event) {
