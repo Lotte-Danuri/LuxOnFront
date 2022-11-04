@@ -488,126 +488,6 @@
               </span>
             </router-link>
           </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/547/220914003112547.jpg?RS=350&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/019/220906003076019.jpg?RS=350&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/973/210917001469973.jpg?RS=300&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/058/221019003343058.jpg?RS=300&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/895/221024003363895.jpg?RS=300&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/024/221026003379024.jpg?RS=300&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/411/221014003312411.jpg?RS=300&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/952/220810002934952.jpg?RS=300&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/478/221024003365478.jpg?RS=300&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/393/220908003092393.jpg?RS=300&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/785/220916003124785.jpg?RS=300&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
-          <div>
-            <img
-              src="https://image.sivillage.com/upload/C00001/goods/org/700/221018003331700.jpg?RS=300&SP=1"
-            />
-            <span>
-              <p>SACAI</p>
-              <p>언발 집업 하이넥 패딩 점퍼</p>
-              <p>￦1,790,000</p>
-            </span>
-          </div>
         </div>
       </div>
     </div>
@@ -702,10 +582,7 @@ export default {
 @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css';
 
 /* Write your own CSS for pagination */
-.pagination {
-}
-.page-item {
-}
+
 .side_menu div h3 {
   margin-bottom: 10px;
   font-weight: bold;

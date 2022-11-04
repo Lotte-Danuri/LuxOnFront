@@ -10,6 +10,8 @@
         <th>쿠폰명</th>
         <th>내용</th>
         <th>할인율</th>
+        <th>최소주문금액</th>
+        <th>최대할인금액</th>
         <th>쿠폰시작일</th>
         <th>쿠폰종료일</th>
         <th>적용상품</th>
@@ -26,6 +28,8 @@
         <td>{{ coupon.name }}</td>
         <td>{{ coupon.contents }}</td>
         <td>{{ coupon.discountRate }}</td>
+        <td>{{ coupon.minOrderPrice }}</td>
+        <td>{{ coupon.maxDiscountPrice }}</td>
         <td>{{ coupon.startDate }}</td>
         <td>{{ coupon.endDate }}</td>
         <td>

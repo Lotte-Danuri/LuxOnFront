@@ -23,7 +23,7 @@
             <div class="bg-text">
               <h2>Winter LuxOn</h2>
               <h1 style="font-size: 50px">Luxury On</h1>
-              <p>겨울 test</p>
+              <p style="color: white; margin-top: 20px">겨울 시즌 리스트</p>
             </div>
             <div style="postion: absolute; margini-top: -100px">
               <img
@@ -112,6 +112,16 @@
               </span>
             </div>
             <div class="item color4">
+              <button
+                style="
+                  position: absolute;
+                  right: 0px;
+                  background-color: transparent;
+                  border: none;
+                "
+              >
+                <like-button></like-button>
+              </button>
               <img
                 src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
                 alt="image"
@@ -390,10 +400,12 @@ import { reactive } from 'vue';
 import { onBeforeMount } from 'vue';
 import axios from 'axios';
 
+import LikeButton from '@/components/button/likeButton.vue';
+
 SwiperCore.use([EffectCube, Pagination, Autoplay]);
 
 export default {
-  components: { Swiper, SwiperSlide },
+  components: { Swiper, SwiperSlide, LikeButton },
   setup() {
     const swiperTextBase = ref([
       {
