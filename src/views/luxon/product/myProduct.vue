@@ -10,7 +10,7 @@
             <div style="display: flex; justify-content: space-between">
               <p>상품코드 {{ state.productCode }}</p>
               <button>
-                <like-button></like-button>
+                <like-button v-bind:productCode ="state.productCode"></like-button>
               </button>
             </div>
             <h1>{{ state.products[0]?.productName }}</h1>
