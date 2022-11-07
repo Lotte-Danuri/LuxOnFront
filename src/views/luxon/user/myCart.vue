@@ -87,14 +87,10 @@
                         </div>
                       </div>
                     </div>
-
                     <!-- Remove -->
-                    <a
-                      class="fs-xs text-gray-400 ms-auto"
-                      @click="removeProduct(index)"
-                    >
-                      <i class="fe fe-x"></i> Remove
-                    </a>
+                      <a @click="removeProduct(index)">
+                        <i class="fa-solid fa-trash"></i>remove
+                      </a>
                   </div>
                 </div>
               </div>
@@ -194,8 +190,6 @@ export default {
               )
               .then((response) => {
                 product.coupons = response.data;
-                product.discountPrice = 0;
-                product.selectedCouponIndex = -1;
               });
           });
         });
