@@ -80,18 +80,27 @@
                             Arial, sans-serif;
                         "
                       >
-                        <button
-                          style="
-                            width: 200px;
-                            height: 50px;
-                            margin-top: 15%;
-                            background-color: black;
-                            color: white;
-                            border-radius: 5px;
-                          "
-                        >
-                          상품상세
-                        </button>
+                      <router-link
+                        :to="{
+                          path: '/product/myProduct',
+                          query: {
+                            productCode: o.productCode,
+                          },
+                        }"
+                      >
+                          <button
+                            style="
+                              width: 200px;
+                              height: 50px;
+                              margin-top: 15%;
+                              background-color: black;
+                              color: white;
+                              border-radius: 5px;
+                            "
+                          >
+                            상품상세
+                          </button>
+                        </router-link>
                       </div>
                     </div>
                   </div>
@@ -143,10 +152,10 @@ export default {
 </script>
 
 <style>
-.mypage{
+.mypage {
   background-color: #fff;
   border: 1px solid #e0e0e0;
-  width:1182px;
+  width: 1182px;
   min-height: 1467px;
   padding: 40px;
   box-sizing: border-box;
