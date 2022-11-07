@@ -4,6 +4,7 @@
   <the-view></the-view>
 
   <TheChat
+    v-if="login"
     style="position: fixed; z-index: 999; right: 30px; bottom: 30px"
     @click="buttonClick"
   ></TheChat>
@@ -35,6 +36,7 @@ export default {
     TheChatApp,
     TheFooter,
   },
+
   created() {
     if (window.location.pathname == '/') {
       router.push('/main');
@@ -43,7 +45,11 @@ export default {
   data: function () {
     return {
       chatShow: false,
+      login: false,
     };
+  },
+  setup() {
+    this.login = localStorage.getItem('login_id') !== null;
   },
   methods: {
     buttonClick() {
@@ -54,7 +60,7 @@ export default {
 </script>
 
 <style scoped>
-/* .v-enter-active,
+.v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
 }
@@ -62,5 +68,5 @@ export default {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
-} */
+}
 </style>
