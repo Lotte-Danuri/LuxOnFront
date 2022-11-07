@@ -127,7 +127,7 @@
 
               <div class="small_grid">
                 쿠폰적용
-                <select
+                <select id="couponSelect"
                   style="
                       width: 300px;
                       height: 30px;
@@ -226,6 +226,9 @@ export default {
     const products = computed(() =>
       route.params.products ? JSON.parse(route.params.products) : null
     );
+    const reserveCouponId = computed(() =>
+      route.params.couponId ? route.params.couponId : null
+    );
     const state = reactive({
       userInfo: "",
       order: "",
@@ -236,16 +239,15 @@ export default {
     });
 
     onBeforeMount(async () => {
-      
       await router.isReady();
-      
+
       isProductsData();
 
       await setProductsCoupon();
-      
+
       await calTotalPriceAndQuantity();
-      
-      console.log(products)
+
+      console.log(products);
 
       loginCheck();
 
@@ -253,10 +255,46 @@ export default {
     });
 
     const setProductsCoupon = async () => {
-      for (var index in products.value) {
-        products.value[index].discountPrice = 0;
-        products.value[index].selectedCouponIndex = -1;
+      if (reserveCouponId != null) {
+        setReserveCoupon();
+        return;
       }
+
+      for (var index in products.value) {
+        await axios
+          .post(
+            "https://sbbro.xyz/api/member/mycoupon/product",
+            {
+              productId: products.value[index].productDto.id,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ` + localStorage.getItem("token"),
+              },
+            }
+          )
+          .then((response) => {
+            products.value[index].coupons = response.data;
+            products.value[index].discountPrice = 0;
+            products.value[index].selectedCouponIndex = -1;
+          });
+      }
+    };
+
+    const setReserveCoupon = () => {
+      //가져온 쿠폰번호로 쿠폰을 조회해서 값 세팅
+      axios
+        .get("https://sbbro.xyz/api/product/coupons/" + reserveCouponId, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          products.value[index].coupons.push(response.data);
+          products.value[index].discountPrice = 0;
+          products.value[index].selectedCouponIndex = 0;
+        });
     };
 
     const getUserData = async () => {
