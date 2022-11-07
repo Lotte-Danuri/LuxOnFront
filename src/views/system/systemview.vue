@@ -1,5 +1,5 @@
 <template>
-  <main>셀러페이지만들어주세용~</main>
+  <main>시스템페이지만들어주세용~</main>
 </template>
 <script>
 export default {
