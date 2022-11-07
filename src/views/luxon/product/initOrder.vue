@@ -144,7 +144,7 @@
                     :key="coupon"
                     :value="index"
                   >
-                    {{ coupon.name }} : {{ coupon.discountRate}}% 할인
+                    {{ coupon.name }} : {{ coupon.discountRate }}% 할인
                   </option>
                 </select>
                 <button
@@ -215,14 +215,17 @@ import { computed, reactive } from "@vue/reactivity";
 import { onBeforeMount } from "@vue/runtime-core";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useRoute,useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   components: {},
+
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const products = computed(() => JSON.parse(route.params.products));
+    const products = computed(() =>
+      route.params.products ? JSON.parse(route.params.products) : null
+    );
     const state = reactive({
       userInfo: "",
       order: "",
@@ -233,17 +236,31 @@ export default {
     });
 
     onBeforeMount(async () => {
-      calTotalPriceAndQuantity();
+      
       await router.isReady();
-      console.log(products);
+      
+      isProductsData();
 
-      if (localStorage.getItem("token") == null) {
-        Swal.fire("로그인 해주세요").then(() => {
-          router.push("/login");
-        });
+      await setProductsCoupon();
+      
+      await calTotalPriceAndQuantity();
+      
+      console.log(products)
+
+      loginCheck();
+
+      getUserData();
+    });
+
+    const setProductsCoupon = async () => {
+      for (var index in products.value) {
+        products.value[index].discountPrice = 0;
+        products.value[index].selectedCouponIndex = -1;
       }
+    };
 
-      axios
+    const getUserData = async () => {
+      await axios
         .get("https://sbbro.xyz/api/member/members", {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem("token"),
@@ -253,11 +270,29 @@ export default {
           console.log(response);
           state.userInfo = response.data;
         });
-    });
+    };
+
+    const loginCheck = () => {
+      if (localStorage.getItem("token") == null) {
+        Swal.fire("로그인 해주세요").then(() => {
+          router.push("/login");
+        });
+      }
+    };
+
+    const isProductsData = () => {
+      if (products.value == null) {
+        Swal.fire("올바른 경로로 접근해주세요").then(() => {
+          router.push("/cart");
+        });
+      }
+    };
 
     const calTotalPriceAndQuantity = async () => {
       state.totalPrice = 0;
       state.totalQuantity = 0;
+      state.totalDiscountPrice = 0;
+
       for (var index in products.value) {
         state.totalPrice +=
           products.value[index].quantity *
@@ -303,8 +338,8 @@ export default {
               }
             )
             .then((response) => {
-              Swal.fire('주문이 완료되었습니다.')
-              router.push('/mypage/order')
+              Swal.fire("주문이 완료되었습니다.");
+              router.push("/mypage/order");
             });
         }
       });
