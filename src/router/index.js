@@ -7,6 +7,7 @@ import MyList from '@/views/luxon/myList.vue';
 import MyProduct from '@/views/luxon/product/myProduct.vue';
 import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
+import GridSystem from '@/views/admin/gridSystem.vue';
 import Registration from '@/views/admin/registration.vue';
 import RegiCoupon from '@/views/admin/regiCoupon.vue';
 import GetCoupon from '@/views/admin/getCoupon.vue';
@@ -22,7 +23,7 @@ import MyLike from '@/components/mypage/myLike.vue';
 const routes = [
   {
     path: '/',
-    name:"home",
+    name: 'home',
     component: Index,
     children: [
       {
@@ -43,7 +44,7 @@ const routes = [
       {
         path: '/product/order',
         name: 'initOrder',
-        component: ()=>import('@/views/luxon/product/initOrder.vue'),
+        component: () => import('@/views/luxon/product/initOrder.vue'),
       },
       {
         path: '/login',
@@ -71,9 +72,9 @@ const routes = [
         component: MySignup,
       },
       {
-        path : 'cart',
-        name : 'cart',
-        component: ()=> import('@/views/luxon/user/myCart.vue'),
+        path: 'cart',
+        name: 'cart',
+        component: () => import('@/views/luxon/user/myCart.vue'),
       },
       {
         path: '/mypage',
@@ -107,6 +108,11 @@ const routes = [
         path: '/admin/registration',
         name: 'Registration',
         component: Registration,
+      },
+      {
+        path: '/admin/gridSystem',
+        name: 'gridSystem',
+        component: GridSystem,
       },
       {
         path: '/admin/regiCoupon',

@@ -1,18 +1,20 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap-icons/font/bootstrap-icons.css';
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from '@/router';
 import mixins from './mixins';
 import globals from '@/globalMethod/global.js';
 
-import 'bootstrap/dist/js/bootstrap.js';
+// import 'bootstrap/dist/js/bootstrap.js';
 
 // main.js
 // import './index.css';
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+
+// import VuePaginate from 'vue-pagination-2';
 
 createApp(App)
   .use(VueSweetalert2)
