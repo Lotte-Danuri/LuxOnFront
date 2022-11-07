@@ -75,7 +75,12 @@
         >
           상품 구매
         </button>
-        <button @click="insertCart(product.data.source)">장바구니</button>
+        <button
+          class="btn btn-primary"
+          @click="insertCart(product.data.source)"
+        >
+          장바구니
+        </button>
       </div>
       <div
         class="chat__mymessage__product"
@@ -273,7 +278,6 @@ export default {
       coupon: {
         data: { name: '쿠폰 정보', startDate: '', endDate: '' },
       },
-      plist: [],
       product: {
         data: {
           productName: '',
@@ -285,6 +289,7 @@ export default {
           categoryThirdName: '',
         },
       },
+      plist: [],
     };
   },
   methods: {
@@ -385,15 +390,15 @@ export default {
     },
     async getRecommendProduct(productList) {
       this.plist = [];
-      productList.forEach(product => {
-        axios
+      productList.forEach(async product => {
+        await axios
           .get('https://sbbro.xyz/api/product/products/' + product, {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
               contentType: 'application/json',
             },
           })
-          .then(res => this.plist.append(res))
+          .then(res => this.plist.push(res))
           .catch(err => console.log(err));
       });
     },
