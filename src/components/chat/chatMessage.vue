@@ -23,11 +23,9 @@
       <div
         class="chat__mymessage__paragraph"
         v-else-if="msg.contentType == '쿠폰'"
-        @load="getCouponInfo(msg.source)"
+        :on-load="getCouponInfo(msg.source)"
       >
-        <div class="chat__mymessage__coupon">
-          <p>{{ coupon.name }}</p>
-        </div>
+        {{ coupon.name }}
       </div>
       <div
         class="chat__mymessage__paragraph"
@@ -56,6 +54,14 @@
               <img v-if="msg.source" :src="`${msg.source}`" />
             </div>
           </div>
+          <div
+            class="chat__your_chat__yourmessage__paragraphparagraph"
+            v-else-if="msg.contentType == '쿠폰'"
+          >
+            <div class="chat__yourmessage__coupon">
+              {{ coupon.name }}
+            </div>
+          </div>
           <p class="chat__yourmessage__time">
             {{ msg.createdAt.substr(11, 5) }}
           </p>
@@ -68,6 +74,8 @@
 <script>
 import { reactive } from 'vue';
 import { onMounted } from 'vue';
+import axios from 'axios';
+
 export default {
   setup() {
     const state = reactive({
@@ -85,7 +93,9 @@ export default {
   data() {
     return {
       isSame: false,
-      coupon: {},
+      coupon: {
+        name: 'default',
+      },
     };
   },
   methods: {
@@ -98,7 +108,18 @@ export default {
         return false;
       }
     },
-    getCouponInfo(couponId) {},
+    async getCouponInfo(couponId) {
+      await axios
+        .get('https://sbbro.xyz/api/product/coupons/' + couponId, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
+        .then(res => (this.coupon = res))
+        .catch(err => console.log(err));
+      console.log(this.coupon);
+    },
   },
   created() {
     this.isSame = this.isSamePerson(this.msg, this.prev);

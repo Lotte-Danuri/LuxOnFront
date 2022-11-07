@@ -7,6 +7,7 @@ import MyList from '@/views/luxon/myList.vue';
 import MyProduct from '@/views/luxon/product/myProduct.vue';
 import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
+import GridSystem from '@/views/admin/gridSystem.vue';
 import Registration from '@/views/admin/registration.vue';
 import RegiCoupon from '@/views/admin/regiCoupon.vue';
 import GetCoupon from '@/views/admin/getCoupon.vue';
@@ -18,11 +19,13 @@ import NaverLogin from '@/components/social_login/naverLogin.vue';
 import MyPage from '@/views/luxon/user/myPage.vue';
 import MyOrder from '@/components/mypage/myOrder.vue';
 import MyLike from '@/components/mypage/myLike.vue';
+import MySystem from '@/layouts/system/systemIndex.vue';
+import SystemView from '@/views/system/systemView.vue';
 
 const routes = [
   {
     path: '/',
-    name:"home",
+    name: 'home',
     component: Index,
     children: [
       {
@@ -43,7 +46,7 @@ const routes = [
       {
         path: '/product/order',
         name: 'initOrder',
-        component: ()=>import('@/views/luxon/product/initOrder.vue'),
+        component: () => import('@/views/luxon/product/initOrder.vue'),
       },
       {
         path: '/login',
@@ -71,9 +74,9 @@ const routes = [
         component: MySignup,
       },
       {
-        path : 'cart',
-        name : 'cart',
-        component: ()=> import('@/views/luxon/user/myCart.vue'),
+        path: 'cart',
+        name: 'cart',
+        component: () => import('@/views/luxon/user/myCart.vue'),
       },
       {
         path: '/mypage',
@@ -109,6 +112,11 @@ const routes = [
         component: Registration,
       },
       {
+        path: '/admin/gridSystem',
+        name: 'gridSystem',
+        component: GridSystem,
+      },
+      {
         path: '/admin/regiCoupon',
         name: 'RegiCoupon',
         component: RegiCoupon,
@@ -117,6 +125,17 @@ const routes = [
         path: '/admin/getCoupon',
         name: 'GetCoupon',
         component: GetCoupon,
+      },
+    ],
+  },
+  {
+    path: '/system',
+    component: MySystem,
+    children: [
+      {
+        path: '/system/systemView',
+        name: 'SystemView',
+        component: SystemView,
       },
     ],
   },

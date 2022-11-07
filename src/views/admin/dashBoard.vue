@@ -1,248 +1,264 @@
 <template>
   <main>
-    <h1 style="font-size: 60px; margin-top: 50px">메인 센터</h1>
-    <div class="date">
-      <input type="date" />
+    <h1>메인 센터</h1>
+    <br />
+    <br />
+    <div class="zero_grid">
+      <div>
+        <span class="material-icons-sharp"> today </span>
+        총판매량
+      </div>
+      <div><span class="material-icons-sharp"> poll </span>거래건수</div>
+      <div><span class="material-icons-sharp"> cloud_queue </span>순수익</div>
+      <div>뭐넣징</div>
     </div>
-    <div class="insights">
-      <div class="sales">
-        <br />
-        <span class="material-icons-sharp">analytics</span>
-        <div class="middle">
-          <div class="left">
-            <br />
-            <h2>총 판매량</h2>
-            <br />
-            <h1>￦7,225,024</h1>
-          </div>
-          <div class="progress">
-            <svg>
-              <circle cx="38" cy="38" r="36"></circle>
-            </svg>
-            <div class="number">
-              <p>81%</p>
-            </div>
+    <div class="first_grid">
+      <div style="background-color: gray; font-size: 150px">
+        차트 넣어주세용~
+      </div>
+      <!-- <v-calendar /> -->
+      <v-date-picker v-model="date" is-expanded style="height: 500px" />
+    </div>
+    <div class="second_grid">
+      <div style="overflow: scroll">
+        <h1>등록상품</h1>
+        <hr />
+        <div class="table_grid">
+          <div>
+            <table id="customers">
+              <tr>
+                <th>이미지</th>
+                <th>상품명</th>
+                <th>상품가격</th>
+                <th>재고</th>
+                <th>보증기간</th>
+              </tr>
+              <tr v-for="product in productList">
+                <td>
+                  <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
+                </td>
+                <td>{{ product.productName }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.stock }}</td>
+                <td>{{ product.warranty }}</td>
+              </tr>
+            </table>
           </div>
         </div>
-        <small class="text-muted">Last 24 Hours</small>
       </div>
-      <!-- ------------ END OF SALES ----------- -->
-      <div class="expenses">
-        <br />
-        <span class="material-icons-sharp">analytics</span>
-        <div class="middle">
-          <div class="left">
-            <br />
-            <h2>순 수익</h2>
-            <br />
-            <h1>￦1,225,024</h1>
-          </div>
-          <div class="progress">
-            <svg>
-              <circle cx="38" cy="38" r="36"></circle>
-            </svg>
-            <div class="number">
-              <p>81%</p>
-            </div>
-          </div>
+      <div>
+        <h1>거래내역</h1>
+        <hr />
+        <div>
+          <table>
+            <tr>
+              <th>이름</th>
+              <th>상품명</th>
+            </tr>
+          </table>
         </div>
-        <small class="text-muted">Last 24 Hours</small>
-      </div>
-      <!-- ------------ END OF Incomes ----------- -->
-      <div class="income">
-        <br />
-        <span class="material-icons-sharp">analytics</span>
-        <div class="middle">
-          <div class="left">
-            <br />
-            <h2>총 주문건수</h2>
-            <br />
-            <h1>125개</h1>
-          </div>
-          <div class="progress">
-            <svg>
-              <circle cx="38" cy="38" r="36"></circle>
-            </svg>
-            <div class="number">
-              <p>81%</p>
-            </div>
-          </div>
-        </div>
-        <small class="text-muted">Last 24 Hours</small>
-      </div>
-      <!-- ------------ END OF EXPENSES ----------- -->
-    </div>
-    <div>
-      <div
-        class="chart-container"
-        style="position: relative; height: 25vh; width: 25vw"
-      >
-        <canvas id="myChart"></canvas>
       </div>
     </div>
-
-    <!-----------------END OF INSIGHTS ------------------>
-
-    <div class="recent-orders">
-      <h2>Recent Orders</h2>
-      <table>
-        <thread>
-          <tr>
-            <th>Product Name</th>
-            <th>Product Number</th>
-            <th>Payment</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thread>
-        <tbody>
-          <tr>
-            <td>Foldable Mini Drone</td>
-            <td>85631</td>
-            <td>Due</td>
-            <td class="warning">Pending</td>
-            <td class="primary">Details</td>
-          </tr>
-        </tbody>
-      </table>
-      <a href="#">Show All</a>
-    </div>
+    <div></div>
+    <!-- <div class="third_grid">
+      <div></div>
+      <div></div>
+    </div> -->
   </main>
-  <!----------------------- EBD OF MAIN ------------------------->
-
-  <div class="right">
-    <div class="top">
-      <button id="menu-btn">
-        <span class="material-icons-sharp"> menu </span>
-      </button>
-      <div class="theme-toggler">
-        <span class="material-icons-sharp active">light_mode</span>
-        <span class="material-icons-sharp">dark_mode</span>
-      </div>
-      <div class="profile">
-        <div class="info">
-          <p>Hey, <b>Daniel</b></p>
-          <small class="text-muted">Admin</small>
-        </div>
-        <div class="profile-photo">
-          <img src="./images/profile-1.jpg" />
-        </div>
-      </div>
-    </div>
-    <!-- END OF TOP -->
-    <div>
-      <div style="float: right">
-        <h2>Recent Updates</h2>
-        <div class="updates">
-          <div class="date">
-            <div class="profile-photo">
-              <img src="./images/profile-2.jpg" />
-            </div>
-            <div class="message">
-              <p>
-                <b>Mike Tyson</b> received his order or Night lion tech GPS
-                drone.
-              </p>
-              <small class="text-muted">2 Minutes Ago</small>
-            </div>
-          </div>
-        </div>
-        <div class="updates">
-          <div class="date">
-            <div class="profile-photo">
-              <img src="./images/profile-3.jpg" />
-            </div>
-            <div class="message">
-              <p>
-                <b>Mike Tyson</b> received his order or Night lion tech GPS
-                drone.
-              </p>
-              <small class="text-muted">2 Minutes Ago</small>
-            </div>
-          </div>
-        </div>
-        <div class="updates">
-          <div class="date">
-            <div class="profile-photo">
-              <img src="./images/profile-4.jpg" />
-            </div>
-            <div class="message">
-              <p>
-                <b>Mike Tyson</b> received his order or Night lion tech GPS
-                drone.
-              </p>
-              <small class="text-muted">2 Minutes Ago</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!------------------------- END OF RECENT UPDATES ------------------------------->
-    <div class="sales-analytics">
-      <h2>통계</h2>
-      <div class="item offline">
-        <div class="icon">
-          <span class="material-icons-sharp"> local_mall </span>
-        </div>
-        <div class="right">
-          <div class="info">
-            <h3>OFFLINE ORDERS</h3>
-            <small class="text-muted">Last 24 Hours</small>
-          </div>
-          <h5 class="danger">-17%</h5>
-          <h5>1100</h5>
-        </div>
-      </div>
-      <div class="item online">
-        <div class="icon">
-          <span class="material-icons-sharp"> shopping_cart </span>
-        </div>
-        <div class="right">
-          <div class="info">
-            <h3>ONLINE ORDERS</h3>
-            <small class="text-muted">Last 24 Hours</small>
-          </div>
-          <h5 class="success">+25%</h5>
-          <h5>849</h5>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 <script>
-import Chart from 'chart.js/auto';
+import 'v-calendar/dist/style.css';
+
+import axios from 'axios';
 
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String,
+  data() {
+    return {
+      categoryList: [],
+      categorySecondList: [],
+      categoryThirdList: [],
+      productList: [],
+      firstClickValue: '',
+      secondClickValue: '',
+      thirdClickValue: '',
+      fistValue: '',
+      secondValue: '',
+      thirdValue: '',
+      productCheckVmodel: [],
+      productCheckList: [],
+      couponName: '',
+      couponContent: '',
+      discountRate: 0.0,
+      startDate: '',
+      endDate: '',
+      productIdList: [],
+    };
+  },
+  created() {
+    this.getCategoryList();
   },
   mounted() {
-    console.log('Component mounted.');
-    const ctx = document.getElementById('myChart');
-
-    const data = {
-      labels: ['Red', 'Blue', 'Yellow'],
-      datasets: [
+    let firstClickId = parseInt(this.firstValue);
+    let secondClickId = parseInt(this.secondValue);
+    let thirdClickId = parseInt(this.thirdValue);
+    console.log(this.firstValue, this.secondValue, this.thirdValue);
+    axios
+      .post(
+        'https://sbbro.xyz/api/product/sellers/products/category',
         {
-          label: 'My First Dataset',
-          data: [300, 50, 100],
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)',
-          ],
-          hoverOffset: 4,
+          stordId: localStorage.getItem('store_id'),
+          categoryFirstId: firstClickId,
+          categorySecondId: secondClickId,
+          categoryThirdId: thirdClickId,
         },
-      ],
-    };
-
-    const myChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: data,
-    });
-
-    myChart;
+        {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      .then(response => {
+        console.log(response.data);
+        this.productList = response.data;
+      });
+  },
+  methods: {
+    async getCategoryList() {
+      this.categoryList = await this.$api('/product/categories');
+      console.log(this.categoryList);
+    },
+    changeCategoryFirst(event) {
+      this.firstClickValue = event.target.value;
+      if (this.firstClickValue == -1) {
+        this.firstValue = '';
+      } else {
+        this.categorySecondList =
+          this.categoryList[this.firstClickValue].categorySecondDtoList;
+        this.firstValue = this.categoryList[this.firstClickValue].id;
+      }
+    },
+    changeCategorySecond(event) {
+      this.secondClickValue = event.target.value;
+      if (this.secondClickValue == -1) {
+        this.secondValue = '';
+      } else {
+        this.categoryThirdList =
+          this.categorySecondList[this.secondClickValue].categoryThirdDtoList;
+        this.secondValue =
+          this.categoryList[this.firstClickValue].categorySecondDtoList[
+            this.secondClickValue
+          ].id;
+      }
+    },
+    changeCategoryThird(event) {
+      this.thirdClickValue = event.target.value;
+      if (this.thirdClickValue == -1) {
+        this.thirdValue = '';
+      } else {
+        this.thirdValue =
+          this.categoryList[this.firstClickValue].categorySecondDtoList[
+            this.secondClickValue
+          ].categoryThirdDtoList[this.thirdClickValue].id;
+      }
+    },
+    calc() {
+      if (document.querySelector('.myCheckbox').checked) {
+        console.log(this.id);
+      }
+    },
+    productSearch() {
+      let firstClickId = parseInt(this.firstValue);
+      let secondClickId = parseInt(this.secondValue);
+      let thirdClickId = parseInt(this.thirdValue);
+      console.log(this.firstValue, this.secondValue, this.thirdValue);
+      axios
+        .post(
+          'https://sbbro.xyz/api/product/sellers/products/category',
+          {
+            stordId: localStorage.getItem('store_id'),
+            categoryFirstId: firstClickId,
+            categorySecondId: secondClickId,
+            categoryThirdId: thirdClickId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then(response => {
+          console.log(response.data);
+          this.productList = response.data;
+        });
+    },
   },
 };
 </script>
+
+<style>
+.zero_grid {
+  display: grid;
+  grid-template-columns: 325px 325px 325px 325px;
+  margin-bottom: 0px;
+  gap: 50px;
+  /* grid-auto-rows: minmax(25px, auto); */
+}
+
+.zero_grid div {
+  border: solid 1px black;
+  border-radius: 20px;
+  background-color: white;
+  height: 150px;
+  font-size: 40px;
+}
+
+.first_grid {
+  display: grid;
+  grid-template-columns: 1000px 400px;
+  margin-bottom: 0px;
+  gap: 50px;
+  /* grid-auto-rows: minmax(25px, auto); */
+}
+
+/* .first_grid div {
+  background-color: gray;
+  width: 100%;
+  height: 400px;
+} */
+
+.second_grid {
+  display: grid;
+  grid-template-columns: 400px 1000px;
+  margin-bottom: 0px;
+  gap: 50px;
+}
+
+.second_grid div {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  height: 400px;
+}
+
+.third_grid {
+  display: grid;
+  grid-template-columns: 700px 700px;
+  margin-bottom: 0px;
+  gap: 50px;
+}
+
+.third_grid div {
+  background-color: gray;
+  width: 100%;
+  height: 400px;
+}
+
+.table_grid div table th {
+  text-align: center;
+}
+
+.table_grid div table tr {
+  text-align: center;
+}
+</style>
