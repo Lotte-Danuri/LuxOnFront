@@ -38,9 +38,7 @@
                 {{ product.productName }}
               </p>
             </router-link>
-            <p class="product__data-price">
-              {{ self.$comma(product.price) }}원
-            </p>
+            <p class="product__data-price">{{ comma(product.price) }}원</p>
           </a>
         </li>
       </ul>
@@ -53,14 +51,17 @@
 import { reactive } from "vue";
 import { onBeforeMount } from "vue";
 import axios from "axios";
+import { getCurrentInstance } from "@vue/runtime-core";
 
-let self;
+// let self;
 
 export default {
   created() {
-    self = this;
+    // self = this;
   },
   setup() {
+    const comma =
+      getCurrentInstance().appContext.config.globalProperties.$comma;
     const state = reactive({
       products: [],
     });
@@ -78,7 +79,7 @@ export default {
         });
     });
 
-    return { state, self };
+    return { state, comma };
   },
 };
 </script>

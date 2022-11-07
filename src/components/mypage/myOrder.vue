@@ -39,7 +39,7 @@
                 <h6 class="heading-xxxs text-muted">Total Price:</h6>
                 <!-- Text -->
                 <p class="mb-0 fs-sm fw-bold">
-                  {{ self.$comma(order.totalPrice) }}
+                  {{ comma(order.totalPrice) }}
                 </p>
               </div>
               <div>
@@ -63,9 +63,7 @@
                             >[상품명] {{ o.productName.substring(0, 15) }}</span
                           >
                           <br />
-                          <span
-                            >[가격] {{ self.$comma(o.productPrice) }}원</span
-                          >
+                          <span>[가격] {{ comma(o.productPrice) }}원</span>
                           <br />
                           <span
                             >[보증기간] {{ o.warrantyStartDate }} [2022-10-19 ~
@@ -80,14 +78,14 @@
                             Arial, sans-serif;
                         "
                       >
-                      <router-link
-                        :to="{
-                          path: '/product/myProduct',
-                          query: {
-                            productCode: o.productCode,
-                          },
-                        }"
-                      >
+                        <router-link
+                          :to="{
+                            path: '/product/myProduct',
+                            query: {
+                              productCode: o.productCode,
+                            },
+                          }"
+                        >
                           <button
                             style="
                               width: 200px;
@@ -121,14 +119,12 @@
 import { reactive } from "vue";
 import { onBeforeMount } from "vue";
 import axios from "axios";
-
-let self;
+import { getCurrentInstance } from "@vue/runtime-core";
 
 export default {
-  created() {
-    self = this;
-  },
   setup() {
+    const comma =
+      getCurrentInstance().appContext.config.globalProperties.$comma;
     const state = reactive({
       orderList: [],
     });
@@ -146,7 +142,7 @@ export default {
         });
     });
 
-    return { state, self };
+    return { state, comma };
   },
 };
 </script>

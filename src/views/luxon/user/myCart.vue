@@ -147,14 +147,17 @@
 
 <script>
 import { computed, reactive } from "@vue/reactivity";
+import { getCurrentInstance } from "@vue/runtime-core";
 import { onBeforeMount } from "@vue/runtime-core";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
-    const router = useRouter()
+    const comma =
+      getCurrentInstance().appContext.config.globalProperties.$comma;
+    const router = useRouter();
     const id = computed(() => router.params.id);
     const state = reactive({
       products: [],
@@ -176,25 +179,27 @@ export default {
         .then((response) => {
           console.log(response);
           state.products = response.data;
-          state.products.forEach((product)=>{
-            axios.post('https://sbbro.xyz/api/member/mycoupon/product',{
-              productId : product.productDto.id
-            },{
-              headers :{
-                Authorization: `Bearer ` + localStorage.getItem("token"),
-              }
-            }).then((response)=>{
-              product.coupons = response.data
-              product.discountPrice = 0
-              product.selectedCouponIndex = -1
-            })
-          })
+          state.products.forEach((product) => {
+            axios
+              .post(
+                "https://sbbro.xyz/api/member/mycoupon/product",
+                {
+                  productId: product.productDto.id,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ` + localStorage.getItem("token"),
+                  },
+                }
+              )
+              .then((response) => {
+                product.coupons = response.data;
+                product.discountPrice = 0;
+                product.selectedCouponIndex = -1;
+              });
+          });
         });
     });
-
-    const comma = (val) => {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    };
 
     const total = () => {
       var totalPrice = 0;
