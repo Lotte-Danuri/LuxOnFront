@@ -50,37 +50,6 @@
             <hr style="border: 3px solid gray" />
           </div>
           <div>
-            <h2 style="font-weight: bold">쿠폰</h2>
-            <hr />
-            <br />
-            <div>
-              <div class="small_grid">
-                쿠폰적용
-                <select
-                  style="
-                    width: 300px;
-                    height: 30px;
-                    margin-left:10%
-                    color: gray;
-                    border: solid 1px;
-                    text-align: center;
-                  "
-                >
-                  <option>10% 할인 쿠폰</option>
-                  <option>5% 할인 쿠폰</option>
-                  <option>배송 무료 쿠폰</option>
-                </select>
-                <button
-                  style="width: 100px; background-color: black; color: white"
-                  @click="showAlert"
-                >
-                  적용
-                </button>
-              </div>
-            </div>
-            <hr style="border: 3px solid gray" />
-          </div>
-          <div>
             <h2 style="font-weight: bold">주문고객</h2>
             <hr />
             <br />
@@ -120,34 +89,87 @@
             <h2 style="font-weight: bold">주문상품</h2>
             <hr />
             <br />
-            <div
-              class="order_product_grid"
-              v-for="product in products"
-              :key="product"
-            >
-              <img :src="product.productDto.thumbnailUrl" />
-              <div>
-                <p style="font-weight: bold">{{ product.brandName }}</p>
-                <p>{{ product.productDto.productName }}</p>
-                <p>블랙/S</p>
+            <div v-for="product in products" :key="product">
+              <div class="order_product_grid">
+                <router-link
+                  :to="{
+                    path: '/product/myProduct',
+                    query: { productCode: product.productDto.productCode },
+                  }"
+                >
+                  <img :src="product.productDto.thumbnailUrl" />
+                </router-link>
+                <div>
+                  <p style="font-weight: bold">{{ product.brandName }}</p>
+                  <router-link
+                    :to="{
+                      path: '/product/myProduct',
+                      query: { productCode: product.productDto.productCode },
+                    }"
+                  >
+                    <p>{{ product.productDto.productName }}</p>
+                  </router-link>
+                </div>
+                <div>
+                  <p>{{ product.quantity }}개 주문</p>
+                </div>
+                <div>
+                  <p style="font-weight: bold">
+                    {{
+                      comma(
+                        product.productDto.price * product.quantity -
+                          product.discountPrice
+                      )
+                    }}원
+                  </p>
+                </div>
               </div>
-              <div>
-                <p>{{ product.quantity }}개 주문</p>
+
+              <div class="small_grid">
+                쿠폰적용
+                <select
+                  style="
+                      width: 300px;
+                      height: 30px;
+                      margin-left:10%
+                      color: gray;
+                      border: solid 1px;
+                      text-align: center;
+                    "
+                  @change="onChangeCoupon(product, $event)"
+                >
+                  <option value="none">=== 선택 ===</option>
+                  <option
+                    v-for="(coupon, index) in product.coupons"
+                    :key="coupon"
+                    :value="index"
+                  >
+                    {{ coupon.name }} : {{ coupon.discountRate}}% 할인
+                  </option>
+                </select>
+                <button
+                  style="width: 100px; background-color: black; color: white"
+                  @click="applyCoupon(product)"
+                >
+                  적용
+                </button>
               </div>
-              <div>
-                <p style="font-weight: bold">
-                  {{ comma(product.productDto.price * product.quantity) }}원
-                </p>
-              </div>
+              <hr style="border: 3px solid gray" />
             </div>
-            <hr style="border: 3px solid gray" />
           </div>
         </div>
         <aside class="aside" style="padding: 20px; height: 410px">
           <br />
           <div class="small_aside_grid">
-            <div style="font-weight: bold; color: gray">상품금액</div>
+            <div style="font-weight: bold; color: gray">총 상품금액</div>
             <div style="margin-left: 30%">{{ comma(state.totalPrice) }} 원</div>
+          </div>
+          <hr />
+          <div class="small_aside_grid">
+            <div style="font-weight: bold; color: gray">총 할인금액</div>
+            <div style="margin-left: 30%">
+              {{ comma(state.totalDiscountPrice) }} 원
+            </div>
           </div>
           <hr />
           <div class="small_aside_grid">
@@ -195,7 +217,6 @@ import axios from "axios";
 import router from "@/router";
 import Swal from "sweetalert2";
 import { useRoute } from "vue-router";
-import { onMounted } from "@vue/runtime-core";
 
 export default {
   components: {},
@@ -207,13 +228,15 @@ export default {
       order: "",
       totalPrice: 0,
       totalQuantity: 0,
+      totalDiscountPrice: 0,
       delivaryFee: 5000,
     });
 
     onBeforeMount(async () => {
+      calTotalPriceAndQuantity();
       await router.isReady();
+      console.log(products);
 
-      console.log(router.params);
       if (localStorage.getItem("token") == null) {
         Swal.fire("로그인 해주세요").then(() => {
           router.push("/login");
@@ -232,18 +255,19 @@ export default {
         });
     });
 
-    onMounted(async () => {
-      await router.isReady();
-      console.log(products);
+    const calTotalPriceAndQuantity = async () => {
       state.totalPrice = 0;
       state.totalQuantity = 0;
       for (var index in products.value) {
         state.totalPrice +=
           products.value[index].quantity *
-          products.value[index].productDto.price;
+            products.value[index].productDto.price -
+          products.value[index].discountPrice;
         state.totalQuantity += products.value[index].quantity;
+        state.totalDiscountPrice +=
+          products.value[index].quantity * products.value[index].discountPrice;
       }
-    });
+    };
 
     const order = () => {
       Swal.fire({
@@ -286,6 +310,23 @@ export default {
       });
     };
 
+    const onChangeCoupon = (product, event) => {
+      if (event.target.value == "none") {
+        product.selectedCouponIndex = -1;
+        return;
+      }
+      product.selectedCouponIndex = event.target.value;
+    };
+
+    const applyCoupon = (product) => {
+      var discountRate =
+        product.selectedCouponIndex != -1
+          ? product.coupons[product.selectedCouponIndex].discountRate
+          : 0;
+      product.discountPrice = (discountRate / 100) * product.productDto.price;
+      calTotalPriceAndQuantity();
+    };
+
     const showAlert = () => {
       this.$swal("적용 되었습니다");
     };
@@ -294,18 +335,15 @@ export default {
       return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
 
-    const calculatePrice = (product, cnt) => {
-      product.quantity = product.quantity + cnt;
-      if (product.quantity < 1) product.quantity = 1;
-    };
-
     return {
       state,
       products,
       comma,
       showAlert,
-      calculatePrice,
       order,
+      onChangeCoupon,
+      applyCoupon,
+      calTotalPriceAndQuantity,
     };
   },
 };

@@ -166,7 +166,6 @@ export default {
         });
       }
 
-      console.log("before Mounted");
       await axios
         .get("https://sbbro.xyz/api/member/cart", {
           headers: {
@@ -176,8 +175,20 @@ export default {
         .then((response) => {
           console.log(response);
           state.products = response.data;
+          state.products.forEach((product)=>{
+            axios.post('https://sbbro.xyz/api/member/mycoupon/product',{
+              productId : product.productDto.id
+            },{
+              headers :{
+                Authorization: `Bearer ` + localStorage.getItem("token"),
+              }
+            }).then((response)=>{
+              product.coupons = response.data
+              product.discountPrice = 0
+              product.selectedCouponIndex = -1
+            })
+          })
         });
-      console.log("end");
     });
 
     const comma = (val) => {
@@ -207,8 +218,6 @@ export default {
     };
 
     const removeProduct = (index) => {
-      console.log(index);
-      console.log(state.products[index].id);
       Swal.fire({
         title: "삭제하시겠습니까?",
         text: "",
