@@ -18,7 +18,7 @@ export default {
     <div
       v-for="room in rooms"
       :key="room.chatRoomId"
-      class="room"
+      v-bind:class="room.valid ? 'room' : 'no_room'"
       tabindex="0"
       @click="$emit('selectChatRoom', room)"
     >
@@ -43,9 +43,10 @@ export default {
           room.countNewChats
         }}</span>
 
-        <div class="room_message">
+        <div class="room_message" v-if="room.valid">
           {{ room.lastChatContent }}
         </div>
+        <div class="room_message" v-else>상대방이 채팅을 나갔습니다.</div>
         <span class="room_date">{{
           room.lastChatCreatedAt !== null
             ? room.lastChatCreatedAt.substr(11, 5)
@@ -67,7 +68,16 @@ export default {
   transition: 0.2s;
   position: relative;
 }
-
+.no_room {
+  align-items: center;
+  max-width: 100%;
+  height: 100px;
+  padding: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;
+  background-color: rgb(184, 183, 183);
+}
 .room:focus {
   background-color: rgb(197, 195, 195);
 }
