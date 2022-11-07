@@ -68,14 +68,14 @@
             router.push({
               path: '/product/myProduct',
               query: {
-                productCode: product.data.source.split('/')[0],
+                productCode: product.data.productCode,
               },
             })
           "
         >
           상품 구매
         </button>
-        <button>장바구니</button>
+        <button @click="insertCart(product.data.source)">장바구니</button>
       </div>
       <div
         class="chat__mymessage__product"
@@ -107,6 +107,34 @@
         >
           상품 구매
         </button>
+      </div>
+      <div
+        class="chat__mymessage__product"
+        v-else-if="msg.contentType == '상품추천'"
+        :on-load="getRecommendProduct(msg.source.split('/'))"
+      >
+        <div>상품 추천</div>
+        <div v-for="product in plist" :key="product.productId">
+          <div
+            @click="
+              router.push({
+                path: '/product/myProduct',
+                query: {
+                  productCode: product.data.productCode,
+                },
+              })
+            "
+          >
+            <img :src="product.data.thumbnailUrl" />
+            <div>
+              {{ product.data.categoryFirstName }}>{{
+                product.data.categorySecondName
+              }}>{{ product.data.categoryThirdName }}
+            </div>
+            <div>{{ product.data.productName }}</div>
+            <div>{{ product.data.price }}</div>
+          </div>
+        </div>
       </div>
     </div>
     <div
@@ -223,6 +251,7 @@
 import { reactive } from 'vue';
 import { onMounted } from 'vue';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   setup() {
@@ -244,6 +273,7 @@ export default {
       coupon: {
         data: { name: '쿠폰 정보', startDate: '', endDate: '' },
       },
+      plist: [],
       product: {
         data: {
           productName: '',
@@ -322,6 +352,50 @@ export default {
         })
         .then(res => (this.coupon = res))
         .catch(err => console.log(err));
+    },
+    async insertCart(productId) {
+      axios
+        .post(
+          'https://sbbro.xyz/api/member/cart',
+          {
+            productId: productId,
+            quantity: 1,
+          },
+          {
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+          },
+        )
+        .then(response => {
+          if (response.status == 200) {
+            Swal.fire({
+              title: '상품이 장바구니에 담겼습니다.',
+              icon: 'success',
+              showCancelButton: true,
+              confirmButtonText: '장바구니로 이동',
+              cancelButtonText: '계속 쇼핑하기',
+            }).then(result => {
+              if (result.isConfirmed) {
+                router.push('/cart');
+              }
+            });
+          }
+        });
+    },
+    async getRecommendProduct(productList) {
+      this.plist = [];
+      productList.forEach(product => {
+        axios
+          .get('https://sbbro.xyz/api/product/products/' + product, {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
+            },
+          })
+          .then(res => this.plist.append(res))
+          .catch(err => console.log(err));
+      });
     },
   },
   created() {
