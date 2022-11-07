@@ -21,16 +21,93 @@
         </div>
       </div>
       <div
-        class="chat__mymessage__paragraph"
+        class="chat__mymessage__coupon"
         v-else-if="msg.contentType == '쿠폰'"
         :on-load="getCouponInfo(msg.source)"
       >
-        {{ coupon.name }}
+        <div>{{ coupon.data.name }}</div>
+        <div>{{ coupon.data.discountRate }}% 할인</div>
+        <div style="color: gray; font-size: 12px">
+          {{ coupon.data.startDate.slice(0, 10) }}~{{
+            coupon.data.endDate.slice(0, 10)
+          }}
+        </div>
+        <div style="color: gray; font-size: 14px" v-if="coupon.data.status">
+          상대가 쿠폰을 받으셨습니다.
+        </div>
+        <div
+          style="color: gray; font-size: 14px"
+          v-else
+          class="chat__coupon__button"
+          @click="getCoupon(msg.source)"
+        >
+          쿠폰을 보냈습니다.
+        </div>
       </div>
       <div
         class="chat__mymessage__paragraph"
         v-else-if="msg.contentType == '프로모션'"
       ></div>
+      <div
+        class="chat__mymessage__product"
+        v-else-if="msg.contentType == '상품정보'"
+        :on-load="getProduct(msg.source)"
+      >
+        <div>상품정보</div>
+        <img :src="product.data.thumbnailUrl" />
+        <div>
+          {{ product.data.categoryFirstName }}>{{
+            product.data.categorySecondName
+          }}>{{ product.data.categoryThirdName }}
+        </div>
+        <div>{{ product.data.productName }}</div>
+        <div>{{ product.data.price }}</div>
+        <button
+          class="btn btn-primary"
+          @click="
+            router.push({
+              path: '/product/myProduct',
+              query: {
+                productCode: product.data.source.split('/')[0],
+              },
+            })
+          "
+        >
+          상품 구매
+        </button>
+        <button>장바구니</button>
+      </div>
+      <div
+        class="chat__mymessage__product"
+        v-else-if="msg.contentType == '특별할인'"
+        :on-load="getSaleProduct(msg.source.split('/'))"
+      >
+        <div>특별 할인</div>
+        <img :src="product.data.thumbnailUrl" />
+        <div>
+          {{ product.data.categoryFirstName }}>{{
+            product.data.categorySecondName
+          }}>{{ product.data.categoryThirdName }}
+        </div>
+        <div>{{ product.data.productName }}</div>
+        <p style="text-decoration: line-through">{{ product.data.price }} 원</p>
+        <div>
+          {{ (product.data.price * (100 - coupon.data.discountRate)) / 100 }} 원
+        </div>
+        <button
+          @click="
+            router.push({
+              path: '/product/myProduct',
+              query: {
+                productId: product.data.source.split('/')[0],
+                couponId: product.data.source.split('/')[1],
+              },
+            })
+          "
+        >
+          상품 구매
+        </button>
+      </div>
     </div>
     <div
       v-else
@@ -55,17 +132,88 @@
             </div>
           </div>
           <div
-            class="chat__your_chat__yourmessage__paragraphparagraph"
+            class="chat__mymessage__coupon"
             v-else-if="msg.contentType == '쿠폰'"
+            :on-load="getCouponInfo(msg.source)"
           >
-            <div class="chat__yourmessage__coupon">
-              {{ coupon.name }}
+            <div>{{ coupon.data.name }}</div>
+            <div>{{ coupon.data.discountRate }}% 할인</div>
+            <div style="color: gray; font-size: 12px">
+              {{ coupon.data.startDate.slice(0, 10) }}~{{
+                coupon.data.endDate.slice(0, 10)
+              }}
             </div>
+            <div style="color: gray; font-size: 14px" v-if="coupon.data.status">
+              이미 쿠폰을 받으셨습니다.
+            </div>
+            <button
+              v-else
+              class="chat__coupon__button"
+              @click="getCoupon(msg.source)"
+            >
+              쿠폰 받기
+            </button>
+          </div>
+          <div
+            class="chat__mymessage__paragraph"
+            v-else-if="msg.contentType == '프로모션'"
+          ></div>
+          <div
+            class="chat__mymessage__product"
+            v-else-if="msg.contentType == '상품정보'"
+            :on-load="getProduct(msg.source)"
+          >
+            <div>상품정보</div>
+            <img :src="product.data.thumbnailUrl" />
+            <div>
+              {{ product.data.categoryFirstName }}>{{
+                product.data.categorySecondName
+              }}>{{ product.data.categoryThirdName }}
+            </div>
+            <div>{{ product.data.productName }}</div>
+            <div>{{ product.data.price }}</div>
+          </div>
+          <div
+            class="chat__mymessage__product"
+            v-else-if="msg.contentType == '특별할인'"
+            :on-load="getSaleProduct(msg.source.split('/'))"
+          >
+            <div>특별 할인</div>
+            <img :src="product.data.thumbnailUrl" />
+            <div>
+              {{ product.data.categoryFirstName }}>{{
+                product.data.categorySecondName
+              }}>{{ product.data.categoryThirdName }}
+            </div>
+            <div>{{ product.data.productName }}</div>
+            <p style="text-decoration: line-through">
+              {{ product.data.price }} 원
+            </p>
+            <div>
+              {{
+                (product.data.price * (100 - coupon.data.discountRate)) / 100
+              }}
+              원
+            </div>
+            <button
+              @click="
+                router.push({
+                  path: '/product/myProduct',
+                  query: {
+                    productId: product.data.source.split('/')[0],
+                    couponId: product.data.source.split('/')[1],
+                  },
+                })
+              "
+            >
+              상품 구매
+            </button>
           </div>
           <p class="chat__yourmessage__time">
             {{ msg.createdAt.substr(11, 5) }}
           </p>
         </div>
+        <!-- 진우 프로덕트-->
       </div>
     </div>
   </div>
@@ -94,7 +242,18 @@ export default {
     return {
       isSame: false,
       coupon: {
-        name: 'default',
+        data: { name: '쿠폰 정보', startDate: '', endDate: '' },
+      },
+      product: {
+        data: {
+          productName: '',
+          thumbnailUrl: '',
+          price: 0,
+          storeName: '',
+          categoryFirstName: '',
+          categorySecondName: '',
+          categoryThirdName: '',
+        },
       },
     };
   },
@@ -118,7 +277,51 @@ export default {
         })
         .then(res => (this.coupon = res))
         .catch(err => console.log(err));
-      console.log(this.coupon);
+    },
+    async getCoupon(couponId) {
+      await axios
+        .post(
+          'https://sbbro.xyz/api/member/mycoupon/person',
+          { id: couponId },
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
+            },
+          },
+        )
+        .then();
+    },
+    async getProduct(productId) {
+      await axios
+        .get('https://sbbro.xyz/api/product/products/' + productId, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
+        .then(res => (this.product = res))
+        .catch(err => console.log(err));
+    },
+    async getSaleProduct(source) {
+      await axios
+        .get('https://sbbro.xyz/api/product/products/' + source[0], {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
+        .then(res => (this.product = res))
+        .catch(err => console.log(err));
+      await axios
+        .get('https://sbbro.xyz/api/product/coupons/' + source[1], {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
+        .then(res => (this.coupon = res))
+        .catch(err => console.log(err));
     },
   },
   created() {
@@ -145,10 +348,38 @@ export default {
   font-size: 14px;
 }
 
+.chat__mymessage__coupon {
+  margin: 0.4rem 0 0 1rem;
+  border-radius: 20px 20px 0px 20px;
+  max-width: 180px;
+  width: 180px;
+  background-color: black;
+  color: #ffffff;
+  padding: 0.8rem;
+  font-size: 14px;
+}
+
+.chat__mymessage__product {
+  margin: 0.4rem 0 0 1rem;
+  border-radius: 20px 20px 0px 20px;
+  max-width: 180px;
+  background-color: black;
+  color: #ffffff;
+  padding: 0.8rem;
+  font-size: 14px;
+}
+
 .chat__mymessage__time {
   margin: 0;
   font-size: 12px;
   color: #9c9c9c;
+}
+
+.chat__coupon__button {
+  width: 75px;
+  height: 25px;
+  color: #ffffff;
+  background-color: #414141;
 }
 
 .chat__first {
