@@ -19,45 +19,6 @@
             </h2>
           </span>
           <hr />
-          <br />
-          <div class="option_grid">
-            <div class="option_name">
-              <h3>할인쿠폰</h3>
-            </div>
-            <div>
-              <button>50% 상품쿠폰</button>
-              <br />
-              <br />
-              <button>15% 더블쿠폰</button>
-            </div>
-          </div>
-          <hr />
-          <div class="option_grid">
-            <div class="option_name">
-              <h3>색상</h3>
-            </div>
-            <div>
-              <span class="siv-colorchip__option">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/upload1/product/colorChip/15_04_카멜.png"
-                  style="width: 50px"
-                  alt="카멜"
-                />
-              </span>
-            </div>
-          </div>
-          <hr />
-          <div class="option_grid">
-            <div class="option_name">
-              <h3>옵션</h3>
-            </div>
-            <div class="size_div" style="float: left">
-              <button>Small</button>
-              <button>Medium</button>
-              <button>Large</button>
-            </div>
-          </div>
-          <hr />
 
           <div class="option_grid">
             <div class="option_name">
@@ -137,15 +98,15 @@
 <script>
 import { reactive } from 'vue';
 import { onBeforeMount } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import router from '@/router';
 import Swal from 'sweetalert2';
 import LikeButton from '@/components/button/likeButton.vue';
 
 export default {
   components: { LikeButton },
   setup() {
+    const router = useRouter()
     const state = reactive({
       productCode: '',
       products: [],

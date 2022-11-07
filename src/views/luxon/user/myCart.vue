@@ -150,10 +150,11 @@ import { computed, reactive } from "@vue/reactivity";
 import { onBeforeMount } from "@vue/runtime-core";
 import axios from "axios";
 import Swal from "sweetalert2";
-import router from "@/router";
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
+    const router = useRouter()
     const id = computed(() => router.params.id);
     const state = reactive({
       products: [],

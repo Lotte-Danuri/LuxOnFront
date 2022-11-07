@@ -214,14 +214,14 @@
 import { computed, reactive } from "@vue/reactivity";
 import { onBeforeMount } from "@vue/runtime-core";
 import axios from "axios";
-import router from "@/router";
 import Swal from "sweetalert2";
-import { useRoute } from "vue-router";
+import { useRoute,useRouter } from "vue-router";
 
 export default {
   components: {},
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const products = computed(() => JSON.parse(route.params.products));
     const state = reactive({
       userInfo: "",
@@ -303,8 +303,8 @@ export default {
               }
             )
             .then((response) => {
-              alert("주문 완료되었습니다.");
-              router.push("/main");
+              Swal.fire('주문이 완료되었습니다.')
+              router.push('/mypage/order')
             });
         }
       });
