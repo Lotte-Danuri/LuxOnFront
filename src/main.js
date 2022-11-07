@@ -16,7 +16,10 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 // import VuePaginate from 'vue-pagination-2';
 
+import VCalendar from 'v-calendar';
+
 createApp(App)
+  .use(VCalendar)
   .use(VueSweetalert2)
   .use(router)
   .use(globals)
