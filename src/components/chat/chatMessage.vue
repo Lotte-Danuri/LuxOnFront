@@ -12,7 +12,10 @@
       >
         {{ msg.content }}
       </div>
-      <div class="chat__mymessage__paragraph" v-if="msg.contentType == '공지'">
+      <div
+        class="chat__mymessage__notification"
+        v-if="msg.contentType == '공지'"
+      >
         {{ msg.content }}
       </div>
       <div
@@ -156,6 +159,12 @@
           <div
             class="chat__yourmessage__paragraph"
             v-if="msg.contentType == '메세지'"
+          >
+            {{ msg.content }}
+          </div>
+          <div
+            class="chat__yourmessage__notification"
+            v-if="msg.contentType == '공지'"
           >
             {{ msg.content }}
           </div>
@@ -462,6 +471,26 @@ export default {
   height: 25px;
   color: #ffffff;
   background-color: #414141;
+}
+
+.chat__mymessage__notification {
+  margin: 0.4rem 0 0 1rem;
+  border-radius: 20px 20px 0px 20px;
+  max-width: 180px;
+  background-color: black;
+  color: #ffffff;
+  padding: 0.8rem;
+  font-size: 14px;
+}
+
+.chat__yourmessage__notification {
+  margin: 0.4rem 0 0 1rem;
+  border-radius: 20px 20px 0px 20px;
+  max-width: 180px;
+  background-color: rgb(234, 137, 137);
+  color: #ffffff;
+  padding: 0.8rem;
+  font-size: 14px;
 }
 
 .chat__first {
