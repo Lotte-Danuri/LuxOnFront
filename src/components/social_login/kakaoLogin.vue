@@ -33,7 +33,15 @@ export default {
           console.log(response);
           localStorage.setItem('token', response.data.accessToken);
           localStorage.setItem('userName', response.data.encodedName);
-          localStorage.setItem('loginId', response.data.loginId);
+          localStorage.setItem('login_id', response.data.loginId);
+          axios
+            .post('https://sbbro.xyz/api/chat/user', {
+              userId: response.data.loginId,
+              userName: response.data.encodedName,
+            })
+            .then(response => {
+              console.log(response);
+            });
         })
         .finally(() => {
           window.location.href = '/main';

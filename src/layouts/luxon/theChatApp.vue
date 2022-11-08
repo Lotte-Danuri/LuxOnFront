@@ -2,7 +2,7 @@
   <div>
     <!-- 채팅방 -->
     <div class="chat_app_wrapper" v-if="showChat">
-      <div class="chat_app_header border">
+      <div class="chat_app_header">
         <div style="margin-left: 28px"></div>
         <div>
           <img class="chat_app_brand" src="@/assets/logo/logo_white.png" />
@@ -21,17 +21,25 @@
     </div>
     <!-- 채팅창 -->
     <div class="chat_app_wrapper_chat" v-if="!showChat">
-      <div class="chat_app_header border">
+      <div class="chat_app_header_chat border">
         <button class="btn" @click="backButton">
           <i class="bi bi-chevron-left"></i>
         </button>
         <p class="app__brand">{{ selectedChatRoom.userName }}</p>
-        <button class="btn" @click="$emit('closeBtn')">
-          <i class="bi bi-x-lg"></i>
-        </button>
+        <div>
+          <button class="btn" style="height: 100%" @click="outBtn()">
+            <i class="bi bi-box-arrow-right"></i>
+          </button>
+          <button class="btn" @click="$emit('closeBtn')">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
       </div>
       <ChatList :msgs="msgData"></ChatList>
-      <ChatForm @submitMessage="sendMessage"></ChatForm>
+      <ChatForm
+        @submitMessage="sendMessage"
+        :chatValid="selectedChatRoom.valid"
+      ></ChatForm>
     </div>
   </div>
 </template>
@@ -74,6 +82,23 @@ export default {
           },
         })
         .then(res => (this.rooms = res.data))
+        .catch(err => console.log(err));
+    },
+    outBtn: function () {
+      axios
+        .delete(
+          'https://sbbro.xyz/api/chat/user/' +
+            this.userId +
+            '/' +
+            this.selectedChatRoom.chatRoomId,
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
+            },
+          },
+        )
+        .then(this.backButton())
         .catch(err => console.log(err));
     },
     getChatDatas: function (val) {
@@ -228,16 +253,29 @@ body {
 }
 
 .chat_app_header {
+  height: 70px;
   background: #ffffff;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
   border-radius: 24px 24px 0px 0px;
   font-size: 16px;
   font-weight: 700;
   display: flex;
-
+  z-index: 2;
   flex-direction: row;
   justify-content: space-between;
+}
+.chat_app_header_chat {
   height: 70px;
+  width: 375px;
+  background: #ffffff;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 24px 24px 0px 0px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  position: fixed;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .chatroom_area {
   border-right: 1px solid black;

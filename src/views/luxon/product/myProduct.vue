@@ -21,45 +21,6 @@
             </h2>
           </span>
           <hr />
-          <br />
-          <div class="option_grid">
-            <div class="option_name">
-              <h3>할인쿠폰</h3>
-            </div>
-            <div>
-              <button>50% 상품쿠폰</button>
-              <br />
-              <br />
-              <button>15% 더블쿠폰</button>
-            </div>
-          </div>
-          <hr />
-          <div class="option_grid">
-            <div class="option_name">
-              <h3>색상</h3>
-            </div>
-            <div>
-              <span class="siv-colorchip__option">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/upload1/product/colorChip/15_04_카멜.png"
-                  style="width: 50px"
-                  alt="카멜"
-                />
-              </span>
-            </div>
-          </div>
-          <hr />
-          <div class="option_grid">
-            <div class="option_name">
-              <h3>옵션</h3>
-            </div>
-            <div class="size_div" style="float: left">
-              <button>Small</button>
-              <button>Medium</button>
-              <button>Large</button>
-            </div>
-          </div>
-          <hr />
 
           <div class="option_grid">
             <div class="option_name">
@@ -73,11 +34,11 @@
               >
                 <input
                   :id="'문자열' + index"
-                  v-model="state.productId"
+                  v-model="state.selectedStoreIndex"
                   type="radio"
                   class="form-check-input"
                   name="sizeRadio"
-                  :value="product.id"
+                  :value="index"
                   data-toggle="form-caption"
                   data-target="#sizeCaption"
                 />
@@ -205,48 +166,47 @@
   </main>
 </template>
 <script>
-import { reactive } from 'vue';
-import { onBeforeMount } from 'vue';
-import { useRoute } from 'vue-router';
-import axios from 'axios';
-import router from '@/router';
-import Swal from 'sweetalert2';
-import LikeButton from '@/components/button/likeButton.vue';
+import { reactive } from "vue";
+import { onBeforeMount } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import axios from "axios";
+import Swal from "sweetalert2";
+import LikeButton from "@/components/button/likeButton.vue";
+import { getCurrentInstance } from "@vue/runtime-core";
 
 export default {
   components: { LikeButton },
   setup() {
+    const router = useRouter();
     const state = reactive({
-      productCode: '',
+      productCode: "",
       products: [],
       sumPrice: 0,
-      productId: '',
+      selectedStoreIndex: "",
       quantity: 0,
     });
+    const comma =
+      getCurrentInstance().appContext.config.globalProperties.$comma;
 
     onBeforeMount(() => {
       var route = useRoute();
       state.productCode = route.query.productCode;
       axios
-        .get('https://sbbro.xyz/api/product/products/list/' + state.productCode)
-        .then(response => {
+        .get("https://sbbro.xyz/api/product/products/list/" + state.productCode)
+        .then((response) => {
           if (response.status == 200) {
             state.products = response.data;
             console.log(state.products);
             state.sumPrice =
-              document.getElementById('countValue').value *
+              document.getElementById("countValue").value *
               state.products[0].price;
           }
         })
         .catch(() => {
-          alert('해당 상품은 조회할 수 없습니다.');
+          alert("해당 상품은 조회할 수 없습니다.");
           history.back();
         });
     });
-
-    const comma = val => {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    };
 
     const minusBtn = () => {
       if (state.quantity > 0) {
@@ -258,19 +218,14 @@ export default {
       state.quantity++;
       state.sumPrice = state.quantity * state.products[0].price;
     };
-    const initOrder = () => {
-      // this.$router.push("initOrder");
-      // if (loginCheck()) {
-      // }
-    };
 
     const loginCheck = () => {
-      if (localStorage.getItem('token') == null) {
+      if (localStorage.getItem("token") == null) {
         Swal.fire({
-          title: '로그인 해주세요',
-          icon: 'error',
+          title: "로그인 해주세요",
+          icon: "error",
           showCancelButton: false,
-          confirmButtonText: '확인',
+          confirmButtonText: "확인",
         }).then(() => {
           return false;
         });
@@ -279,37 +234,109 @@ export default {
       }
     };
 
-    const addCart = () => {
-      if (loginCheck() == true) {
-        axios
-          .post(
-            'https://sbbro.xyz/api/member/cart',
-            {
-              productId: state.productId,
-              quantity: state.quantity,
-            },
-            {
-              headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('token'),
-              },
-            },
-          )
-          .then(response => {
-            if (response.status == 200) {
-              Swal.fire({
-                title: '상품이 장바구니에 담겼습니다.',
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonText: '장바구니로 이동',
-                cancelButtonText: '계속 쇼핑하기',
-              }).then(result => {
-                if (result.isConfirmed) {
-                  router.push('/cart');
-                }
-              });
-            }
-          });
+    const isSelectStore = () => {
+      if (state.selectedStoreIndex === "") {
+        Swal.fire("지점을 선택해주세요");
+        return false;
       }
+      return true;
+    };
+
+    const isSelectQuantity = () => {
+      if (state.quantity === 0) {
+        Swal.fire("수량을 선택해주세요");
+        return false;
+      }
+      return true;
+    };
+
+    const initOrder = () => {
+      if (!loginCheck()) {
+        return;
+      }
+
+      if (!isSelectStore()) {
+        return;
+      }
+
+      if (!isSelectQuantity()) {
+        return;
+      }
+
+      Swal.fire({
+        title: "주문 하시겠습니까?",
+        icon: "success",
+        showCancelButton: true,
+        confirmButtonText: "네",
+        cancelButtonText: "아니요",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          var productsData = [];
+          var product = {
+            storeName: state.products[0].storeName,
+            quantity: state.quantity,
+            productDto: {
+              id: state.products[0].id,
+              price: state.products[0].price,
+              productCode: state.products[0].productCode,
+              productName: state.products[0].productName,
+              storeId: state.products[0].storeId,
+              thumbnailUrl: state.products[0].thumbnailUrl,
+              warranty: state.products[0].warranty,
+            },
+          };
+          productsData.push(product);
+          router.push({
+            name: "initOrder",
+            params: {
+              products: JSON.stringify(productsData),
+            },
+          });
+        }
+      });
+    };
+
+    const addCart = () => {
+      if (!loginCheck()) {
+        return;
+      }
+
+      if (!isSelectStore()) {
+        return;
+      }
+
+      if (!isSelectQuantity()) {
+        return;
+      }
+
+      axios
+        .post(
+          "https://sbbro.xyz/api/member/cart",
+          {
+            productId: state.products[state.selectedStoreIndex].id,
+            quantity: state.quantity,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            Swal.fire({
+              title: "상품이 장바구니에 담겼습니다.",
+              icon: "success",
+              showCancelButton: true,
+              confirmButtonText: "장바구니로 이동",
+              cancelButtonText: "계속 쇼핑하기",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                router.push("/cart");
+              }
+            });
+          }
+        });
     };
 
     const click_review = () => {
@@ -340,12 +367,12 @@ export default {
 };
 </script>
 <style scoped>
-input[type='radio'] {
+input[type="radio"] {
   display: none;
   margin: 10px;
 }
 
-input[type='radio'] + label {
+input[type="radio"] + label {
   display: inline-block;
   margin: -2px;
   padding: 8px 19px;
@@ -358,7 +385,7 @@ input[type='radio'] + label {
   white-space: nowrap;
 }
 
-input[type='radio']:checked + label {
+input[type="radio"]:checked + label {
   background-color: #38363656;
 }
 .list_contents {

@@ -4,6 +4,7 @@
   <the-view></the-view>
 
   <TheChat
+    v-if="state.localStorage.login_id != null"
     style="position: fixed; z-index: 999; right: 30px; bottom: 30px"
     @click="buttonClick"
   ></TheChat>
@@ -24,6 +25,8 @@ import TheChat from '@/layouts/luxon/theChat.vue';
 import TheChatApp from '@/layouts/luxon/theChatApp.vue';
 import TheFooter from '@/layouts/luxon/theFooter.vue';
 import router from '@/router';
+import { reactive } from 'vue';
+import { onMounted } from 'vue';
 // import { ref } from 'vue';
 
 export default {
@@ -35,6 +38,7 @@ export default {
     TheChatApp,
     TheFooter,
   },
+
   created() {
     if (window.location.pathname == '/') {
       router.push('/main');
@@ -43,6 +47,19 @@ export default {
   data: function () {
     return {
       chatShow: false,
+      login: false,
+    };
+  },
+  setup() {
+    const state = reactive({
+      localStorage: '',
+    });
+
+    onMounted(() => {
+      state.localStorage = localStorage;
+    });
+    return {
+      state,
     };
   },
   methods: {
@@ -54,7 +71,7 @@ export default {
 </script>
 
 <style scoped>
-/* .v-enter-active,
+.v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
 }
@@ -62,5 +79,5 @@ export default {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
-} */
+}
 </style>
