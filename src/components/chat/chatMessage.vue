@@ -62,19 +62,7 @@
         </div>
         <div>{{ product.data.productName }}</div>
         <div>{{ product.data.price }}</div>
-        <button
-          class="btn btn-primary"
-          @click="
-            router.push({
-              path: '/product/myProduct',
-              query: {
-                productCode: product.data.productCode,
-              },
-            })
-          "
-        >
-          상품 구매
-        </button>
+        <button class="btn btn-primary" @click="orderProduct">상품 구매</button>
         <button
           class="btn btn-primary"
           @click="insertCart(product.data.source)"
@@ -99,19 +87,7 @@
         <div>
           {{ (product.data.price * (100 - coupon.data.discountRate)) / 100 }} 원
         </div>
-        <button
-          @click="
-            router.push({
-              path: '/product/myProduct',
-              query: {
-                productId: product.data.source.split('/')[0],
-                couponId: product.data.source.split('/')[1],
-              },
-            })
-          "
-        >
-          상품 구매
-        </button>
+        <button @click="orderProduct">상품 구매</button>
       </div>
       <div
         class="chat__mymessage__product"
@@ -228,19 +204,7 @@
               }}
               원
             </div>
-            <button
-              @click="
-                router.push({
-                  path: '/product/myProduct',
-                  query: {
-                    productId: product.data.source.split('/')[0],
-                    couponId: product.data.source.split('/')[1],
-                  },
-                })
-              "
-            >
-              상품 구매
-            </button>
+            <button @click="orderProduct">상품 구매</button>
           </div>
           <p class="chat__yourmessage__time">
             {{ msg.createdAt.substr(11, 5) }}
@@ -253,15 +217,16 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
-import { onMounted } from 'vue';
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import { reactive } from "vue";
+import { onMounted } from "vue";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
     const state = reactive({
-      localStorage: '',
+      localStorage: "",
     });
     onMounted(() => {
       state.localStorage = localStorage;
@@ -271,28 +236,55 @@ export default {
       state,
     };
   },
-  props: ['msg', 'prev'],
+  props: ["msg", "prev"],
   data() {
     return {
+      router: useRouter(),
       isSame: false,
       coupon: {
-        data: { name: '쿠폰 정보', startDate: '', endDate: '' },
+        data: { name: "쿠폰 정보", startDate: "", endDate: "" },
       },
       product: {
         data: {
-          productName: '',
-          thumbnailUrl: '',
+          productName: "",
+          thumbnailUrl: "",
           price: 0,
-          storeName: '',
-          categoryFirstName: '',
-          categorySecondName: '',
-          categoryThirdName: '',
+          storeName: "",
+          categoryFirstName: "",
+          categorySecondName: "",
+          categoryThirdName: "",
         },
       },
       plist: [],
     };
   },
   methods: {
+    orderProduct() {
+      console.log(this.product.data)
+      var productsData = [];
+      var productData = {
+        storeName: this.product.data.storeName,
+        quantity: 1,
+        productDto: {
+          id: this.product.data.id,
+          price: this.product.data.price,
+          productCode: this.product.data.productCode,
+          productName: this.product.data.productName,
+          storeId: this.product.data.storeId,
+          thumbnailUrl: this.product.data.thumbnailUrl,
+          warranty: this.product.data.warranty,
+        },
+      };
+      productsData.push(productData);
+      console.log(productData)
+      this.router.push({
+        name: "initOrder",
+        params: {
+          products: JSON.stringify(productsData),
+          couponId: this.coupon.data.id,
+        },
+      });
+    },
     isSamePerson(msg, prev) {
       if (prev === null) {
         return false;
@@ -304,85 +296,85 @@ export default {
     },
     async getCouponInfo(couponId) {
       await axios
-        .get('https://sbbro.xyz/api/product/coupons/' + couponId, {
+        .get("https://sbbro.xyz/api/product/coupons/" + couponId, {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            contentType: 'application/json',
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+            contentType: "application/json",
           },
         })
-        .then(res => (this.coupon = res))
-        .catch(err => console.log(err));
+        .then((res) => (this.coupon = res))
+        .catch((err) => console.log(err));
     },
     async getCoupon(couponId) {
       await axios
         .post(
-          'https://sbbro.xyz/api/member/mycoupon/person',
+          "https://sbbro.xyz/api/member/mycoupon/person",
           { id: couponId },
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-              contentType: 'application/json',
+              Authorization: `Bearer ` + localStorage.getItem("token"),
+              contentType: "application/json",
             },
-          },
+          }
         )
         .then();
     },
     async getProduct(productId) {
       await axios
-        .get('https://sbbro.xyz/api/product/products/' + productId, {
+        .get("https://sbbro.xyz/api/product/products/" + productId, {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            contentType: 'application/json',
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+            contentType: "application/json",
           },
         })
-        .then(res => (this.product = res))
-        .catch(err => console.log(err));
+        .then((res) => (this.product = res))
+        .catch((err) => console.log(err));
     },
     async getSaleProduct(source) {
       await axios
-        .get('https://sbbro.xyz/api/product/products/' + source[0], {
+        .get("https://sbbro.xyz/api/product/products/" + source[0], {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            contentType: 'application/json',
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+            contentType: "application/json",
           },
         })
-        .then(res => (this.product = res))
-        .catch(err => console.log(err));
+        .then((res) => (this.product = res))
+        .catch((err) => console.log(err));
       await axios
-        .get('https://sbbro.xyz/api/product/coupons/' + source[1], {
+        .get("https://sbbro.xyz/api/product/coupons/" + source[1], {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            contentType: 'application/json',
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+            contentType: "application/json",
           },
         })
-        .then(res => (this.coupon = res))
-        .catch(err => console.log(err));
+        .then((res) => (this.coupon = res))
+        .catch((err) => console.log(err));
     },
     async insertCart(productId) {
       axios
         .post(
-          'https://sbbro.xyz/api/member/cart',
+          "https://sbbro.xyz/api/member/cart",
           {
             productId: productId,
             quantity: 1,
           },
           {
             headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
-          },
+          }
         )
-        .then(response => {
+        .then((response) => {
           if (response.status == 200) {
             Swal.fire({
-              title: '상품이 장바구니에 담겼습니다.',
-              icon: 'success',
+              title: "상품이 장바구니에 담겼습니다.",
+              icon: "success",
               showCancelButton: true,
-              confirmButtonText: '장바구니로 이동',
-              cancelButtonText: '계속 쇼핑하기',
-            }).then(result => {
+              confirmButtonText: "장바구니로 이동",
+              cancelButtonText: "계속 쇼핑하기",
+            }).then((result) => {
               if (result.isConfirmed) {
-                router.push('/cart');
+                router.push("/cart");
               }
             });
           }
@@ -390,16 +382,16 @@ export default {
     },
     async getRecommendProduct(productList) {
       this.plist = [];
-      productList.forEach(async product => {
+      productList.forEach(async (product) => {
         await axios
-          .get('https://sbbro.xyz/api/product/products/' + product, {
+          .get("https://sbbro.xyz/api/product/products/" + product, {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-              contentType: 'application/json',
+              Authorization: `Bearer ` + localStorage.getItem("token"),
+              contentType: "application/json",
             },
           })
-          .then(res => this.plist.push(res))
-          .catch(err => console.log(err));
+          .then((res) => this.plist.push(res))
+          .catch((err) => console.log(err));
       });
     },
   },
