@@ -165,7 +165,7 @@
           <br />
           <div class="small_aside_grid">
             <div style="font-weight: bold; color: gray">총 상품금액</div>
-            <div style="margin-left: 30%">{{ comma(state.totalPrice) }} 원</div>
+            <div style="margin-left: 30%">{{ comma(state.totalProductPrice) }} 원</div>
           </div>
           <hr />
           <div class="small_aside_grid">
@@ -191,7 +191,7 @@
                 color: goldenrod;
               "
             >
-              {{ comma(state.totalPrice + state.delivaryFee) }}원
+              {{ comma(totalPrice()) }}원
             </div>
           </div>
           <hr />
@@ -232,10 +232,11 @@ export default {
     const reserveCouponId = computed(() =>
       route.params.couponId ? route.params.couponId : null
     );
+
     const state = reactive({
       userInfo: "",
       order: "",
-      totalPrice: 0,
+      totalProductPrice: 0,
       totalQuantity: 0,
       totalDiscountPrice: 0,
       delivaryFee: 5000,
@@ -257,11 +258,17 @@ export default {
       getUserData();
     });
 
+    const totalPrice = () =>{
+      return state.totalProductPrice - state.totalDiscountPrice + state.delivaryFee;
+    }
+
     const setProductsCoupon = async () => {
       if (reserveCouponId.value != null) {
+        console.log(reserveCouponId.value)
         setReserveCoupon();
         return;
       }
+      console.log(reserveCouponId.value)
 
       for (var index in products.value) {
         await axios
@@ -334,15 +341,14 @@ export default {
     };
 
     const calTotalPriceAndQuantity = async () => {
-      state.totalPrice = 0;
+      state.totalProductPrice = 0;
       state.totalQuantity = 0;
       state.totalDiscountPrice = 0;
 
       for (var index in products.value) {
-        state.totalPrice +=
+        state.totalProductPrice +=
           products.value[index].quantity *
-            products.value[index].productDto.price -
-          products.value[index].discountPrice;
+            products.value[index].productDto.price;
         state.totalQuantity += products.value[index].quantity;
         state.totalDiscountPrice +=
           products.value[index].quantity * products.value[index].discountPrice;
@@ -372,7 +378,7 @@ export default {
               `https://sbbro.xyz/api/order/orders/pays`,
               {
                 buyerId: state.userInfo.id,
-                totalPrice: state.totalPrice,
+                totalPrice: totalPrice(),
                 totalQuantity: state.totalQuantity,
                 orderDataDtoList: orderDataDtoList,
               },
@@ -425,6 +431,7 @@ export default {
       applyCoupon,
       calTotalPriceAndQuantity,
       reserveCouponId,
+      totalPrice,
     };
   },
 };
