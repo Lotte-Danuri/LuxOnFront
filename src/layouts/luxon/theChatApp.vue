@@ -260,7 +260,7 @@ body {
   font-size: 16px;
   font-weight: 700;
   display: flex;
-
+  z-index: 2;
   flex-direction: row;
   justify-content: space-between;
 }
