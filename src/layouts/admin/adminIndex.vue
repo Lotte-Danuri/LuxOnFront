@@ -20,10 +20,10 @@
           <span class="material-icons-sharp">grid_view</span>
           <h3>메인 센터</h3>
         </router-link>
-        <a href="#">
+        <router-link to="/admin/analytics">
           <span class="material-icons-sharp">insights</span>
           <h3>통계</h3>
-        </a>
+        </router-link>
         <a href="#">
           <span class="material-icons-sharp">receipt_long</span>
           <h3>상품 관리</h3>

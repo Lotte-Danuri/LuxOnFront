@@ -3,6 +3,9 @@
   <main>
     <div class="regi_grid">
       <div class="top_div">
+        <br />
+        <br />
+        <br />
         <input placeholder="쿠폰명" id="couponName" />
         <input placeholder="내용" id="couponContent" />
         <input placeholder="할인율" id="discountRate" />
@@ -10,8 +13,6 @@
         <input type="datetime-local" data-placeholder="시작일" id="startDate" />
         <input type="datetime-local" data-placeholder="종료일" id="endDate" />
         <br />
-        <br />
-        <!-- <input placeholder="상품선택" /> -->
         <br />
       </div>
       <div>
@@ -321,7 +322,7 @@ export default {
           },
         )
         .then(response => {
-          alert("쿠폰이 등록되었습니다");
+          alert('쿠폰이 등록되었습니다');
         });
     },
     selectAll(event) {
