@@ -6,15 +6,15 @@
     <div class="zero_grid">
       <div>
         <span class="material-icons-sharp"> today </span>
-        총판매량
+        총판매량 1111111
       </div>
       <div><span class="material-icons-sharp"> poll </span>거래건수</div>
       <div><span class="material-icons-sharp"> cloud_queue </span>순수익</div>
       <div>뭐넣징</div>
     </div>
     <div class="first_grid">
-      <div style="background-color: gray; font-size: 150px">
-        차트 넣어주세용~
+      <div style="background-color: white">
+        <canvas id="myChart" style="width: 100%; max-width: 1000px"></canvas>
       </div>
       <!-- <v-calendar /> -->
       <v-date-picker v-model="date" is-expanded style="height: 500px" />
@@ -92,6 +92,7 @@ export default {
       startDate: '',
       endDate: '',
       productIdList: [],
+      myChart: '',
     };
   },
   created() {
@@ -122,6 +123,34 @@ export default {
         console.log(response.data);
         this.productList = response.data;
       });
+
+    var xValues = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+    new Chart('myChart', {
+      type: 'line',
+      data: {
+        labels: xValues,
+        datasets: [
+          {
+            data: [860, 1140, 1060, 1060, 1070, 1110, 1330, 2210, 7830, 2478],
+            borderColor: 'red',
+            fill: false,
+          },
+          {
+            data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000],
+            borderColor: 'green',
+            fill: false,
+          },
+          {
+            data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100],
+            borderColor: 'blue',
+            fill: false,
+          },
+        ],
+      },
+      options: {
+        legend: { display: false },
+      },
+    });
   },
   methods: {
     async getCategoryList() {
@@ -197,7 +226,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .zero_grid {
   display: grid;
   grid-template-columns: 325px 325px 325px 325px;
@@ -211,7 +240,7 @@ export default {
   border-radius: 20px;
   background-color: white;
   height: 150px;
-  font-size: 40px;
+  font-size: 5px;
 }
 
 .first_grid {
@@ -249,7 +278,7 @@ export default {
 }
 
 .third_grid div {
-  background-color: gray;
+  background-color: white;
   width: 100%;
   height: 400px;
 }

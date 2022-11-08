@@ -85,13 +85,81 @@
         </div>
       </div>
       <div>
-        <h1>상품상세</h1>
-        <div
-          style="margin-right: 20%"
-          v-for="productImg in state.products[0]?.imageList"
-          v-bind:key="productImg"
-        >
-          <img :src="productImg" alt="/" />
+        <nav class="click_nav">
+          <button id="detail_btn" @click="click_detail" style="color: black">
+            상품상세
+          </button>
+          <button id="review_btn" @click="click_review">리뷰</button>
+        </nav>
+        <hr style="width: 80%" />
+        <div id="product_detail">
+          <div
+            style="margin-right: 20%"
+            v-for="productImg in state.products[0]?.imageList"
+            v-bind:key="productImg"
+          >
+            <img :src="productImg" alt="/" />
+          </div>
+        </div>
+        <div id="product_review">
+          <!-- <hr style="width: 80%" /> -->
+          <div>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 5% 5%;
+                margin-bottom: 0px;
+              "
+            >
+              <p>jeyz******</p>
+              <p>2022.11.05</p>
+            </div>
+            <div>
+              <p style="font-size: 20px; font-weight: bold; margin-bottom: 0px">
+                멜란지 그레이/M
+              </p>
+              <br />
+              <p style="font-size: 15px">
+                소재도 부드럽고 따뜻하니 마음에 들어요 색감도 사진이랑 똑같고
+                특히 핏이 너무 예쁘네요 기장이 긴 편이라 키 큰 사람한테 더 잘
+                어울릴 것 같아요.
+              </p>
+            </div>
+            <div>
+              <img
+                style="width: 100px; height: 100px"
+                src="https://image.sivillage.com/upload/C00001/eval/281/202211050726281_00001.jpeg?RS=90&SP=1&AO=1"
+              />
+            </div>
+            <div
+              style="
+                margin-left: 5%;
+                display: grid;
+                grid-template-columns: 3% 45% 10%;
+              "
+            >
+              <p style="font-size: 30px">└</p>
+              <input
+                style="
+                  width: 700px;
+                  height: 70px;
+                  border: solid 1px black;
+                  margin-left: ;
+                  border-radius: 10px;
+                "
+                placeholder="답글을 작성해주세요"
+              />
+              <button
+                style="
+                  background-color: black;
+                  color: white;
+                  border-radius: 10px;
+                "
+              >
+                답글 작성
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -271,7 +339,30 @@ export default {
         });
     };
 
-    return { state, minusBtn, plusBtn, initOrder, comma, addCart };
+    const click_review = () => {
+      document.getElementById('product_detail').style.display = 'none';
+      document.getElementById('product_review').style.display = 'block';
+      document.getElementById('review_btn').style.color = 'black';
+      document.getElementById('detail_btn').style.color = 'gray';
+    };
+
+    const click_detail = () => {
+      document.getElementById('product_review').style.display = 'none';
+      document.getElementById('product_detail').style.display = 'block';
+      document.getElementById('review_btn').style.color = 'gray';
+      document.getElementById('detail_btn').style.color = 'black';
+    };
+
+    return {
+      state,
+      minusBtn,
+      plusBtn,
+      initOrder,
+      comma,
+      addCart,
+      click_review,
+      click_detail,
+    };
   },
 };
 </script>
@@ -362,5 +453,16 @@ input[type="radio"]:checked + label {
   margin-top: 40px;
   margin-right: 10px;
   margin-left: 30px;
+}
+
+.click_nav {
+  display: grid;
+  grid-template-columns: 40% 30%;
+}
+.click_nav button {
+  background-color: transparent;
+  font-size: 40px;
+  font-weight: bold;
+  color: gray;
 }
 </style>
