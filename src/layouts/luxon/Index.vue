@@ -4,7 +4,7 @@
   <the-view></the-view>
 
   <TheChat
-    v-if="login"
+    v-if="state.localStorage.login_id != null"
     style="position: fixed; z-index: 999; right: 30px; bottom: 30px"
     @click="buttonClick"
   ></TheChat>
@@ -25,6 +25,8 @@ import TheChat from '@/layouts/luxon/theChat.vue';
 import TheChatApp from '@/layouts/luxon/theChatApp.vue';
 import TheFooter from '@/layouts/luxon/theFooter.vue';
 import router from '@/router';
+import { reactive } from 'vue';
+import { onMounted } from 'vue';
 // import { ref } from 'vue';
 
 export default {
@@ -49,7 +51,16 @@ export default {
     };
   },
   setup() {
-    this.login = localStorage.getItem('login_id') !== null;
+    const state = reactive({
+      localStorage: '',
+    });
+
+    onMounted(() => {
+      state.localStorage = localStorage;
+    });
+    return {
+      state,
+    };
   },
   methods: {
     buttonClick() {

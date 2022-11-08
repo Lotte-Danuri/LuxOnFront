@@ -16,19 +16,19 @@
         </div> -->
       </div>
       <div class="sidebar" style="height: 1000px; width: 200px">
-        <router-link to="/system/dashBoard">
+        <router-link to="/system/systemview">
           <span class="material-icons-sharp">grid_view</span>
           <h3>관리자 센터</h3>
         </router-link>
-        <router-link to="/system/promotion">
+        <router-link to="/system/syspromotion">
           <span class="material-icons-sharp"> edit_calendar </span>
           <h3>프로모션</h3>
         </router-link>
-        <a href="/system/notification">
+        <a href="/system/sysnotification">
           <span class="material-icons-sharp"> question_answer </span>
           <h3>체팅 알림 전송</h3>
         </a>
-        <router-link to="/system/recommend">
+        <router-link to="/system/sysrecommend">
           <span class="material-icons-sharp"> offline_bolt </span>
           <h3>상품 추천</h3>
         </router-link>

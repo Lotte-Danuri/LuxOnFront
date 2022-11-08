@@ -20,7 +20,10 @@ import MyPage from '@/views/luxon/user/myPage.vue';
 import MyOrder from '@/components/mypage/myOrder.vue';
 import MyLike from '@/components/mypage/myLike.vue';
 import MySystem from '@/layouts/system/systemIndex.vue';
-import SystemView from '@/views/system/systemView.vue';
+import SystemView from '@/views/system/systemview.vue';
+import SysPromotion from '@/views/system/syspromotion.vue';
+import SysNotification from '@/views/system/sysnotification.vue';
+import SysRecommend from '@/views/system/sysrecommend.vue';
 
 const routes = [
   {
@@ -136,6 +139,21 @@ const routes = [
         path: '/system/systemView',
         name: 'SystemView',
         component: SystemView,
+      },
+      {
+        path: '/system/syspromotion',
+        name: 'promotion',
+        component: SysPromotion,
+      },
+      {
+        path: '/system/sysnotification',
+        name: 'notification',
+        component: SysNotification,
+      },
+      {
+        path: '/system/sysrecommend',
+        name: 'recommend',
+        component: SysRecommend,
       },
     ],
   },

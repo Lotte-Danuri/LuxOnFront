@@ -94,10 +94,13 @@ export default {
             );
             localStorage.setItem('role', response.headers.role);
             localStorage.setItem('login_id', response.headers.login_id);
-            if (response.headers.role != 1) {
+            if (response.headers.role == 0) {
               window.location.href = '/main';
-            } else {
+            } else if (response.headers.role == 1) {
               window.location.href = '/admin/dashboard';
+              localStorage.setItem('store_id', response.headers.store_id);
+            } else if (response.headers.role == 2) {
+              window.location.href = '/system/systemview';
               localStorage.setItem('store_id', response.headers.store_id);
             }
             // console.log(response.headers);
