@@ -12,6 +12,9 @@
       >
         {{ msg.content }}
       </div>
+      <div class="chat__mymessage__paragraph" v-if="msg.contentType == '공지'">
+        {{ msg.content }}
+      </div>
       <div
         class="chat__mymessage__image"
         v-else-if="msg.contentType == '이미지'"
