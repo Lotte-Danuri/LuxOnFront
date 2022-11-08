@@ -127,7 +127,8 @@
 
               <div class="small_grid">
                 쿠폰적용
-                <select id="couponSelect"
+                <select
+                  :v-model="state.couponPick"
                   style="
                       width: 300px;
                       height: 30px;
@@ -138,7 +139,9 @@
                     "
                   @change="onChangeCoupon(product, $event)"
                 >
-                  <option value="none">=== 선택 ===</option>
+                  <option v-if="!reserveCouponId" value="none" selected>
+                    === 선택 ===
+                  </option>
                   <option
                     v-for="(coupon, index) in product.coupons"
                     :key="coupon"
@@ -243,9 +246,9 @@ export default {
 
       isProductsData();
 
-      await setProductsCoupon();
-
-      await calTotalPriceAndQuantity();
+      await setProductsCoupon().then(() => {
+        calTotalPriceAndQuantity();
+      });
 
       console.log(products);
 
@@ -255,7 +258,7 @@ export default {
     });
 
     const setProductsCoupon = async () => {
-      if (reserveCouponId != null) {
+      if (reserveCouponId.value != null) {
         setReserveCoupon();
         return;
       }
@@ -278,23 +281,27 @@ export default {
             products.value[index].discountPrice = 0;
             products.value[index].selectedCouponIndex = -1;
           });
-      }
+        }
     };
 
-    const setReserveCoupon = () => {
-      //가져온 쿠폰번호로 쿠폰을 조회해서 값 세팅
-      axios
-        .get("https://sbbro.xyz/api/product/coupons/" + reserveCouponId, {
-          headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          products.value[index].coupons.push(response.data);
-          products.value[index].discountPrice = 0;
-          products.value[index].selectedCouponIndex = 0;
-        });
+    const setReserveCoupon = async () => {
+      try {
+        const response = await axios.get(
+          "https://sbbro.xyz/api/product/coupons/" + reserveCouponId.value,
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem("token"),
+            },
+          }
+          );
+          products.value[0].coupons = [];
+          products.value[0].coupons.push(response.data);
+          products.value[0].discountPrice = 0;
+          products.value[0].selectedCouponIndex = 0;
+          applyCoupon(products.value[0]);
+      } catch (err) {
+        console.log(err)
+      }
     };
 
     const getUserData = async () => {
@@ -417,6 +424,7 @@ export default {
       onChangeCoupon,
       applyCoupon,
       calTotalPriceAndQuantity,
+      reserveCouponId,
     };
   },
 };
