@@ -62,19 +62,7 @@
         </div>
         <div>{{ product.data.productName }}</div>
         <div>{{ product.data.price }}</div>
-        <button
-          class="btn btn-primary"
-          @click="
-            router.push({
-              path: '/product/myProduct',
-              query: {
-                productCode: product.data.productCode,
-              },
-            })
-          "
-        >
-          상품 구매
-        </button>
+        <button class="btn btn-primary" @click="orderProduct">상품 구매</button>
         <button
           class="btn btn-primary"
           @click="insertCart(product.data.source)"
@@ -257,6 +245,7 @@ import { reactive } from 'vue';
 import { onMounted } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -274,6 +263,7 @@ export default {
   props: ['msg', 'prev'],
   data() {
     return {
+      router : useRouter(),
       isSame: false,
       coupon: {
         data: { name: '쿠폰 정보', startDate: '', endDate: '' },
@@ -293,6 +283,30 @@ export default {
     };
   },
   methods: {
+    orderProduct(){
+      var productsData = [];
+      var productData = {
+        storeName : this.product.storeName,
+        quantity : 1,
+        productDto : {
+          id : this.product.id,
+          price : this.product.price,
+          productCode : this.product.productCode,
+          productName : this.product.productName,
+          storeId : this.product.storeId,
+          thumbnailUrl : this.product.thumbnailUrl,
+          warranty : this.product.warranty
+        }
+      }
+      productsData.push(productData);
+      this.router.push({
+              name : 'initOrder',
+              params: {
+                products: JSON.stringify(productsData),
+                couponId : this.coupon.id
+              },
+            })
+    },
     isSamePerson(msg, prev) {
       if (prev === null) {
         return false;
