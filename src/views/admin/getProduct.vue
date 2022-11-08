@@ -1,5 +1,5 @@
 <template>
-  <h1>상품 조회</h1>
+  <h1>상품 관리</h1>
   <h3>상품 조회, 수정 및 히트맵 확인이 가능합니다.</h3>
   <main>
     <div class="regi_grid">
@@ -49,14 +49,13 @@
             color: black;
             border: solid 1px black;
             margin-left: 10px;
-            margin-top: 50px;
+            /* margin-top: 30px; */
           "
           @click="productSearch"
         >
           상품검색
         </button>
       </div>
-      
     </div>
     <table id="customers">
       <tr>
@@ -71,55 +70,59 @@
         <th>수정</th>
         <th>삭제</th>
         <th>히트</th>
-        
       </tr>
-      <tr v-for="(product,i) in productList" :key="i">
-            <td>{{i+1}}</td>
-            <td><img :src="`${product.thumbnailUrl}`" style="height: 100px" /></td>
-            <td>{{product.productName}}</td>
-            <td>{{product.price}}원</td>
-            <td>{{product.likeCount}}개</td>
-            <td>{{product.categoryFirstName}}</td>
-            <td>{{product.categorySecondName}}</td>
-            <td>{{product.categoryThirdName}}</td>
-            <td><button
-              style="
-                background-color: white;
-                width: 100px;
-                height: 50px;
-                color: black;
-                border: solid 1px black;
-              "
-              @click="updateProduct(`${product.id}`)"
-            >
-              정보수정
-            </button></td>
-            <td><button
-              style="
-                background-color: white;
-                width: 100px;
-                height: 50px;
-                color: black;
-                border: solid 1px black;
-              "
-              @click="deleteProduct(`${product.id}`)"
-            >
-              상품삭제
-            </button></td>
-            <td><button
-              style="
-                background-color: white;
-                width: 100px;
-                height: 50px;
-                color: black;
-                border: solid 1px black;
-              "
-              @click="checkHeatmap"
-            >
-              히트맵확인
-              
-            </button></td>
-        </tr>
+      <tr v-for="(product, i) in productList" :key="i">
+        <td>{{ i + 1 }}</td>
+        <td><img :src="`${product.thumbnailUrl}`" style="height: 100px" /></td>
+        <td>{{ product.productName }}</td>
+        <td>{{ product.price }}원</td>
+        <td>{{ product.likeCount }}개</td>
+        <td>{{ product.categoryFirstName }}</td>
+        <td>{{ product.categorySecondName }}</td>
+        <td>{{ product.categoryThirdName }}</td>
+        <td>
+          <button
+            style="
+              background-color: white;
+              width: 100px;
+              height: 50px;
+              color: black;
+              border: solid 1px black;
+            "
+            @click="updateProduct(`${product.id}`)"
+          >
+            정보수정
+          </button>
+        </td>
+        <td>
+          <button
+            style="
+              background-color: white;
+              width: 100px;
+              height: 50px;
+              color: black;
+              border: solid 1px black;
+            "
+            @click="deleteProduct(`${product.id}`)"
+          >
+            상품삭제
+          </button>
+        </td>
+        <td>
+          <button
+            style="
+              background-color: white;
+              width: 100px;
+              height: 50px;
+              color: black;
+              border: solid 1px black;
+            "
+            @click="checkHeatmap"
+          >
+            히트맵확인
+          </button>
+        </td>
+      </tr>
     </table>
   </main>
 </template>
@@ -130,7 +133,7 @@ import router from '@/router';
 export default {
   data() {
     return {
-      productList:[],
+      productList: [],
       categoryList: [],
       categorySecondList: [],
       categoryThirdList: [],
@@ -154,7 +157,8 @@ export default {
     async getProductList() {
       axios
         .get(
-          'https://sbbro.xyz/api/product/sellers/products/'+localStorage.getItem('store_id'),
+          'https://sbbro.xyz/api/product/sellers/products/' +
+            localStorage.getItem('store_id'),
           {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -163,12 +167,12 @@ export default {
           },
         )
         .then(response => {
-          this.productList=response.data;
+          this.productList = response.data;
           console.log(this.productList);
         });
     },
     changeCategoryFirst(event) {
-      console.log(this.firstClickValue)
+      console.log(this.firstClickValue);
       this.firstClickValue = event.target.value;
       if (this.firstClickValue == -1) {
         this.firstValue = '';
@@ -206,7 +210,7 @@ export default {
       let firstClickId = parseInt(this.firstValue);
       let secondClickId = parseInt(this.secondValue);
       let thirdClickId = parseInt(this.thirdValue);
-      let inputProductName = document.getElementById("inputProductName").value
+      let inputProductName = document.getElementById('inputProductName').value;
       axios
         .post(
           'https://sbbro.xyz/api/product/sellers/products/category',
@@ -215,7 +219,7 @@ export default {
             categoryFirstId: firstClickId,
             categorySecondId: secondClickId,
             categoryThirdId: thirdClickId,
-            productName: inputProductName
+            productName: inputProductName,
           },
           {
             headers: {
@@ -230,30 +234,27 @@ export default {
         });
     },
 
-    updateProduct(productId){
-      router.push({path: 'updateProduct',query: { productId:productId}})
+    updateProduct(productId) {
+      router.push({ path: 'updateProduct', query: { productId: productId } });
     },
 
-    deleteProduct(productId){
+    deleteProduct(productId) {
       var id = parseInt(productId);
       axios
-        .delete(
-          'https://sbbro.xyz/api/product/sellers/products',
-          {
-            data: {
-              id: id
-            },
-            headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-              'Content-Type': 'application/json',
-            },
+        .delete('https://sbbro.xyz/api/product/sellers/products', {
+          data: {
+            id: id,
           },
-        )
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+          },
+        })
         .then(response => {
-          alert("상품 삭제 완료!")
-          document.getElementById("productSearchButton").click();
+          alert('상품 삭제 완료!');
+          document.getElementById('productSearchButton').click();
         });
-    }
+    },
   },
 };
 </script>

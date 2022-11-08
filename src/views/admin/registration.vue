@@ -118,8 +118,14 @@
           </button>
         </div>
         <div
-          style="width: 800px; background-color: white; border: 2px solid black"
+          style="
+            width: 505px;
+            height: 700px;
+            background-color: white;
+            border: 2px solid black;
+          "
         >
+          <h2 style="margin-left: 35%">등록 상품 List</h2>
           <table id="customers" style="width: 500px">
             <tr>
               <th>이미지</th>
