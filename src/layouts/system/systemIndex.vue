@@ -16,40 +16,22 @@
         </div> -->
       </div>
       <div class="sidebar" style="height: 1000px; width: 200px">
-        <router-link to="/admin/dashBoard">
+        <router-link to="/system/systemview">
           <span class="material-icons-sharp">grid_view</span>
-          <h3>메인 센터</h3>
+          <h3>관리자 센터</h3>
         </router-link>
-        <a href="#">
-          <span class="material-icons-sharp">insights</span>
-          <h3>통계</h3>
-        </a>
-        <a href="#">
-          <span class="material-icons-sharp">receipt_long</span>
-          <h3>상품 관리</h3>
-        </a>
-        <router-link to="/admin/registration">
-          <span class="material-icons-sharp"> done_outline </span>
-          <h3>상품 등록</h3>
+        <router-link to="/system/syspromotion">
+          <span class="material-icons-sharp"> edit_calendar </span>
+          <h3>프로모션</h3>
         </router-link>
-        <a href="#">
-          <span class="material-icons-sharp"> published_with_changes </span>
-          <h3>상품 수정</h3>
+        <a href="/system/sysnotification">
+          <span class="material-icons-sharp"> question_answer </span>
+          <h3>체팅 알림 전송</h3>
         </a>
-        <router-link to="/admin/regiCoupon">
+        <router-link to="/system/sysrecommend">
           <span class="material-icons-sharp"> offline_bolt </span>
-          <h3>쿠폰 등록</h3>
-          <!-- <span class="message-count">26</span> -->
+          <h3>상품 추천</h3>
         </router-link>
-        <router-link to="/admin/getCoupon">
-          <span class="material-icons-sharp"> offline_bolt </span>
-          <h3>쿠폰 뿌리기</h3>
-          <!-- <span class="message-count">26</span> -->
-        </router-link>
-        <a href="#">
-          <span class="material-icons-sharp">settings</span>
-          <h3>환경설정</h3>
-        </a>
         <a href="#">
           <span class="material-icons-sharp">logout</span>
           <h3>Logout</h3>

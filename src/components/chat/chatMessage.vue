@@ -508,9 +508,11 @@ export default {
 
 .chat__mymessage__image {
   object-fit: contain;
+  z-index: 1;
 }
 
 .chat__yourmessage__image {
   object-fit: contain;
+  z-index: 1;
 }
 </style>
