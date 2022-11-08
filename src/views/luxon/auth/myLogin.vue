@@ -8,8 +8,8 @@
         />
       </div>
       <div class="inputDiv">
+        <h2>로그인</h2>
         <br />
-        <h4>로그인</h4>
         <br />
         <input placeholder="아이디" v-model="state.id" />
         <input

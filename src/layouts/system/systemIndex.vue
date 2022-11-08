@@ -42,14 +42,14 @@
           <!-- <span class="message-count">26</span> -->
         </router-link>
         <router-link to="/admin/getCoupon">
-          <span class="material-icons-sharp"> send </span>
+          <span class="material-icons-sharp"> offline_bolt </span>
           <h3>쿠폰 뿌리기</h3>
           <!-- <span class="message-count">26</span> -->
         </router-link>
-        <!-- <a href="#">
+        <a href="#">
           <span class="material-icons-sharp">settings</span>
           <h3>환경설정</h3>
-        </a> -->
+        </a>
         <a href="#">
           <span class="material-icons-sharp">logout</span>
           <h3>Logout</h3>

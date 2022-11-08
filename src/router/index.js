@@ -19,6 +19,8 @@ import NaverLogin from '@/components/social_login/naverLogin.vue';
 import MyPage from '@/views/luxon/user/myPage.vue';
 import MyOrder from '@/components/mypage/myOrder.vue';
 import MyLike from '@/components/mypage/myLike.vue';
+import MySystem from '@/layouts/system/systemIndex.vue';
+import SystemView from '@/views/system/systemView.vue';
 
 const routes = [
   {
@@ -123,6 +125,17 @@ const routes = [
         path: '/admin/getCoupon',
         name: 'GetCoupon',
         component: GetCoupon,
+      },
+    ],
+  },
+  {
+    path: '/system',
+    component: MySystem,
+    children: [
+      {
+        path: '/system/systemView',
+        name: 'SystemView',
+        component: SystemView,
       },
     ],
   },
