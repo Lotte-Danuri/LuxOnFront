@@ -110,16 +110,6 @@
               </span>
             </div>
             <div class="item color4">
-              <!-- <button
-                style="
-                  position: absolute;
-                  right: 0px;
-                  background-color: transparent;
-                  border: none;
-                "
-              >
-                <like-button></like-button>
-              </button> -->
               <img
                 src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
                 alt="image"
@@ -440,13 +430,7 @@
             [아무아쥬] 아너 오드퍼퓸 포 우먼 100ml
           </p>
         </div>
-
-        <p class="main__styling-like">
-          <button data-goods-no="2210569677" class="like-btn"></button>
-          <span>3</span>
-        </p>
       </div>
-
       <div class="main__styling-img">
         <a href="javascript:void(0);"
           ><img
@@ -457,6 +441,8 @@
       </div>
     </div>
   </div>
+  <br />
+  <br />
 </template>
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';

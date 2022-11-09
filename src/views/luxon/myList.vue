@@ -42,7 +42,7 @@
         <label for="maxPrice">최대</label>
         <input type="text" id="maxPrice" name="maxP" placeholder="max Price" />
       </div>
-      <div>
+      <!-- <div>
         <h3>색상</h3>
         <ul class="color_grid" style="width: 150px; margin: 0px">
           <li class="option-color">
@@ -346,7 +346,7 @@
             </label>
           </li>
         </ul>
-      </div>
+      </div> -->
       <hr style="width: 160px" />
       <br />
       <button
@@ -365,7 +365,7 @@
       class="category__content"
       style="margin-left: 50px; margin-bottom: 0px"
     >
-      <div class="swiper-content">
+      <div class="swiper-content" style="margin-top: -70px">
         <div class="leftSwiper">
           <swiper
             class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
@@ -394,7 +394,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 300px; height: 300px"
+                      style="width: 523px; height: 523px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -431,7 +431,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 300px; height: 300px"
+                      style="width: 523px; height: 523px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -455,37 +455,17 @@
               }"
             >
               <img :src="product.thumbnailUrl" />
+              <br />
               <span>
-                <!-- <p>SACAI</p> -->
-                <p>{{ product.productName }}</p>
-                <p>￦{{ comma(product.price) }}</p>
+                <p style="color: black">
+                  {{ product.productName }}
+                </p>
+                <p style="font-weight: ">￦&nbsp;{{ comma(product.price) }}</p>
               </span>
             </router-link>
           </div>
-          <div>
-            <router-link to="/product/myProduct">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/546/211015001544546.jpg?RS=350&SP=1"
-              />
-              <span>
-                <p>SACAI</p>
-                <p>언발 집업 하이넥 패딩 점퍼</p>
-                <p>￦1,790,000</p>
-              </span>
-            </router-link>
-          </div>
-          <div>
-            <router-link to="/product/myProduct">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/266/211019001559266.jpg?RS=350&SP=1"
-              />
-              <span>
-                <p>SACAI</p>
-                <p>언발 집업 하이넥 패딩 점퍼</p>
-                <p>￦1,790,000</p>
-              </span>
-            </router-link>
-          </div>
+          <br />
+          <br />
         </div>
       </div>
     </div>
@@ -507,6 +487,7 @@ export default {
   },
   created() {
     this.getProductList();
+    console.log(this.$route.query.id);
   },
   methods: {
     async getProductList() {
@@ -531,12 +512,12 @@ export default {
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/519/00/221000000296519.jpg?cVer=19044659&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/374/00/221000000288374.jpg?cVer=17020031&RS=&SP=1',
       },
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/225/00/220900000284225.jpg?cVer=10023119&RS=&SP=1',
       },
     ]);
     const swiperTextBase2 = ref([
@@ -580,6 +561,16 @@ export default {
 /* @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'; */
 
 /* Write your own CSS for pagination */
+
+a {
+  text-decoration: none;
+}
+
+p {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+    'Apple SD Gothic Neo', 'Apple-Gothic', 'Roboto', 'Noto Sans KR',
+    'Droid Sans', 'dotum', sans-serif;
+}
 
 .side_menu div h3 {
   margin-bottom: 10px;
@@ -628,7 +619,7 @@ export default {
 .listSwiper {
   width: 100%;
   height: 700px;
-  postion: absolute;
+  /* postion: absolute; */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
