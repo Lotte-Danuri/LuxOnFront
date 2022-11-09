@@ -9,7 +9,7 @@
           v-model="inputName"
           placeholder="빈칸시 전체 조회"
         />
-        <button class="btn btn-primary" @click="searchMember(inputName)">
+        <button class="btn btn-primary" @click="getMember(inputName)">
           조회 <i class="fa fa-search" />
         </button>
       </div>
@@ -28,7 +28,10 @@
                 <td>
                   <input
                     type="checkbox"
-                    :value="member.loginId"
+                    :value="{
+                      loginId: member.loginId.split('@')[0],
+                      memberId: member.id,
+                    }"
                     v-model="selectedMembers"
                   />
                 </td>
@@ -41,7 +44,10 @@
       </div>
       <div class="message_form">
         <input type="text" v-model="content" />
-        <button class="btn btn-primary" @click="sendMessages(content)">
+        <button
+          class="btn btn-primary"
+          @click="sendMessages(content, this.selectedMembers)"
+        >
           보내기
           <i class="fa fa-envelope" />
         </button>
@@ -54,7 +60,7 @@
 import axios from 'axios';
 
 export default {
-  name: 'SysPromotion',
+  name: 'SysRecommend',
   data() {
     return {
       picked: 0,
@@ -63,12 +69,13 @@ export default {
       searchMembers: [],
       inputName: '',
       content: '고객 맞춤 추천 상품',
+      recList: [],
     };
   },
   methods: {
-    searchRole: async function (value) {
+    getMember: async function (value) {
       await axios
-        .get('https://sbbro.xyz/api/auth/all/' + value, {
+        .get('https://sbbro.xyz/api/auth/all/0', {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',
@@ -76,7 +83,12 @@ export default {
         })
         .then(res => (this.members = res.data))
         .catch(err => console.log(err));
-      this.searchMembers = this.members;
+      console.log(this.members);
+      if (value == null) {
+        this.searchMembers = this.members;
+      } else {
+        this.searchMember(value);
+      }
     },
     searchMember: function (value) {
       var searchMembers = [];
@@ -87,18 +99,12 @@ export default {
       });
       this.searchMembers = searchMembers;
     },
-    sendMessages: function (content) {
-      axios
+    sendMessages: async function (content, selectedMembers) {
+      console.log(selectedMembers);
+      await axios
         .post(
-          'https://sbbro.xyz/api/chat/chatRoom/chats',
-          {
-            id: null,
-            content: content,
-            contentType: '추천',
-            sendBy: localStorage.getItem('login_id'),
-            sendTo: this.selectedMembers,
-            source: '',
-          },
+          'https://sbbro.xyz/api/recommend/recommends/member/list',
+          selectedMembers,
           {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -106,7 +112,33 @@ export default {
             },
           },
         )
-        .then(alert('상품 추천 메세지 전송 완료!'));
+        .then(res => (this.recList = res.data))
+        .catch(err => console.log(err));
+      console.log(this.recList);
+      this.recList.forEach(async function (rec) {
+        rec.productCode.length != 0
+          ? await axios
+              .post(
+                'https://sbbro.xyz/api/chat/chatRoom/chats',
+                {
+                  id: null,
+                  content: content,
+                  contentType: '추천',
+                  sendBy: localStorage.getItem('login_id'),
+                  sendTo: rec.loginId,
+                  source: rec.productCode,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ` + localStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                  },
+                },
+              )
+              .then(alert('상품 추천 메세지 전송 완료!'))
+              .catch(err => console.log(err))
+          : false;
+      });
     },
   },
   computed: {
@@ -121,7 +153,10 @@ export default {
 
         if (value) {
           this.members.forEach(function (user) {
-            selectedMembers.push(user.loginId);
+            selectedMembers.push({
+              loginId: user.loginId.split('@')[0],
+              memberId: user.id,
+            });
           });
         }
 

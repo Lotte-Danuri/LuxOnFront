@@ -33,7 +33,7 @@
                 <td>
                   <input
                     type="checkbox"
-                    :value="member.loginId"
+                    :value="member.loginId.split('@')[0]"
                     v-model="selectedMembers"
                   />
                 </td>
@@ -115,7 +115,8 @@ export default {
             },
           },
         )
-        .then(alert('메세지 전송 완료!'));
+        .then(alert('메세지 전송 완료!'))
+        .catch(err => console.log(err));
     },
   },
   computed: {
@@ -130,7 +131,10 @@ export default {
 
         if (value) {
           this.members.forEach(function (user) {
-            selectedMembers.push(user.loginId);
+            selectedMembers.push({
+              loginId: user.loginId.split('@')[0],
+              memberId: user.memberId,
+            });
           });
         }
 

@@ -140,7 +140,7 @@ export default {
             if (currentToken) {
               axios
                 .post(
-                  'http://localhost:8080/user/fcmToken',
+                  'https://sbbro.xyz/api/chat/user/fcmToken',
                   {
                     userId: localStorage.getItem('login_id'),
                     fcmToken: currentToken,
