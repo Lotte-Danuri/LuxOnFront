@@ -5,13 +5,14 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue';
-import { onBeforeMount } from 'vue';
-import likeImg from '@/assets/img/heart_icon.png';
-import unLikeImg from '@/assets/img/heart_icon_unlike.png';
-import axios from 'axios';
-import { prop } from 'dom7';
-import { onMounted } from 'vue';
+import { reactive, ref } from "@vue/reactivity";
+import { onBeforeMount } from "@vue/runtime-core";
+import likeImg from "@/assets/img/heart_icon.png";
+import unLikeImg from "@/assets/img/heart_icon_unlike.png";
+import axios from "axios";
+import { prop } from "dom7";
+import { onMounted } from "@vue/runtime-core";
+
 export default {
   props: {
     productCode: String,
@@ -19,10 +20,11 @@ export default {
   setup(props) {
     const state = reactive({
       buttonCheck: false,
-      imgSrc: '',
-      checkingLike: '',
-      token: localStorage.getItem('token'),
+      imgSrc: "",
+      checkingLike: "",
+      token: localStorage.getItem("token"),
     });
+
     onBeforeMount(async () => {
       await checkLike();
       if (state.checkingLike == true) {
@@ -32,61 +34,64 @@ export default {
         state.imgSrc = unLikeImg;
       }
     });
+
     const checkLike = async () => {
       await axios
         .post(
-          'https://sbbro.xyz/api/member/likes/check',
+          "https://sbbro.xyz/api/member/likes/check",
           {
             productCode: props.productCode,
           },
           {
             headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
-          },
+          }
         )
-        .then(response => {
+        .then((response) => {
           console.log(response);
           state.checkingLike = response.data;
         });
     };
+
     const clickButton = async () => {
       console.log(state.buttonCheck);
       if (state.buttonCheck == false) {
         await axios
           .post(
-            'https://sbbro.xyz/api/member/likes',
+            "https://sbbro.xyz/api/member/likes",
             {
               productCode: props.productCode,
             },
             {
               headers: {
-                Authorization: 'Bearer ' + state.token,
+                Authorization: "Bearer " + state.token,
               },
-            },
+            }
           )
-          .then(response => {
+          .then((response) => {
             console.log(response);
             state.buttonCheck = !state.buttonCheck;
             state.imgSrc = likeImg;
           });
       } else {
         await axios
-          .delete('https://sbbro.xyz/api/member/likes', {
+          .delete("https://sbbro.xyz/api/member/likes", {
             data: {
               productCode: props.productCode,
             },
             headers: {
-              Authorization: 'Bearer ' + state.token,
+              Authorization: "Bearer " + state.token,
             },
           })
-          .then(response => {
+          .then((response) => {
             console.log(response);
             state.buttonCheck = !state.buttonCheck;
             state.imgSrc = unLikeImg;
           });
       }
     };
+
     return { state, clickButton, checkLike };
   },
 };

@@ -1,84 +1,88 @@
 <template>
-  <h1>쿠폰 뿌리기</h1>
+  <h1>쿠폰 나누기</h1>
   <br /><br />
+  <h3>팔로워 혹은 지정 사용자에게 쿠폰을 나눠줍니다.</h3>
   <main>
-    <h3>생성된 쿠폰</h3>
     <br />
-    <table id="customers">
-      <tr>
-        <th>선택</th>
-        <th>쿠폰명</th>
-        <th>내용</th>
-        <th>할인율</th>
-        <th>최소주문금액</th>
-        <th>최대할인금액</th>
-        <th>쿠폰시작일</th>
-        <th>쿠폰종료일</th>
-        <th>적용상품</th>
-      </tr>
-      <tr v-for="(coupon, i) in couponList">
-        <td>
-          <input
-            type="checkbox"
-            v-model="couponCheckVmodel"
-            :value="coupon.id"
-            id="i"
-          />
-        </td>
-        <td>{{ coupon.name }}</td>
-        <td>{{ coupon.contents }}</td>
-        <td>{{ coupon.discountRate }}</td>
-        <td>{{ coupon.minOrderPrice }}</td>
-        <td>{{ coupon.maxDiscountPrice }}</td>
-        <td>{{ coupon.startDate }}</td>
-        <td>{{ coupon.endDate }}</td>
-        <td>
-          <button
-            style="
-              background-color: black;
-              width: 50px;
-              height: 20px;
-              color: white;
-            "
-            :value="coupon"
-            @click="showProduct(coupon)"
-          >
-            상품보기
-          </button>
-        </td>
-      </tr>
-    </table>
-    <br />
-    <hr />
-    <table id="customers">
-      <tr>
-        <th>이미지</th>
-        <th>상품명</th>
-        <th>상품가격</th>
-        <th>재고</th>
-        <th>보증기간</th>
-        <th>게시일</th>
-      </tr>
-      <tr v-for="product in productList" :key="i">
-        <td>
-          <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
-        </td>
-        <td>{{ product.productName }}</td>
-        <td>{{ product.price }}</td>
-        <td>{{ product.stock }}</td>
-        <td>{{ product.warranty }}</td>
-        <td>{{ product.createdDate }}</td>
-      </tr>
-    </table>
-    <br />
-    <hr />
+    <div class="div_cls">
+      <table id="customers" class="cls_table">
+        <tr>
+          <th>선택</th>
+          <th>쿠폰명</th>
+          <th>내용</th>
+          <th>할인율</th>
+          <!-- <th>최소주문금액</th> -->
+          <!-- <th>최대할인금액</th> -->
+          <th>쿠폰시작일</th>
+          <th>쿠폰종료일</th>
+          <th>적용상품</th>
+        </tr>
+        <tr v-for="(coupon, i) in couponList">
+          <td>
+            <input
+              type="checkbox"
+              v-model="couponCheckVmodel"
+              :value="coupon.id"
+              id="i"
+            />
+          </td>
+          <td>{{ coupon.name }}</td>
+          <td>{{ coupon.contents }}</td>
+          <td>{{ coupon.discountRate }}</td>
+          <!-- <td>{{ coupon.minOrderPrice }}</td> -->
+          <!-- <td>{{ coupon.maxDiscountPrice }}</td> -->
+          <td>{{ coupon.startDate }}</td>
+          <td>{{ coupon.endDate }}</td>
+          <td>
+            <button
+              style="
+                background-color: black;
+                width: 70px;
+                height: 20px;
+                color: white;
+              "
+              :value="coupon"
+              @click="showProduct(coupon)"
+            >
+              상품보기 >>
+            </button>
+          </td>
+        </tr>
+      </table>
+      <table id="customers2" class="cls_table" style="display: none">
+        <tr style="height: 10px">
+          <th>이미지</th>
+          <th>상품명</th>
+          <th>상품가격</th>
+          <th>재고</th>
+          <th>보증기간</th>
+          <th>게시일</th>
+        </tr>
+        <tr v-for="product in productList">
+          <td>
+            <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
+          </td>
+          <td>{{ product.productName }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.stock }}</td>
+          <td>{{ product.warranty }}</td>
+          <td>{{ product.createdDate }}</td>
+        </tr>
+      </table>
+    </div>
     <button
-      style="background-color: black; width: 150px; height: 50px; color: white"
+      style="
+        background-color: black;
+        width: 200px;
+        height: 60px;
+        color: white;
+        margin-left: 40%;
+      "
       @click="CouponToFollower"
     >
       팔로워들에게 뿌리기
     </button>
-    <hr />
+    <hr style="border: solid 3px black" />
     <br />
     <br />
     <div class="top_div">
@@ -238,6 +242,7 @@ export default {
 
     showProduct(coupon) {
       this.productList = coupon.productDtoList;
+      document.getElementById('customers2').style.display = 'block';
     },
 
     searchUser() {
@@ -257,6 +262,7 @@ export default {
         )
         .then(response => {
           this.userList = response.data;
+          console.log(this.userList);
         });
     },
   },
@@ -285,30 +291,45 @@ export default {
   margin-bottom: 30px;
 }
 
-#customers {
+.cls_table {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
 }
 
-#customers td,
-#customers th {
+.cls_table td,
+.cls_table th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-#customers tr:nth-child(even) {
+.cls_table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-#customers tr:hover {
+.cls_table tr:hover {
   background-color: #ddd;
 }
 
-#customers th {
+.cls_table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #04aa6d;
+  background-color: #8d8d8d;
   color: white;
+  height: 50px;
+}
+
+.div_cls {
+  display: grid;
+  grid-template-columns: 700px 700px;
+  gap: 30px;
+}
+
+.cls_table tr th {
+  height: 50px;
+}
+
+.cls_table {
+  height: 500px;
 }
 </style>

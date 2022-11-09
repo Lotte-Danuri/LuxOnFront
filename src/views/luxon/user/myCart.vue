@@ -175,23 +175,7 @@ export default {
         .then((response) => {
           console.log(response);
           state.products = response.data;
-          state.products.forEach((product) => {
-            axios
-              .post(
-                "https://sbbro.xyz/api/member/mycoupon/product",
-                {
-                  productId: product.productDto.id,
-                },
-                {
-                  headers: {
-                    Authorization: `Bearer ` + localStorage.getItem("token"),
-                  },
-                }
-              )
-              .then((response) => {
-                product.coupons = response.data;
-              });
-          });
+
         });
     });
 

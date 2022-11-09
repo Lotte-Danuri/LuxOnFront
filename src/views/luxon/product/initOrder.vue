@@ -128,6 +128,7 @@
               <div class="small_grid">
                 쿠폰적용
                 <select
+                  :v-model="state.couponPick"
                   style="
                       width: 300px;
                       height: 30px;
@@ -138,7 +139,9 @@
                     "
                   @change="onChangeCoupon(product, $event)"
                 >
-                  <option value="none">=== 선택 ===</option>
+                  <option v-if="!reserveCouponId" value="none" selected>
+                    === 선택 ===
+                  </option>
                   <option
                     v-for="(coupon, index) in product.coupons"
                     :key="coupon"
@@ -162,7 +165,7 @@
           <br />
           <div class="small_aside_grid">
             <div style="font-weight: bold; color: gray">총 상품금액</div>
-            <div style="margin-left: 30%">{{ comma(state.totalPrice) }} 원</div>
+            <div style="margin-left: 30%">{{ comma(state.totalProductPrice) }} 원</div>
           </div>
           <hr />
           <div class="small_aside_grid">
@@ -188,7 +191,7 @@
                 color: goldenrod;
               "
             >
-              {{ comma(state.totalPrice + state.delivaryFee) }}원
+              {{ comma(totalPrice()) }}원
             </div>
           </div>
           <hr />
@@ -226,36 +229,85 @@ export default {
     const products = computed(() =>
       route.params.products ? JSON.parse(route.params.products) : null
     );
+    const reserveCouponId = computed(() =>
+      route.params.couponId ? route.params.couponId : null
+    );
+
     const state = reactive({
       userInfo: "",
       order: "",
-      totalPrice: 0,
+      totalProductPrice: 0,
       totalQuantity: 0,
       totalDiscountPrice: 0,
       delivaryFee: 5000,
     });
 
     onBeforeMount(async () => {
-      
       await router.isReady();
-      
+
       isProductsData();
 
-      await setProductsCoupon();
-      
-      await calTotalPriceAndQuantity();
-      
-      console.log(products)
+      await setProductsCoupon().then(() => {
+        calTotalPriceAndQuantity();
+      });
+
+      console.log(products);
 
       loginCheck();
 
       getUserData();
     });
 
+    const totalPrice = () =>{
+      return state.totalProductPrice - state.totalDiscountPrice + state.delivaryFee;
+    }
+
     const setProductsCoupon = async () => {
+      if (reserveCouponId.value != null) {
+        console.log(reserveCouponId.value)
+        setReserveCoupon();
+        return;
+      }
+      console.log(reserveCouponId.value)
+
       for (var index in products.value) {
-        products.value[index].discountPrice = 0;
-        products.value[index].selectedCouponIndex = -1;
+        await axios
+          .post(
+            "https://sbbro.xyz/api/member/mycoupon/product",
+            {
+              productId: products.value[index].productDto.id,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ` + localStorage.getItem("token"),
+              },
+            }
+          )
+          .then((response) => {
+            products.value[index].coupons = response.data;
+            products.value[index].discountPrice = 0;
+            products.value[index].selectedCouponIndex = -1;
+          });
+        }
+    };
+
+    const setReserveCoupon = async () => {
+      try {
+        const response = await axios.get(
+          "https://sbbro.xyz/api/product/coupons/" + reserveCouponId.value,
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem("token"),
+            },
+          }
+          );
+          products.value[0].coupons = [];
+          products.value[0].coupons.push(response.data);
+          products.value[0].discountPrice = 0;
+          products.value[0].selectedCouponIndex = 0;
+          applyCoupon(products.value[0]);
+      } catch (err) {
+        console.log(err)
       }
     };
 
@@ -289,15 +341,14 @@ export default {
     };
 
     const calTotalPriceAndQuantity = async () => {
-      state.totalPrice = 0;
+      state.totalProductPrice = 0;
       state.totalQuantity = 0;
       state.totalDiscountPrice = 0;
 
       for (var index in products.value) {
-        state.totalPrice +=
+        state.totalProductPrice +=
           products.value[index].quantity *
-            products.value[index].productDto.price -
-          products.value[index].discountPrice;
+            products.value[index].productDto.price;
         state.totalQuantity += products.value[index].quantity;
         state.totalDiscountPrice +=
           products.value[index].quantity * products.value[index].discountPrice;
@@ -327,7 +378,7 @@ export default {
               `https://sbbro.xyz/api/order/orders/pays`,
               {
                 buyerId: state.userInfo.id,
-                totalPrice: state.totalPrice,
+                totalPrice: totalPrice(),
                 totalQuantity: state.totalQuantity,
                 orderDataDtoList: orderDataDtoList,
               },
@@ -379,6 +430,8 @@ export default {
       onChangeCoupon,
       applyCoupon,
       calTotalPriceAndQuantity,
+      reserveCouponId,
+      totalPrice,
     };
   },
 };
