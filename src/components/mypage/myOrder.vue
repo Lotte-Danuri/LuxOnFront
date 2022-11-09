@@ -116,10 +116,10 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import { onBeforeMount } from "vue";
-import axios from "axios";
-import { getCurrentInstance } from "@vue/runtime-core";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
+import { getCurrentInstance } from 'vue';
 
 export default {
   setup() {
@@ -131,12 +131,12 @@ export default {
 
     onBeforeMount(() => {
       axios
-        .get("https://sbbro.xyz/api/member/products", {
+        .get('https://sbbro.xyz/api/member/products', {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
+            Authorization: `Bearer ` + localStorage.getItem('token'),
           },
         })
-        .then((response) => {
+        .then(response => {
           console.log(response);
           state.orderList = response.data;
         });
