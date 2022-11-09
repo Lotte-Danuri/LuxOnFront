@@ -258,7 +258,6 @@
             {{ msg.createdAt.substr(11, 5) }}
           </p>
         </div>
-        <!-- 진우 프로덕트-->
       </div>
     </div>
   </div>
