@@ -53,7 +53,35 @@
       <div
         class="chat__mymessage__paragraph"
         v-else-if="msg.contentType == '프로모션'"
-      ></div>
+        :on-load="getPromotion(msg.source)"
+      >
+        <div>{{ promotion.title }}</div>
+        <div>
+          <img :src="promotion.imageUrl" />
+        </div>
+        <div>
+          {{ promotion.startDate.slice(0, 10) }}~{{
+            promotion.endDate.slice(0, 10)
+          }}
+        </div>
+        <button class="btn">
+          <router-link
+            :to="{
+              name: 'promotion',
+              params: {
+                title: promotion.title,
+                imageUrl: promotion.imageUrl,
+                startDate: promotion.startDate,
+                endDate: promotion.endDate,
+                buttonUrl: promotion.buttonUrl,
+              },
+            }"
+            ,target="_blank"
+          >
+          </router-link
+          >프로모션 이동
+        </button>
+      </div>
       <div
         class="chat__mymessage__product"
         v-else-if="msg.contentType == '상품정보'"
@@ -178,7 +206,23 @@
           <div
             class="chat__mymessage__paragraph"
             v-else-if="msg.contentType == '프로모션'"
-          ></div>
+            :on-load="getPromotion(msg.source)"
+          >
+            <div>프로모션</div>
+            <div>{{ promotion.title }}</div>
+            <div>
+              <img :src="promotion.imageUrl" />
+            </div>
+            <div>{{ promotion.startDate }}~{{ promotion.endDate }}</div>
+
+            <button class="btn">
+              <router-link
+                to="/promotion, params:{title:{{promotion.title}},imageUrl:{{promotion.imageUrl}},startDate:{{promotion.startDate}},endDate:{{promotion.endDate}},buttonUrl:{{promotion.buttonUrl}}}"
+                target="_blank"
+                >프로모션 이동</router-link
+              >
+            </button>
+          </div>
           <div
             class="chat__mymessage__product"
             v-else-if="msg.contentType == '상품정보'"
@@ -228,16 +272,16 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import { onMounted } from "vue";
-import axios from "axios";
-import Swal from "sweetalert2";
-import { useRouter } from "vue-router";
+import { reactive } from 'vue';
+import { onMounted } from 'vue';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
     const state = reactive({
-      localStorage: "",
+      localStorage: '',
     });
     onMounted(() => {
       state.localStorage = localStorage;
@@ -247,31 +291,32 @@ export default {
       state,
     };
   },
-  props: ["msg", "prev"],
+  props: ['msg', 'prev'],
   data() {
     return {
       router: useRouter(),
       isSame: false,
       coupon: {
-        data: { name: "쿠폰 정보", startDate: "", endDate: "" },
+        data: { name: '쿠폰 정보', startDate: '', endDate: '' },
       },
       product: {
         data: {
-          productName: "",
-          thumbnailUrl: "",
+          productName: '',
+          thumbnailUrl: '',
           price: 0,
-          storeName: "",
-          categoryFirstName: "",
-          categorySecondName: "",
-          categoryThirdName: "",
+          storeName: '',
+          categoryFirstName: '',
+          categorySecondName: '',
+          categoryThirdName: '',
         },
       },
+      promotion: { startDate: '', endDate: '' },
       plist: [],
     };
   },
   methods: {
     orderProduct() {
-      console.log(this.product.data)
+      console.log(this.product.data);
       var productsData = [];
       var productData = {
         storeName: this.product.data.storeName,
@@ -287,9 +332,9 @@ export default {
         },
       };
       productsData.push(productData);
-      console.log(productData)
+      console.log(productData);
       this.router.push({
-        name: "initOrder",
+        name: 'initOrder',
         params: {
           products: JSON.stringify(productsData),
           couponId: this.coupon.data.id,
@@ -307,85 +352,96 @@ export default {
     },
     async getCouponInfo(couponId) {
       await axios
-        .get("https://sbbro.xyz/api/product/coupons/" + couponId, {
+        .get('https://sbbro.xyz/api/product/coupons/' + couponId, {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
-            contentType: "application/json",
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
           },
         })
-        .then((res) => (this.coupon = res))
-        .catch((err) => console.log(err));
+        .then(res => (this.coupon = res))
+        .catch(err => console.log(err));
     },
     async getCoupon(couponId) {
       await axios
         .post(
-          "https://sbbro.xyz/api/member/mycoupon/person",
+          'https://sbbro.xyz/api/member/mycoupon/person',
           { id: couponId },
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem("token"),
-              contentType: "application/json",
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
             },
-          }
+          },
         )
         .then();
     },
     async getProduct(productId) {
       await axios
-        .get("https://sbbro.xyz/api/product/products/" + productId, {
+        .get('https://sbbro.xyz/api/product/products/' + productId, {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
-            contentType: "application/json",
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
           },
         })
-        .then((res) => (this.product = res))
-        .catch((err) => console.log(err));
+        .then(res => (this.product = res))
+        .catch(err => console.log(err));
     },
     async getSaleProduct(source) {
       await axios
-        .get("https://sbbro.xyz/api/product/products/" + source[0], {
+        .get('https://sbbro.xyz/api/product/products/' + source[0], {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
-            contentType: "application/json",
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
           },
         })
-        .then((res) => (this.product = res))
-        .catch((err) => console.log(err));
+        .then(res => (this.product = res))
+        .catch(err => console.log(err));
       await axios
-        .get("https://sbbro.xyz/api/product/coupons/" + source[1], {
+        .get('https://sbbro.xyz/api/product/coupons/' + source[1], {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
-            contentType: "application/json",
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
           },
         })
-        .then((res) => (this.coupon = res))
-        .catch((err) => console.log(err));
+        .then(res => (this.coupon = res))
+        .catch(err => console.log(err));
+    },
+    async getPromotion(promotionId) {
+      await axios
+        .get('https://sbbro.xyz/api/member/promotion/' + promotionId, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
+        .then(res => (this.promotion = res.data))
+        .catch(err => console.log(err));
     },
     async insertCart(productId) {
       axios
         .post(
-          "https://sbbro.xyz/api/member/cart",
+          'https://sbbro.xyz/api/member/cart',
           {
             productId: productId,
             quantity: 1,
           },
           {
             headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
             },
-          }
+          },
         )
-        .then((response) => {
+        .then(response => {
           if (response.status == 200) {
             Swal.fire({
-              title: "상품이 장바구니에 담겼습니다.",
-              icon: "success",
+              title: '상품이 장바구니에 담겼습니다.',
+              icon: 'success',
               showCancelButton: true,
-              confirmButtonText: "장바구니로 이동",
-              cancelButtonText: "계속 쇼핑하기",
-            }).then((result) => {
+              confirmButtonText: '장바구니로 이동',
+              cancelButtonText: '계속 쇼핑하기',
+            }).then(result => {
               if (result.isConfirmed) {
-                router.push("/cart");
+                router.push('/cart');
               }
             });
           }
@@ -393,18 +449,19 @@ export default {
     },
     async getRecommendProduct(productList) {
       this.plist = [];
-      productList.forEach(async (product) => {
+      productList.forEach(async product => {
         await axios
-          .get("https://sbbro.xyz/api/product/products/" + product, {
+          .get('https://sbbro.xyz/api/product/products/' + product, {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem("token"),
-              contentType: "application/json",
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
             },
           })
-          .then((res) => this.plist.push(res))
-          .catch((err) => console.log(err));
+          .then(res => this.plist.push(res))
+          .catch(err => console.log(err));
       });
     },
+    movePromotion(promotion) {},
   },
   created() {
     this.isSame = this.isSamePerson(this.msg, this.prev);
