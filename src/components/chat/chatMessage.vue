@@ -64,23 +64,21 @@
             promotion.endDate.slice(0, 10)
           }}
         </div>
-        <button class="btn">
-          <router-link
-            :to="{
-              name: 'promotion',
-              params: {
-                title: promotion.title,
-                imageUrl: promotion.imageUrl,
-                startDate: promotion.startDate,
-                endDate: promotion.endDate,
-                buttonUrl: promotion.buttonUrl,
-              },
-            }"
-            ,target="_blank"
-          >
-          </router-link
-          >프로모션 이동
-        </button>
+        <router-link
+          :to="{
+            name: 'promotion',
+            query: {
+              title: promotion.title,
+              imageUrl: promotion.imageUrl,
+              startDate: promotion.startDate,
+              endDate: promotion.endDate,
+              buttonUrl: promotion.buttonUrl,
+            },
+          }"
+          target="_blank"
+        >
+          <button class="btn">프로모션 이동</button>
+        </router-link>
       </div>
       <div
         class="chat__mymessage__product"
@@ -204,24 +202,34 @@
             </button>
           </div>
           <div
-            class="chat__mymessage__paragraph"
+            class="chat__yourmessage__paragraph"
             v-else-if="msg.contentType == '프로모션'"
             :on-load="getPromotion(msg.source)"
           >
-            <div>프로모션</div>
             <div>{{ promotion.title }}</div>
             <div>
               <img :src="promotion.imageUrl" />
             </div>
-            <div>{{ promotion.startDate }}~{{ promotion.endDate }}</div>
-
-            <button class="btn">
-              <router-link
-                to="/promotion, params:{title:{{promotion.title}},imageUrl:{{promotion.imageUrl}},startDate:{{promotion.startDate}},endDate:{{promotion.endDate}},buttonUrl:{{promotion.buttonUrl}}}"
-                target="_blank"
-                >프로모션 이동</router-link
-              >
-            </button>
+            <div>
+              기간 : {{ promotion.startDate.slice(0, 10) }}<br />~{{
+                promotion.endDate.slice(0, 10)
+              }}
+            </div>
+            <router-link
+              :to="{
+                name: 'promotion',
+                query: {
+                  title: promotion.title,
+                  imageUrl: promotion.imageUrl,
+                  startDate: promotion.startDate,
+                  endDate: promotion.endDate,
+                  buttonUrl: promotion.buttonUrl,
+                },
+              }"
+              target="_blank"
+            >
+              <button class="btn btn-black">프로모션 이동</button>
+            </router-link>
           </div>
           <div
             class="chat__mymessage__product"

@@ -32,15 +32,14 @@ const routes = [
     component: Index,
     children: [
       {
-        path: '/promotion',
-        name: 'promotion',
-        component: Promotion,
-        props: true,
-      },
-      {
         path: '/main',
         name: 'MyMain',
         component: MyMain,
+      },
+      {
+        path: '/promotion',
+        name: 'promotion',
+        component: Promotion,
       },
       {
         path: '/list',
