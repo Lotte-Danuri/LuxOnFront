@@ -33,8 +33,8 @@ export default {
 <style>
 .chat__body {
   padding: 1rem;
+  padding-top: 70px;
   overflow: scroll;
-  scroll-behavior: smooth;
 }
 
 .chat__body::-webkit-scrollbar {

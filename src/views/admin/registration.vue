@@ -100,7 +100,7 @@
             "
             @click="regiProduct"
           >
-            전송
+            등록
           </button>
         </div>
         <div>
@@ -119,14 +119,16 @@
         </div>
         <div
           style="
-            width: 505px;
+            width: 620px;
             height: 700px;
             background-color: white;
             border: 2px solid black;
+            overflow: scroll;
+            overflow-x: hidden;
           "
         >
-          <h2 style="margin-left: 35%">등록 상품 List</h2>
-          <table id="customers" style="width: 500px">
+          <h2 style="margin-left: 38%">등록 상품 List</h2>
+          <table id="customers" style="width: 600px">
             <tr>
               <th>이미지</th>
               <th>상품명</th>
@@ -135,7 +137,7 @@
               <th>보증기간</th>
               <th>게시일</th>
             </tr>
-            <tr v-for="product in productList">
+            <tr v-for="product in productList.slice().reverse()">
               <td>
                 <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
               </td>
@@ -238,23 +240,40 @@ export default {
         .then(response => {
           console.log(response);
           console.log(formdata);
+          axios
+            .post(
+              'https://sbbro.xyz/api/product/sellers/products/category',
+              {
+                stordId: localStorage.getItem('store_id'),
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ` + localStorage.getItem('token'),
+                  'Content-Type': 'application/json',
+                },
+              },
+            )
+            .then(response => {
+              console.log(response.data);
+              this.productList = response.data;
+            });
         });
     },
     changeCategoryFirst(event) {
       this.categorySecondList =
         this.categoryList[event.target.value].categorySecondDtoList;
       let sel = document.getElementById('first_select');
-      alert(sel.options[sel.selectedIndex].childNodes[1].id);
+      // alert(sel.options[sel.selectedIndex].childNodes[1].id);
     },
     changeCategorySecond(event) {
       this.categoryThirdList =
         this.categorySecondList[event.target.value].categoryThirdDtoList;
       let sel = document.getElementById('second_select');
-      alert(sel.options[sel.selectedIndex].childNodes[1].id);
+      // alert(sel.options[sel.selectedIndex].childNodes[1].id);
     },
     changeCategoryThird() {
       let sel = document.getElementById('third_select');
-      alert(sel.options[sel.selectedIndex].childNodes[1].id);
+      // alert(sel.options[sel.selectedIndex].childNodes[1].id);
     },
   },
 };

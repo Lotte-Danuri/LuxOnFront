@@ -1,5 +1,6 @@
 <template>
-  <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+  <div class="mypage col-12 col-md-9 col-lg-8 offset-lg-1">
+    <h2>주문/배송 조회</h2>
     <!-- Order -->
     <div class="card card-lg mb-5 border">
       <div
@@ -38,7 +39,7 @@
                 <h6 class="heading-xxxs text-muted">Total Price:</h6>
                 <!-- Text -->
                 <p class="mb-0 fs-sm fw-bold">
-                  {{ self.$comma(order.totalPrice) }}
+                  {{ comma(order.totalPrice) }}
                 </p>
               </div>
               <div>
@@ -62,9 +63,7 @@
                             >[상품명] {{ o.productName.substring(0, 15) }}</span
                           >
                           <br />
-                          <span
-                            >[가격] {{ self.$comma(o.productPrice) }}원</span
-                          >
+                          <span>[가격] {{ comma(o.productPrice) }}원</span>
                           <br />
                           <span
                             >[보증기간] {{ o.warrantyStartDate }} [2022-10-19 ~
@@ -79,18 +78,27 @@
                             Arial, sans-serif;
                         "
                       >
-                        <button
-                          style="
-                            width: 200px;
-                            height: 50px;
-                            margin-top: 15%;
-                            background-color: black;
-                            color: white;
-                            border-radius: 5px;
-                          "
+                        <router-link
+                          :to="{
+                            path: '/product/myProduct',
+                            query: {
+                              productCode: o.productCode,
+                            },
+                          }"
                         >
-                          상품상세
-                        </button>
+                          <button
+                            style="
+                              width: 200px;
+                              height: 50px;
+                              margin-top: 15%;
+                              background-color: black;
+                              color: white;
+                              border-radius: 5px;
+                            "
+                          >
+                            상품상세
+                          </button>
+                        </router-link>
                       </div>
                     </div>
                   </div>
@@ -108,37 +116,45 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import { onBeforeMount } from "vue";
-import axios from "axios";
-
-let self;
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
+import { getCurrentInstance } from 'vue';
 
 export default {
-  created() {
-    self = this;
-  },
   setup() {
+    const comma =
+      getCurrentInstance().appContext.config.globalProperties.$comma;
     const state = reactive({
       orderList: [],
     });
 
     onBeforeMount(() => {
       axios
-        .get("https://sbbro.xyz/api/member/products", {
+        .get('https://sbbro.xyz/api/member/products', {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
+            Authorization: `Bearer ` + localStorage.getItem('token'),
           },
         })
-        .then((response) => {
+        .then(response => {
           console.log(response);
           state.orderList = response.data;
         });
     });
 
-    return { state, self };
+    return { state, comma };
   },
 };
 </script>
 
-<style></style>
+<style>
+.mypage {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  width: 1182px;
+  min-height: 1467px;
+  padding: 40px;
+  box-sizing: border-box;
+  margin-left: 0;
+}
+</style>
