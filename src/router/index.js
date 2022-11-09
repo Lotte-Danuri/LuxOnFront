@@ -167,6 +167,21 @@ const routes = [
         name: 'SystemView',
         component: SystemView,
       },
+      {
+        path: '/system/syspromotion',
+        name: 'syspromotion',
+        component: SysPromotion,
+      },
+      {
+        path: '/system/sysnotification',
+        name: 'notification',
+        component: SysNotification,
+      },
+      {
+        path: '/system/sysrecommend',
+        name: 'recommend',
+        component: SysRecommend,
+      },
     ],
   },
 ];
