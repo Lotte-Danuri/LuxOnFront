@@ -1,5 +1,7 @@
 <template>
-  <main>스템페이지만들어주세용~</main>
+  <main>
+    <h1>관리자 센터</h1>
+  </main>
 </template>
 <script>
 export default {

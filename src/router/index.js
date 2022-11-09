@@ -142,7 +142,7 @@ const routes = [
       },
       {
         path: '/system/syspromotion',
-        name: 'promotion',
+        name: 'syspromotion',
         component: SysPromotion,
       },
       {

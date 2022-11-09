@@ -1,5 +1,7 @@
 <template>
-  <h1>aa</h1>
+  <main>
+    <h1>프로모션 관리</h1>
+  </main>
 </template>
 
 <script>
