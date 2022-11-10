@@ -4,7 +4,7 @@
       <nav class="navbar">
         <div class="navbar__logo">
           <router-link to="/main"
-            ><img style="margin-left: 10%" src="@/assets/logo/logo_black.png"
+            ><img style="margin-left: 10%" src="@/assets/logo/logo_white.png"
           /></router-link>
         </div>
         <ul class="navbar__menu">
@@ -248,7 +248,7 @@ header {
 }
 
 img {
-  width: 100px;
+  width: 170px;
 }
 
 a {

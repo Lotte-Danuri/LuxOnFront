@@ -64,6 +64,9 @@ export default {
     buttonClick() {
       this.chatShow = !this.chatShow;
     },
+    sendMessage(data) {
+      console.log(data);
+    },
   },
 };
 </script>

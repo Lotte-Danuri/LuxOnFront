@@ -60,7 +60,9 @@
   </section>
   <section style="margin-top: 50px" class="favorite_cls" id="favorite_cls">
     <div class="container" style="margin-left: 15%">
-      <h1 style="margin-left: -200px">Favorite Brand</h1>
+      <h1 style="margin-left: -200px; font-family: RegularBoldCell">
+        Favorite Brand
+      </h1>
       <br /><br />
       <swiper
         class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
@@ -577,7 +579,15 @@ export default {
           document.getElementById('favorite_cls').style.transform =
             'translateY(0)';
         }
-        if (nowScroll < 1000) {
+        if (nowScroll < 700) {
+          document.getElementById('coupon_cls').style.opacity = '0';
+        }
+        if (nowScroll > 1500) {
+          document.getElementById('coupon_cls').style.opacity = '1';
+          document.getElementById('coupon_cls').style.transform =
+            'translateY(0)';
+        }
+        if (nowScroll < 2000) {
           document.getElementById('recommend_cls').style.opacity = '0';
         }
         if (nowScroll > 2000) {

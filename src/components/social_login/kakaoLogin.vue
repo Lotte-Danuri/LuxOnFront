@@ -1,6 +1,9 @@
 <template>
   <button class="socialButton" @click="kakaoLogin">
-    <img src="@/assets/loginBtn/kakao_login_large_narrow.png" />
+    <img
+      src="//cdn-fo.sivillage.com/fo/assets/comm/image/icon_sns_kakaotalk.svg"
+      style="width: 60px; height: 60px"
+    />
   </button>
 </template>
 
@@ -62,5 +65,10 @@ export default {
   width: 100%;
   height: 60px;
   margin-bottom: 20px;
+}
+
+#kakao_btn {
+  color: #000000;
+  font-weight: bold;
 }
 </style>

@@ -1,12 +1,6 @@
 <template>
-  <section style="margin-top: 50px; margin-left: 100px">
+  <section style="margin-top: 50px; margin-left: 40%">
     <div class="login_grid">
-      <div>
-        <img
-          style="width: 100%; height: 100%"
-          src="https://image.sivillage.com/upload/C00001/banner/5061/00/22100000021321020221017102900.jpg"
-        />
-      </div>
       <div class="inputDiv">
         <h2>로그인</h2>
         <br />
@@ -30,15 +24,20 @@
           로그인
         </button>
         <br />
-        <kakaoLogin></kakaoLogin>
+        <div
+          style="
+            display: grid;
+            width: 400px;
+            grid-template-columns: 40% 30%;
+            margin-top: 10%;
+            margin-left: 80%;
+          "
+        >
+          <kakaoLogin></kakaoLogin>
+          <naver-login></naver-login>
+        </div>
         <br />
         <br />
-        <naver-login></naver-login>
-        <br />
-        <br />
-        <!-- <button class="socialButton">
-          <img src="@/assets/loginBtn/google_login.png" />
-        </button> -->
         <br />
         <router-link to="/signup">
           <button
@@ -49,7 +48,7 @@
               height: 40px;
             "
           >
-            회원가입
+            <h3 style="font-weight: bold">회원가입</h3>
           </button>
         </router-link>
       </div>
@@ -123,8 +122,9 @@ export default {
 <style scoped>
 .login_grid {
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 30% 40%;
   grid-template-rows: 100%;
+  margin-top: 7%;
 }
 .inputDiv {
   background-color: rgb(245, 245, 245);
@@ -140,6 +140,7 @@ export default {
   width: 400px;
   height: 40px;
   margin-bottom: 20px;
+  border: solid 2px black;
 }
 .inputDiv img {
   width: 300px;
