@@ -1,6 +1,6 @@
 <template>
   <button @click="clickButton">
-    <img height="50" :src="state.imgSrc" />
+    <img height="50" :src="state.imgSrc" id="like_btn" />
   </button>
 </template>
 
@@ -18,6 +18,10 @@ export default {
     productCode: String,
   },
   setup(props) {
+    // if (localStorage.getItem('token') == null) {
+    //   document.getElementById('like_btn').src = likeImg;
+    // }
+
     const state = reactive({
       buttonCheck: false,
       imgSrc: '',
@@ -91,7 +95,6 @@ export default {
           });
       }
     };
-
     return { state, clickButton, checkLike };
   },
 };
