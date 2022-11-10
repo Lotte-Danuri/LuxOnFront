@@ -350,12 +350,17 @@ export default {
     };
 
     const sendChat = () => {
+      if (!isSelectStore()) {
+        return;
+      }
       axios
         .post(
           'https://sbbro.xyz/api/chat/chatRoom/chat',
           {
             id: null,
-            content: +'상품 문의',
+            content:
+              state.products[state.selectedStoreIndex].productName +
+              ' 상품 문의',
             contentType: '상품정보',
             sendBy: localStorage.getItem('login_id'),
             sendTo: state.products[state.selectedStoreIndex].storeId,
