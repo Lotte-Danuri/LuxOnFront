@@ -70,7 +70,7 @@ export default {
           password: state.password,
           name: state.name,
           gender: state.gender,
-          role: 1,
+          role: 0,
           birthDate: state.birthday,
           phoneNumber: state.phoneNumber,
           address: state.address,
