@@ -24,7 +24,7 @@ import SystemView from '@/views/system/systemview.vue';
 import SysPromotion from '@/views/system/syspromotion.vue';
 import SysNotification from '@/views/system/sysnotification.vue';
 import SysRecommend from '@/views/system/sysrecommend.vue';
-
+import Promotion from '@/views/luxon/promotion/promotion.vue';
 const routes = [
   {
     path: '/',
@@ -35,6 +35,11 @@ const routes = [
         path: '/main',
         name: 'MyMain',
         component: MyMain,
+      },
+      {
+        path: '/promotion',
+        name: 'promotion',
+        component: Promotion,
       },
       {
         path: '/list',
@@ -81,6 +86,7 @@ const routes = [
         name: 'cart',
         component: () => import('@/views/luxon/user/myCart.vue'),
       },
+
       {
         path: '/mypage',
         name: 'mypage',
