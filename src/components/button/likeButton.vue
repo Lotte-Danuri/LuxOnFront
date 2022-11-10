@@ -10,17 +10,16 @@ import { onBeforeMount } from 'vue';
 import likeImg from '@/assets/img/heart_icon.png';
 import unLikeImg from '@/assets/img/heart_icon_unlike.png';
 import axios from 'axios';
-import { prop } from 'dom7';
-import { onMounted } from 'vue';
+import { getCurrentInstance } from 'vue';
+import Swal from 'sweetalert2';
 
 export default {
   props: {
     productCode: String,
   },
   setup(props) {
-    // if (localStorage.getItem('token') == null) {
-    //   document.getElementById('like_btn').src = likeImg;
-    // }
+    const globalProperties =
+      getCurrentInstance().appContext.config.globalProperties;
 
     const state = reactive({
       buttonCheck: false,
@@ -30,6 +29,11 @@ export default {
     });
 
     onBeforeMount(async () => {
+      if (globalProperties.$isLogin() == false) {
+        state.imgSrc = unLikeImg;
+        return;
+      }
+
       await checkLike();
       if (state.checkingLike == true) {
         state.imgSrc = likeImg;
@@ -59,6 +63,11 @@ export default {
     };
 
     const clickButton = async () => {
+      if (globalProperties.$isLogin() == false) {
+        Swal.fire('로그인이 필요합니다.');
+        return;
+      }
+
       console.log(state.buttonCheck);
       if (state.buttonCheck == false) {
         await axios

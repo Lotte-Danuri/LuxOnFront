@@ -150,7 +150,7 @@ export default {
               contentType: '프로모션',
               sendBy: localStorage.getItem('login_id'),
               sendTo: selectedMembers,
-              source: promotion.id,
+              source: promotion,
             },
             {
               headers: {

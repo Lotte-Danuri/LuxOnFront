@@ -9,7 +9,7 @@
   <Transition>
     <TheChatApp
       @closeBtn="buttonClick"
-      v-if="chatShow"
+      v-if="state.chatShow"
       style="position: fixed; right: 30px; bottom: 30px; z-index: 999"
     ></TheChatApp>
   </Transition>
@@ -19,6 +19,9 @@
 <script>
 import TheHeader from '@/layouts/luxon/theHeader.vue';
 import TheView from '@/layouts/luxon/theView.vue';
+import { onBeforeMount } from 'vue';
+import { getCurrentInstance } from 'vue';
+
 import TheChat from '@/layouts/luxon/theChat.vue';
 import TheChatApp from '@/layouts/luxon/theChatApp.vue';
 import TheFooter from '@/layouts/luxon/theFooter.vue';
@@ -37,36 +40,40 @@ export default {
     TheFooter,
   },
 
+  setup() {
+    let login = false;
+    const emitter =
+      getCurrentInstance().appContext.config.globalProperties.$emitter;
+    const globalProperties =
+      getCurrentInstance().appContext.config.globalProperties;
+    onBeforeMount(() => {
+      if (globalProperties.$isLogin() == false) {
+        login = true;
+      }
+    });
+    const state = reactive({
+      localStorage: '',
+      chatShow: false,
+    });
+    let buttonClick = () => {
+      state.chatShow = !state.chatShow;
+    };
+
+    onMounted(() => {
+      state.localStorage = localStorage;
+      emitter.on('chatShow', buttonClick);
+    });
+    return {
+      state,
+      login,
+      buttonClick,
+    };
+  },
+
   created() {
     if (window.location.pathname == '/') {
       router.push('/main');
     }
-  },
-  data: function () {
-    return {
-      chatShow: false,
-      login: false,
-    };
-  },
-  setup() {
-    const state = reactive({
-      localStorage: '',
-    });
-
-    onMounted(() => {
-      state.localStorage = localStorage;
-    });
-    return {
-      state,
-    };
-  },
-  methods: {
-    buttonClick() {
-      this.chatShow = !this.chatShow;
-    },
-    sendMessage(data) {
-      console.log(data);
-    },
   },
 };
 </script>
