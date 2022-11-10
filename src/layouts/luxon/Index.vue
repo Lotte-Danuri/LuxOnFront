@@ -55,9 +55,6 @@ export default {
       localStorage: '',
     });
 
-    onMounted(() => {
-      state.localStorage = localStorage;
-    });
     return {
       state,
     };

@@ -81,6 +81,13 @@
             <button @click="initOrder" style="margin-left: 10%">
               바로구매
             </button>
+            <button
+              @click="sendChat"
+              style="margin-left: 10% style:background-color: gray"
+            >
+              <i class="bi bi-chat-left-dots"></i>
+              채팅문의
+            </button>
           </div>
         </div>
       </div>
@@ -166,44 +173,47 @@
   </main>
 </template>
 <script>
-import { reactive } from "vue";
-import { onBeforeMount } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import axios from "axios";
-import Swal from "sweetalert2";
-import LikeButton from "@/components/button/likeButton.vue";
-import { getCurrentInstance } from "@vue/runtime-core";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import LikeButton from '@/components/button/likeButton.vue';
+import { getCurrentInstance } from 'vue';
 
 export default {
   components: { LikeButton },
   setup() {
     const router = useRouter();
     const state = reactive({
-      productCode: "",
+      productCode: '',
       products: [],
       sumPrice: 0,
-      selectedStoreIndex: "",
+      selectedStoreIndex: '',
       quantity: 0,
     });
     const comma =
       getCurrentInstance().appContext.config.globalProperties.$comma;
 
+    const emitter =
+      getCurrentInstance().appContext.config.globalProperties.$emitter;
     onBeforeMount(() => {
       var route = useRoute();
       state.productCode = route.query.productCode;
       axios
-        .get("https://sbbro.xyz/api/product/products/list/" + state.productCode)
-        .then((response) => {
+        .get('https://sbbro.xyz/api/product/products/list/' + state.productCode)
+        .then(response => {
           if (response.status == 200) {
             state.products = response.data;
             console.log(state.products);
             state.sumPrice =
-              document.getElementById("countValue").value *
+              document.getElementById('countValue').value *
               state.products[0].price;
           }
+          console.log(state.products);
         })
         .catch(() => {
-          alert("해당 상품은 조회할 수 없습니다.");
+          alert('해당 상품은 조회할 수 없습니다.');
           history.back();
         });
     });
@@ -220,12 +230,12 @@ export default {
     };
 
     const loginCheck = () => {
-      if (localStorage.getItem("token") == null) {
+      if (localStorage.getItem('token') == null) {
         Swal.fire({
-          title: "로그인 해주세요",
-          icon: "error",
+          title: '로그인 해주세요',
+          icon: 'error',
           showCancelButton: false,
-          confirmButtonText: "확인",
+          confirmButtonText: '확인',
         }).then(() => {
           return false;
         });
@@ -235,8 +245,8 @@ export default {
     };
 
     const isSelectStore = () => {
-      if (state.selectedStoreIndex === "") {
-        Swal.fire("지점을 선택해주세요");
+      if (state.selectedStoreIndex === '') {
+        Swal.fire('지점을 선택해주세요');
         return false;
       }
       return true;
@@ -244,7 +254,7 @@ export default {
 
     const isSelectQuantity = () => {
       if (state.quantity === 0) {
-        Swal.fire("수량을 선택해주세요");
+        Swal.fire('수량을 선택해주세요');
         return false;
       }
       return true;
@@ -264,12 +274,12 @@ export default {
       }
 
       Swal.fire({
-        title: "주문 하시겠습니까?",
-        icon: "success",
+        title: '주문 하시겠습니까?',
+        icon: 'success',
         showCancelButton: true,
-        confirmButtonText: "네",
-        cancelButtonText: "아니요",
-      }).then((result) => {
+        confirmButtonText: '네',
+        cancelButtonText: '아니요',
+      }).then(result => {
         if (result.isConfirmed) {
           var productsData = [];
           var product = {
@@ -287,7 +297,7 @@ export default {
           };
           productsData.push(product);
           router.push({
-            name: "initOrder",
+            name: 'initOrder',
             params: {
               products: JSON.stringify(productsData),
             },
@@ -311,32 +321,55 @@ export default {
 
       axios
         .post(
-          "https://sbbro.xyz/api/member/cart",
+          'https://sbbro.xyz/api/member/cart',
           {
             productId: state.products[state.selectedStoreIndex].id,
             quantity: state.quantity,
           },
           {
             headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
             },
-          }
+          },
         )
-        .then((response) => {
+        .then(response => {
           if (response.status == 200) {
             Swal.fire({
-              title: "상품이 장바구니에 담겼습니다.",
-              icon: "success",
+              title: '상품이 장바구니에 담겼습니다.',
+              icon: 'success',
               showCancelButton: true,
-              confirmButtonText: "장바구니로 이동",
-              cancelButtonText: "계속 쇼핑하기",
-            }).then((result) => {
+              confirmButtonText: '장바구니로 이동',
+              cancelButtonText: '계속 쇼핑하기',
+            }).then(result => {
               if (result.isConfirmed) {
-                router.push("/cart");
+                router.push('/cart');
               }
             });
           }
         });
+    };
+
+    const sendChat = () => {
+      axios
+        .post(
+          'https://sbbro.xyz/api/chat/chatRoom/chat',
+          {
+            id: null,
+            content: +'상품 문의',
+            contentType: '상품정보',
+            sendBy: localStorage.getItem('login_id'),
+            sendTo: state.products[state.selectedStoreIndex].storeId,
+            source: state.products[state.selectedStoreIndex].productCode,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then(emitter.emit('chatShow'))
+        .catch(err => console.log(err));
     };
 
     const click_review = () => {
@@ -359,6 +392,8 @@ export default {
       plusBtn,
       initOrder,
       comma,
+      emitter,
+      sendChat,
       addCart,
       click_review,
       click_detail,
@@ -367,12 +402,12 @@ export default {
 };
 </script>
 <style scoped>
-input[type="radio"] {
+input[type='radio'] {
   display: none;
   margin: 10px;
 }
 
-input[type="radio"] + label {
+input[type='radio'] + label {
   display: inline-block;
   margin: -2px;
   padding: 8px 19px;
@@ -385,7 +420,7 @@ input[type="radio"] + label {
   white-space: nowrap;
 }
 
-input[type="radio"]:checked + label {
+input[type='radio']:checked + label {
   background-color: #38363656;
 }
 .list_contents {
