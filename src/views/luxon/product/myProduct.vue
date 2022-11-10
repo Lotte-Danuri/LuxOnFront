@@ -78,13 +78,8 @@
             <button style="background-color: gray" @click="addCart">
               장바구니
             </button>
-            <button @click="initOrder" style="margin-left: 10%">
-              바로구매
-            </button>
-            <button
-              @click="sendChat"
-              style="margin-left: 10% style:background-color: gray"
-            >
+            <button @click="initOrder">바로구매</button>
+            <button @click="sendChat" style="background-color: black">
               <i class="bi bi-chat-left-dots"></i>
               채팅문의
             </button>
@@ -482,6 +477,11 @@ input[type='radio']:checked + label {
 .count button {
   width: 40px;
   height: 40px;
+}
+
+.actionBtn {
+  display: flex;
+  justify-content: space-between;
 }
 
 .actionBtn button {
