@@ -1,35 +1,32 @@
 <template>
-    <section class="ee-contents mypage-shopping"><br>
-        <div class="pc-wrap">
-            <div class="mypage-shopping__container">
-                <left-bar></left-bar>
+  <section class="ee-contents mypage-shopping">
+    <br />
+    <div class="pc-wrap">
+      <div class="mypage-shopping__container">
+        <left-bar></left-bar>
 
-                <router-view>
-                </router-view>
-                
-            </div>
-        </div>
-    </section>
+        <router-view> </router-view>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
-import leftBar from '@/components/mypage/leftBar.vue'
-import MainContent from '@/components/mypage/mainContent.vue'
-import { onBeforeMount } from '@vue/runtime-core'
-import router from '@/router'
+import leftBar from "@/components/mypage/leftBar.vue";
+import MainContent from "@/components/mypage/mainContent.vue";
+import { onBeforeMount } from "@vue/runtime-core";
+import router from "@/router";
 export default {
   components: { leftBar, MainContent },
   setup() {
-    onBeforeMount(()=>{
-      if (window.location.pathname == '/mypage') {
-      router.push('/mypage/order');
-    }
-    })
-    return {
-      
-    }
+    onBeforeMount(() => {
+      if (window.location.pathname == "/mypage") {
+        router.push("/mypage/order");
+      }
+    });
+    return {};
   },
-}
+};
 </script>
 
 <style>
