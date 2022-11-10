@@ -4,7 +4,7 @@
       <nav class="navbar">
         <div class="navbar__logo">
           <router-link to="/main"
-            ><img style="margin-left: 10%" src="@/assets/logo/logo_black.png"
+            ><img style="margin-left: 10%" src="@/assets/logo/logo_white.png"
           /></router-link>
         </div>
         <ul class="navbar__menu">
@@ -66,10 +66,42 @@
     <section class="header_bottom">
       <nav class="navbar_bottom">
         <ul class="navbar__menu" style="margin-left: 200px; font-size: 15px">
-          <li><router-link to="/list">여성</router-link></li>
-          <li><router-link to="/list">남성</router-link></li>
-          <li><router-link to="/list">패션잡화</router-link></li>
-          <li><router-link to="/list">뷰티</router-link></li>
+          <li>
+            <router-link
+              :to="{
+                name: 'MyList',
+                query: { id: 3 },
+              }"
+              >여성</router-link
+            >
+          </li>
+          <li>
+            <router-link
+              :to="{
+                name: 'MyList',
+                query: { id: 5 },
+              }"
+              >남성</router-link
+            >
+          </li>
+          <li>
+            <router-link
+              :to="{
+                name: 'MyList',
+                query: { id: 6 },
+              }"
+              >패션잡화</router-link
+            >
+          </li>
+          <li>
+            <router-link
+              :to="{
+                name: 'MyList',
+                query: { id: 7 },
+              }"
+              >뷰티</router-link
+            >
+          </li>
           <li><router-link to="/list">골프</router-link></li>
           <li><router-link to="/list">리빙</router-link></li>
           <li><router-link to="/list">컬쳐</router-link></li>
@@ -216,7 +248,7 @@ header {
 }
 
 img {
-  width: 100px;
+  width: 170px;
 }
 
 a {

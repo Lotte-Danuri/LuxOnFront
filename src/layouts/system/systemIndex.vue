@@ -44,13 +44,12 @@
 </template>
 
 <script>
-import TheSide from '@/layouts/admin/theSide.vue';
+// import TheSide from '@/layouts/admin/theSide.vue';
 import AdminView from '@/layouts/admin/adminView.vue';
 
 export default {
   name: 'DefaultLayout',
   components: {
-    TheSide,
     AdminView,
   },
 };

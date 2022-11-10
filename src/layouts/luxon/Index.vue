@@ -1,8 +1,6 @@
 <template>
   <the-header></the-header>
-
   <the-view></the-view>
-
   <TheChat
     v-if="state.localStorage.login_id != null"
     style="position: fixed; z-index: 999; right: 30px; bottom: 30px"

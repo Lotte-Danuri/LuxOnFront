@@ -11,6 +11,18 @@
 <script>
 import axios from 'axios';
 import heatmap from "@mars3d/heatmap.js";
+
+// let browserPoint = (event)=>{
+//     console.log(`브라우저 좌표 : (${event.pageX}, ${event.pageY})`);
+// }
+// let clientPoint = (event) =>{
+//     console.log(`화면 좌표 : (${event.clientX}, ${event.clientY})`);
+// }
+// window.addEventListener('click',e=>{
+//     browserPoint(e);
+//     clientPoint(e);
+// });
+
 export default {
   data() {
     return {
@@ -24,6 +36,7 @@ export default {
   },
   mounted() {
     this.getRecommendProductList();
+    document.addEventListener('click', this.logKey);
   },
   methods: {
     async getRecommendProductList() {
@@ -56,7 +69,25 @@ export default {
       heatmapInstance.setData(data);
 
       console.log(this.points);
-    }
+    },
+
+    logKey(e) {
+      var x = `${e.screenX}`
+      var y = `${e.screenY}`
+      axios
+        .post(
+          'https://sbbro.xyz/api/recommend/heatmaps/click',
+          {
+            x:parseInt(x),
+            y:parseInt(y),
+            productCode:"3612301006"
+          },
+        )
+        .then(response => {
+          console.log(x);
+          console.log(y);
+        });
+    },
   }
 };
 </script>

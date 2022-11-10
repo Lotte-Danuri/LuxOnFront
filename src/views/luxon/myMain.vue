@@ -60,7 +60,9 @@
   </section>
   <section style="margin-top: 50px" class="favorite_cls" id="favorite_cls">
     <div class="container" style="margin-left: 15%">
-      <h1 style="margin-left: -200px">Favorite Brand</h1>
+      <h1 style="margin-left: -200px; font-family: RegularBoldCell">
+        Favorite Brand
+      </h1>
       <br /><br />
       <swiper
         class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
@@ -110,16 +112,6 @@
               </span>
             </div>
             <div class="item color4">
-              <!-- <button
-                style="
-                  position: absolute;
-                  right: 0px;
-                  background-color: transparent;
-                  border: none;
-                "
-              >
-                <like-button></like-button>
-              </button> -->
               <img
                 src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
                 alt="image"
@@ -207,45 +199,65 @@
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰8</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color2">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰2</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color3">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/042/00/220900000284042.jpg?cVer=31105127&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰3</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color4">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰4</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color5">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰5</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
           </div>
         </swiper-slide>
@@ -256,45 +268,65 @@
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰6</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color6">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/042/00/220900000284042.jpg?cVer=31105127&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰7</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color7">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰7</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color8">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰8</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color9">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰9</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
           </div>
         </swiper-slide>
@@ -384,6 +416,35 @@
       </swiper>
     </div>
   </section>
+  <div class="pc-wrap">
+    <div
+      class="main__styling-slide"
+      style="
+        background-image: url('https://cdn-fo.sivillage.com/fo/assets/comm/image/main_styling_pattern.svg');
+      "
+    >
+      <div class="main__styling-text">
+        <h2 class="regularbold">Exclusive</h2>
+
+        <div class="main__styling-info">
+          <p class="main__styling-text-strong">PERFUME GALLERY</p>
+          <p class="main__styling-text-description">
+            [아무아쥬] 아너 오드퍼퓸 포 우먼 100ml
+          </p>
+        </div>
+      </div>
+      <div class="main__styling-img">
+        <a href="javascript:void(0);"
+          ><img
+            src="https://image.sivillage.com/upload/C00001/goods/org/819/221012003299819.jpg?RS=600&amp;SP=1"
+            alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />
 </template>
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -518,7 +579,15 @@ export default {
           document.getElementById('favorite_cls').style.transform =
             'translateY(0)';
         }
-        if (nowScroll < 1000) {
+        if (nowScroll < 700) {
+          document.getElementById('coupon_cls').style.opacity = '0';
+        }
+        if (nowScroll > 1500) {
+          document.getElementById('coupon_cls').style.opacity = '1';
+          document.getElementById('coupon_cls').style.transform =
+            'translateY(0)';
+        }
+        if (nowScroll < 2000) {
           document.getElementById('recommend_cls').style.opacity = '0';
         }
         if (nowScroll > 2000) {
@@ -576,6 +645,22 @@ export default {
   text-align: center;
 }
 
+.coupon-text {
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: relative;
+  margin-top: -70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 50%;
+  padding: 20px;
+  text-align: center;
+}
+
 .container_grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -620,5 +705,58 @@ export default {
   /* transition-timing-function: ease;
   transition-duration: 1.5s;
   transition-property: opacity, transform; */
+}
+
+.main__styling-img img {
+  height: 650px;
+  width: 433px;
+  object-fit: cover;
+}
+
+.main__styling-slide {
+  position: relative;
+  display: flex;
+  height: 730px;
+  padding: 0 183px 0 200px;
+  box-sizing: border-box;
+}
+
+.main__styling-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main__styling-img {
+  position: absolute;
+  top: 41px;
+  right: 223px;
+}
+
+.main__styling-text h2 {
+  margin-bottom: 57px;
+  font-size: 72px;
+  color: #141a23;
+}
+
+.main__styling-text-strong {
+  white-space: nowrap;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main__styling-text-description {
+  white-space: nowrap;
+  font-size: 16px;
+  line-height: 22px;
+  color: #404040;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

@@ -116,16 +116,16 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import { onBeforeMount } from "vue";
-import axios from "axios";
-import { getCurrentInstance } from "@vue/runtime-core";
-import Swal from "sweetalert2";
-import { useRouter } from "vue-router";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
+import { getCurrentInstance } from 'vue';
+import Swal from 'sweetalert2';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
-    const router = useRouter()
+    const router = useRouter();
     const comma =
       getCurrentInstance().appContext.config.globalProperties.$comma;
     const globalProperties =
@@ -136,18 +136,18 @@ export default {
 
     onBeforeMount(() => {
       if (globalProperties.$isLogin() == false) {
-        Swal.fire("로그인 해주세요").then(() => {
-          router.push("/login");
+        Swal.fire('로그인 해주세요').then(() => {
+          router.push('/login');
         });
       }
 
       axios
-        .get("https://sbbro.xyz/api/member/products", {
+        .get('https://sbbro.xyz/api/member/products', {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
+            Authorization: `Bearer ` + localStorage.getItem('token'),
           },
         })
-        .then((response) => {
+        .then(response => {
           console.log(response);
           state.orderList = response.data;
         });
