@@ -27,7 +27,7 @@ import GetProductChance from '@/views/admin/getProductChance.vue';
 import GetProduct from '@/views/admin/getProduct.vue';
 import UpdateProduct from '@/views/admin/updateProduct.vue';
 import Test from '@/views/admin/test.vue';
-import SysPromotion from '@/views/luxon/promotion/promotion.vue';
+import SysPromotion from '@/views/system/syspromotion.vue';
 import SysNotification from '@/views/system/sysnotification.vue';
 import SysRecommend from '@/views/system/sysrecommend.vue';
 import Promotion from '@/views/luxon/promotion/promotion.vue';
@@ -37,11 +37,6 @@ const routes = [
     name: 'home',
     component: Index,
     children: [
-      {
-        path: '/promotion',
-        name: 'SysPromotion',
-        component: SysPromotion,
-      },
       {
         path: '/main',
         name: 'MyMain',
