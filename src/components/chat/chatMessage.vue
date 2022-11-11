@@ -469,7 +469,6 @@ export default {
           .catch(err => console.log(err));
       });
     },
-    movePromotion(promotion) {},
   },
   created() {
     this.isSame = this.isSamePerson(this.msg, this.prev);
