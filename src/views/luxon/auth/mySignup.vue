@@ -60,27 +60,10 @@ birthDate: this.birthDate -->
             <span>여성</span>
           </label>
         </div>
-        <!-- <input placeholder="성별" v-model="state.gender" /> -->
-        <!-- <label>
-          <input
-            type="radio"
-            v-bind:value="state.male"
-            v-model="state.gender"
-          />
-          남자회원
-        </label>
-        <label>
-          <input
-            type="radio"
-            v-bind:value="state.female"
-            v-model="state.gender"
-          />
-          여자회원
-        </label> -->
         <br />
-        <input placeholder="phone" v-model="state.phone" />
+        <input placeholder="핸드폰번호" v-model="state.phone" />
         <br />
-        <div>
+        <div style="margin-left: 18px">
           <input placeholder="주소찾기를 눌러주세요" style="width: 180px" />
           <button
             style="
@@ -135,7 +118,7 @@ birthDate: this.birthDate -->
           </label>
         </div>
         <!-- {{ state.rolePicked }} -->
-        <div>
+        <!-- <div>
           <label>
             <input
               type="radio"
@@ -152,7 +135,7 @@ birthDate: this.birthDate -->
             />
             판매자
           </label>
-        </div>
+        </div> -->
         <br />
         <button
           @click="signUp"
