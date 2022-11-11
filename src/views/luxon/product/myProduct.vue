@@ -189,6 +189,8 @@ export default {
     });
     const comma =
       getCurrentInstance().appContext.config.globalProperties.$comma;
+    const globalProperties =
+      getCurrentInstance().appContext.config.globalProperties;
 
     const emitter =
       getCurrentInstance().appContext.config.globalProperties.$emitter;
@@ -204,6 +206,19 @@ export default {
             state.sumPrice =
               document.getElementById('countValue').value *
               state.products[0].price;
+            state.products.forEach((product) => {
+              if (globalProperties.$isLogin() == false) {
+                console.log('비로그인')
+                axios.get(`https://sbbro.xyz/api/recommend/recommends/click/unlogin/`+product.id)
+              }else{
+                console.log('로그인')
+                axios.get(`https://sbbro.xyz/api/recommend/recommends/click/login/`+product.id,{
+                  headers:{
+                    Authorization: "Bearer " + localStorage.getItem("token"),
+                  }
+                })
+              }
+            });
           }
           console.log(state.products);
         })
@@ -373,17 +388,17 @@ export default {
     };
 
     const click_review = () => {
-      document.getElementById('product_detail').style.display = 'none';
-      document.getElementById('product_review').style.display = 'block';
-      document.getElementById('review_btn').style.color = 'black';
-      document.getElementById('detail_btn').style.color = 'gray';
+      document.getElementById("product_detail").style.display = "none";
+      document.getElementById("product_review").style.display = "block";
+      document.getElementById("review_btn").style.color = "black";
+      document.getElementById("detail_btn").style.color = "gray";
     };
 
     const click_detail = () => {
-      document.getElementById('product_review').style.display = 'none';
-      document.getElementById('product_detail').style.display = 'block';
-      document.getElementById('review_btn').style.color = 'gray';
-      document.getElementById('detail_btn').style.color = 'black';
+      document.getElementById("product_review").style.display = "none";
+      document.getElementById("product_detail").style.display = "block";
+      document.getElementById("review_btn").style.color = "gray";
+      document.getElementById("detail_btn").style.color = "black";
     };
 
     return {
