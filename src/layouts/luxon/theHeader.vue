@@ -1,85 +1,121 @@
 <template>
-  <header>
-    <section class="header_top">
-      <nav class="navbar">
-        <div class="navbar__logo">
-          <router-link to="/main"
-            ><img style="margin-left: 10%" src="@/assets/logo/logo_black.png"
-          /></router-link>
-        </div>
-        <ul class="navbar__menu">
-          <div class="wrap">
-            <div class="search">
-              <input
-                type="text"
-                style="height: 36px"
-                class="searchTerm"
-                placeholder="검색어를 입력하세요"
-              />
-              <button type="submit" class="searchButton">
-                <i class="fa fa-search"></i>
-              </button>
-            </div>
+  <header style="background-color: white; height: 150px">
+    <div style="margin-left: 10%; width: 80%">
+      <section class="header_top">
+        <nav class="navbar">
+          <div class="navbar__logo">
+            <router-link to="/main"
+              ><img style="margin-left: 10%" src="@/assets/logo/logo_white.png"
+            /></router-link>
           </div>
-        </ul>
+          <ul class="navbar__menu">
+            <div class="wrap">
+              <div class="search">
+                <input
+                  type="text"
+                  style="height: 36px"
+                  class="searchTerm"
+                  placeholder="검색어를 입력하세요"
+                  id="searchValue"
+                  ref="ref_search"
+                />
+                <button type="submit" class="searchButton" @click="searchBtn">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </div>
+          </ul>
 
-        <ul class="navbar__icons">
-          <li v-if="state.localStorage.token == null">
-            <router-link to="/login">
-              <i class="fa-solid fa-right-to-bracket"></i>
-              <p>로그인</p>
-            </router-link>
-          </li>
-          <li v-else>
-            <router-link to="/logout">
-              <i class="fa-solid fa-right-to-bracket"></i>
-              <p>로그아웃</p>
-            </router-link>
-          </li>
-          <li>
-            <i class="fa-solid fa-phone"></i>
-            <p>고객센터</p>
-          </li>
-          <li>
-            <router-link to="/mypage/order">
-              <i class="fa-solid fa-user"></i>
-              <p>마이페이지</p>
-            </router-link>
-          </li>
-          <li>
-            <i class="fa-regular fa-clock"></i>
-            <p>최근본상품</p>
-          </li>
-          <li>
-            <router-link :to="{ name: 'cart' }">
-              <i class="fa-solid fa-bag-shopping"></i>
-              <p>쇼핑백</p>
-            </router-link>
-          </li>
-        </ul>
+          <ul class="navbar__icons">
+            <li v-if="state.localStorage.token == null">
+              <router-link to="/login">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <p>로그인</p>
+              </router-link>
+            </li>
+            <li v-else>
+              <router-link to="/logout">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <p>로그아웃</p>
+              </router-link>
+            </li>
+            <li>
+              <i class="fa-solid fa-phone"></i>
+              <p>고객센터</p>
+            </li>
+            <li>
+              <router-link to="/mypage/order">
+                <i class="fa-solid fa-user"></i>
+                <p>마이페이지</p>
+              </router-link>
+            </li>
+            <!-- <li>
+              <i class="fa-regular fa-clock"></i>
+              <p>최근본상품</p>
+            </li> -->
+            <li>
+              <router-link :to="{ name: 'cart' }">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <p>쇼핑백</p>
+              </router-link>
+            </li>
+          </ul>
 
-        <a href="#" class="navbar__toogleBtn" @click="btnClick">
-          <i class="fas fa-bars"></i>
-        </a>
-      </nav>
-    </section>
-    <section class="header_bottom">
-      <nav class="navbar_bottom">
-        <ul class="navbar__menu" style="margin-left: 200px; font-size: 15px">
-          <li><router-link to="/list">여성</router-link></li>
-          <li><router-link to="/list">남성</router-link></li>
-          <li><router-link to="/list">패션잡화</router-link></li>
-          <li><router-link to="/list">뷰티</router-link></li>
-          <li><router-link to="/list">골프</router-link></li>
-          <li><router-link to="/list">리빙</router-link></li>
-          <li><router-link to="/list">컬쳐</router-link></li>
-          <li><router-link to="/list">아동</router-link></li>
-        </ul>
-        <a href="#" class="navbar__toogleBtn" @click="btnClick">
-          <i class="fas fa-bars"></i>
-        </a>
-      </nav>
-    </section>
+          <a href="#" class="navbar__toogleBtn" @click="btnClick">
+            <i class="fas fa-bars"></i>
+          </a>
+        </nav>
+      </section>
+      <section class="header_bottom">
+        <nav class="navbar_bottom">
+          <ul class="navbar__menu" style="margin-left: 200px; font-size: 15px">
+            <li>
+              <router-link
+                :to="{
+                  name: 'MyList',
+                  query: { id: 3 },
+                }"
+                >여성</router-link
+              >
+            </li>
+            <li>
+              <router-link
+                :to="{
+                  name: 'MyList',
+                  query: { id: 5 },
+                }"
+                >남성</router-link
+              >
+            </li>
+            <li>
+              <router-link
+                :to="{
+                  name: 'MyList',
+                  query: { id: 6 },
+                }"
+                >패션잡화</router-link
+              >
+            </li>
+            <li>
+              <router-link
+                :to="{
+                  name: 'MyList',
+                  query: { id: 7 },
+                }"
+                >뷰티</router-link
+              >
+            </li>
+          </ul>
+          <ul
+            class="navbar__menu"
+            style="margin-left: 900px; margin-top: -38px; font-size: 15px"
+          ></ul>
+          <a href="#" class="navbar__toogleBtn" @click="btnClick">
+            <i class="fas fa-bars"></i>
+          </a>
+        </nav>
+      </section>
+    </div>
   </header>
 </template>
 <script>
@@ -88,6 +124,7 @@ import { onMounted } from 'vue';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 // const toggleBtn = document.querySelector('.navbar__toogleBtn');
 const menu = document.querySelector('.navbar__menu');
@@ -95,23 +132,26 @@ const icons = document.querySelector('.navbar__icons');
 
 export default {
   components: {},
+  data() {
+    return {
+      searchValue: '',
+    };
+  },
+  watch: {
+    searchValue() {
+      alert('search작동');
+    },
+  },
   setup() {
+    const router = useRouter();
     const state = reactive({
       localStorage: '',
+      searchValue: '',
     });
 
     onMounted(() => {
       state.localStorage = localStorage;
       if (localStorage.getItem('login_id') !== null) {
-        // const cors = require('cors')
-
-        // const corsOption = {
-        //   origin: 'http://localhost:8080',
-        //   credentials: true
-        // }
-
-        // createApp(App).use(cors(corsOption))
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
           apiKey: 'AIzaSyAHFnEL7qoOi2fQB9opoZeOFFy9MUH7GDM',
           authDomain: 'luxon-c4fb2.firebaseapp.com',
@@ -172,14 +212,36 @@ export default {
     });
 
     const btnClick = () => {
-      alert('test');
       menu.classList.toggle('active');
       icons.classList.toggle('active');
+    };
+
+    const searchBtn = () => {
+      let searchValue = document.getElementById('searchValue').value;
+      router
+        .push({
+          name: 'MyList',
+          query: { searchValue: searchValue },
+        })
+        .then(
+          setTimeout(() => {
+            set(
+              decodeURI(window.location.href)
+                .slice(window.location.href.indexOf('searchValue'))
+                .slice(12),
+            );
+          }, 500),
+        );
+    };
+
+    const set = t => {
+      console.log(t);
     };
 
     return {
       state,
       btnClick,
+      searchBtn,
     };
   },
 };
@@ -201,9 +263,9 @@ header {
 .header_bottom {
   margin: 0;
   font-family: 'Source Sans Pro';
-  border-style: solid;
+  /* border-style: solid;
   border-color: gray;
-  border-width: 1px 0px 0px 0px;
+  border-width: 1px 0px 0px 0px; */
 }
 
 .navbar_bottom {
@@ -216,7 +278,7 @@ header {
 }
 
 img {
-  width: 100px;
+  width: 120px;
 }
 
 a {
@@ -262,7 +324,7 @@ a {
   height: 20px;
   border-radius: 5px 0 0 5px;
   outline: none;
-  color: #9dbfaf;
+  color: #000000;
 }
 
 .searchTerm:focus {
@@ -298,6 +360,7 @@ a {
 .navbar__menu li:hover {
   background-color: rgb(53, 53, 53);
   border-radius: 4px;
+  color: white;
 }
 
 .navbar__menu li:hover a {

@@ -11,28 +11,39 @@
         top: 200px;
       "
     >
-      <div>
-        <h3>Category</h3>
+      <div v-for="(category, i) in categoryList" :key="i" :value="i">
+        <h1>
+          {{ category.categoryName }}
+        </h1>
+        <br />
         <ul>
-          <li>전체</li>
-          <li>아우터</li>
-          <li>상의</li>
-          <li>하의</li>
-          <li>드레스/점프수트</li>
-          <li>수트</li>
-          <li>라운지웨어</li>
-          <li>언더웨어</li>
+          <li>
+            <h4>전체{{ $route.params.searchValue }}</h4>
+          </li>
+          <li
+            v-for="(categorySecond, j) in category.categorySecondDtoList"
+            :key="j"
+            :value="j"
+            @click="myFilter($event)"
+          >
+            <h4>
+              {{ categorySecond.categoryName }}
+            </h4>
+            <ul>
+              <li
+                v-for="(
+                  categoryThird, k
+                ) in categorySecond.categoryThirdDtoList"
+                :key="k"
+                :value="k"
+              >
+                {{ categoryThird.categoryName }}
+              </li>
+            </ul>
+          </li>
         </ul>
       </div>
-      <div>
-        <h3>Filter</h3>
-        <ul>
-          <li>브랜드</li>
-          <li>할인/혜택</li>
-          <li>상품쿠폰</li>
-          <li>세트 상품</li>
-        </ul>
-      </div>
+
       <div class="inputPrice">
         <h3>가격</h3>
         <label for="minPrice">최소</label>
@@ -41,311 +52,6 @@
         <br />
         <label for="maxPrice">최대</label>
         <input type="text" id="maxPrice" name="maxP" placeholder="max Price" />
-      </div>
-      <div>
-        <h3>색상</h3>
-        <ul class="color_grid" style="width: 150px; margin: 0px">
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_01"
-                data-selector="targetLink"
-                data-filter_cd="01"
-                data-text="화이트"
-                value="화이트"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_010005_210114010651.png"
-                  alt="화이트"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_02"
-                data-selector="targetLink"
-                data-filter_cd="02"
-                data-text="베이지"
-                value="베이지"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_020065_210114011229.png"
-                  alt="베이지"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_03"
-                data-selector="targetLink"
-                data-filter_cd="03"
-                data-text="그레이"
-                value="그레이"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_030005_210114010650.png"
-                  alt="그레이"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_04"
-                data-selector="targetLink"
-                data-filter_cd="04"
-                data-text="블랙"
-                value="블랙"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_040002_210114011352.png"
-                  alt="블랙"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_05"
-                data-selector="targetLink"
-                data-filter_cd="05"
-                data-text="브라운"
-                value="브라운"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_110021_210114010651.png"
-                  alt="브라운"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_06"
-                data-selector="targetLink"
-                data-filter_cd="06"
-                data-text="레드"
-                value="레드"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_060027_210114011352.png"
-                  alt="레드"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_07"
-                data-selector="targetLink"
-                data-filter_cd="07"
-                data-text="핑크"
-                value="핑크"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_070070_210114011352.png"
-                  alt="핑크"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_08"
-                data-selector="targetLink"
-                data-filter_cd="08"
-                data-text="오렌지"
-                value="오렌지"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_080018_210114011352.png"
-                  alt="오렌지"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_09"
-                data-selector="targetLink"
-                data-filter_cd="09"
-                data-text="옐로우"
-                value="옐로우"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_120010_210114010651.png"
-                  alt="옐로우"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_10"
-                data-selector="targetLink"
-                data-filter_cd="10"
-                data-text="그린"
-                value="그린"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_110022_210114010650.png"
-                  alt="그린"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_11"
-                data-selector="targetLink"
-                data-filter_cd="11"
-                data-text="블루"
-                value="블루"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_100018_210114010651.png"
-                  alt="블루"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_12"
-                data-selector="targetLink"
-                data-filter_cd="12"
-                data-text="퍼플"
-                value="퍼플"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_110023_210114010651.png"
-                  alt="퍼플"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_13"
-                data-selector="targetLink"
-                data-filter_cd="13"
-                data-text="골드"
-                value="골드"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_110024_210114010650.png"
-                  alt="골드"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_14"
-                data-selector="targetLink"
-                data-filter_cd="14"
-                data-text="실버"
-                value="실버"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_110025_210114010651.png"
-                  alt="실버"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_15"
-                data-selector="targetLink"
-                data-filter_cd="15"
-                data-text="기타"
-                value="기타"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_15_210114025641.png"
-                  alt="기타"
-                />
-              </span>
-            </label>
-          </li>
-        </ul>
       </div>
       <hr style="width: 160px" />
       <br />
@@ -365,7 +71,7 @@
       class="category__content"
       style="margin-left: 50px; margin-bottom: 0px"
     >
-      <div class="swiper-content">
+      <div class="swiper-content" style="margin-top: -70px">
         <div class="leftSwiper">
           <swiper
             class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
@@ -388,13 +94,13 @@
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
                     <h1 style="font-size: 50px">Luxury On</h1>
-                    <p>겨울 test</p>
+                    <!-- <p>겨울 test</p> -->
                   </div>
                   <div>
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 300px; height: 300px"
+                      style="width: 523px; height: 523px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -425,13 +131,13 @@
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
                     <h1 style="font-size: 50px">Luxury On</h1>
-                    <p>겨울 test</p>
+                    <!-- <p>겨울 test</p> -->
                   </div>
                   <div>
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 300px; height: 300px"
+                      style="width: 523px; height: 523px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -455,37 +161,17 @@
               }"
             >
               <img :src="product.thumbnailUrl" />
+              <br />
               <span>
-                <!-- <p>SACAI</p> -->
-                <p>{{ product.productName }}</p>
-                <p>￦{{ comma(product.price) }}</p>
+                <p style="color: black">
+                  {{ product.productName }}
+                </p>
+                <p style="font-weight: ">￦&nbsp;{{ comma(product.price) }}</p>
               </span>
             </router-link>
           </div>
-          <div>
-            <router-link to="/product/myProduct">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/546/211015001544546.jpg?RS=350&SP=1"
-              />
-              <span>
-                <p>SACAI</p>
-                <p>언발 집업 하이넥 패딩 점퍼</p>
-                <p>￦1,790,000</p>
-              </span>
-            </router-link>
-          </div>
-          <div>
-            <router-link to="/product/myProduct">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/266/211019001559266.jpg?RS=350&SP=1"
-              />
-              <span>
-                <p>SACAI</p>
-                <p>언발 집업 하이넥 패딩 점퍼</p>
-                <p>￦1,790,000</p>
-              </span>
-            </router-link>
-          </div>
+          <br />
+          <br />
         </div>
       </div>
     </div>
@@ -503,17 +189,48 @@ export default {
   data() {
     return {
       productList: [],
+      categoryList: [],
+      selectedUl: [],
+      isActive: false,
+      searchValue: '',
+      searchValue2: '',
     };
+  },
+  watch: {
+    searchValue() {
+      this.searchValue2 = this.searchValue;
+    },
   },
   created() {
     this.getProductList();
+    console.log(this.$route.query.id);
+    console.log(this.$route.query.searchValue);
+    console.log(this.searchValue2);
+    this.getCategoryList();
+
+    const url = decodeURI(window.location.href);
+    // alert(url);
+    this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
+
+    if (this.$route.query.searchValue != undefined) {
+      // alert(this.$route.query.searchValue);
+    }
   },
   methods: {
     async getProductList() {
       this.productList = await this.$api('/product/products');
     },
+    async getCategoryList() {
+      this.categoryList = await this.$api('/product/categories');
+      console.log(this.categoryList);
+    },
     clickCallback(pageNum) {
       console.log(pageNum);
+    },
+    myFilter(event) {
+      // alert(this.selectedUl);
+      this.isActive = !this.isActive;
+      console.log(event.target.children);
     },
   },
   setup() {
@@ -521,7 +238,7 @@ export default {
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/096/00/221000000299096.jpg?cVer=31105502&RS=&SP=1',
       },
       {
         author: 'Elon Musk',
@@ -531,12 +248,12 @@ export default {
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/519/00/221000000296519.jpg?cVer=19044659&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/374/00/221000000288374.jpg?cVer=17020031&RS=&SP=1',
       },
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/225/00/220900000284225.jpg?cVer=10023119&RS=&SP=1',
       },
     ]);
     const swiperTextBase2 = ref([
@@ -581,7 +298,17 @@ export default {
 
 /* Write your own CSS for pagination */
 
-.side_menu div h3 {
+a {
+  text-decoration: none;
+}
+
+p {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+    'Apple SD Gothic Neo', 'Apple-Gothic', 'Roboto', 'Noto Sans KR',
+    'Droid Sans', 'dotum', sans-serif;
+}
+
+.active .side_menu div h3 {
   margin-bottom: 10px;
   font-weight: bold;
 }
@@ -628,7 +355,7 @@ export default {
 .listSwiper {
   width: 100%;
   height: 700px;
-  postion: absolute;
+  /* postion: absolute; */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

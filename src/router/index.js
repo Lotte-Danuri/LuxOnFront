@@ -8,6 +8,7 @@ import StorePage from '@/views/luxon/store/storepage.vue';
 import MyProduct from '@/views/luxon/product/myProduct.vue';
 import MyAdmin from '@/layouts/admin/adminIndex.vue';
 import DashBoard from '@/views/admin/dashBoard.vue';
+import Analytics from '@/views/admin/analytics.vue';
 import GridSystem from '@/views/admin/gridSystem.vue';
 import Registration from '@/views/admin/registration.vue';
 import RegiCoupon from '@/views/admin/regiCoupon.vue';
@@ -21,8 +22,12 @@ import MyPage from '@/views/luxon/user/myPage.vue';
 import MyOrder from '@/components/mypage/myOrder.vue';
 import MyLike from '@/components/mypage/myLike.vue';
 import MySystem from '@/layouts/system/systemIndex.vue';
-import SystemView from '@/views/system/systemview.vue';
-import SysPromotion from '@/views/system/syspromotion.vue';
+import SystemView from '@/views/system/systemView.vue';
+import GetProductChance from '@/views/admin/getProductChance.vue';
+import GetProduct from '@/views/admin/getProduct.vue';
+import UpdateProduct from '@/views/admin/updateProduct.vue';
+import Test from '@/views/admin/test.vue';
+import SysPromotion from '@/views/luxon/promotion/promotion.vue';
 import SysNotification from '@/views/system/sysnotification.vue';
 import SysRecommend from '@/views/system/sysrecommend.vue';
 import Promotion from '@/views/luxon/promotion/promotion.vue';
@@ -32,6 +37,11 @@ const routes = [
     name: 'home',
     component: Index,
     children: [
+      {
+        path: '/promotion',
+        name: 'SysPromotion',
+        component: SysPromotion,
+      },
       {
         path: '/main',
         name: 'MyMain',
@@ -122,6 +132,11 @@ const routes = [
         component: DashBoard,
       },
       {
+        path: '/admin/analytics',
+        name: 'Analytics',
+        component: Analytics,
+      },
+      {
         path: '/admin/registration',
         name: 'Registration',
         component: Registration,
@@ -140,6 +155,26 @@ const routes = [
         path: '/admin/getCoupon',
         name: 'GetCoupon',
         component: GetCoupon,
+      },
+      {
+        path: '/admin/getProductChance',
+        name: 'GetProductChance',
+        component: GetProductChance,
+      },
+      {
+        path: '/admin/getProduct',
+        name: 'GetProduct',
+        component: GetProduct,
+      },
+      {
+        path: '/admin/updateProduct',
+        name: 'UpdateProduct',
+        component: UpdateProduct,
+      },
+      {
+        path: '/admin/test',
+        name: 'Test',
+        component: Test,
       },
     ],
   },

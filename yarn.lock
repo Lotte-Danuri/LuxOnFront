@@ -998,6 +998,14 @@
   "resolved" "https://registry.npmjs.org/@rushstack/eslint-patch/-/eslint-patch-1.2.0.tgz"
   "version" "1.2.0"
 
+"@techassi/vue-youtube-iframe@^1.0.6":
+  "integrity" "sha512-5Hf2PsoGcw/oFN8cq56CF1Wtal1VWntpKJLlCsLj7aKzFXdsQEupNcmwhKexV4LdZoGnnmGsUpzJuxzVPj5mmQ=="
+  "resolved" "https://registry.npmjs.org/@techassi/vue-youtube-iframe/-/vue-youtube-iframe-1.0.6.tgz"
+  "version" "1.0.6"
+  dependencies:
+    "@types/youtube" "^0.0.41"
+    "vue" "^3.0.5"
+
 "@types/eslint-scope@^3.7.3":
   "integrity" "sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA=="
   "resolved" "https://registry.npmjs.org/@types/eslint-scope/-/eslint-scope-3.7.4.tgz"
@@ -1038,6 +1046,11 @@
   "integrity" "sha512-BxcJpBu8D3kv/GZkx/gSMz6VnTJREBj/4lbzYOQueUOELkt8WrO6zAcSPmp9uRPEW/d+lUO8QK0W2xnS1hEU0A=="
   "resolved" "https://registry.npmjs.org/@types/node/-/node-18.11.4.tgz"
   "version" "18.11.4"
+
+"@types/youtube@^0.0.41":
+  "integrity" "sha512-k6IzSO62JaC4YImW6dEYzWA84+Gb4T0KPswy2FlWAWKcitstju8qZ3sN2GKhKskcslOiXmVveem/x/gCa3zMRg=="
+  "resolved" "https://registry.npmjs.org/@types/youtube/-/youtube-0.0.41.tgz"
+  "version" "0.0.41"
 
 "@vitejs/plugin-vue@^3.1.2":
   "integrity" "sha512-3zxKNlvA3oNaKDYX0NBclgxTQ1xaFdL7PzwF6zj9tGFziKwmBa3Q/6XcJQxudlT81WxDjEhHmevvIC4Orc1LhQ=="
@@ -2024,9 +2037,9 @@
   "resolved" "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-0.9.3.tgz"
   "version" "0.9.3"
 
-"esbuild-darwin-arm64@0.15.12":
-  "integrity" "sha512-z4zPX02tQ41kcXMyN3c/GfZpIjKoI/BzHrdKUwhC/Ki5BAhWv59A9M8H+iqaRbwpzYrYidTybBwiZAIWCLJAkw=="
-  "resolved" "https://registry.npmjs.org/esbuild-darwin-arm64/-/esbuild-darwin-arm64-0.15.12.tgz"
+"esbuild-windows-64@0.15.12":
+  "integrity" "sha512-VActO3WnWZSN//xjSfbiGOSyC+wkZtI8I4KlgrTo5oHJM6z3MZZBCuFaZHd8hzf/W9KPhF0lY8OqlmWC9HO5AA=="
+  "resolved" "https://registry.npmjs.org/esbuild-windows-64/-/esbuild-windows-64-0.15.12.tgz"
   "version" "0.15.12"
 
 "esbuild@^0.15.9":
@@ -2384,11 +2397,6 @@
   "integrity" "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw=="
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
-
-"fsevents@~2.3.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
@@ -4092,6 +4100,11 @@
   "resolved" "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   "version" "1.0.2"
 
+"uuid@3.1.0":
+  "integrity" "sha512-DIWtzUkw04M4k3bf1IcpS2tngXEL26YUD2M0tMDUpnUrz2hgzUBlD55a4FjdLGPvfHxS6uluGWvaVEqgBcVa+g=="
+  "resolved" "https://registry.npmjs.org/uuid/-/uuid-3.1.0.tgz"
+  "version" "3.1.0"
+
 "v-calendar@^3.0.0-alpha.8":
   "integrity" "sha512-T23H5UbK0EomrwArlF/jrT2LFbV/lu+Bp9JroZ1paN6rPoaMyvE+HrLxvAmUgi+pODrdTURDMzM3+WPgeFKEBQ=="
   "resolved" "https://registry.npmjs.org/v-calendar/-/v-calendar-3.0.0-alpha.8.tgz"
@@ -4196,6 +4209,13 @@
     "lodash" "^4.17.21"
     "semver" "^7.3.6"
 
+"vue-friendly-iframe@^0.20.0":
+  "integrity" "sha512-aspddnbCg3i+tEkknuYwyn7NbpQuRhMMkaXdch+kY1RrAzh+YGXcxL3xCq5lmtfKiV5owG911fEgPEQNkq+tlw=="
+  "resolved" "https://registry.npmjs.org/vue-friendly-iframe/-/vue-friendly-iframe-0.20.0.tgz"
+  "version" "0.20.0"
+  dependencies:
+    "uuid" "3.1.0"
+
 "vue-functional-data-merge@^3.1.0":
   "integrity" "sha512-leT4kdJVQyeZNY1kmnS1xiUlQ9z1B/kdBFCILIjYYQDqZgLqCLa0UhjSSeRX6c3mUe6U5qYeM8LrEqkHJ1B4LA=="
   "resolved" "https://registry.npmjs.org/vue-functional-data-merge/-/vue-functional-data-merge-3.1.0.tgz"
@@ -4277,7 +4297,7 @@
   "resolved" "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@*", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.1", "vue@^3.1.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.41", "vue@>=2.0.0", "vue@>=3.0.0", "vue@2 || 3", "vue@3.2.41":
+"vue@*", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.1", "vue@^3.0.5", "vue@^3.1.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.41", "vue@>=2.0.0", "vue@>=3.0.0", "vue@2 || 3", "vue@3.2.41":
   "integrity" "sha512-uuuvnrDXEeZ9VUPljgHkqB5IaVO8SxhPpqF2eWOukVrBnRBx2THPSGQBnVRt0GrIG1gvCmFXMGbd7FqcT1ixNQ=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.2.41.tgz"
   "version" "3.2.41"

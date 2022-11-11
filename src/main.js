@@ -18,7 +18,10 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 import VCalendar from 'v-calendar';
 
+import YoutubeIframe from '@techassi/vue-youtube-iframe';
+
 createApp(App)
+  .use(YoutubeIframe)
   .use(VCalendar)
   .use(VueSweetalert2)
   .use(router)
