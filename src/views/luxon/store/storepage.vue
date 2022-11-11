@@ -5,47 +5,60 @@
         <img class="brand_thumnail" :src="brand.imageUrl" />
       </div>
       <div class="brand_name">{{ brand.name }}</div>
-
-      <div class="brand_store">
+      <Transition>
         <div>
-          <input
-            type="radio"
-            class="btn-check"
-            v-model="selectedStoreId"
-            value=""
-            id="storeAll"
-            @change="getBrandProduct()"
-            checked
-          />
-          <label name="options-outlined" class="btn stores" for="storeAll"
-            >전체</label
-          >
+          <div class="brand_store">
+            <div>
+              <input
+                type="radio"
+                class="btn-check"
+                v-model="selectedStoreId"
+                value=""
+                id="storeAll"
+                @change="getBrandProduct()"
+                checked
+              />
+              <label
+                name="options-outlined"
+                class="btn stores_all"
+                for="storeAll"
+                >전체</label
+              >
+            </div>
+            <div v-for="store in storeList" :key="store.storeId">
+              <input
+                type="radio"
+                v-model="selectedStoreId"
+                :value="store.storeId"
+                class="btn-check"
+                @change="getBrandProduct()"
+                :id="store.storeId"
+              />
+              <label
+                name="options-outlined"
+                class="btn stores"
+                :for="store.storeId"
+                >{{ store.storeName }}</label
+              >
+            </div>
+          </div>
+          <div class="store_btns" v-if="selectedStoreId">
+            <button
+              :class="
+                followBool
+                  ? 'btn btn-dark store_follow_true'
+                  : 'btn btn-dark store_follow_false'
+              "
+              @click="followBtn()"
+            >
+              <i class="bi bi-heart"></i> 팔로우
+            </button>
+            <button class="btn btn-dark store_chat" @click="sendMessage()">
+              <i class="bi bi-chat-left-dots"></i> 채팅 문의
+            </button>
+          </div>
         </div>
-        <div v-for="store in storeList" :key="store.storeId">
-          <input
-            type="radio"
-            v-model="selectedStoreId"
-            :value="store.storeId"
-            class="btn-check"
-            @change="getBrandProduct()"
-            :id="store.storeId"
-          />
-          <label
-            name="options-outlined"
-            class="btn stores"
-            :for="store.storeId"
-            >{{ store.storeName }}</label
-          >
-        </div>
-      </div>
-      <div class="store_btns" v-if="selectedStoreId">
-        <button class="btn btn-dark store_follow" @click="followBtn()">
-          <i class="bi bi-heart"></i>팔로우
-        </button>
-        <button class="btn btn-dark store_chat" @click="followBtn()">
-          <i class="bi bi-chat-left-dots"></i>채팅 문의
-        </button>
-      </div>
+      </Transition>
     </div>
   </div>
   <div class="list_grid">
@@ -130,10 +143,14 @@ import { Autoplay, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import axios from 'axios';
+import { bool } from 'prop-types';
+import { getCurrentInstance } from 'vue';
 
 export default {
   data() {
     return {
+      followBool: bool,
+      followId: 0,
       productList: [],
       categoryList: [],
       categorySecondList: [],
@@ -212,19 +229,71 @@ export default {
         .then(response => {
           console.log(response.data);
           this.productList = response.data;
+          if (this.selectedStoreId) this.getFollow();
         });
     },
     async followBtn() {
+      console.log(this.followBool);
+      if (!this.followBool) {
+        await axios
+          .post(
+            'https://sbbro.xyz/api/member/follow',
+            {
+              storeId: this.selectedStoreId,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ` + localStorage.getItem('token'),
+                contentType: 'application/json',
+              },
+            },
+          )
+          .then(response => {
+            this.followId = response.data.id;
+            this.getFollow();
+          });
+      } else {
+        await axios
+          .delete('https://sbbro.xyz/api/member/follow', {
+            data: { storeId: this.selectedStoreId, id: this.followId },
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
+            },
+          })
+          .then(() => {
+            this.followId = 0;
+            this.getFollow();
+          });
+      }
+    },
+    sendMessage: async function () {
       await axios
         .post(
-          'https://sbbro.xyz/api/product/products/brand',
+          'https://sbbro.xyz/api/chat/chatRoom/chat',
           {
-            brandId: this.$route.query.brandId,
-            categoryFirstId: this.firstValue,
-            categorySecondId: this.secondValue,
-            categoryThirdId: null,
-            storeId: this.selectedStoreId,
+            id: null,
+            content: this.brand.name + ' 문의',
+            contentType: '메세지',
+            sendBy: localStorage.getItem('login_id'),
+            sendTo: this.selectedStoreId,
+            source: '',
           },
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then(this.$emitter.emit('chatShow'))
+        .catch(err => console.log(err));
+    },
+
+    async getFollow() {
+      await axios
+        .get(
+          'https://sbbro.xyz/api/member/follow/member/' + this.selectedStoreId,
           {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -234,10 +303,12 @@ export default {
         )
         .then(response => {
           console.log(response.data);
-          this.productList = response.data;
+          this.followBool = response.data.status;
+          this.followId = response.data.id;
         });
     },
   },
+
   setup() {
     const comma = val => {
       return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -360,7 +431,23 @@ export default {
   white-space: pre;
 }
 
+.stores_all {
+  border-radius: 50%;
+  color: white;
+  vertical-align: middle;
+  height: 55px;
+  width: 55px;
+  padding-top: 17px;
+  font-size: small;
+  white-space: pre;
+}
+
 .stores:hover {
+  background-color: white;
+  color: black;
+}
+
+.stores_all:hover {
   background-color: white;
   color: black;
   border-radius: 0%;
@@ -368,13 +455,18 @@ export default {
   border-top-right-radius: 50%;
 }
 
-.btn-check:checked + .btn {
+.btn-check:checked + .stores {
   background-color: white;
   color: black;
   border-color: white;
   border-radius: 0%;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
+}
+.btn-check:checked + .stores_all {
+  background-color: white;
+  color: black;
+  border-color: white;
 }
 
 .store_btns {
@@ -383,7 +475,7 @@ export default {
   background-color: white;
   height: 40px;
   margin: auto;
-  padding-top: 8px;
+  padding-top: 4px;
   padding-left: 30px;
   padding-right: 30px;
   margin-bottom: 10px;
@@ -391,12 +483,32 @@ export default {
   width: 358px;
 }
 
-.store_follow {
+.store_follow_true {
   width: 100px;
   height: 33px;
+  border: 0;
+  background-color: rgba(200, 0, 0, 0.902);
 }
+.store_follow_true:hover {
+  background-color: gray;
+}
+.store_follow_false {
+  width: 100px;
+  height: 33px;
+  border: 0;
+  background-color: gray;
+}
+.store_follow_false:hover {
+  background-color: rgba(200, 0, 0, 0.902);
+}
+
 .store_chat {
   width: 100px;
   height: 33px;
+  border: 0;
+  background-color: gray;
+}
+.store_chat:hover {
+  background-color: black;
 }
 </style>
