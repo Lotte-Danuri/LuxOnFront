@@ -99,6 +99,19 @@
                             상품상세
                           </button>
                         </router-link>
+                        <button
+                          style="
+                            width: 200px;
+                            height: 50px;
+                            margin-top: 15%;
+                            background-color: black;
+                            color: white;
+                            border-radius: 5px;
+                          "
+                          @click="pushNft(o)"
+                        >
+                          NFT 증명서
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -116,12 +129,12 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
-import { onBeforeMount } from 'vue';
-import axios from 'axios';
-import { getCurrentInstance } from 'vue';
-import Swal from 'sweetalert2';
-import { useRouter } from 'vue-router';
+import { reactive } from "vue";
+import { onBeforeMount } from "vue";
+import axios from "axios";
+import { getCurrentInstance } from "vue";
+import Swal from "sweetalert2";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -136,24 +149,36 @@ export default {
 
     onBeforeMount(() => {
       if (globalProperties.$isLogin() == false) {
-        Swal.fire('로그인 해주세요').then(() => {
-          router.push('/login');
+        Swal.fire("로그인 해주세요").then(() => {
+          router.push("/login");
         });
       }
 
       axios
-        .get('https://sbbro.xyz/api/member/products', {
+        .get("https://sbbro.xyz/api/member/products", {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
+            Authorization: `Bearer ` + localStorage.getItem("token"),
           },
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           state.orderList = response.data;
         });
     });
 
-    return { state, comma };
+    const checkNft = (productId) => {};
+
+    const pushNft = (order) => {
+      if (!checkNft(order.orderDataDtoList.productId)) {
+        Swal.fire({
+          title: "NFT 증명서를 등록 하시겠습니까?",
+        });
+      }
+
+      router.push({});
+    };
+
+    return { state, comma, pushNft };
   },
 };
 </script>
