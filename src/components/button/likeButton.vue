@@ -6,23 +6,22 @@
 
 <script>
 
-import { reactive, ref } from "@vue/reactivity";
-import { onBeforeMount } from "@vue/runtime-core";
-import likeImg from "@/assets/img/heart_icon.png";
-import unLikeImg from "@/assets/img/heart_icon_unlike.png";
-import axios from "axios";
-import { getCurrentInstance } from "@vue/runtime-core";
-import Swal from "sweetalert2";
-
+import { reactive, ref } from 'vue';
+import { onBeforeMount } from 'vue';
+import likeImg from '@/assets/img/heart_icon.png';
+import unLikeImg from '@/assets/img/heart_icon_unlike.png';
+import axios from 'axios';
+import { getCurrentInstance } from 'vue';
+import Swal from 'sweetalert2';
 
 export default {
   props: {
     productCode: String,
   },
   setup(props) {
-
-    const globalProperties = getCurrentInstance().appContext.config.globalProperties;
-    
+    const globalProperties =
+      getCurrentInstance().appContext.config.globalProperties;
+      
     const state = reactive({
       buttonCheck: false,
       imgSrc: '',
@@ -31,7 +30,7 @@ export default {
     });
 
     onBeforeMount(async () => {
-      if(globalProperties.$isLogin() == false){
+      if (globalProperties.$isLogin() == false) {
         state.imgSrc = unLikeImg;
         return;
       }
@@ -65,8 +64,8 @@ export default {
     };
 
     const clickButton = async () => {
-      if(globalProperties.$isLogin() == false){
-        Swal.fire('로그인이 필요합니다.')
+      if (globalProperties.$isLogin() == false) {
+        Swal.fire('로그인이 필요합니다.');
         return;
       }
 

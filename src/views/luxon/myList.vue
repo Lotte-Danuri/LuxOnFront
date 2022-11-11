@@ -11,28 +11,37 @@
         top: 200px;
       "
     >
-      <div>
-        <h3>Category</h3>
+      <div v-for="(category, i) in categoryList" :key="i" :value="i">
+        <h1>
+          {{ category.categoryName }}
+        </h1>
+        <br />
         <ul>
-          <li>전체</li>
-          <li>아우터</li>
-          <li>상의</li>
-          <li>하의</li>
-          <li>드레스/점프수트</li>
-          <li>수트</li>
-          <li>라운지웨어</li>
-          <li>언더웨어</li>
+          <li><h4>전체</h4></li>
+          <li
+            v-for="(categorySecond, j) in category.categorySecondDtoList"
+            :key="j"
+            :value="j"
+            @click="myFilter($event)"
+          >
+            <h4>
+              {{ categorySecond.categoryName }}
+            </h4>
+            <ul>
+              <li
+                v-for="(
+                  categoryThird, k
+                ) in categorySecond.categoryThirdDtoList"
+                :key="k"
+                :value="k"
+              >
+                {{ categoryThird.categoryName }}
+              </li>
+            </ul>
+          </li>
         </ul>
       </div>
-      <div>
-        <h3>Filter</h3>
-        <ul>
-          <li>브랜드</li>
-          <li>할인/혜택</li>
-          <li>상품쿠폰</li>
-          <li>세트 상품</li>
-        </ul>
-      </div>
+
       <div class="inputPrice">
         <h3>가격</h3>
         <label for="minPrice">최소</label>
@@ -483,18 +492,31 @@ export default {
   data() {
     return {
       productList: [],
+      categoryList: [],
+      selectedUl: [],
+      isActive: false,
     };
   },
   created() {
     this.getProductList();
     console.log(this.$route.query.id);
+    this.getCategoryList();
   },
   methods: {
     async getProductList() {
       this.productList = await this.$api('/product/products');
     },
+    async getCategoryList() {
+      this.categoryList = await this.$api('/product/categories');
+      console.log(this.categoryList);
+    },
     clickCallback(pageNum) {
       console.log(pageNum);
+    },
+    myFilter(event) {
+      // alert(this.selectedUl);
+      this.isActive = !this.isActive;
+      console.log(event.target.children);
     },
   },
   setup() {
@@ -572,7 +594,7 @@ p {
     'Droid Sans', 'dotum', sans-serif;
 }
 
-.side_menu div h3 {
+.active .side_menu div h3 {
   margin-bottom: 10px;
   font-weight: bold;
 }
