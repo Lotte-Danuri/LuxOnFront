@@ -70,6 +70,7 @@
         <th>수정</th>
         <th>삭제</th>
         <th>히트</th>
+        <th>증명서 등록</th>
       </tr>
       <tr v-for="(product, i) in productList" :key="i">
         <td>{{ i + 1 }}</td>
@@ -122,14 +123,28 @@
             히트맵확인
           </button>
         </td>
+        <td>
+          <button
+            style="
+              background-color: white;
+              width: 100px;
+              height: 50px;
+              color: black;
+              border: solid 1px black;
+            "
+            @click="addNft(product)"
+          >
+            증명서 등록
+          </button>
+        </td>
       </tr>
     </table>
   </main>
 </template>
 <script>
-import axios from 'axios';
-import router from '@/router';
-
+import axios from "axios";
+import router from "@/router";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -137,12 +152,12 @@ export default {
       categoryList: [],
       categorySecondList: [],
       categoryThirdList: [],
-      firstClickValue: '',
-      secondClickValue: '',
-      thirdClickValue: '',
-      firstValue: '',
-      secondValue: '',
-      thirdValue: '',
+      firstClickValue: "",
+      secondClickValue: "",
+      thirdClickValue: "",
+      firstValue: "",
+      secondValue: "",
+      thirdValue: "",
     };
   },
   created() {
@@ -151,22 +166,22 @@ export default {
   },
   methods: {
     async getCategoryList() {
-      this.categoryList = await this.$api('/product/categories');
+      this.categoryList = await this.$api("/product/categories");
       console.log(this.categoryList);
     },
     async getProductList() {
       axios
         .get(
-          'https://sbbro.xyz/api/product/sellers/products/' +
-            localStorage.getItem('store_id'),
+          "https://sbbro.xyz/api/product/sellers/products/" +
+            localStorage.getItem("store_id"),
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-              'Content-Type': 'application/json',
+              Authorization: `Bearer ` + localStorage.getItem("token"),
+              "Content-Type": "application/json",
             },
-          },
+          }
         )
-        .then(response => {
+        .then((response) => {
           this.productList = response.data;
           console.log(this.productList);
         });
@@ -175,7 +190,7 @@ export default {
       console.log(this.firstClickValue);
       this.firstClickValue = event.target.value;
       if (this.firstClickValue == -1) {
-        this.firstValue = '';
+        this.firstValue = "";
       } else {
         this.categorySecondList =
           this.categoryList[this.firstClickValue].categorySecondDtoList;
@@ -185,7 +200,7 @@ export default {
     changeCategorySecond(event) {
       this.secondClickValue = event.target.value;
       if (this.secondClickValue == -1) {
-        this.secondValue = '';
+        this.secondValue = "";
       } else {
         this.categoryThirdList =
           this.categorySecondList[this.secondClickValue].categoryThirdDtoList;
@@ -198,7 +213,7 @@ export default {
     changeCategoryThird(event) {
       this.thirdClickValue = event.target.value;
       if (this.thirdClickValue == -1) {
-        this.thirdValue = '';
+        this.thirdValue = "";
       } else {
         this.thirdValue =
           this.categoryList[this.firstClickValue].categorySecondDtoList[
@@ -210,12 +225,12 @@ export default {
       let firstClickId = parseInt(this.firstValue);
       let secondClickId = parseInt(this.secondValue);
       let thirdClickId = parseInt(this.thirdValue);
-      let inputProductName = document.getElementById('inputProductName').value;
+      let inputProductName = document.getElementById("inputProductName").value;
       axios
         .post(
-          'https://sbbro.xyz/api/product/sellers/products/category',
+          "https://sbbro.xyz/api/product/sellers/products/category",
           {
-            stordId: localStorage.getItem('store_id'),
+            stordId: localStorage.getItem("store_id"),
             categoryFirstId: firstClickId,
             categorySecondId: secondClickId,
             categoryThirdId: thirdClickId,
@@ -223,37 +238,71 @@ export default {
           },
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-              'Content-Type': 'application/json',
+              Authorization: `Bearer ` + localStorage.getItem("token"),
+              "Content-Type": "application/json",
             },
-          },
+          }
         )
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
           this.productList = response.data;
         });
     },
 
     updateProduct(productId) {
-      router.push({ path: 'updateProduct', query: { productId: productId } });
+      router.push({ path: "updateProduct", query: { productId: productId } });
     },
 
     deleteProduct(productId) {
       var id = parseInt(productId);
       axios
-        .delete('https://sbbro.xyz/api/product/sellers/products', {
+        .delete("https://sbbro.xyz/api/product/sellers/products", {
           data: {
             id: id,
           },
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+            "Content-Type": "application/json",
           },
         })
-        .then(response => {
-          alert('상품 삭제 완료!');
-          document.getElementById('productSearchButton').click();
+        .then((response) => {
+          alert("상품 삭제 완료!");
+          document.getElementById("productSearchButton").click();
         });
+    },
+    async addNft(product) {
+      console.log(product);
+
+      Swal.fire({
+        title: "상품의 영수증을 NFT로 관리하시겠습니까?",
+        showCancelButton: true,
+        confirmButtonText: "네",
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          return axios.post("http://localhost:5001/contract", {
+            productId: product.id,
+            name: product.productName,
+            symbol: product.productCode,
+            image: product.thumbnailUrl,
+            sellerId: localStorage.getItem('store_id')
+          });
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        console.log(result);
+        if (result.value.status == 200) {
+          Swal.fire({
+            icon:'success',
+            text:"등록이 완료되었습니다."
+          });
+        }
+        else{
+          Swal.fire({
+           icon: 'error',
+           text:'등록에 실패하였습니다.' 
+          })
+        }
+      });
     },
   },
 };
