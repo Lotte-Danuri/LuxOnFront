@@ -153,6 +153,7 @@ export default {
       formdata.append('productName',document.getElementById('productName').value);
       formdata.append('price', document.getElementById('price').value);
       formdata.append('stock', document.getElementById('stock').value);
+      formdata.append('warranty', document.getElementById('warranty').value);
       formdata.append('storeId', localStorage.getItem('store_id'));
       formdata.append(
         'productCode',

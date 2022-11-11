@@ -10,7 +10,6 @@
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       }"
-      @click="showAlert"
     >
       <swiper-slide
         v-for="text in swiperTextBase"
@@ -21,8 +20,10 @@
           <div class="firstSwiper">
             <div class="bg-text">
               <h2>Winter LuxOn</h2>
-              <h1 style="font-size: 50px">Luxury On</h1>
-              <p style="color: white; margin-top: 20px">겨울 시즌 리스트</p>
+              <h1 style="font-size: 50px">{{ text.brand }}</h1>
+              <p style="color: white; margin-top: 20px">
+                {{ text.description }}
+              </p>
             </div>
             <div style="postion: absolute; margini-top: -100px">
               <img
@@ -53,14 +54,161 @@
                 class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
               />
             </div>
+            <div>
+              <button
+                style="
+                  position: absolute;
+                  background-color: transparent;
+                  left: 0%;
+                  top: 27%;
+                  font-size: 200px;
+                  color: white;
+                "
+              >
+                <span class="material-icons-sharp" style="font-size: 100px">
+                  arrow_back_ios
+                </span>
+              </button>
+              <button
+                style="
+                  position: absolute;
+                  background-color: transparent;
+                  right: 0%;
+                  top: 50%;
+                  color: white;
+                "
+              >
+                <span class="material-icons-sharp" style="font-size: 100px">
+                  arrow_forward_ios
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </swiper-slide>
     </swiper>
   </section>
-  <section style="margin-top: 50px" class="favorite_cls" id="favorite_cls">
+  <section>
+    <div style="margin-left: 20%; margin-top: 3%; width: 60%">
+      <div style="display: grid; grid-template-columns: 25% 25% 25% 25%">
+        <div>
+          <button>
+            <img
+              src="//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_642/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 642w,//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_960/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 960w,//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_1280/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 1280w"
+              style="width: 150px; height: 150px; border-radius: 100px"
+            />
+            <h3>여성</h3>
+          </button>
+        </div>
+        <div>
+          <button>
+            <img
+              src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/088/00/221000000303088.jpg?cVer=03041533&RS=&SP=1"
+              style="width: 150px; height: 150px; border-radius: 100px"
+            />
+            <h3>남성</h3>
+          </button>
+        </div>
+        <div>
+          <button>
+            <img
+              src="https://puls-img.chanel.com/1665492769363-pushbaspageone1210x680pximg03jpg_680x1210.jpg"
+              style="width: 150px; height: 150px; border-radius: 100px"
+            />
+            <h3>패션잡화</h3>
+          </button>
+        </div>
+        <div>
+          <button>
+            <img
+              src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/801/00/220900000287801.jpg?cVer=31104641&RS=&SP=1"
+              style="width: 150px; height: 150px; border-radius: 100px"
+            />
+            <h3>뷰티</h3>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section
+    style="
+      background-image: url('https://contents.lotteon.com/display/dshoplnk/30511/2/M001155/289130/PB66348D4B3C34F5FF2DF2A17F24C2B70BAC43F300C76D0A9D0FC5B55BBD98C23/file');
+      height: 150px;
+      color: white;
+    "
+  >
+    <div style="margin-left: 35%">
+      <br />
+      <p style="color: goldenrod; font-size: 40px">
+        NFT 인증서 명품 검수 프로그램
+      </p>
+      <p style="color: white; font-size: 20px; margin-left: 10%">
+        럭셔리 쇼핑의 디테일, LUX ON
+      </p>
+    </div>
+  </section>
+  <section
+    id="recommend_cls"
+    class="recommend_cls"
+    style="
+      background-image: url(https://api-beauty.dior.com/couture/var/dior/storage/images/horizon/beauty/womens-fragrance/new/29782799-27-int-EN/home-parfum-femme.jpg) !important;
+    "
+  >
     <div class="container" style="margin-left: 15%">
-      <h1 style="margin-left: -200px">Favorite Brand</h1>
+      <br /><br />
+      <h1 style="margin-left: -200px; color: white">추천 상품</h1>
+      <br /><br />
+      <swiper
+        class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
+        :space-between="21"
+        :loop="true"
+        :pagination="{ clickable: true }"
+        :autoplay="{
+          delay: 2000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }"
+      >
+        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
+          <div class="container_grid">
+            <div
+              class="item color5"
+              v-for="(recommend, i) in productList.slice(0, 4)"
+              :key="i"
+            >
+              <img :src="`${recommend.thumbnailUrl}`" alt="image" />
+              <br />
+              <span>
+                <h5 style="color: white">{{ recommend.productName }}</h5>
+                <p style="color: white">￦{{ comma(recommend.price) }}</p>
+              </span>
+            </div>
+          </div>
+        </swiper-slide>
+        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
+          <div class="container_grid">
+            <div
+              class="item color5"
+              v-for="(recommend, i) in productList.slice(4, 8)"
+              :key="i"
+            >
+              <img :src="`${recommend.thumbnailUrl}`" alt="image" />
+              <br />
+              <span>
+                <h5 style="color: white">{{ recommend.productName }}</h5>
+                <p style="color: white">￦{{ comma(recommend.price) }}</p>
+              </span>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper>
+    </div>
+  </section>
+  <!-- <section style="margin-top: 50px" class="favorite_cls" id="favorite_cls">
+    <div class="container" style="margin-left: 15%">
+      <h1 style="margin-left: -200px; font-family: RegularBoldCell">
+        Favorite Brand
+      </h1>
       <br /><br />
       <swiper
         class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
@@ -110,16 +258,6 @@
               </span>
             </div>
             <div class="item color4">
-              <!-- <button
-                style="
-                  position: absolute;
-                  right: 0px;
-                  background-color: transparent;
-                  border: none;
-                "
-              >
-                <like-button></like-button>
-              </button> -->
               <img
                 src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
                 alt="image"
@@ -182,10 +320,10 @@
         </swiper-slide>
       </swiper>
     </div>
-  </section>
+  </section> -->
   <section style="margin-top: 50px" class="coupon_cls" id="coupon_cls">
     <div class="container" style="margin-left: 15%">
-      <h1 style="margin-left: -200px">Coupon</h1>
+      <!-- <h1 style="margin-left: -200px">기능1</h1> -->
       <br /><br />
       <swiper
         class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
@@ -197,7 +335,6 @@
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }"
-        @click="showAlert"
         style="width: 2356px; margin-left: calc(-100vw + 110%) !important"
       >
         <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
@@ -207,45 +344,65 @@
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰8</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color2">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰2</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color3">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/042/00/220900000284042.jpg?cVer=31105127&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰3</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color4">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰4</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color5">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰5</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
           </div>
         </swiper-slide>
@@ -256,134 +413,142 @@
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰6</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color6">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/042/00/220900000284042.jpg?cVer=31105127&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰7</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color7">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰7</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color8">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰8</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
             <div class="item color9">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
                 alt="image"
               />
-              <span>
-                <p>쿠폰9</p>
-              </span>
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">쿠폰제목</h1>
+                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                </div>
+              </div>
             </div>
           </div>
         </swiper-slide>
       </swiper>
     </div>
   </section>
-  <section id="recommend_cls" class="recommend_cls">
-    <div class="container" style="margin-left: 15%">
-      <h1 style="margin-left: -200px">Recommend</h1>
-      <br /><br />
-      <swiper
-        class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-        :space-between="20"
-        :loop="true"
-        :pagination="{ clickable: true }"
-        :autoplay="{
-          delay: 2000,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }"
-        @click="showAlert"
-      >
-        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
-          <div class="container_grid">
-            <div class="item color1">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color2">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color3">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color4">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
-          <div class="container_grid">
-            <div
-              class="item color5"
-              v-for="(recommend, i) in state.products"
-              :key="i"
-              @click="showAlert"
+
+  <section>
+    <div style="margin-left: 20%">
+      <div class="all_procut" style="margin-top: -100px">
+        <h2 style="font-weight: bold">Best Product</h2>
+        <br />
+        <div class="product_grid">
+          <div v-for="product in productList.slice(0, 16)" v-bind:key="product">
+            <router-link
+              :to="{
+                path: '/product/myProduct',
+                query: { productCode: product.productCode },
+              }"
             >
-              <img :src="`${recommend.thumbnailUrl}`" alt="image" />
+              <img :src="product.thumbnailUrl" />
+              <br />
               <span>
-                <p>{{ recommend.productName }}</p>
-                <p>{{ recommend.price }}</p>
+                <p style="color: black">
+                  {{ product.productName }}
+                </p>
+                <p style="font-weight: ">￦&nbsp;{{ comma(product.price) }}</p>
               </span>
-            </div>
+            </router-link>
           </div>
-        </swiper-slide>
-      </swiper>
+          <br />
+          <br />
+        </div>
+      </div>
     </div>
   </section>
+
+  <div class="pc-wrap">
+    <div
+      class="main__styling-slide"
+      style="
+        background-image: url('https://cdn-fo.sivillage.com/fo/assets/comm/image/main_styling_pattern.svg');
+      "
+    >
+      <div class="main__styling-text">
+        <h2 class="regularbold">Exclusive</h2>
+
+        <div class="main__styling-info">
+          <p class="main__styling-text-strong">PERFUME GALLERY</p>
+          <p class="main__styling-text-description">
+            [아무아쥬] 아너 오드퍼퓸 포 우먼 100ml
+          </p>
+        </div>
+      </div>
+      <div class="main__styling-img">
+        <a href="javascript:void(0);"
+          ><img
+            src="https://image.sivillage.com/upload/C00001/goods/org/819/221012003299819.jpg?RS=600&amp;SP=1"
+            alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+  <div style="margin-left: 10%">
+    <iframe
+      width="1500"
+      height="800"
+      src="https://www.youtube.com/embed/DsZhTIwJV5E"
+      title="The Dior Spring-Summer 2023 Show"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+  <br />
+  <br />
 </template>
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -405,19 +570,19 @@ export default {
   setup() {
     const swiperTextBase = ref([
       {
-        author: 'Elon Musk',
-        description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/90/812/00/221000000299812.jpg',
+        brand: 'CHANEL',
+        description: '2022/23 코코 네쥬 컬렉션',
+        img: '//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_642/prd-emea/sys-master/content/P1/hf1/he1/10004788412446-Homepage_Fashion_ONE_Mobile2(1).jpg',
       },
       {
-        author: 'Elon Musk',
-        description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/034/00/220900000284034.jpg?cVer=21032552',
+        brand: 'CELINE',
+        description: 'HAUTE MAROQUINERIE',
+        img: 'https://cms.celine.com/resource/blob/623944/0c7b44b3bb84ed2a755859ae1b7806e3/celine-homme-summer-23-dysfunctional-bauhaus-23-web-data.jpg',
       },
       {
-        author: 'Elon Musk',
-        description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/196/00/221000000297196.jpg?cVer=20035850',
+        brand: 'DIOR',
+        description: 'For GIFT',
+        img: 'https://www.dior.com/couture/var/dior/storage/images/horizon/beauty/beauty-home-components/block-cover-cover-02-xmas-epopup/block-cover-item-xmas02/38380287-2-kor-KR/xmas022_1440_1200.jpg',
       },
     ]);
     const swiperTextBase2 = ref([
@@ -473,20 +638,10 @@ export default {
 
     const state = reactive({
       products: [],
+      productList: [],
     });
 
-    onBeforeMount(() => {
-      // axios
-      //   .get('https://sbbro.xyz/api/recommend/recommends/list', {
-      //     headers: {
-      //       Authorization: `Bearer ` + localStorage.getItem('token'),
-      //     },
-      //   })
-      //   .then(response => {
-      //     console.log(response);
-      //     state.products = response.data;
-      //   });
-    });
+    onBeforeMount(() => {});
 
     return { swiperTextBase, swiperTextBase2, state };
   },
@@ -500,6 +655,15 @@ export default {
     window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
+    leftBtn() {
+      alert('left');
+    },
+    rightBtn() {
+      alert('right');
+    },
+    comma(val) {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    },
     async getProductList() {
       this.productList = await this.$api('/product/products');
       console.log(this.productList);
@@ -508,24 +672,33 @@ export default {
       // console.log(document.querySelector('html').scrollTop);
       if (window.location.href.includes('main')) {
         let nowScroll = document.querySelector('html').scrollTop;
-        if (nowScroll < 500) {
-          document.getElementById('favorite_cls').style.opacity = '0';
-          document.getElementById('favorite_cls').style.transform =
-            'translateY(0)';
-        }
-        if (nowScroll > 500) {
-          document.getElementById('favorite_cls').style.opacity = '1';
-          document.getElementById('favorite_cls').style.transform =
-            'translateY(0)';
-        }
-        if (nowScroll < 1000) {
+        // alert(nowScroll);
+        if (nowScroll < 100) {
           document.getElementById('recommend_cls').style.opacity = '0';
+          document.getElementById('recommend_cls').style.transform =
+            'translateY(0)';
         }
-        if (nowScroll > 2000) {
+        if (nowScroll > 200) {
           document.getElementById('recommend_cls').style.opacity = '1';
           document.getElementById('recommend_cls').style.transform =
             'translateY(0)';
         }
+        if (nowScroll < 400) {
+          document.getElementById('coupon_cls').style.opacity = '0';
+        }
+        if (nowScroll > 1000) {
+          document.getElementById('coupon_cls').style.opacity = '1';
+          document.getElementById('coupon_cls').style.transform =
+            'translateY(0)';
+        }
+        // if (nowScroll < 1500) {
+        //   document.getElementById('recommend_cls').style.opacity = '0';
+        // }
+        // if (nowScroll > 1500) {
+        //   document.getElementById('recommend_cls').style.opacity = '1';
+        //   document.getElementById('recommend_cls').style.transform =
+        //     'translateY(0)';
+        // }
       }
     },
     showAlert() {
@@ -576,10 +749,26 @@ export default {
   text-align: center;
 }
 
+.coupon-text {
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: relative;
+  margin-top: -70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 50%;
+  padding: 20px;
+  text-align: center;
+}
+
 .container_grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
+  gap: 40px;
   grid-auto-rows: minmax(25px, auto);
 }
 .coupon_grid {
@@ -590,8 +779,9 @@ export default {
 }
 
 .container_grid img {
-  width: 300px;
+  width: 280px;
   height: 400px;
+  border-radius: 30px;
 }
 
 .container_grid div span p {
@@ -620,5 +810,84 @@ export default {
   /* transition-timing-function: ease;
   transition-duration: 1.5s;
   transition-property: opacity, transform; */
+}
+
+.main__styling-img img {
+  height: 650px;
+  width: 433px;
+  object-fit: cover;
+}
+
+.main__styling-slide {
+  position: relative;
+  display: flex;
+  height: 730px;
+  padding: 0 183px 0 200px;
+  box-sizing: border-box;
+}
+
+.main__styling-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main__styling-img {
+  position: absolute;
+  top: 41px;
+  right: 223px;
+}
+
+.main__styling-text h2 {
+  margin-bottom: 57px;
+  font-size: 72px;
+  color: #141a23;
+}
+
+.main__styling-text-strong {
+  white-space: nowrap;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main__styling-text-description {
+  white-space: nowrap;
+  font-size: 16px;
+  line-height: 22px;
+  color: #404040;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product_grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  grid-auto-rows: minmax(5px, auto);
+  margin-right: 20%;
+}
+
+.product_grid div {
+  background-color: rgb(238, 238, 238);
+  width: 250px;
+  height: 400px;
+  margin-bottom: 80px;
+}
+
+.product_grid div img {
+  height: 400px;
+}
+
+.product_grid div span p {
+  font-weight: bold;
+}
+.product_grid div span p {
+  margin: 0px;
 }
 </style>

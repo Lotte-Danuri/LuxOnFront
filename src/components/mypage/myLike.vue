@@ -48,10 +48,10 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import { onBeforeMount } from "vue";
-import axios from "axios";
-import { getCurrentInstance } from "@vue/runtime-core";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
+import { getCurrentInstance } from 'vue';
 
 // let self;
 
@@ -67,13 +67,13 @@ export default {
     });
     onBeforeMount(() => {
       axios
-        .post("https://sbbro.xyz/api/member/like", null, {
+        .post('https://sbbro.xyz/api/member/like', null, {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
-            "Content-Type": "application/json",
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
           },
         })
-        .then((response) => {
+        .then(response => {
           console.log(response);
           state.products = response.data;
         });
@@ -195,7 +195,7 @@ export default {
   bottom: 0;
   box-sizing: border-box;
   border: 1px solid #d99c63;
-  content: "";
+  content: '';
 }
 .module-cody-recom__tab .product__list.type-w80px .product__thum > a img {
   opacity: 0.5;

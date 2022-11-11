@@ -1,6 +1,9 @@
 <template>
   <button class="socialButton" @click="naverLogin">
-    <img src="@/assets/loginBtn/naver_login.png" />
+    <img
+      src="//cdn-fo.sivillage.com/fo/assets/comm/image/icon_sns_naver.png?cVer=202211090622"
+      style="width: 60px; height: 60px"
+    />
   </button>
 </template>
 

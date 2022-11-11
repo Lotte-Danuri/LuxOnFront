@@ -998,6 +998,14 @@
   "resolved" "https://registry.npmjs.org/@rushstack/eslint-patch/-/eslint-patch-1.2.0.tgz"
   "version" "1.2.0"
 
+"@techassi/vue-youtube-iframe@^1.0.6":
+  "integrity" "sha512-5Hf2PsoGcw/oFN8cq56CF1Wtal1VWntpKJLlCsLj7aKzFXdsQEupNcmwhKexV4LdZoGnnmGsUpzJuxzVPj5mmQ=="
+  "resolved" "https://registry.npmjs.org/@techassi/vue-youtube-iframe/-/vue-youtube-iframe-1.0.6.tgz"
+  "version" "1.0.6"
+  dependencies:
+    "@types/youtube" "^0.0.41"
+    "vue" "^3.0.5"
+
 "@types/eslint-scope@^3.7.3":
   "integrity" "sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA=="
   "resolved" "https://registry.npmjs.org/@types/eslint-scope/-/eslint-scope-3.7.4.tgz"
@@ -1038,6 +1046,11 @@
   "integrity" "sha512-BxcJpBu8D3kv/GZkx/gSMz6VnTJREBj/4lbzYOQueUOELkt8WrO6zAcSPmp9uRPEW/d+lUO8QK0W2xnS1hEU0A=="
   "resolved" "https://registry.npmjs.org/@types/node/-/node-18.11.4.tgz"
   "version" "18.11.4"
+
+"@types/youtube@^0.0.41":
+  "integrity" "sha512-k6IzSO62JaC4YImW6dEYzWA84+Gb4T0KPswy2FlWAWKcitstju8qZ3sN2GKhKskcslOiXmVveem/x/gCa3zMRg=="
+  "resolved" "https://registry.npmjs.org/@types/youtube/-/youtube-0.0.41.tgz"
+  "version" "0.0.41"
 
 "@vitejs/plugin-vue@^3.1.2":
   "integrity" "sha512-3zxKNlvA3oNaKDYX0NBclgxTQ1xaFdL7PzwF6zj9tGFziKwmBa3Q/6XcJQxudlT81WxDjEhHmevvIC4Orc1LhQ=="
@@ -1191,7 +1204,7 @@
   optionalDependencies:
     "prettier" "^1.18.2 || ^2.0.0"
 
-"@vue/devtools-api@^6.0.0":
+"@vue/devtools-api@^6.4.5":
   "integrity" "sha512-JD5fcdIuFxU4fQyXUu3w2KpAJHzTVdN+p4iOX2lMWSHMOoQdMAcpFLZzm9Z/2nmsoZ1a96QEhZ26e50xLBsgOQ=="
   "resolved" "https://registry.npmjs.org/@vue/devtools-api/-/devtools-api-6.4.5.tgz"
   "version" "6.4.5"
@@ -2941,6 +2954,11 @@
   "resolved" "https://registry.npmjs.org/minimist/-/minimist-1.2.7.tgz"
   "version" "1.2.7"
 
+"mitt@^3.0.0":
+  "integrity" "sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ=="
+  "resolved" "https://registry.npmjs.org/mitt/-/mitt-3.0.0.tgz"
+  "version" "3.0.0"
+
 "mkdirp@~0.5.1":
   "integrity" "sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw=="
   "resolved" "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.6.tgz"
@@ -4082,6 +4100,11 @@
   "resolved" "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   "version" "1.0.2"
 
+"uuid@3.1.0":
+  "integrity" "sha512-DIWtzUkw04M4k3bf1IcpS2tngXEL26YUD2M0tMDUpnUrz2hgzUBlD55a4FjdLGPvfHxS6uluGWvaVEqgBcVa+g=="
+  "resolved" "https://registry.npmjs.org/uuid/-/uuid-3.1.0.tgz"
+  "version" "3.1.0"
+
 "v-calendar@^3.0.0-alpha.8":
   "integrity" "sha512-T23H5UbK0EomrwArlF/jrT2LFbV/lu+Bp9JroZ1paN6rPoaMyvE+HrLxvAmUgi+pODrdTURDMzM3+WPgeFKEBQ=="
   "resolved" "https://registry.npmjs.org/v-calendar/-/v-calendar-3.0.0-alpha.8.tgz"
@@ -4186,6 +4209,13 @@
     "lodash" "^4.17.21"
     "semver" "^7.3.6"
 
+"vue-friendly-iframe@^0.20.0":
+  "integrity" "sha512-aspddnbCg3i+tEkknuYwyn7NbpQuRhMMkaXdch+kY1RrAzh+YGXcxL3xCq5lmtfKiV5owG911fEgPEQNkq+tlw=="
+  "resolved" "https://registry.npmjs.org/vue-friendly-iframe/-/vue-friendly-iframe-0.20.0.tgz"
+  "version" "0.20.0"
+  dependencies:
+    "uuid" "3.1.0"
+
 "vue-functional-data-merge@^3.1.0":
   "integrity" "sha512-leT4kdJVQyeZNY1kmnS1xiUlQ9z1B/kdBFCILIjYYQDqZgLqCLa0UhjSSeRX6c3mUe6U5qYeM8LrEqkHJ1B4LA=="
   "resolved" "https://registry.npmjs.org/vue-functional-data-merge/-/vue-functional-data-merge-3.1.0.tgz"
@@ -4222,12 +4252,12 @@
     "vue" ">=2.0.0"
     "vuex" "^2.0.0"
 
-"vue-router@^4.0.13":
-  "integrity" "sha512-LmXrC+BkDRLak+d5xTMgUYraT3Nj0H/vCbP+7usGvIl9Viqd1UP6AsP0i69pSbn9O0dXK/xCdp4yPw21HqV9Jw=="
-  "resolved" "https://registry.npmjs.org/vue-router/-/vue-router-4.0.13.tgz"
-  "version" "4.0.13"
+"vue-router@^4.1.6":
+  "integrity" "sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ=="
+  "resolved" "https://registry.npmjs.org/vue-router/-/vue-router-4.1.6.tgz"
+  "version" "4.1.6"
   dependencies:
-    "@vue/devtools-api" "^6.0.0"
+    "@vue/devtools-api" "^6.4.5"
 
 "vue-sweetalert2@^5.0.5":
   "integrity" "sha512-Q7+TjQxNwGruT2jfPaSKMz18HHWs81r4umEwlrrtOf/QL5Iwl1T+tUaNkcvKB7Rf9rYftubt7NnOMjfDMnDH3A=="
@@ -4267,7 +4297,7 @@
   "resolved" "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@*", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.1", "vue@^3.1.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.41", "vue@>=2.0.0", "vue@>=3.0.0", "vue@2 || 3", "vue@3.2.41":
+"vue@*", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.1", "vue@^3.0.5", "vue@^3.1.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.41", "vue@>=2.0.0", "vue@>=3.0.0", "vue@2 || 3", "vue@3.2.41":
   "integrity" "sha512-uuuvnrDXEeZ9VUPljgHkqB5IaVO8SxhPpqF2eWOukVrBnRBx2THPSGQBnVRt0GrIG1gvCmFXMGbd7FqcT1ixNQ=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.2.41.tgz"
   "version" "3.2.41"

@@ -11,28 +11,37 @@
         top: 200px;
       "
     >
-      <div>
-        <h3>Category</h3>
+      <div v-for="(category, i) in categoryList" :key="i" :value="i">
+        <h1>
+          {{ category.categoryName }}
+        </h1>
+        <br />
         <ul>
-          <li>전체</li>
-          <li>아우터</li>
-          <li>상의</li>
-          <li>하의</li>
-          <li>드레스/점프수트</li>
-          <li>수트</li>
-          <li>라운지웨어</li>
-          <li>언더웨어</li>
+          <li><h4>전체</h4></li>
+          <li
+            v-for="(categorySecond, j) in category.categorySecondDtoList"
+            :key="j"
+            :value="j"
+            @click="myFilter($event)"
+          >
+            <h4>
+              {{ categorySecond.categoryName }}
+            </h4>
+            <ul>
+              <li
+                v-for="(
+                  categoryThird, k
+                ) in categorySecond.categoryThirdDtoList"
+                :key="k"
+                :value="k"
+              >
+                {{ categoryThird.categoryName }}
+              </li>
+            </ul>
+          </li>
         </ul>
       </div>
-      <div>
-        <h3>Filter</h3>
-        <ul>
-          <li>브랜드</li>
-          <li>할인/혜택</li>
-          <li>상품쿠폰</li>
-          <li>세트 상품</li>
-        </ul>
-      </div>
+
       <div class="inputPrice">
         <h3>가격</h3>
         <label for="minPrice">최소</label>
@@ -42,7 +51,7 @@
         <label for="maxPrice">최대</label>
         <input type="text" id="maxPrice" name="maxP" placeholder="max Price" />
       </div>
-      <div>
+      <!-- <div>
         <h3>색상</h3>
         <ul class="color_grid" style="width: 150px; margin: 0px">
           <li class="option-color">
@@ -346,7 +355,7 @@
             </label>
           </li>
         </ul>
-      </div>
+      </div> -->
       <hr style="width: 160px" />
       <br />
       <button
@@ -365,7 +374,7 @@
       class="category__content"
       style="margin-left: 50px; margin-bottom: 0px"
     >
-      <div class="swiper-content">
+      <div class="swiper-content" style="margin-top: -70px">
         <div class="leftSwiper">
           <swiper
             class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
@@ -394,7 +403,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 300px; height: 300px"
+                      style="width: 523px; height: 523px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -431,7 +440,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 300px; height: 300px"
+                      style="width: 523px; height: 523px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -455,37 +464,17 @@
               }"
             >
               <img :src="product.thumbnailUrl" />
+              <br />
               <span>
-                <!-- <p>SACAI</p> -->
-                <p>{{ product.productName }}</p>
-                <p>￦{{ comma(product.price) }}</p>
+                <p style="color: black">
+                  {{ product.productName }}
+                </p>
+                <p style="font-weight: ">￦&nbsp;{{ comma(product.price) }}</p>
               </span>
             </router-link>
           </div>
-          <div>
-            <router-link to="/product/myProduct">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/546/211015001544546.jpg?RS=350&SP=1"
-              />
-              <span>
-                <p>SACAI</p>
-                <p>언발 집업 하이넥 패딩 점퍼</p>
-                <p>￦1,790,000</p>
-              </span>
-            </router-link>
-          </div>
-          <div>
-            <router-link to="/product/myProduct">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/266/211019001559266.jpg?RS=350&SP=1"
-              />
-              <span>
-                <p>SACAI</p>
-                <p>언발 집업 하이넥 패딩 점퍼</p>
-                <p>￦1,790,000</p>
-              </span>
-            </router-link>
-          </div>
+          <br />
+          <br />
         </div>
       </div>
     </div>
@@ -503,17 +492,31 @@ export default {
   data() {
     return {
       productList: [],
+      categoryList: [],
+      selectedUl: [],
+      isActive: false,
     };
   },
   created() {
     this.getProductList();
+    console.log(this.$route.query.id);
+    this.getCategoryList();
   },
   methods: {
     async getProductList() {
       this.productList = await this.$api('/product/products');
     },
+    async getCategoryList() {
+      this.categoryList = await this.$api('/product/categories');
+      console.log(this.categoryList);
+    },
     clickCallback(pageNum) {
       console.log(pageNum);
+    },
+    myFilter(event) {
+      // alert(this.selectedUl);
+      this.isActive = !this.isActive;
+      console.log(event.target.children);
     },
   },
   setup() {
@@ -531,12 +534,12 @@ export default {
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/519/00/221000000296519.jpg?cVer=19044659&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/374/00/221000000288374.jpg?cVer=17020031&RS=&SP=1',
       },
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/225/00/220900000284225.jpg?cVer=10023119&RS=&SP=1',
       },
     ]);
     const swiperTextBase2 = ref([
@@ -581,7 +584,17 @@ export default {
 
 /* Write your own CSS for pagination */
 
-.side_menu div h3 {
+a {
+  text-decoration: none;
+}
+
+p {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+    'Apple SD Gothic Neo', 'Apple-Gothic', 'Roboto', 'Noto Sans KR',
+    'Droid Sans', 'dotum', sans-serif;
+}
+
+.active .side_menu div h3 {
   margin-bottom: 10px;
   font-weight: bold;
 }
@@ -628,7 +641,7 @@ export default {
 .listSwiper {
   width: 100%;
   height: 700px;
-  postion: absolute;
+  /* postion: absolute; */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
