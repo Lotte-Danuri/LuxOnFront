@@ -1,5 +1,5 @@
 <template>
-  <header style="background-color: white">
+  <header style="background-color: white; height: 150px">
     <div style="margin-left: 10%; width: 80%">
       <section class="header_top">
         <nav class="navbar">
@@ -16,8 +16,10 @@
                   style="height: 36px"
                   class="searchTerm"
                   placeholder="검색어를 입력하세요"
+                  id="searchValue"
+                  ref="ref_search"
                 />
-                <button type="submit" class="searchButton">
+                <button type="submit" class="searchButton" @click="searchBtn">
                   <i class="fa fa-search"></i>
                 </button>
               </div>
@@ -47,10 +49,10 @@
                 <p>마이페이지</p>
               </router-link>
             </li>
-            <li>
+            <!-- <li>
               <i class="fa-regular fa-clock"></i>
               <p>최근본상품</p>
-            </li>
+            </li> -->
             <li>
               <router-link :to="{ name: 'cart' }">
                 <i class="fa-solid fa-bag-shopping"></i>
@@ -103,11 +105,11 @@
                 >뷰티</router-link
               >
             </li>
-            <li><router-link to="/list">골프</router-link></li>
-            <li><router-link to="/list">리빙</router-link></li>
-            <li><router-link to="/list">컬쳐</router-link></li>
-            <li><router-link to="/list">아동</router-link></li>
           </ul>
+          <ul
+            class="navbar__menu"
+            style="margin-left: 900px; margin-top: -38px; font-size: 15px"
+          ></ul>
           <a href="#" class="navbar__toogleBtn" @click="btnClick">
             <i class="fas fa-bars"></i>
           </a>
@@ -122,6 +124,7 @@ import { onMounted } from 'vue';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 // const toggleBtn = document.querySelector('.navbar__toogleBtn');
 const menu = document.querySelector('.navbar__menu');
@@ -129,23 +132,26 @@ const icons = document.querySelector('.navbar__icons');
 
 export default {
   components: {},
+  data() {
+    return {
+      searchValue: '',
+    };
+  },
+  watch: {
+    searchValue() {
+      alert('search작동');
+    },
+  },
   setup() {
+    const router = useRouter();
     const state = reactive({
       localStorage: '',
+      searchValue: '',
     });
 
     onMounted(() => {
       state.localStorage = localStorage;
       if (localStorage.getItem('login_id') !== null) {
-        // const cors = require('cors')
-
-        // const corsOption = {
-        //   origin: 'http://localhost:8080',
-        //   credentials: true
-        // }
-
-        // createApp(App).use(cors(corsOption))
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
           apiKey: 'AIzaSyAHFnEL7qoOi2fQB9opoZeOFFy9MUH7GDM',
           authDomain: 'luxon-c4fb2.firebaseapp.com',
@@ -206,14 +212,36 @@ export default {
     });
 
     const btnClick = () => {
-      alert('test');
       menu.classList.toggle('active');
       icons.classList.toggle('active');
+    };
+
+    const searchBtn = () => {
+      let searchValue = document.getElementById('searchValue').value;
+      router
+        .push({
+          name: 'MyList',
+          query: { searchValue: searchValue },
+        })
+        .then(
+          setTimeout(() => {
+            set(
+              decodeURI(window.location.href)
+                .slice(window.location.href.indexOf('searchValue'))
+                .slice(12),
+            );
+          }, 500),
+        );
+    };
+
+    const set = t => {
+      console.log(t);
     };
 
     return {
       state,
       btnClick,
+      searchBtn,
     };
   },
 };
@@ -296,7 +324,7 @@ a {
   height: 20px;
   border-radius: 5px 0 0 5px;
   outline: none;
-  color: #9dbfaf;
+  color: #000000;
 }
 
 .searchTerm:focus {
@@ -332,6 +360,7 @@ a {
 .navbar__menu li:hover {
   background-color: rgb(53, 53, 53);
   border-radius: 4px;
+  color: white;
 }
 
 .navbar__menu li:hover a {
