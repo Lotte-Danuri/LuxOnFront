@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section style="margin-top: -70px">
     <swiper
       class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
       :space-between="20"
@@ -89,7 +89,7 @@
     </swiper>
   </section>
   <section>
-    <div style="margin-left: 20%; margin-top: 3%; width: 60%">
+    <div style="margin-left: 25%; margin-top: 3%; width: 60%">
       <div style="display: grid; grid-template-columns: 25% 25% 25% 25%">
         <div>
           <button>
@@ -204,123 +204,6 @@
       </swiper>
     </div>
   </section>
-  <!-- <section style="margin-top: 50px" class="favorite_cls" id="favorite_cls">
-    <div class="container" style="margin-left: 15%">
-      <h1 style="margin-left: -200px; font-family: RegularBoldCell">
-        Favorite Brand
-      </h1>
-      <br /><br />
-      <swiper
-        class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-        :space-between="20"
-        :loop="true"
-        :pagination="{ clickable: true }"
-        :autoplay="{
-          delay: 2000,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }"
-        @click="showAlert"
-      >
-        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
-          <div class="container_grid">
-            <div class="item color1">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color2">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color3">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color4">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
-          <div class="container_grid">
-            <div class="item color5">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/621/211201001837621.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color6">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/523/221017003322523.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color7">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/705/221019003338705.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color8">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/621/211201001837621.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-          </div>
-        </swiper-slide>
-      </swiper>
-    </div>
-  </section> -->
   <section style="margin-top: 50px" class="coupon_cls" id="coupon_cls">
     <div class="container" style="margin-left: 15%">
       <!-- <h1 style="margin-left: -200px">기능1</h1> -->
@@ -482,6 +365,21 @@
   <section>
     <div style="margin-left: 20%">
       <div class="all_procut" style="margin-top: -100px">
+        <button
+          style="
+            background-color: black;
+            width: 40px;
+            height: 30px;
+            border-radius: 20px;
+            position: absolute;
+            left: 29%;
+            margin-top: 3px;
+            color: white;
+          "
+          @click="bestBtn"
+        >
+          ?
+        </button>
         <h2 style="font-weight: bold">Best Product</h2>
         <br />
         <div class="product_grid">
@@ -493,6 +391,7 @@
               }"
             >
               <img :src="product.thumbnailUrl" />
+              <div style="position: absolute; top: 10px">sfdsfdsfsdf</div>
               <br />
               <span>
                 <p style="color: black">
@@ -517,7 +416,7 @@
       "
     >
       <div class="main__styling-text">
-        <h2 class="regularbold">Exclusive</h2>
+        <h2 class="regularbold">NFT 보증서</h2>
 
         <div class="main__styling-info">
           <p class="main__styling-text-strong">PERFUME GALLERY</p>
@@ -537,7 +436,7 @@
     </div>
   </div>
   <div style="margin-left: 10%">
-    <iframe
+    <!-- <iframe
       width="1500"
       height="800"
       src="https://www.youtube.com/embed/DsZhTIwJV5E"
@@ -545,7 +444,7 @@
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen
-    ></iframe>
+    ></iframe> -->
   </div>
   <br />
   <br />
@@ -655,11 +554,10 @@ export default {
     window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
-    leftBtn() {
-      alert('left');
-    },
-    rightBtn() {
-      alert('right');
+    bestBtn() {
+      this.$swal(
+        '클릭수와 주문수에대해 상품전체갯수*0.5 한것의 순위를 각각 뽑고 각각 뽑은 순위가 서로 겹치는 상품에 대한 배열을 만든다음에 그 배열에서 상품전환율로 rank 오름차순처리한다.',
+      );
     },
     comma(val) {
       return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
