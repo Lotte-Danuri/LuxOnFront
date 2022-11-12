@@ -411,7 +411,7 @@
         <h2 style="font-weight: bold">Best Product</h2>
         <br />
         <div class="product_grid">
-          <div v-for="product in productList.slice(0, 16)" v-bind:key="product">
+          <div v-for="product in bestList.slice(0, 16)" v-bind:key="product">
             <router-link
               :to="{
                 path: '/product/myProduct',
@@ -566,6 +566,7 @@ export default {
     const state = reactive({
       products: [],
       productList: [],
+      bestList: [],
     });
 
     onBeforeMount(() => {});
@@ -575,11 +576,14 @@ export default {
   data() {
     return {
       productList: [],
+      bestList: [],
     };
   },
   created() {
     this.getProductList();
     window.addEventListener('scroll', this.handleScroll);
+    this.getBestList();
+    console.log('test' + this.bestList);
   },
   methods: {
     bestBtn() {
@@ -592,7 +596,23 @@ export default {
     },
     async getProductList() {
       this.productList = await this.$api('/product/products');
-      console.log(this.productList);
+      // console.log(this.productList);
+    },
+    async getBestList() {
+      try {
+        const response = await axios.get(
+          'https://sbbro.xyz/api/product/products/best/list',
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+            },
+          },
+        );
+        console.log(JSON.stringify(response.data));
+        this.bestList = response.data;
+      } catch (err) {
+        console.log(err);
+      }
     },
     handleScroll() {
       // console.log(document.querySelector('html').scrollTop);
