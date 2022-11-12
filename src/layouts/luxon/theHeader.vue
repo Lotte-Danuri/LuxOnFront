@@ -39,8 +39,8 @@
                 <p>로그아웃</p>
               </router-link>
             </li>
-            <li>
-              <i class="fa-solid fa-phone"></i>
+            <li @click="sendMessage()">
+              <i class="fa-solid fa-commenting"></i>
               <p>고객센터</p>
             </li>
             <li>
@@ -125,6 +125,7 @@ import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import { getCurrentInstance } from 'vue';
 
 // const toggleBtn = document.querySelector('.navbar__toogleBtn');
 const menu = document.querySelector('.navbar__menu');
@@ -211,6 +212,31 @@ export default {
       }
     });
 
+    const emitter =
+      getCurrentInstance().appContext.config.globalProperties.$emitter;
+    const sendMessage = async () => {
+      await axios
+        .post(
+          'https://sbbro.xyz/api/chat/chatRoom/chat',
+          {
+            id: null,
+            content: '고객센터에 문의하기',
+            contentType: '메세지',
+            sendBy: localStorage.getItem('login_id'),
+            sendTo: '고객센터',
+            source: '',
+          },
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then(emitter.emit('chatShow'))
+        .catch(err => console.log(err));
+    };
+
     const btnClick = () => {
       menu.classList.toggle('active');
       icons.classList.toggle('active');
@@ -242,6 +268,7 @@ export default {
       state,
       btnClick,
       searchBtn,
+      sendMessage,
     };
   },
 };
