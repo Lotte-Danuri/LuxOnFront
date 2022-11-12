@@ -113,6 +113,16 @@ const routes = [
             name: 'like',
             component: MyLike,
           },
+          {
+            path : 'nft',
+            name : 'nft',
+            component: () => import('@/components/mypage/myNft.vue'),
+          },
+          {
+            path : 'nftlist',
+            name : 'nftlist',
+            component: () => import('@/components/mypage/myNftList.vue'),
+          },
         ],
       },
     ],
