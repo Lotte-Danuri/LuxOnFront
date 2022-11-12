@@ -143,13 +143,11 @@ import { Autoplay, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import axios from 'axios';
-import { bool } from 'prop-types';
-import { getCurrentInstance } from 'vue';
 
 export default {
   data() {
     return {
-      followBool: bool,
+      followBool: Boolean,
       followId: 0,
       productList: [],
       categoryList: [],
