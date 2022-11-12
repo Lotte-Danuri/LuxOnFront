@@ -73,8 +73,8 @@ export default {
       this.selectedChatRoom = room;
       this.showChat = !this.showChat;
     },
-    getRoomDatas: function () {
-      axios
+    getRoomDatas: async function () {
+      await axios
         .get('https://sbbro.xyz/api/chat/user/' + this.userId, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -84,8 +84,8 @@ export default {
         .then(res => (this.rooms = res.data))
         .catch(err => console.log(err));
     },
-    outBtn: function () {
-      axios
+    outBtn: async function () {
+      await axios
         .delete(
           'https://sbbro.xyz/api/chat/user/' +
             this.userId +
@@ -101,8 +101,8 @@ export default {
         .then(this.backButton())
         .catch(err => console.log(err));
     },
-    getChatDatas: function (val) {
-      axios
+    getChatDatas: async function (val) {
+      await axios
         .get(
           'https://sbbro.xyz/api/chat/chatRoom/chats/' +
             this.userId +
@@ -118,8 +118,8 @@ export default {
         .then(res => (this.msgData = res.data))
         .catch(err => console.log(err));
     },
-    getNewMessages: function async(val) {
-      axios
+    getNewMessages: async function (val) {
+      await axios
         .get(
           'https://sbbro.xyz/api/chat/chatRoom/newChats/' +
             this.userId +
@@ -139,7 +139,7 @@ export default {
         )
         .catch(err => console.log(err));
     },
-    sendMessage(msg, type, file) {
+    async sendMessage(msg, type, file) {
       let data = {
         content: msg,
         contentType: type,
@@ -149,7 +149,7 @@ export default {
         source: '',
       };
       if (type == '메세지') {
-        axios
+        await axios
           .post('https://sbbro.xyz/api/chat/chatRoom/chat', data, {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -168,7 +168,7 @@ export default {
         const blob = new Blob([js2], { type: 'application/json' });
         fd.append('chatVo', blob);
         fd.append('imageFile', file);
-        axios
+        await axios
           .post('https://sbbro.xyz/api/chat/chatRoom/image', fd, {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -180,7 +180,7 @@ export default {
       }
     },
   },
-  mounted() {
+  created() {
     this.userId = localStorage.getItem('login_id');
     this.listLoading = setInterval(() => {
       this.getRoomDatas();
