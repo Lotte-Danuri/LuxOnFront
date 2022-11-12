@@ -4,12 +4,9 @@
     <!-- Order -->
     <div class="card card-lg mb-5 border">
       <div class="pc-wrap">
-        <div
-          class="main__styling-slide"
-          style="
+        <div class="main__styling-slide" style="
             background-image: url('https://cdn-fo.sivillage.com/fo/assets/comm/image/main_styling_pattern.svg');
-          "
-        >
+          ">
           <div class="main__styling-text">
             <h2 class="regularbold">Exclusive</h2>
 
@@ -21,12 +18,9 @@
             </div>
           </div>
           <div class="main__styling-img">
-            <a href="javascript:void(0);"
-              ><img
-                src="https://image.sivillage.com/upload/C00001/goods/org/819/221012003299819.jpg?RS=600&amp;SP=1"
-                alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
-              />
+            <a href="javascript:void(0);"><img :src="state.nftData.image" alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml" />
             </a>
+            {{ state.nftData.image }}
           </div>
         </div>
       </div>
@@ -42,47 +36,50 @@ import { onBeforeMount } from "vue";
 import axios from "axios";
 import { getCurrentInstance } from "vue";
 import Swal from "sweetalert2";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { computed } from "@vue/reactivity";
 
 export default {
   setup() {
-    const router = useRouter();
-    const comma =
-      getCurrentInstance().appContext.config.globalProperties.$comma;
-    const globalProperties =
-      getCurrentInstance().appContext.config.globalProperties;
+    const route = useRoute();
+    const userId = computed(() =>
+      route.params.userId
+    );
+    const productId = computed(() =>
+      route.params.productId
+    );
+
     const state = reactive({
-      orderList: [],
-    });
+      nftData: ''
+    })
 
-    onBeforeMount(() => {
-      if (globalProperties.$isLogin() == false) {
-        Swal.fire("로그인 해주세요").then(() => {
-          router.push("/login");
-        });
-      }
+    onBeforeMount(async () => {
+      console.log('params', userId.value)
+      console.log('params', productId.value)
 
-      axios
-        .get("https://sbbro.xyz/api/member/products", {
-          headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
-          },
+      await getNftData()
+    })
+
+    const getNftData = async () => {
+      try {
+        const response = await axios.post("http://localhost:5001/api/nft", {
+          userId: userId.value,
+          productId: productId.value
         })
-        .then((response) => {
-          console.log(response);
-          state.orderList = response.data;
-        });
-    });
+        console.log('getNftData', response)
+        state.nftData = response.data;
+      } catch (err) {
+        console.log(err)
+      }
+    }
 
-    return { state, comma };
+    return { state, };
   },
 };
 </script>
 
 <style>
-.pc-wrap {
-
-}
+.pc-wrap {}
 
 .mypage {
   background-color: #fff;

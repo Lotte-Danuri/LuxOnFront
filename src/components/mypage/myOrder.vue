@@ -3,11 +3,7 @@
     <h2>주문/배송 조회</h2>
     <!-- Order -->
     <div class="card card-lg mb-5 border">
-      <div
-        v-for="order in state.orderList"
-        v-bind:key="order"
-        class="card-body pb-0"
-      >
+      <div v-for="order in state.orderList" v-bind:key="order" class="card-body pb-0">
         <!-- Info -->
         <div class="card card-sm">
           <div class="card-body bg-light">
@@ -50,66 +46,49 @@
                       <div class="col-3 col-lg-2">
                         <img :src="o.thumbnail" />
                       </div>
-                      <div
-                        class="col-7 col-lg-6"
-                        style="
+                      <div class="col-7 col-lg-6" style="
                           font-family: 'Lucida Sans', 'Lucida Sans Regular',
                             'Lucida Grande', 'Lucida Sans Unicode', Geneva,
                             Verdana, sans-serif;
-                        "
-                      >
+                        ">
                         <div style="margin-top: 7%">
-                          <span
-                            >[상품명] {{ o.productName.substring(0, 15) }}</span
-                          >
+                          <span>[상품명] {{ o.productName.substring(0, 15) }}</span>
                           <br />
                           <span>[가격] {{ comma(o.productPrice) }}원</span>
                           <br />
-                          <span
-                            >[보증기간] {{ o.warrantyStartDate }} [2022-10-19 ~
-                            {{ o.warrantyEndDate }}2025-10-19]</span
-                          >
+                          <span>[보증기간] {{ o.warrantyStartDate }} [2022-10-19 ~
+                            {{ o.warrantyEndDate }}2025-10-19]</span>
                         </div>
                       </div>
-                      <div
-                        class="col-2 col-lg-4"
-                        style="
+                      <div class="col-2 col-lg-4" style="
                           font-family: 'Franklin Gothic Medium', 'Arial Narrow',
                             Arial, sans-serif;
-                        "
-                      >
-                        <router-link
-                          :to="{
-                            path: '/product/myProduct',
-                            query: {
-                              productCode: o.productCode,
-                            },
-                          }"
-                        >
-                          <button
-                            style="
+                        ">
+                        <router-link :to="{
+                          path: '/product/myProduct',
+                          query: {
+                            productCode: o.productCode,
+                          },
+                        }">
+                          <button style="
                               width: 200px;
                               height: 50px;
                               margin-top: 15%;
                               background-color: black;
                               color: white;
                               border-radius: 5px;
-                            "
-                          >
+                            ">
                             상품상세
                           </button>
                         </router-link>
-                        <button
-                          style="
+                        <button style="
                             width: 200px;
                             height: 50px;
                             margin-top: 15%;
                             background-color: black;
                             color: white;
                             border-radius: 5px;
-                          "
-                          @click="pushNft(o)"
-                        >
+                          " @click="pushNft(o)">
                           NFT 증명서
                         </button>
                       </div>
@@ -166,19 +145,89 @@ export default {
         });
     });
 
-    const checkNft = (productId) => {};
-
-    const pushNft = (order) => {
-      if (!checkNft(order.orderDataDtoList.productId)) {
-        Swal.fire({
-          title: "NFT 증명서를 등록 하시겠습니까?",
-        });
+    const checkNft = async (productId) => {
+      try {
+        const response = await axios.post('http://localhost:5001/api/checknft',
+          {
+            productId: productId,
+            userId: state.orderList[0].buyerId,
+          },)
+          console.log("checkNft response",response)
+        if (response.data.length != 0) {
+          return true;
+        }
+        return false;
+      } catch {
+        return false;
       }
-
-      router.push({});
     };
 
-    return { state, comma, pushNft };
+    const isNftMinting = async (productId) => {
+      try {
+        const response = await axios.post('http://localhost:5001/api/checkmint',
+          {
+            productId: productId,
+          },)
+        if (response.data.length == 0) {
+          return false;
+        }
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
+    const publishNft = async (order) => {
+      if (await isNftMinting(order.productId) == false) {
+        Swal.fire('판매자가 상품을 NFT로 등록하지 않았습니다.')
+        return;
+      }
+
+      Swal.fire({
+        title: "NFT 증명서를 발급 하시겠습니까?",
+        showCancelButton: true,
+        confirmButtonText: '네',
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          return axios.post('http://localhost:5001/api/receipts', {
+            productId: order.productId,
+            userId: state.orderList[0].buyerId,
+          })
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        console.log(result)
+        if (result.value.status == 200) {
+          Swal.fire({
+            icon: 'success',
+            text: "발급이 완료되었습니다."
+          });
+        }
+        else {
+          Swal.fire({
+            icon: 'error',
+            text: '발급에 실패하였습니다.'
+          })
+        }
+      });
+    }
+
+    const pushNft = async (order) => {
+      if (await checkNft(order.productId) == false) {
+        publishNft(order)
+        return;
+      }
+
+      router.push({
+        name: "nft",
+        params: {
+          userId: state.orderList[0].buyerId,
+          productId: order.productId
+        },
+      });
+    };
+
+    return { state, comma, pushNft, };
   },
 };
 </script>
