@@ -92,40 +92,68 @@
     <div style="margin-left: 25%; margin-top: 3%; width: 60%">
       <div style="display: grid; grid-template-columns: 25% 25% 25% 25%">
         <div>
-          <button>
-            <img
-              src="//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_642/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 642w,//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_960/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 960w,//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_1280/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 1280w"
-              style="width: 150px; height: 150px; border-radius: 100px"
-            />
-            <h3>여성</h3>
-          </button>
+          <router-link
+            :to="{
+              name: 'MyList',
+              query: { id: 3 },
+            }"
+          >
+            <button>
+              <img
+                src="//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_642/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 642w,//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_960/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 960w,//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_1280/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 1280w"
+                style="width: 150px; height: 150px; border-radius: 100px"
+              />
+              <h3>여성</h3>
+            </button>
+          </router-link>
         </div>
         <div>
-          <button>
-            <img
-              src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/088/00/221000000303088.jpg?cVer=03041533&RS=&SP=1"
-              style="width: 150px; height: 150px; border-radius: 100px"
-            />
-            <h3>남성</h3>
-          </button>
+          <router-link
+            :to="{
+              name: 'MyList',
+              query: { id: 5 },
+            }"
+          >
+            <button>
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/088/00/221000000303088.jpg?cVer=03041533&RS=&SP=1"
+                style="width: 150px; height: 150px; border-radius: 100px"
+              />
+              <h3>남성</h3>
+            </button>
+          </router-link>
         </div>
         <div>
-          <button>
-            <img
-              src="https://puls-img.chanel.com/1665492769363-pushbaspageone1210x680pximg03jpg_680x1210.jpg"
-              style="width: 150px; height: 150px; border-radius: 100px"
-            />
-            <h3>패션잡화</h3>
-          </button>
+          <router-link
+            :to="{
+              name: 'MyList',
+              query: { id: 6 },
+            }"
+          >
+            <button>
+              <img
+                src="https://puls-img.chanel.com/1665492769363-pushbaspageone1210x680pximg03jpg_680x1210.jpg"
+                style="width: 150px; height: 150px; border-radius: 100px"
+              />
+              <h3>패션잡화</h3>
+            </button>
+          </router-link>
         </div>
         <div>
-          <button>
-            <img
-              src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/801/00/220900000287801.jpg?cVer=31104641&RS=&SP=1"
-              style="width: 150px; height: 150px; border-radius: 100px"
-            />
-            <h3>뷰티</h3>
-          </button>
+          <router-link
+            :to="{
+              name: 'MyList',
+              query: { id: 7 },
+            }"
+          >
+            <button>
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/801/00/220900000287801.jpg?cVer=31104641&RS=&SP=1"
+                style="width: 150px; height: 150px; border-radius: 100px"
+              />
+              <h3>뷰티</h3>
+            </button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -383,7 +411,7 @@
         <h2 style="font-weight: bold">Best Product</h2>
         <br />
         <div class="product_grid">
-          <div v-for="product in productList.slice(0, 16)" v-bind:key="product">
+          <div v-for="product in bestList.slice(0, 16)" v-bind:key="product">
             <router-link
               :to="{
                 path: '/product/myProduct',
@@ -538,6 +566,7 @@ export default {
     const state = reactive({
       products: [],
       productList: [],
+      bestList: [],
     });
 
     onBeforeMount(() => {});
@@ -547,11 +576,14 @@ export default {
   data() {
     return {
       productList: [],
+      bestList: [],
     };
   },
   created() {
     this.getProductList();
     window.addEventListener('scroll', this.handleScroll);
+    this.getBestList();
+    console.log('test' + this.bestList);
   },
   methods: {
     bestBtn() {
@@ -564,7 +596,23 @@ export default {
     },
     async getProductList() {
       this.productList = await this.$api('/product/products');
-      console.log(this.productList);
+      // console.log(this.productList);
+    },
+    async getBestList() {
+      try {
+        const response = await axios.get(
+          'https://sbbro.xyz/api/product/products/best/list',
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+            },
+          },
+        );
+        console.log(JSON.stringify(response.data));
+        this.bestList = response.data;
+      } catch (err) {
+        console.log(err);
+      }
     },
     handleScroll() {
       // console.log(document.querySelector('html').scrollTop);

@@ -5,8 +5,9 @@
       type="button"
       style="
         border-radius: 50%;
-        background-color: white;
-        box-shadow: 0px 1px 20px #9c9cc855;
+        background-color: black;
+        color: white;
+        box-shadow: 0px 1px 20px #222;
       "
       @click="buttonClick"
     >

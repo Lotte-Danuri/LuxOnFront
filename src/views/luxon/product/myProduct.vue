@@ -441,6 +441,8 @@ export default {
       document.getElementById('detail_btn').style.color = 'black';
     };
 
+    window.scrollTo(0, 0);
+
     return {
       state,
       minusBtn,
