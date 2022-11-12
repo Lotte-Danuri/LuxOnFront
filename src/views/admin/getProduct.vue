@@ -284,6 +284,8 @@ export default {
             name: product.productName,
             symbol: product.productCode,
             image: product.thumbnailUrl,
+            price: product.price,
+            brandName : product.brandName,
             sellerId: localStorage.getItem('store_id')
           });
         },

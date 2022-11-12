@@ -8,19 +8,18 @@
             background-image: url('https://cdn-fo.sivillage.com/fo/assets/comm/image/main_styling_pattern.svg');
           ">
           <div class="main__styling-text">
-            <h2 class="regularbold">Exclusive</h2>
+            <h2 class="regularbold">NFT</h2>
 
             <div class="main__styling-info">
               <p class="main__styling-text-strong">PERFUME GALLERY</p>
               <p class="main__styling-text-description">
-                [아무아쥬] 아너 오드퍼퓸 포 우먼 100ml
+                {{ state.nftData.name }}
               </p>
             </div>
           </div>
           <div class="main__styling-img">
             <a href="javascript:void(0);"><img :src="state.nftData.image" alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml" />
             </a>
-            {{ state.nftData.image }}
           </div>
         </div>
       </div>
@@ -42,6 +41,7 @@ import { computed } from "@vue/reactivity";
 export default {
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const userId = computed(() =>
       route.params.userId
     );
@@ -54,8 +54,10 @@ export default {
     })
 
     onBeforeMount(async () => {
-      console.log('params', userId.value)
-      console.log('params', productId.value)
+      if(!userId.value || !productId.value){
+        Swal.fire("정상적인 경로로 접근해주세요")
+        router.push("order")
+      }
 
       await getNftData()
     })
@@ -66,8 +68,8 @@ export default {
           userId: userId.value,
           productId: productId.value
         })
-        console.log('getNftData', response)
-        state.nftData = response.data;
+        state.nftData = response.data[0];
+        console.log('data', state.nftData)
       } catch (err) {
         console.log(err)
       }
