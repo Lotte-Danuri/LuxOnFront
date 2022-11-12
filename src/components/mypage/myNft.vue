@@ -18,8 +18,7 @@
             </div>
           </div>
           <div class="main__styling-img">
-            <a href="javascript:void(0);"><img :src="state.nftData.image" alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml" />
-            </a>
+            <img :src="state.nftData.image" alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml" />
           </div>
         </div>
       </div>
@@ -54,7 +53,7 @@ export default {
     })
 
     onBeforeMount(async () => {
-      if(!userId.value || !productId.value){
+      if (!userId.value || !productId.value) {
         Swal.fire("정상적인 경로로 접근해주세요")
         router.push("order")
       }
