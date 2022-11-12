@@ -13,6 +13,9 @@
             <router-link to="/mypage/order">
               <a>주문/배송 조회</a>
             </router-link>
+            <router-link to="/mypage/nftlist">
+              <a>NFT 증명서 목록</a>
+            </router-link>
           </li>
         </ul>
       </div>
