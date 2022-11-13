@@ -18,6 +18,7 @@
                   placeholder="검색어를 입력하세요"
                   id="searchValue"
                   ref="ref_search"
+                  @keyup.enter="searchBtn"
                 />
                 <button type="submit" class="searchButton" @click="searchBtn">
                   <i class="fa fa-search"></i>
@@ -69,7 +70,7 @@
       <section class="header_bottom">
         <nav class="navbar_bottom">
           <ul class="navbar__menu" style="margin-left: 200px; font-size: 15px">
-            <li>
+            <li @click="reload">
               <router-link
                 :to="{
                   name: 'MyList',
@@ -78,7 +79,7 @@
                 >여성</router-link
               >
             </li>
-            <li>
+            <li @click="reload">
               <router-link
                 :to="{
                   name: 'MyList',
@@ -87,7 +88,7 @@
                 >남성</router-link
               >
             </li>
-            <li>
+            <li @click="reload">
               <router-link
                 :to="{
                   name: 'MyList',
@@ -96,7 +97,7 @@
                 >패션잡화</router-link
               >
             </li>
-            <li>
+            <li @click="reload">
               <router-link
                 :to="{
                   name: 'MyList',
@@ -244,24 +245,27 @@ export default {
 
     const searchBtn = () => {
       let searchValue = document.getElementById('searchValue').value;
-      router
-        .push({
-          name: 'MyList',
-          query: { searchValue: searchValue },
-        })
-        .then(
-          setTimeout(() => {
-            set(
-              decodeURI(window.location.href)
-                .slice(window.location.href.indexOf('searchValue'))
-                .slice(12),
-            );
-          }, 500),
-        );
+      // if (
+      //   window.location.href.includes('list') &&
+      //   decodeURI(window.location.href)
+      //     .slice(window.location.href.indexOf('searchValue'))
+      //     .slice(12) != searchValue
+      // ) {
+      //   searchValue = document.getElementById('searchValue').value;
+      //   location.reload();
+      // }
+      router.push({
+        name: 'MyList',
+        query: { searchValue: searchValue },
+      });
     };
 
-    const set = t => {
-      console.log(t);
+    // const set = t => {
+    //   console.log(t);
+    // };
+
+    const reload = () => {
+      location.reload();
     };
 
     return {
@@ -269,6 +273,7 @@ export default {
       btnClick,
       searchBtn,
       sendMessage,
+      reload,
     };
   },
 };

@@ -204,12 +204,19 @@
               v-for="(recommend, i) in productList.slice(0, 4)"
               :key="i"
             >
-              <img :src="`${recommend.thumbnailUrl}`" alt="image" />
-              <br />
-              <span>
-                <h5 style="color: white">{{ recommend.productName }}</h5>
-                <p style="color: white">￦{{ comma(recommend.price) }}</p>
-              </span>
+              <router-link
+                :to="{
+                  path: '/product/myProduct',
+                  query: { productCode: recommend.productCode },
+                }"
+              >
+                <img :src="`${recommend.thumbnailUrl}`" alt="image" />
+                <br />
+                <span>
+                  <h5 style="color: white">{{ recommend.productName }}</h5>
+                  <p style="color: white">￦{{ comma(recommend.price) }}</p>
+                </span>
+              </router-link>
             </div>
           </div>
         </swiper-slide>
@@ -220,19 +227,26 @@
               v-for="(recommend, i) in productList.slice(4, 8)"
               :key="i"
             >
-              <img :src="`${recommend.thumbnailUrl}`" alt="image" />
-              <br />
-              <span>
-                <h5 style="color: white">{{ recommend.productName }}</h5>
-                <p style="color: white">￦{{ comma(recommend.price) }}</p>
-              </span>
+              <router-link
+                :to="{
+                  path: '/product/myProduct',
+                  query: { productCode: recommend.productCode },
+                }"
+              >
+                <img :src="`${recommend.thumbnailUrl}`" alt="image" />
+                <br />
+                <span>
+                  <h5 style="color: white">{{ recommend.productName }}</h5>
+                  <p style="color: white">￦{{ comma(recommend.price) }}</p>
+                </span>
+              </router-link>
             </div>
           </div>
         </swiper-slide>
       </swiper>
     </div>
   </section>
-  <section style="margin-top: 50px" class="coupon_cls" id="coupon_cls">
+  <section style="margin-top: 10px" class="coupon_cls" id="coupon_cls">
     <div class="container" style="margin-left: 15%">
       <!-- <h1 style="margin-left: -200px">기능1</h1> -->
       <br /><br />
@@ -392,7 +406,7 @@
 
   <section>
     <div style="margin-left: 20%">
-      <div class="all_procut" style="margin-top: -100px">
+      <div class="all_procut" style="margin-top: -80px">
         <button
           style="
             background-color: black;
@@ -583,7 +597,6 @@ export default {
     this.getProductList();
     window.addEventListener('scroll', this.handleScroll);
     this.getBestList();
-    console.log('test' + this.bestList);
   },
   methods: {
     bestBtn() {
@@ -596,7 +609,6 @@ export default {
     },
     async getProductList() {
       this.productList = await this.$api('/product/products');
-      // console.log(this.productList);
     },
     async getBestList() {
       try {
@@ -608,14 +620,12 @@ export default {
             },
           },
         );
-        console.log(JSON.stringify(response.data));
         this.bestList = response.data;
       } catch (err) {
         console.log(err);
       }
     },
     handleScroll() {
-      // console.log(document.querySelector('html').scrollTop);
       if (window.location.href.includes('main')) {
         let nowScroll = document.querySelector('html').scrollTop;
         // alert(nowScroll);
@@ -655,7 +665,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+a {
+  text-decoration: none;
+}
 .coupon_cls .swiper-pagination-bullets span {
   display: none;
 }
