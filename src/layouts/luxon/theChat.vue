@@ -11,7 +11,7 @@
       "
       @click="buttonClick"
     >
-      <i class="bi bi-chat-left-dots" style="font-size: xx-large"></i>
+      <i class="bi bi-chat-dots-fill" style="font-size: xx-large"></i>
     </button>
   </div>
 </template>
