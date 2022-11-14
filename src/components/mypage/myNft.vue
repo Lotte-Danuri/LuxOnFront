@@ -4,9 +4,12 @@
     <!-- Order -->
     <div class="card card-lg mb-5 border">
       <div class="pc-wrap">
-        <div class="main__styling-slide" style="
+        <div
+          class="main__styling-slide"
+          style="
             background-image: url('https://cdn-fo.sivillage.com/fo/assets/comm/image/main_styling_pattern.svg');
-          ">
+          "
+        >
           <div class="main__styling-text">
             <h2 class="regularbold">NFT</h2>
 
@@ -18,7 +21,10 @@
             </div>
           </div>
           <div class="main__styling-img">
-            <img :src="state.nftData.image" alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml" />
+            <img
+              :src="state.nftData.image"
+              alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
+            />
           </div>
         </div>
       </div>
@@ -29,58 +35,58 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import { onBeforeMount } from "vue";
-import axios from "axios";
-import { getCurrentInstance } from "vue";
-import Swal from "sweetalert2";
-import { useRoute, useRouter } from "vue-router";
-import { computed } from "@vue/reactivity";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
+import { getCurrentInstance } from 'vue';
+import Swal from 'sweetalert2';
+import { useRoute, useRouter } from 'vue-router';
+import { computed } from 'vue';
 
 export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const userId = computed(() =>
-      route.params.userId
-    );
-    const productId = computed(() =>
-      route.params.productId
-    );
+    const userId = computed(() => route.params.userId);
+    const productId = computed(() => route.params.productId);
 
     const state = reactive({
-      nftData: ''
-    })
+      nftData: '',
+    });
 
     onBeforeMount(async () => {
       if (!userId.value || !productId.value) {
-        Swal.fire("정상적인 경로로 접근해주세요")
-        router.push("order")
+        Swal.fire('정상적인 경로로 접근해주세요');
+        router.push('order');
       }
 
-      await getNftData()
-    })
+      await getNftData();
+    });
 
     const getNftData = async () => {
       try {
-        const response = await axios.post("http://43.200.203.135:5000/api/nft", {
-          userId: userId.value,
-          productId: productId.value
-        })
+        const response = await axios.post(
+          'http://43.200.203.135:5000/api/nft',
+          {
+            userId: userId.value,
+            productId: productId.value,
+          },
+        );
         state.nftData = response.data[0];
-        console.log('data', state.nftData)
+        console.log('data', state.nftData);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
+    };
 
-    return { state, };
+    return { state };
   },
 };
 </script>
 
-<style>
-.pc-wrap {}
+<style scoped>
+.pc-wrap {
+}
 
 .mypage {
   background-color: #fff;

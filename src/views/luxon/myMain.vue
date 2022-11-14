@@ -425,15 +425,24 @@
         <h2 style="font-weight: bold">Best Product</h2>
         <br />
         <div class="product_grid">
-          <div v-for="product in bestList.slice(0, 16)" v-bind:key="product">
+          <div
+            v-for="(product, index) in bestList.slice(0, 16)"
+            v-bind:key="product"
+            style="position: relative"
+          >
             <router-link
               :to="{
                 path: '/product/myProduct',
                 query: { productCode: product.productCode },
               }"
             >
+              <div
+                class="rank_num"
+                style="width: 30px; height: 30px; background-color: black"
+              >
+                {{ index + 1 }}
+              </div>
               <img :src="product.thumbnailUrl" />
-              <div style="position: absolute; top: 10px">sfdsfdsfsdf</div>
               <br />
               <span>
                 <p style="color: black">
@@ -851,5 +860,14 @@ a {
 }
 .product_grid div span p {
   margin: 0px;
+}
+
+.rank_num {
+  position: absolute;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  margin: 0;
+  text-align: center;
 }
 </style>
