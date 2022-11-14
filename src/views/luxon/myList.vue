@@ -3,69 +3,45 @@
     <div
       class="side_menu"
       id="style-3"
-      style="
-        height: 600px;
-        overflow: scroll;
-        overflow-x: hidden;
-        position: sticky;
-        top: 200px;
-      "
+      style="height: 600px; overflow-x: hidden; position: sticky; top: 200px"
     >
-      <div v-for="(category, i) in categoryList" :key="i" :value="i">
-        <h1>
-          {{ category.categoryName }}
-        </h1>
-        <br />
-        <ul>
-          <li>
-            <h4>전체{{ $route.params.searchValue }}</h4>
-          </li>
-          <li
-            v-for="(categorySecond, j) in category.categorySecondDtoList"
-            :key="j"
-            :value="j"
-            @click="myFilter($event)"
-          >
-            <h4>
-              {{ categorySecond.categoryName }}
-            </h4>
-            <ul>
+      <div>
+        <h2>Category</h2>
+        <ul class="first_category">
+          <li v-for="categoryFirst in categoryList" :key="categoryFirst.id">
+            <a
+              href="#"
+              @click="
+                () => {
+                  secondValue = '';
+                  firstValue = categoryFirst.id;
+                  getBrandProduct();
+                }
+              "
+              >{{ categoryFirst.categoryName }}</a
+            >
+            <ul class="second_category">
               <li
-                v-for="(
-                  categoryThird, k
-                ) in categorySecond.categoryThirdDtoList"
-                :key="k"
-                :value="k"
+                v-for="categorySecond in categoryFirst.categorySecondDtoList"
+                :key="categorySecond.id"
               >
-                {{ categoryThird.categoryName }}
+                <a
+                  href="#"
+                  @click="
+                    () => {
+                      firstValue = '';
+                      secondValue = categorySecond.id;
+                      getBrandProduct2(secondValue);
+                    }
+                  "
+                >
+                  {{ categorySecond.categoryName }}
+                </a>
               </li>
             </ul>
           </li>
         </ul>
       </div>
-
-      <div class="inputPrice">
-        <h3>가격</h3>
-        <label for="minPrice">최소</label>
-        <input type="text" id="minPrice" name="minP" placeholder="min Price" />
-        <br />
-        <br />
-        <label for="maxPrice">최대</label>
-        <input type="text" id="maxPrice" name="maxP" placeholder="max Price" />
-      </div>
-      <hr style="width: 160px" />
-      <br />
-      <button
-        style="
-          width: 160px;
-          height: 50px;
-          background-color: black;
-          color: white;
-          border-radius: 5px;
-        "
-      >
-        필터 적용
-      </button>
     </div>
     <div
       class="category__content"
@@ -89,7 +65,7 @@
               :key="text.description"
               class="pb-14 sm:flex sm:justify-evenly"
             >
-              <div style="background-color: gray; position: relative">
+              <div style="background-color: black; position: relative">
                 <div class="firstSwiper">
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
@@ -100,7 +76,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 523px; height: 523px"
+                      style="width: 300px; height: 300px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -126,7 +102,7 @@
               :key="text.description"
               class="pb-14 sm:flex sm:justify-evenly"
             >
-              <div style="background-color: gray; position: relative">
+              <div style="background-color: black; position: relative">
                 <div class="firstSwiper">
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
@@ -137,7 +113,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 523px; height: 523px"
+                      style="width: 300px; height: 300px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -153,7 +129,7 @@
         <h2 style="font-weight: bold">All Product</h2>
         <br />
         <div class="product_grid">
-          <div v-for="product in productList" v-bind:key="product">
+          <div v-for="product in showList" v-bind:key="product">
             <router-link
               :to="{
                 path: '/product/myProduct',
@@ -194,43 +170,105 @@ export default {
       isActive: false,
       searchValue: '',
       searchValue2: '',
+      showList: [],
+      firstValue: '',
     };
   },
   watch: {
     searchValue() {
       this.searchValue2 = this.searchValue;
     },
+    $route(to, from) {
+      if (to.path != from.path) {
+        // console.log('감지');
+        this.firstValue = this.$route.query.id;
+      }
+    },
   },
   created() {
-    this.getProductList();
-    console.log(this.$route.query.id);
-    console.log(this.$route.query.searchValue);
-    console.log(this.searchValue2);
     this.getCategoryList();
 
-    const url = decodeURI(window.location.href);
-    // alert(url);
-    this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
+    // this.showList = this.productList;
 
-    if (this.$route.query.searchValue != undefined) {
-      // alert(this.$route.query.searchValue);
-    }
+    // const url = decodeURI(window.location.href);
+    // alert(url);
+    // this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
+  },
+  mounted() {
+    this.getProductList();
+    this.firstValue = this.$route.query.id;
+    this.searchValue = this.$route.query.searchValue;
   },
   methods: {
     async getProductList() {
       this.productList = await this.$api('/product/products');
+      this.showList = this.productList;
+      if (this.firstValue != undefined) {
+        this.getBrandProduct();
+      }
+      if (this.$route.query.searchValue != undefined) {
+        console.log(this.$route.query.searchValue);
+        this.getSearchProduct();
+      }
     },
     async getCategoryList() {
       this.categoryList = await this.$api('/product/categories');
-      console.log(this.categoryList);
     },
-    clickCallback(pageNum) {
-      console.log(pageNum);
+    getSearchProduct() {
+      // this.productList = await this.$api('/product/products');
+      let newList = [];
+      let search = this.searchValue;
+      // alert(
+      //   decodeURI(window.location.href)
+      //     .slice(window.location.href.indexOf('searchValue'))
+      //     .slice(12),
+      // );
+      // alert(search);
+      // if (
+      //   window.location.href.includes('list') &&
+      //   decodeURI(window.location.href)
+      //     .slice(window.location.href.indexOf('searchValue'))
+      //     .slice(12) != search
+      // ) {
+      //   alert(search);
+      //   search = decodeURI(window.location.href)
+      //     .slice(window.location.href.indexOf('searchValue'))
+      //     .slice(12);
+      // }
+      for (let i = 0; i < this.productList.length; i++) {
+        if (this.productList[i].productName.includes(search)) {
+          newList.push(JSON.parse(JSON.stringify(this.productList[i])));
+        }
+      }
+      let proxy = new Proxy(newList, {});
+      this.showList = proxy;
+      // window.scrollTo(1500, 0);
     },
-    myFilter(event) {
-      // alert(this.selectedUl);
-      this.isActive = !this.isActive;
-      console.log(event.target.children);
+    getBrandProduct() {
+      // this.productList = await this.$api('/product/products');
+      let newList = [];
+      let first = this.firstValue;
+      for (let i = 0; i < this.productList.length; i++) {
+        if (first == this.productList[i].categoryFirstId) {
+          newList.push(JSON.parse(JSON.stringify(this.productList[i])));
+        }
+      }
+      let proxy = new Proxy(newList, {});
+      this.showList = proxy;
+      // window.scrollTo(1500, 0);
+    },
+    getBrandProduct2(secondValue) {
+      // this.productList = await this.$api('/product/products');
+      let newList = [];
+      let second = secondValue;
+      for (let i = 0; i < this.productList.length; i++) {
+        if (second == this.productList[i].categorySecondId) {
+          newList.push(JSON.parse(JSON.stringify(this.productList[i])));
+        }
+      }
+      let proxy = new Proxy(newList, {});
+      this.showList = proxy;
+      // window.scrollTo(1500, 0);
     },
   },
   setup() {
@@ -248,12 +286,12 @@ export default {
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/374/00/221000000288374.jpg?cVer=17020031&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/481/00/221000000299481.jpg?cVer=03094826&RS=&SP=1',
       },
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/225/00/220900000284225.jpg?cVer=10023119&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/511/00/221000000288511.jpg?cVer=01093513&RS=&SP=1',
       },
     ]);
     const swiperTextBase2 = ref([
@@ -322,21 +360,6 @@ p {
 .side_menu {
   float: left;
   width: 200px;
-  overflow-y: scroll;
-}
-
-#style-3::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #f5f5f5;
-}
-
-#style-3::-webkit-scrollbar {
-  width: 6px;
-  background-color: #f5f5f5;
-}
-
-#style-3::-webkit-scrollbar-thumb {
-  background-color: #000000;
 }
 
 .inputPrice input {
