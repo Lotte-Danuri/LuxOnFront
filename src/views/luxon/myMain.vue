@@ -91,7 +91,7 @@
   <section>
     <div style="margin-left: 25%; margin-top: 3%; width: 60%">
       <div style="display: grid; grid-template-columns: 25% 25% 25% 25%">
-        <div>
+        <div class="listBtn">
           <router-link
             :to="{
               name: 'MyList',
@@ -107,7 +107,7 @@
             </button>
           </router-link>
         </div>
-        <div>
+        <div class="listBtn">
           <router-link
             :to="{
               name: 'MyList',
@@ -123,7 +123,7 @@
             </button>
           </router-link>
         </div>
-        <div>
+        <div class="listBtn">
           <router-link
             :to="{
               name: 'MyList',
@@ -139,7 +139,7 @@
             </button>
           </router-link>
         </div>
-        <div>
+        <div class="listBtn">
           <router-link
             :to="{
               name: 'MyList',
@@ -679,6 +679,9 @@ a {
 </style>
 
 <style scoped>
+.listBtn button {
+  background-color: transparent;
+}
 .firstSwiper {
   width: 100%;
   height: 600px;
