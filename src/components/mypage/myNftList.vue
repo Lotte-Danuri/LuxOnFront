@@ -59,7 +59,7 @@ export default {
 
     const getNftProducts = async()=>{
       try{
-        const response = await axios.post('http://43.200.203.135/api/nft/list',{
+        const response = await axios.post('http://43.200.203.135:5000/api/nft/list',{
           userId : state.userInfo.id
         })
         console.log('getNftProducts',response)
