@@ -10,7 +10,6 @@
 <script>
 import axios from 'axios';
 import { useRoute } from 'vue-router';
-import router from '@/router';
 export default {
   methods: {
     naverLogin() {

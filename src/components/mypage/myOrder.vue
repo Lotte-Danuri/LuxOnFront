@@ -147,7 +147,7 @@ export default {
 
     const checkNft = async (productId) => {
       try {
-        const response = await axios.post('http://localhost:5001/api/checknft',
+        const response = await axios.post('http://43.200.203.135:5000/api/checknft',
           {
             productId: productId,
             userId: state.orderList[0].buyerId,
@@ -164,7 +164,7 @@ export default {
 
     const isNftMinting = async (productId) => {
       try {
-        const response = await axios.post('http://localhost:5001/api/checkmint',
+        const response = await axios.post('http://43.200.203.135:5000/api/checkmint',
           {
             productId: productId,
           },)
@@ -189,7 +189,7 @@ export default {
         confirmButtonText: '네',
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return axios.post('http://localhost:5001/api/receipts', {
+          return axios.post('http://43.200.203.135:5000/api/receipts', {
             productId: order.productId,
             userId: state.orderList[0].buyerId,
           })
