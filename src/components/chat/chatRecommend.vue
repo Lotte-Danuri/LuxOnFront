@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div>맞춤 상품 추천</div>
-    <div v-for="product in plist" :key="product.id">
+  <div class="product_list">
+    <div style="font-weight: bold">맞춤 상품 추천</div>
+    <div class="product_info" v-for="product in this.plist" :key="product.id">
       <hr />
       <div
         @click="
@@ -14,8 +14,8 @@
         "
       >
         <img :src="product.thumbnailUrl" />
-        <div>{{ product.productName }}</div>
-        <div>{{ $comma(product.price) }}</div>
+        <div class="product_name">{{ product.productName }}</div>
+        <div>{{ $comma(product.price) }}원</div>
       </div>
     </div>
     <hr />
@@ -23,37 +23,45 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+
 export default {
   props: {
     chatData: {},
   },
 
-  method: {
-    async getRecommendProduct(productList) {
-      if (this.first) {
-        this.first = false;
-        let plist = [];
-        console.log(productList);
-        await productList.forEach(async product => {
-          await axios
-            .get('https://sbbro.xyz/api/product/products/list/' + product, {
-              headers: {
-                Authorization: `Bearer ` + localStorage.getItem('token'),
-                contentType: 'application/json',
-              },
-            })
-            .then(res => plist.push(res.data[0]))
-            .catch(err => console.log(err));
-        });
-        this.plist = plist;
-        console.log(this.plist);
-      }
-    },
+  data() {
+    return {
+      plist: [],
+      router: useRouter(),
+    };
   },
+
   created() {
-    this.getRecommendProduct(this.chatData.source.split('/'));
+    let productList = this.chatData.source.split('/');
+    console.log(productList);
+    productList.forEach(async product => {
+      await axios
+        .get('https://sbbro.xyz/api/product/products/list/' + product, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            contentType: 'application/json',
+          },
+        })
+        .then(res => this.plist.push(res.data[0]))
+        .catch(err => console.log(err));
+    });
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.product_list {
+  display: flex;
+  flex-direction: column;
+}
+.product_name {
+  font-weight: bold;
+}
+</style>

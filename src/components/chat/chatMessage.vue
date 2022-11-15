@@ -237,29 +237,12 @@
         </div>
       </div>
 
-      <div
+      <ChatRecommend
         class="chat__mymessage__product"
         v-else-if="msg.contentType == '추천'"
-        :on-load="getRecommendProduct(msg.source.split('/'))"
+        :chatData="msg"
       >
-        <div>맞춤 상품 추천</div>
-        <div v-for="product in plist" :key="product.id">
-          <div
-            @click="
-              router.push({
-                path: '/product/myProduct',
-                query: {
-                  productCode: product.productCode,
-                },
-              })
-            "
-          >
-            <img :src="product.thumbnailUrl" />
-            <div>{{ product.productName }}</div>
-            <div>{{ product.price }}</div>
-          </div>
-        </div>
-      </div>
+      </ChatRecommend>
     </div>
     <div
       v-else
