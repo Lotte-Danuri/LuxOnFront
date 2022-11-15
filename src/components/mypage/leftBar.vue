@@ -33,8 +33,12 @@
       <div class="menu">
         <p class="menu-title">나의 정보 관리</p>
         <ul>
-          <li><a>개인정보 수정</a></li>
-          <li><a>회원탈퇴</a></li>
+          <li>
+            <router-link to="/mypage/myinfo">
+              <a>개인정보 수정</a>
+            </router-link>
+          </li>
+          <!-- <li><a>회원탈퇴</a></li> -->
         </ul>
       </div>
     </nav>

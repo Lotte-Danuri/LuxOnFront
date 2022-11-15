@@ -91,7 +91,7 @@
   <section>
     <div style="margin-left: 25%; margin-top: 3%; width: 60%">
       <div style="display: grid; grid-template-columns: 25% 25% 25% 25%">
-        <div>
+        <div class="listBtn">
           <router-link
             :to="{
               name: 'MyList',
@@ -107,7 +107,7 @@
             </button>
           </router-link>
         </div>
-        <div>
+        <div class="listBtn">
           <router-link
             :to="{
               name: 'MyList',
@@ -123,7 +123,7 @@
             </button>
           </router-link>
         </div>
-        <div>
+        <div class="listBtn">
           <router-link
             :to="{
               name: 'MyList',
@@ -139,7 +139,7 @@
             </button>
           </router-link>
         </div>
-        <div>
+        <div class="listBtn">
           <router-link
             :to="{
               name: 'MyList',
@@ -425,15 +425,24 @@
         <h2 style="font-weight: bold">Best Product</h2>
         <br />
         <div class="product_grid">
-          <div v-for="product in bestList.slice(0, 16)" v-bind:key="product">
+          <div
+            v-for="(product, index) in bestList.slice(0, 16)"
+            v-bind:key="product"
+            style="position: relative"
+          >
             <router-link
               :to="{
                 path: '/product/myProduct',
                 query: { productCode: product.productCode },
               }"
             >
+              <div
+                class="rank_num"
+                style="width: 30px; height: 30px; background-color: black"
+              >
+                {{ index + 1 }}
+              </div>
               <img :src="product.thumbnailUrl" />
-              <div style="position: absolute; top: 10px">sfdsfdsfsdf</div>
               <br />
               <span>
                 <p style="color: black">
@@ -679,6 +688,9 @@ a {
 </style>
 
 <style scoped>
+.listBtn button {
+  background-color: transparent;
+}
 .firstSwiper {
   width: 100%;
   height: 600px;
@@ -848,5 +860,14 @@ a {
 }
 .product_grid div span p {
   margin: 0px;
+}
+
+.rank_num {
+  position: absolute;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  margin: 0;
+  text-align: center;
 }
 </style>

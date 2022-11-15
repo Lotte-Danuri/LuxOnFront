@@ -235,6 +235,17 @@ export default {
       //     .slice(window.location.href.indexOf('searchValue'))
       //     .slice(12);
       // }
+      // let reloadFlag = 0;
+      // if (window.location.href.includes('list') && reloadFlag == 0) {
+      //   // location.reload();
+      //   reloadFlag = 1;
+      // }
+      // window.onload = function () {
+      //   if (!window.location.hash) {
+      //     window.location = window.location + '#loaded';
+      //     window.location.reload();
+      //   }
+      // };
       for (let i = 0; i < this.productList.length; i++) {
         if (this.productList[i].productName.includes(search)) {
           newList.push(JSON.parse(JSON.stringify(this.productList[i])));

@@ -21,6 +21,7 @@ import NaverLogin from '@/components/social_login/naverLogin.vue';
 import MyPage from '@/views/luxon/user/myPage.vue';
 import MyOrder from '@/components/mypage/myOrder.vue';
 import MyLike from '@/components/mypage/myLike.vue';
+import MyInfo from '@/components/mypage/myInfo.vue';
 import MySystem from '@/layouts/system/systemIndex.vue';
 import SystemView from '@/views/system/systemView.vue';
 import GetProductChance from '@/views/admin/getProductChance.vue';
@@ -114,14 +115,19 @@ const routes = [
             component: MyLike,
           },
           {
-            path : 'nft',
-            name : 'nft',
+            path: 'nft',
+            name: 'nft',
             component: () => import('@/components/mypage/myNft.vue'),
           },
           {
-            path : 'nftlist',
-            name : 'nftlist',
+            path: 'nftlist',
+            name: 'nftlist',
             component: () => import('@/components/mypage/myNftList.vue'),
+          },
+          {
+            path: 'myinfo',
+            name: 'myinfo',
+            component: MyInfo,
           },
         ],
       },
