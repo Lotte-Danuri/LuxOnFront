@@ -306,7 +306,7 @@
             </div>
             <button
               v-else
-              class="chat__coupon__button"
+              class="chat__coupon__button btn btn-dark"
               @click="getCoupon(msg.source)"
             >
               쿠폰 받기
@@ -465,8 +465,8 @@
                 "
               >
                 <span
-                  style="color: white; text-decoration: none; text-align: left"
-                  >특별 할인가</span
+                  style="color: black; text-decoration: none; text-align: left"
+                  >할인가</span
                 >
                 {{ product.data.price }} 원
               </div>
@@ -480,7 +480,7 @@
               </div>
               <div class="product_button">
                 <button
-                  class="btn btn-light product_btn"
+                  class="btn btn-dark product_btn"
                   @click="
                     router.push({
                       path: '/product/myProduct',
@@ -493,40 +493,21 @@
                   상품 상세
                 </button>
                 <button
-                  class="btn btn-light product_btn"
+                  class="btn btn-dark product_btn"
                   @click="orderProduct"
-                  v-if="coupon.data.status"
+                  v-if="coupon.data"
                 >
                   상품 구매
                 </button>
               </div>
             </div>
           </div>
-          <div
+          <ChatRecommend
             class="chat__yourmessage__product"
             v-else-if="msg.contentType == '추천'"
-            :on-load="getRecommendProduct(msg.source.split('/'))"
+            :chatData="msg"
           >
-            <div>상품 추천</div>
-            <div v-for="product in plist" :key="product.id">
-              <hr />
-              <div
-                @click="
-                  router.push({
-                    path: '/product/myProduct',
-                    query: {
-                      productCode: product.productCode,
-                    },
-                  })
-                "
-              >
-                <img :src="product.thumbnailUrl" />
-                <div>{{ product.productName }}</div>
-                <div>{{ $comma(product.price) }}</div>
-              </div>
-            </div>
-            <hr />
-          </div>
+          </ChatRecommend>
 
           <p class="chat__yourmessage__time">
             {{ msg.createdAt.substr(11, 5) }}
@@ -543,6 +524,7 @@ import { onMounted } from 'vue';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'vue-router';
+import ChatRecommend from '@/components/chat/chatRecommend.vue';
 
 export default {
   setup() {
@@ -558,6 +540,9 @@ export default {
     };
   },
   props: ['msg', 'prev'],
+  components: {
+    ChatRecommend,
+  },
   data() {
     return {
       router: useRouter(),
@@ -719,7 +704,7 @@ export default {
         this.first = false;
         let plist = [];
         console.log(productList);
-        productList.forEach(async product => {
+        await productList.forEach(async product => {
           await axios
             .get('https://sbbro.xyz/api/product/products/list/' + product, {
               headers: {
@@ -787,10 +772,8 @@ export default {
 }
 
 .chat__coupon__button {
-  width: 75px;
+  width: 100%;
   height: 25px;
-  color: #ffffff;
-  background-color: #414141;
 }
 
 .chat__mymessage__notification {
