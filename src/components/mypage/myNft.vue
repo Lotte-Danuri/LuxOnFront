@@ -67,7 +67,7 @@
           </div>
           <div class="data_grid">
             <h3>발급일</h3>
-            <p>{{ state.nftData.registeredDate.slice(0, 10) }}</p>
+            <p>{{ globalProperties.$formatDatetime(new Date(state.nftData.registeredDate)) }}</p>
           </div>
           <div class="data_grid">
             <h3>NFT 주소</h3>
@@ -100,13 +100,16 @@ export default {
     const router = useRouter();
     const userId = computed(() => route.params.userId);
     const productId = computed(() => route.params.productId);
+    const orderId = computed(() => route.params.orderId);
+    const globalProperties =
+      getCurrentInstance().appContext.config.globalProperties;
 
     const state = reactive({
       nftData: '',
     });
 
     onBeforeMount(async () => {
-      if (!userId.value || !productId.value) {
+      if (!userId.value || !productId.value || !orderId.value) {
         Swal.fire('정상적인 경로로 접근해주세요');
         router.push('order');
       }
@@ -116,11 +119,15 @@ export default {
 
     const getNftData = async () => {
       try {
+        console.log(userId.value)
+        console.log(productId.value)
+        console.log(orderId.value)
         const response = await axios.post(
           'http://43.200.203.135:5000/api/nft',
           {
             userId: userId.value,
             productId: productId.value,
+            orderId : orderId.value,
           },
         );
         state.nftData = response.data[0];
@@ -130,7 +137,7 @@ export default {
       }
     };
 
-    return { state };
+    return { state, globalProperties};
   },
 };
 </script>
