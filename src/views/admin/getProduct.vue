@@ -270,8 +270,38 @@ export default {
           document.getElementById("productSearchButton").click();
         });
     },
+
+    async getBrand(storeId) {
+      try {
+        const response = await axios.get(
+          "https://sbbro.xyz/api/member/store/name/" + storeId,
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem("token"),
+            },
+          }
+        );
+        console.log("getBrand", response);
+        return response.data;
+      } catch (arr) {
+        console.log(arr);
+      }
+    },
+
     async addNft(product) {
       console.log(product);
+
+      var brand = await this.getBrand(localStorage.getItem("store_id"));
+      var postData = {
+        productId: product.id,
+        name: product.productName,
+        symbol: product.productCode,
+        image: product.thumbnailUrl,
+        price: product.price,
+        brandName: product.brandName,
+        sellerId: localStorage.getItem("store_id"),
+        brandName: brand.brandName,
+      };
 
       Swal.fire({
         title: "상품의 영수증을 NFT로 관리하시겠습니까?",
@@ -279,30 +309,21 @@ export default {
         confirmButtonText: "네",
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return axios.post("http://43.200.203.135:5000/contract", {
-            productId: product.id,
-            name: product.productName,
-            symbol: product.productCode,
-            image: product.thumbnailUrl,
-            price: product.price,
-            brandName : product.brandName,
-            sellerId: localStorage.getItem('store_id')
-          });
+          return axios.post("http://localhost:5000/contract", postData);
         },
         allowOutsideClick: () => !Swal.isLoading(),
       }).then((result) => {
         console.log(result);
         if (result.value.status == 200) {
           Swal.fire({
-            icon:'success',
-            text:"등록이 완료되었습니다."
+            icon: "success",
+            text: "등록이 완료되었습니다.",
           });
-        }
-        else{
+        } else {
           Swal.fire({
-           icon: 'error',
-           text:'등록에 실패하였습니다.' 
-          })
+            icon: "error",
+            text: "등록에 실패하였습니다.",
+          });
         }
       });
     },
