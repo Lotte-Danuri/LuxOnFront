@@ -100,7 +100,7 @@ export default {
               window.location.href = '/admin/dashboard';
               localStorage.setItem('store_id', response.headers.store_id);
             } else if (response.headers.role == 2) {
-              window.location.href = '/system/systemview';
+              window.location.href = '/system/syspromotion';
               localStorage.setItem('store_id', response.headers.store_id);
             }
             // console.log(response.headers);
