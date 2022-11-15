@@ -152,6 +152,7 @@ export default {
           {
             productId: productId,
             userId: state.orderList[0].buyerId,
+            orderId: orderId,
           },)
           console.log("checkNft response",response)
         if (response.data.length != 0) {
@@ -223,7 +224,7 @@ export default {
       router.push({
         name: "nft",
         params: {
-          orderId: order.orderId,
+          orderId: order.id,
           userId: state.orderList[0].buyerId,
           productId: order.productId
         },
