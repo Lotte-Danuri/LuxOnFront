@@ -305,17 +305,37 @@ export default {
         });
     },
 
-    logout() {
-      localStorage.removeItem('login_id');
-      localStorage.removeItem('role');
-      localStorage.removeItem('userName');
-      localStorage.removeItem('token');
-      localStorage.removeItem('store_id');
-      this.router.push('../');
+    async getBrand(storeId) {
+      try {
+        const response = await axios.get(
+          'https://sbbro.xyz/api/member/store/name/' + storeId,
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+            },
+          },
+        );
+        console.log('getBrand', response);
+        return response.data;
+      } catch (arr) {
+        console.log(arr);
+      }
     },
 
     async addNft(product) {
       console.log(product);
+
+      var brand = await this.getBrand(localStorage.getItem('store_id'));
+      var postData = {
+        productId: product.id,
+        name: product.productName,
+        symbol: product.productCode,
+        image: product.thumbnailUrl,
+        price: product.price,
+        brandName: product.brandName,
+        sellerId: localStorage.getItem('store_id'),
+        brandName: brand.brandName,
+      };
 
       Swal.fire({
         title: '상품의 영수증을 NFT로 관리하시겠습니까?',
@@ -323,15 +343,7 @@ export default {
         confirmButtonText: '네',
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return axios.post('http://43.200.203.135:5000/contract', {
-            productId: product.id,
-            name: product.productName,
-            symbol: product.productCode,
-            image: product.thumbnailUrl,
-            price: product.price,
-            brandName: product.brandName,
-            sellerId: localStorage.getItem('store_id'),
-          });
+          return axios.post('http://43.200.203.135:5000/contract', postData);
         },
         allowOutsideClick: () => !Swal.isLoading(),
       }).then(result => {
