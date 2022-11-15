@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 import { reactive, ref } from 'vue';
 import { onBeforeMount } from 'vue';
 import likeImg from '@/assets/img/heart_icon.png';
@@ -20,7 +21,7 @@ export default {
   setup(props) {
     const globalProperties =
       getCurrentInstance().appContext.config.globalProperties;
-
+      
     const state = reactive({
       buttonCheck: false,
       imgSrc: '',

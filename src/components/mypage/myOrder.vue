@@ -108,6 +108,7 @@
 </template>
 
 <script>
+
 import { reactive } from "vue";
 import { onBeforeMount } from "vue";
 import axios from "axios";

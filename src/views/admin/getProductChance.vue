@@ -1,27 +1,46 @@
 <template>
-  <h1>상품관리</h1>
-  <h3>판매가 저조했으나, 고객 관심이 높은 상품을 확인할 수 있습니다.</h3>
+  <br/>
+  <br/>
+  <h1>상품 관리</h1>
+  <br/>
+  <div style="display:flex;">
+    <h3>상품의 방문횟수, 주문횟수, 주문전환율 조회가 가능합니다.</h3>
+    <h3 style="font-style: italic; color:gray; margin-left:45%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
+    <a @click="logout" style="margin-left: 4%;">
+      <div style="display:flex; margin-bottom: 0px;">
+        <span class="material-icons-sharp">logout</span>
+        <h3>Logout</h3>
+      </div>
+    </a>
+  </div>
+  <hr/>
+  <br/>
   <main>
     <div class="regi_grid">
       <div class="top_div">
-        시작일 : <input type="datetime-local" data-placeholder="시작일" id="startDate"/>
-        종료일 : <input type="datetime-local" data-placeholder="종료일" id="endDate" />
-      </div>
-      <button
+        <div class="input-group mb-3">
+          <input type="datetime-local" class="form-control" id="startDate"/>
+          <input type="datetime-local" class="form-control" id="endDate" />
+        </div>
+        <button
         id="searchRecommendProductListButton"
+        class="btn btn-outline-dark"
         style="
-          background-color: white;
           width: 100px;
           height: 50px;
-          color: black;
           border: solid 1px black;
+          margin-left:5%;
         "
         @click="searchRecommendProductList"
       >
         상품검색
       </button>
+      </div>
     </div>
-    <h3>주문이 5회 이하이고, 주문 전환율이 낮습니다.</h3>
+    <br>
+    <br>
+    <h3 style="margin-left:40%;">※ 주문이 5회 이하이고, 주문 전환율이 낮은 순입니다.</h3>
+    <br>
     <table id="customers">
       <tr>
         <th>순위</th>
@@ -46,8 +65,8 @@
             <td>{{recommendProduct.categoryFirstName}}</td>
             <td>{{recommendProduct.categorySecondName}}</td>
             <td>{{recommendProduct.categoryThirdName}}</td>
-            <td>{{recommendProduct.clickCount}}</td>
-            <td>{{recommendProduct.orderCount}}</td>
+            <td>{{recommendProduct.clickCount}}회</td>
+            <td>{{recommendProduct.orderCount}}회</td>
             <td>{{recommendProduct.conversionRate}}%</td>
             <td><button
               style="
@@ -75,7 +94,8 @@ export default {
     return {
       recommendProductList:[],
       startDate:"",
-      endDate:""
+      endDate:"",
+      userName: localStorage.getItem('userName'),
     };
   },
   created() {
@@ -142,16 +162,20 @@ export default {
     updateProduct(recommendProductId){
       router.push({path: 'updateProduct',query: { productId:recommendProductId}})
     },
+    logout(){
+      localStorage.removeItem('login_id');
+      localStorage.removeItem('role');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('token');
+      localStorage.removeItem('store_id');
+      router.push('../');
+    },
   },
 };
 </script>
 
 <style scoped>
-.regi_grid {
-  display: grid;
-  grid-template-columns: 700px 200px 200px;
-  gap: 30px;
-}
+
 .category_grid {
   /* display: grid; */
   /* grid-template-columns: repeat(3, 1fr);
@@ -165,23 +189,31 @@ export default {
   height: 30px;
 }
 
+.top_div {
+  display:flex;
+  margin-top: 35px;
+}
+
 .top_div input {
-  width: 200px;
-  height: 40px;
-  border: 2px solid black;
+  width: 100px;
+  height: 50px;
   margin-left: 30px;
-  margin-bottom: 30px;
+  text-align: center;
 }
 
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
+  text-align: center;
+  width: 80%;
+  margin-left:10%;
 }
 
 #customers td,
 #customers th {
   border: 1px solid #ddd;
   padding: 8px;
+  font-size: 13px;
 }
 
 #customers tr:nth-child(even) {
@@ -195,7 +227,7 @@ export default {
 #customers th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #9b9b9b;
   color: white;
 }
@@ -220,4 +252,21 @@ export default {
   height: 50px;
   border: solid 1px gray;
 }
+
+.input-group{
+  width: 50%;
+  margin-left: 15%;
+}
+
+.regi_grid{
+  border: solid 1px black;
+  width: 60%;
+  margin-left: 20%;
+  border-radius: 10px;
+}
+
+.input-group mb-3{
+  margin-bottom:0px;
+}
 </style>
+margin-top: 35p
