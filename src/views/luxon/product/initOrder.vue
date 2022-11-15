@@ -5,12 +5,12 @@
       <h2 style="text-align: center; font-weight: bold; margin-top: 50px">
         주문서
       </h2>
-      <hr style="border: 2px solid black" />
+      <hr style="border: 3px solid gray" />
       <div class="initOrder_grid">
         <div>
           <div>
             <h2 style="font-weight: bold">배송지</h2>
-            <hr />
+            <hr style="border: 3px solid gray" />
             <br />
             <div>
               <div class="small_grid">
@@ -23,16 +23,24 @@
                     background-color: white;
                     border: solid 1px black;
                   "
-                  @click="openPost"
+                  @click="search"
                 >
-                  입력
+                  주소 변경
                 </button>
               </div>
+              <div class="small_grid">
+                상세주소
+                <input
+                  style="margin-top: 5px; width: 450px"
+                  :value="state.userInfo.addressDetail"
+                />
+              </div>
+              <br />
               <div class="small_grid">
                 배송 메시지
                 <select
                   style="
-                    margin-left: 10%;
+                    margin-left: ;
                     width: 450px;
                     height: 30px;
                     color: gray;
@@ -56,8 +64,9 @@
             <div class="custom_info">
               <div class="small_grid">
                 이름
-                <input :value="state.userInfo.name" />
+                <input :value="state.userInfo.name" style="width: 150px" />
               </div>
+              <br />
               <!-- <div class="small_grid">
                 이메일 주소
                 <input value="lotte@luxon.com" />
@@ -78,10 +87,10 @@
                   />
                 </div>
               </div>
-              <div class="small_grid">
+              <!-- <div class="small_grid">
                 다른 연락처
                 <input value="" />
-              </div>
+              </div> -->
             </div>
             <hr style="border: 3px solid gray" />
           </div>
@@ -385,6 +394,8 @@ export default {
                 totalPrice: totalPrice(),
                 totalQuantity: state.totalQuantity,
                 orderDataDtoList: orderDataDtoList,
+                address1: state.userInfo.address,
+                address2: state.userInfo.addressDetail,
               },
               {
                 headers: {
@@ -425,6 +436,15 @@ export default {
       return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
+    const search = () => {
+      new window.daum.Postcode({
+        oncomplete: data => {
+          console.log(data);
+          state.userInfo.address = data.roadAddress;
+        },
+      }).open();
+    };
+
     return {
       state,
       products,
@@ -436,6 +456,7 @@ export default {
       calTotalPriceAndQuantity,
       reserveCouponId,
       totalPrice,
+      search,
     };
   },
 };
@@ -463,6 +484,12 @@ export default {
   margin-left: 5%;
   display: grid;
   grid-template-columns: 15% 70% 35%;
+}
+
+.small_grid input {
+  border: 1px solid gray;
+  height: 30px;
+  padding: 10px;
 }
 
 .custom_info div input {

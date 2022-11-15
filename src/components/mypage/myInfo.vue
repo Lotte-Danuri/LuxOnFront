@@ -13,22 +13,6 @@
         <br />
         <input placeholder="아이디" v-model="state.id" />
         <br />
-        <input
-          placeholder="비밀번호"
-          type="password"
-          v-model="state.password"
-        />
-        <p>숫자, 영문 포함 10자 이상</p>
-        <p style="color: red">
-          비밀번호는 10자 이상으로, 영문대소문자, 숫자 중 2가지 이상 조합으로
-          공백없이 설정해 주세요.
-        </p>
-        <input
-          placeholder="비밀번호 확인"
-          type="password"
-          v-model="state.password2"
-        />
-        <br />
         <input placeholder="이름" v-model="state.name" />
         <div class="wrapper">
           <input
@@ -85,8 +69,6 @@
             v-model="state.smalladdress"
           />
         </div>
-        <br />
-        <input placeholder="생일" v-model="state.birthday" />
         <div class="wrapper2">
           <input
             type="radio"
@@ -176,29 +158,26 @@ export default {
 
     const signUp = () => {
       state.address = state.bigaddress + state.smalladdress;
+      console.log(state.id, state.name, state.phone, state.address);
       axios
-        .post('https://sbbro.xyz/api/auth/users', {
-          id: state.id,
-          password: state.password,
-          name: state.name,
-          gender: state.gender,
-          role: state.rolePicked,
-          birthDate: state.birthday,
-          phoneNumber: state.phoneNumber,
-          address: state.address,
-        })
+        .post(
+          'https://sbbro.xyz/api/member/info',
+          {
+            name: state.name,
+            phoneNumber: state.phone,
+            address: state.address,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+            },
+          },
+        )
         .then(response => {
-          axios
-            .post('https://sbbro.xyz/api/chat/user', {
-              userId: state.id,
-              userName: state.name,
-            })
-            .then(response => {
-              console.log(response);
-            });
           console.log(response);
-          router.push('/login');
-        });
+          router.push('/main');
+        })
+        .catch(err => console.log(err));
     };
 
     const search = () => {
