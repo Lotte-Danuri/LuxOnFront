@@ -26,7 +26,7 @@
         </router-link>
         <a href="/system/sysnotification">
           <span class="material-icons-sharp"> question_answer </span>
-          <h3>체팅 알림 전송</h3>
+          <h3>채팅 알림 전송</h3>
         </a>
         <router-link to="/system/sysrecommend">
           <span class="material-icons-sharp"> offline_bolt </span>
