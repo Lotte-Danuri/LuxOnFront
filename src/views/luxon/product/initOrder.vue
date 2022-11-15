@@ -5,17 +5,18 @@
       <h2 style="text-align: center; font-weight: bold; margin-top: 50px">
         주문서
       </h2>
-      <hr style="border: 2px solid black" />
+      <hr style="border: 3px solid gray" />
       <div class="initOrder_grid">
         <div>
           <div>
             <h2 style="font-weight: bold">배송지</h2>
-            <hr />
+            <hr style="border: 3px solid gray" />
             <br />
             <div>
               <div class="small_grid">
                 받는분
                 <p id="insertAddress">{{ state.userInfo.address }}</p>
+
                 <button
                   style="
                     width: 100px;
@@ -23,16 +24,22 @@
                     background-color: white;
                     border: solid 1px black;
                   "
-                  @click="openPost"
+                  @click="search"
                 >
                   입력
                 </button>
+                <br />
+                상세주소
+                <input
+                  style="margin-top: 5px; width : 450px"
+                  :value="state.userInfo.addressDetail"
+                />
               </div>
               <div class="small_grid">
                 배송 메시지
                 <select
                   style="
-                    margin-left: 10%;
+                    margin-left: ;
                     width: 450px;
                     height: 30px;
                     color: gray;
@@ -78,10 +85,10 @@
                   />
                 </div>
               </div>
-              <div class="small_grid">
+              <!-- <div class="small_grid">
                 다른 연락처
                 <input value="" />
-              </div>
+              </div> -->
             </div>
             <hr style="border: 3px solid gray" />
           </div>
@@ -118,7 +125,7 @@
                     {{
                       comma(
                         product.productDto.price * product.quantity -
-                          product.discountPrice,
+                          product.discountPrice
                       )
                     }}원
                   </p>
@@ -216,11 +223,11 @@
   </main>
 </template>
 <script>
-import { computed, reactive } from 'vue';
-import { onBeforeMount } from 'vue';
-import axios from 'axios';
-import Swal from 'sweetalert2';
-import { useRoute, useRouter } from 'vue-router';
+import { computed, reactive } from "vue";
+import { onBeforeMount } from "vue";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   components: {},
@@ -229,15 +236,15 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const products = computed(() =>
-      route.params.products ? JSON.parse(route.params.products) : null,
+      route.params.products ? JSON.parse(route.params.products) : null
     );
     const reserveCouponId = computed(() =>
-      route.params.couponId ? route.params.couponId : null,
+      route.params.couponId ? route.params.couponId : null
     );
 
     const state = reactive({
-      userInfo: '',
-      order: '',
+      userInfo: "",
+      order: "",
       totalProductPrice: 0,
       totalQuantity: 0,
       totalDiscountPrice: 0,
@@ -277,17 +284,17 @@ export default {
       for (var index in products.value) {
         await axios
           .post(
-            'https://sbbro.xyz/api/member/mycoupon/product',
+            "https://sbbro.xyz/api/member/mycoupon/product",
             {
               productId: products.value[index].productDto.id,
             },
             {
               headers: {
-                Authorization: `Bearer ` + localStorage.getItem('token'),
+                Authorization: `Bearer ` + localStorage.getItem("token"),
               },
-            },
+            }
           )
-          .then(response => {
+          .then((response) => {
             products.value[index].coupons = response.data;
             products.value[index].discountPrice = 0;
             products.value[index].selectedCouponIndex = -1;
@@ -298,12 +305,12 @@ export default {
     const setReserveCoupon = async () => {
       try {
         const response = await axios.get(
-          'https://sbbro.xyz/api/product/coupons/' + reserveCouponId.value,
+          "https://sbbro.xyz/api/product/coupons/" + reserveCouponId.value,
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
+              Authorization: `Bearer ` + localStorage.getItem("token"),
             },
-          },
+          }
         );
         products.value[0].coupons = [];
         products.value[0].coupons.push(response.data);
@@ -317,29 +324,29 @@ export default {
 
     const getUserData = async () => {
       await axios
-        .get('https://sbbro.xyz/api/member/members', {
+        .get("https://sbbro.xyz/api/member/members", {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
+            Authorization: `Bearer ` + localStorage.getItem("token"),
           },
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           state.userInfo = response.data;
         });
     };
 
     const loginCheck = () => {
-      if (localStorage.getItem('token') == null) {
-        Swal.fire('로그인 해주세요').then(() => {
-          router.push('/login');
+      if (localStorage.getItem("token") == null) {
+        Swal.fire("로그인 해주세요").then(() => {
+          router.push("/login");
         });
       }
     };
 
     const isProductsData = () => {
       if (products.value == null) {
-        Swal.fire('올바른 경로로 접근해주세요').then(() => {
-          router.push('/cart');
+        Swal.fire("올바른 경로로 접근해주세요").then(() => {
+          router.push("/cart");
         });
       }
     };
@@ -361,12 +368,12 @@ export default {
 
     const order = () => {
       Swal.fire({
-        title: '결제 하시겠습니까?',
-        icon: 'success',
+        title: "결제 하시겠습니까?",
+        icon: "success",
         showCancelButton: true,
-        confirmButtonText: '네',
-        cancelButtonText: '아니요',
-      }).then(result => {
+        confirmButtonText: "네",
+        cancelButtonText: "아니요",
+      }).then((result) => {
         if (result.isConfirmed) {
           var orderDataDtoList = new Array();
           for (var index in products.value) {
@@ -385,30 +392,32 @@ export default {
                 totalPrice: totalPrice(),
                 totalQuantity: state.totalQuantity,
                 orderDataDtoList: orderDataDtoList,
+                address1: state.userInfo.address,
+                address2: state.userInfo.addressDetail,
               },
               {
                 headers: {
-                  Authorization: `Bearer ` + localStorage.getItem('token'),
+                  Authorization: `Bearer ` + localStorage.getItem("token"),
                 },
-              },
+              }
             )
-            .then(response => {
-              Swal.fire('주문이 완료되었습니다.');
-              router.push('/mypage/order');
+            .then((response) => {
+              Swal.fire("주문이 완료되었습니다.");
+              router.push("/mypage/order");
             });
         }
       });
     };
 
     const onChangeCoupon = (product, event) => {
-      if (event.target.value == 'none') {
+      if (event.target.value == "none") {
         product.selectedCouponIndex = -1;
         return;
       }
       product.selectedCouponIndex = event.target.value;
     };
 
-    const applyCoupon = product => {
+    const applyCoupon = (product) => {
       var discountRate =
         product.selectedCouponIndex != -1
           ? product.coupons[product.selectedCouponIndex].discountRate
@@ -418,11 +427,20 @@ export default {
     };
 
     const showAlert = () => {
-      this.$swal('적용 되었습니다');
+      this.$swal("적용 되었습니다");
     };
 
-    const comma = val => {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const comma = (val) => {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+    const search = () => {
+      new window.daum.Postcode({
+        oncomplete: (data) => {
+          console.log(data);
+          state.userInfo.address = data.roadAddress;
+        },
+      }).open();
     };
 
     return {
@@ -436,6 +454,7 @@ export default {
       calTotalPriceAndQuantity,
       reserveCouponId,
       totalPrice,
+      search,
     };
   },
 };
@@ -463,6 +482,12 @@ export default {
   margin-left: 5%;
   display: grid;
   grid-template-columns: 15% 70% 35%;
+}
+
+.small_grid input {
+  border: 1px solid gray;
+  height: 30px;
+  padding: 10px;
 }
 
 .custom_info div input {
