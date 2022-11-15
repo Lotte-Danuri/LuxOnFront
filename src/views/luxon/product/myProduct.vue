@@ -102,7 +102,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div style="margin-top: 50px">
         <nav class="click_nav">
           <button id="detail_btn" @click="click_detail" style="color: black">
             상품상세

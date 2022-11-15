@@ -1,7 +1,6 @@
 <template>
   <div class="mypage">
     <h2>NFT 인증서</h2>
-
     <!-- Order -->
     <div
       class="main__styling-slide"
@@ -17,29 +16,32 @@
       "
     >
       <div class="nft_grid" style="margin-left: 0%; margin-top: 0%">
-        <!-- <div class="">
-              {{ state.nftData.name }}
-            </div> -->
-        <div class="" style="background-color: black">
+        <div
+          class=""
+          style="
+            background-image: url('https://pixy.org/src/474/thumbs350/4743058.jpg');
+            background-size: 1000px 900px;
+            background-repeat: no-repeat;
+            width: 520px;
+            height: 440px;
+            margin-left: 50px;
+          "
+        >
           <img
-            style="width: 450px; height: 400px"
+            style="
+              width: 450px;
+              height: 400px;
+              margin-top: 20px;
+              margin-left: 35px;
+            "
             :src="state.nftData.image"
-            alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
           />
         </div>
-        <div style="margin-left: 50px">
-          <div
-            style="
-              display: grid;
-              grid-template-columns: 100px 50px;
-              margin-left: 30%;
-            "
-          >
-            <h1 style="text-align: center">NFT</h1>
-            <img
-              style="width: 50px; background-color: transparent"
-              src="@/assets/img/gold.png"
-            />
+        <div style="margin-left: 40px">
+          <div>
+            <div>
+              <h1 style="text-align: center">NFT</h1>
+            </div>
           </div>
           <!-- <vue-qr
             :bgSrc="src"
@@ -67,7 +69,13 @@
           </div>
           <div class="data_grid">
             <h3>발급일</h3>
-            <p>{{ globalProperties.$formatDatetime(new Date(state.nftData.registeredDate)) }}</p>
+            <p>
+              {{
+                globalProperties.$formatDatetime(
+                  new Date(state.nftData.registeredDate),
+                )
+              }}
+            </p>
           </div>
           <div class="data_grid">
             <h3>NFT 주소</h3>
@@ -76,7 +84,6 @@
         </div>
       </div>
     </div>
-    {{ state }}
   </div>
 
   <!-- mypage-shopping__content end -->
@@ -119,15 +126,15 @@ export default {
 
     const getNftData = async () => {
       try {
-        console.log(userId.value)
-        console.log(productId.value)
-        console.log(orderId.value)
+        console.log(userId.value);
+        console.log(productId.value);
+        console.log(orderId.value);
         const response = await axios.post(
           'http://43.200.203.135:5000/api/nft',
           {
             userId: userId.value,
             productId: productId.value,
-            orderId : orderId.value,
+            orderId: orderId.value,
           },
         );
         state.nftData = response.data[0];
@@ -137,7 +144,7 @@ export default {
       }
     };
 
-    return { state, globalProperties};
+    return { state, globalProperties };
   },
 };
 </script>
@@ -166,5 +173,9 @@ export default {
 .data_grid {
   display: grid;
   grid-template-columns: 150px 300px;
+}
+
+.data_grid h3 {
+  font-weight: bold;
 }
 </style>
