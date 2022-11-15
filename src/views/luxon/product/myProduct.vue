@@ -414,7 +414,7 @@ export default {
             contentType: '상품정보',
             sendBy: localStorage.getItem('login_id'),
             sendTo: state.products[state.selectedStoreIndex].storeId,
-            source: state.products[state.selectedStoreIndex].productCode,
+            source: state.products[state.selectedStoreIndex].id,
           },
           {
             headers: {

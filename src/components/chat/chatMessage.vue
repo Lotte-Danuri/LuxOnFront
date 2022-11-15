@@ -31,8 +31,8 @@
         v-else-if="msg.contentType == '쿠폰'"
         :on-load="getCouponInfo(msg.source)"
       >
-        <div>{{ coupon.data.name }}</div>
-        <div>{{ coupon.data.discountRate }}% 할인</div>
+        <div class="coupon_name">{{ coupon.data.name }}</div>
+        <div class="coupon_percent">{{ coupon.data.discountRate }}%</div>
         <div style="color: gray; font-size: 12px">
           {{ coupon.data.startDate.slice(0, 10) }}~{{
             coupon.data.endDate.slice(0, 10)
@@ -41,93 +41,209 @@
         <div style="color: gray; font-size: 14px" v-if="coupon.data.status">
           상대가 쿠폰을 받으셨습니다.
         </div>
-        <div
-          style="color: gray; font-size: 14px"
-          v-else
-          class="chat__coupon__button"
-          :disabled="true"
-        >
+        <div style="color: gray; font-size: 14px" v-else>
           쿠폰을 보냈습니다.
         </div>
       </div>
       <div
-        class="chat__mymessage__paragraph"
         v-else-if="msg.contentType == '프로모션'"
         :on-load="getPromotion(msg.source)"
       >
-        <div>{{ promotion.title }}</div>
-        <div>
+        <div class="image-container">
           <img :src="promotion.imageUrl" />
         </div>
-        <div>
-          {{ promotion.startDate.slice(0, 10) }}~{{
-            promotion.endDate.slice(0, 10)
-          }}
+        <div class="chat__mymessage__paragraph">
+          <div>{{ promotion.title }}</div>
+          <div class="product_category">
+            {{ promotion.startDate.slice(0, 10) }}~{{
+              promotion.endDate.slice(0, 10)
+            }}
+          </div>
+          <router-link
+            :to="{
+              name: 'promotion',
+              query: {
+                title: promotion.title,
+                imageUrl: promotion.imageUrl,
+                startDate: promotion.startDate,
+                endDate: promotion.endDate,
+                buttonUrl: promotion.buttonUrl,
+              },
+            }"
+            target="_blank"
+          >
+            <button class="btn btn-light" style="width: 100%" disabled>
+              프로모션 이동
+            </button>
+          </router-link>
         </div>
-        <router-link
-          :to="{
-            name: 'promotion',
-            query: {
-              title: promotion.title,
-              imageUrl: promotion.imageUrl,
-              startDate: promotion.startDate,
-              endDate: promotion.endDate,
-              buttonUrl: promotion.buttonUrl,
-            },
-          }"
-          target="_blank"
-        >
-          <button class="btn">프로모션 이동</button>
-        </router-link>
       </div>
       <div
-        class="chat__mymessage__product"
         v-else-if="msg.contentType == '상품정보'"
         :on-load="getProduct(msg.source)"
       >
-        <div>상품정보</div>
-        <img :src="product.data.thumbnailUrl" />
-        <div>
-          {{ product.data.categoryFirstName }}>{{
-            product.data.categorySecondName
-          }}>{{ product.data.categoryThirdName }}
+        <img
+          class="image-container"
+          :src="product.data.thumbnailUrl"
+          @click="
+            router.push({
+              path: '/product/myProduct',
+              query: {
+                productCode: product.data.productCode,
+              },
+            })
+          "
+        />
+
+        <div class="chat__mymessage__product">
+          <div
+            class="product_name"
+            @click="
+              router.push({
+                path: '/product/myProduct',
+                query: {
+                  productCode: product.data.productCode,
+                },
+              })
+            "
+          >
+            {{ product.data.productName }}
+          </div>
+
+          <div class="product_category">
+            {{ product.data.categoryFirstName }}>{{
+              product.data.categorySecondName
+            }}>{{ product.data.categoryThirdName }}
+          </div>
+          <hr />
+
+          <div class="product_price">{{ $comma(product.data.price) }}원</div>
+          <div class="product_button">
+            <button
+              class="btn btn-light product_btn"
+              @click="
+                router.push({
+                  path: '/product/myProduct',
+                  query: {
+                    productCode: product.data.productCode,
+                  },
+                })
+              "
+            >
+              상품 상세
+            </button>
+            <button class="btn btn-light product_btn" @click="orderProduct">
+              상품 구매
+            </button>
+            <button
+              class="btn btn-light product_btn"
+              @click="insertCart(product.data.source)"
+            >
+              장바구니
+            </button>
+          </div>
         </div>
-        <div>{{ product.data.productName }}</div>
-        <div>{{ product.data.price }}</div>
-        <button class="btn btn-primary" @click="orderProduct">상품 구매</button>
-        <button
-          class="btn btn-primary"
-          @click="insertCart(product.data.source)"
-        >
-          장바구니
-        </button>
       </div>
       <div
-        class="chat__mymessage__product"
         v-else-if="msg.contentType == '특별할인'"
         :on-load="getSaleProduct(msg.source.split('/'))"
       >
-        <div>특별 할인</div>
-        <img :src="product.data.thumbnailUrl" />
-        <div>
-          {{ product.data.categoryFirstName }}>{{
-            product.data.categorySecondName
-          }}>{{ product.data.categoryThirdName }}
+        <img
+          class="image-container"
+          :src="product.data.thumbnailUrl"
+          @click="
+            router.push({
+              path: '/product/myProduct',
+              query: {
+                productCode: product.data.productCode,
+              },
+            })
+          "
+        />
+
+        <div class="chat__mymessage__product">
+          <div
+            class="product_name"
+            @click="
+              router.push({
+                path: '/product/myProduct',
+                query: {
+                  productCode: product.data.productCode,
+                },
+              })
+            "
+          >
+            {{ product.data.productName }}
+          </div>
+
+          <div class="product_category">
+            {{ product.data.categoryFirstName }}>{{
+              product.data.categorySecondName
+            }}>{{ product.data.categoryThirdName }}
+          </div>
+          <hr />
+
+          <div
+            style="
+              text-decoration: line-through;
+              font-weight: 100;
+              color: gray;
+              text-align: right;
+            "
+          >
+            <span style="color: white; text-decoration: none; text-align: left"
+              >특별 할인가</span
+            >
+            {{ product.data.price }} 원
+          </div>
+          <div class="product_price">
+            {{
+              $comma(
+                (product.data.price * (100 - coupon.data.discountRate)) / 100,
+              )
+            }}원
+          </div>
+          <div class="product_button">
+            <button
+              class="btn btn-light product_btn"
+              @click="
+                router.push({
+                  path: '/product/myProduct',
+                  query: {
+                    productCode: product.data.productCode,
+                  },
+                })
+              "
+            >
+              상품 상세
+            </button>
+            <button
+              class="btn btn-light product_btn"
+              @click="orderProduct"
+              disabled
+              v-if="coupon.data.status"
+            >
+              상품을 보냈습니다.
+            </button>
+            <button
+              v-else
+              class="btn btn-light product_btn"
+              @click="orderProduct"
+              disabled
+            >
+              상대방이 받았습니다.
+            </button>
+          </div>
         </div>
-        <div>{{ product.data.productName }}</div>
-        <p style="text-decoration: line-through">{{ product.data.price }} 원</p>
-        <div>
-          {{ (product.data.price * (100 - coupon.data.discountRate)) / 100 }} 원
-        </div>
-        <button @click="orderProduct" :disabled="true">상품 구매</button>
       </div>
+
       <div
         class="chat__mymessage__product"
         v-else-if="msg.contentType == '추천'"
         :on-load="getRecommendProduct(msg.source.split('/'))"
       >
-        <div>상품 추천</div>
-        <div v-for="product in plist" :key="product.productId">
+        <div>맞춤 상품 추천</div>
+        <div v-for="product in plist" :key="product.id">
           <div
             @click="
               router.push({
@@ -178,8 +294,8 @@
             v-else-if="msg.contentType == '쿠폰'"
             :on-load="getCouponInfo(msg.source)"
           >
-            <div>{{ coupon.data.name }}</div>
-            <div>{{ coupon.data.discountRate }}% 할인</div>
+            <div class="coupon_name">{{ coupon.data.name }}</div>
+            <div class="coupon_percent">{{ coupon.data.discountRate }}%</div>
             <div style="color: gray; font-size: 12px">
               {{ coupon.data.startDate.slice(0, 10) }}~{{
                 coupon.data.endDate.slice(0, 10)
@@ -197,91 +313,61 @@
             </button>
           </div>
           <div
-            class="chat__yourmessage__paragraph"
             v-else-if="msg.contentType == '프로모션'"
             :on-load="getPromotion(msg.source)"
           >
-            <div>{{ promotion.title }}</div>
-            <div>
+            <div class="image-container">
               <img :src="promotion.imageUrl" />
             </div>
-            <div>
-              기간 : {{ promotion.startDate.slice(0, 10) }}<br />~{{
-                promotion.endDate.slice(0, 10)
-              }}
+            <div class="chat__yourmessage__paragraph">
+              <div>{{ promotion.title }}</div>
+
+              <div class="product_category">
+                기간: {{ promotion.startDate.slice(0, 10) }}~{{
+                  promotion.endDate.slice(0, 10)
+                }}
+              </div>
+              <router-link
+                :to="{
+                  name: 'promotion',
+                  query: {
+                    title: promotion.title,
+                    imageUrl: promotion.imageUrl,
+                    startDate: promotion.startDate,
+                    endDate: promotion.endDate,
+                    buttonUrl: promotion.buttonUrl,
+                  },
+                }"
+                target="_blank"
+              >
+                <hr />
+                <button class="btn btn-dark" style="width: 100%">
+                  프로모션 이동
+                </button>
+              </router-link>
             </div>
-            <router-link
-              :to="{
-                name: 'promotion',
-                query: {
-                  title: promotion.title,
-                  imageUrl: promotion.imageUrl,
-                  startDate: promotion.startDate,
-                  endDate: promotion.endDate,
-                  buttonUrl: promotion.buttonUrl,
-                },
-              }"
-              target="_blank"
-            >
-              <button class="btn btn-black">프로모션 이동</button>
-            </router-link>
           </div>
+
           <div
             class="chat__yourmessage__product"
             v-else-if="msg.contentType == '상품정보'"
             :on-load="getProduct(msg.source)"
           >
-            <div>상품정보</div>
-            <img :src="product.data.thumbnailUrl" />
-            <div>
-              {{ product.data.categoryFirstName }}>{{
-                product.data.categorySecondName
-              }}>{{ product.data.categoryThirdName }}
-            </div>
-            <div>{{ product.data.productName }}</div>
-            <div>{{ product.data.price }}</div>
-            <button class="btn btn-primary" @click="orderProduct">
-              상품 구매
-            </button>
-            <button
-              class="btn btn-primary"
-              @click="insertCart(product.data.source)"
-            >
-              장바구니
-            </button>
-          </div>
-          <div
-            class="chat__yourmessage__product"
-            v-else-if="msg.contentType == '특별할인'"
-            :on-load="getSaleProduct(msg.source.split('/'))"
-          >
-            <div>특별 할인</div>
-            <img :src="product.data.thumbnailUrl" />
-            <div>
-              {{ product.data.categoryFirstName }}>{{
-                product.data.categorySecondName
-              }}>{{ product.data.categoryThirdName }}
-            </div>
-            <div>{{ product.data.productName }}</div>
-            <p style="text-decoration: line-through">
-              {{ product.data.price }} 원
-            </p>
-            <div>
-              {{
-                (product.data.price * (100 - coupon.data.discountRate)) / 100
-              }}
-              원
-            </div>
-            <button @click="orderProduct">상품 구매</button>
-          </div>
-          <div
-            class="chat__yourmessage__product"
-            v-else-if="msg.contentType == '추천'"
-            :on-load="getRecommendProduct(msg.source.split('/'))"
-          >
-            <div>상품 추천</div>
-            <div v-for="product in plist" :key="product.productId">
+            <img
+              class="image-container"
+              :src="product.data.thumbnailUrl"
+              @click="
+                router.push({
+                  path: '/product/myProduct',
+                  query: {
+                    productCode: product.data.productCode,
+                  },
+                })
+              "
+            />
+            <div class="chat__mymessage__product">
               <div
+                class="product_name"
                 @click="
                   router.push({
                     path: '/product/myProduct',
@@ -291,16 +377,155 @@
                   })
                 "
               >
-                <img :src="product.data.thumbnailUrl" />
-                <div>
-                  {{ product.data.categoryFirstName }}>{{
-                    product.data.categorySecondName
-                  }}>{{ product.data.categoryThirdName }}
-                </div>
-                <div>{{ product.data.productName }}</div>
-                <div>{{ product.data.price }}</div>
+                {{ product.data.productName }}
+              </div>
+
+              <div class="product_category">
+                {{ product.data.categoryFirstName }}>{{
+                  product.data.categorySecondName
+                }}>{{ product.data.categoryThirdName }}
+              </div>
+              <hr />
+
+              <div class="product_price">
+                {{ $comma(product.data.price) }}원
+              </div>
+              <div class="product_button">
+                <button
+                  class="btn btn-light product_btn"
+                  @click="
+                    router.push({
+                      path: '/product/myProduct',
+                      query: {
+                        productCode: product.data.productCode,
+                      },
+                    })
+                  "
+                >
+                  상품 상세
+                </button>
+                <button class="btn btn-light product_btn" @click="orderProduct">
+                  상품 구매
+                </button>
+                <button
+                  class="btn btn-light product_btn"
+                  @click="insertCart(product.data.source)"
+                >
+                  장바구니
+                </button>
               </div>
             </div>
+          </div>
+          <div
+            class="chat__yourmessage__product"
+            v-else-if="msg.contentType == '특별할인'"
+            :on-load="getSaleProduct(msg.source.split('/'))"
+          >
+            <img
+              class="image-container"
+              :src="product.data.thumbnailUrl"
+              @click="
+                router.push({
+                  path: '/product/myProduct',
+                  query: {
+                    productCode: product.data.productCode,
+                  },
+                })
+              "
+            />
+
+            <div class="chat__yourmessage__product">
+              <div
+                class="product_name"
+                @click="
+                  router.push({
+                    path: '/product/myProduct',
+                    query: {
+                      productCode: product.data.productCode,
+                    },
+                  })
+                "
+              >
+                {{ product.data.productName }}
+              </div>
+
+              <div class="product_category">
+                {{ product.data.categoryFirstName }}>{{
+                  product.data.categorySecondName
+                }}>{{ product.data.categoryThirdName }}
+              </div>
+              <hr />
+
+              <div
+                style="
+                  text-decoration: line-through;
+                  font-weight: 100;
+                  color: gray;
+                  text-align: right;
+                "
+              >
+                <span
+                  style="color: white; text-decoration: none; text-align: left"
+                  >특별 할인가</span
+                >
+                {{ product.data.price }} 원
+              </div>
+              <div class="product_price">
+                {{
+                  $comma(
+                    (product.data.price * (100 - coupon.data.discountRate)) /
+                      100,
+                  )
+                }}원
+              </div>
+              <div class="product_button">
+                <button
+                  class="btn btn-light product_btn"
+                  @click="
+                    router.push({
+                      path: '/product/myProduct',
+                      query: {
+                        productCode: product.data.productCode,
+                      },
+                    })
+                  "
+                >
+                  상품 상세
+                </button>
+                <button
+                  class="btn btn-light product_btn"
+                  @click="orderProduct"
+                  v-if="coupon.data.status"
+                >
+                  상품 구매
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="chat__yourmessage__product"
+            v-else-if="msg.contentType == '추천'"
+            :on-load="getRecommendProduct(msg.source.split('/'))"
+          >
+            <div>상품 추천</div>
+            <div v-for="product in plist" :key="product.id">
+              <hr />
+              <div
+                @click="
+                  router.push({
+                    path: '/product/myProduct',
+                    query: {
+                      productCode: product.productCode,
+                    },
+                  })
+                "
+              >
+                <img :src="product.thumbnailUrl" />
+                <div>{{ product.productName }}</div>
+                <div>{{ $comma(product.price) }}</div>
+              </div>
+            </div>
+            <hr />
           </div>
 
           <p class="chat__yourmessage__time">
@@ -340,6 +565,7 @@ export default {
       coupon: {
         data: { name: '쿠폰 정보', startDate: '', endDate: '' },
       },
+      first: true,
       product: {
         data: {
           productName: '',
@@ -352,7 +578,7 @@ export default {
         },
       },
       promotion: { startDate: '', endDate: '' },
-      plist: [],
+      plist: [{ id: '', thumbnailUrl: '', productName: '', price: '' }],
     };
   },
   methods: {
@@ -489,18 +715,24 @@ export default {
         });
     },
     async getRecommendProduct(productList) {
-      productList.forEach(async product => {
-        await axios
-          .get('https://sbbro.xyz/api/product/products/list/' + product, {
-            headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-              contentType: 'application/json',
-            },
-          })
-          .then(res => (this.plist = res.data[0]))
-          .catch(err => console.log(err));
+      if (this.first) {
+        this.first = false;
+        let plist = [];
+        console.log(productList);
+        productList.forEach(async product => {
+          await axios
+            .get('https://sbbro.xyz/api/product/products/list/' + product, {
+              headers: {
+                Authorization: `Bearer ` + localStorage.getItem('token'),
+                contentType: 'application/json',
+              },
+            })
+            .then(res => plist.push(res.data[0]))
+            .catch(err => console.log(err));
+        });
+        this.plist = plist;
         console.log(this.plist);
-      });
+      }
     },
   },
   created() {
@@ -616,6 +848,16 @@ export default {
   font-size: 14px;
 }
 
+.chat__yourmessage__coupon {
+  margin: 0.4rem 1rem 0 0;
+  border-radius: 0px 20px 20px 20px;
+  background-color: #f3f3f3;
+  max-width: 180px;
+  color: #414141;
+  padding: 0.8rem;
+  font-size: 14px;
+}
+
 .chat__yourmessage__notification {
   margin: 0.4rem 1rem 0 0;
   border-radius: 0px 20px 20px 20px;
@@ -645,5 +887,40 @@ export default {
 .chat__yourmessage__image {
   object-fit: contain;
   z-index: 1;
+}
+
+.product_name {
+  font: 12px;
+  font-weight: bold;
+}
+
+.product_category {
+  font-weight: 100;
+  font-size: 12px;
+}
+
+.product_price {
+  text-align: right;
+  font-size: large;
+}
+
+.product_button {
+  border: black;
+  border-radius: 0%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product_btn {
+  margin-bottom: 3px;
+}
+
+.coupon_name {
+}
+.coupon_percent {
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
 }
 </style>
