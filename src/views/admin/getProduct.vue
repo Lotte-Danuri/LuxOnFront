@@ -309,7 +309,7 @@ export default {
         confirmButtonText: "네",
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return axios.post("http://localhost:5000/contract", postData);
+          return axios.post("http://43.200.203.135:5000/contract", postData);
         },
         allowOutsideClick: () => !Swal.isLoading(),
       }).then((result) => {
