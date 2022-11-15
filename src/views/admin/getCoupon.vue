@@ -361,6 +361,7 @@ export default {
 .inner_grid {
   display: grid;
   grid-template-columns: 130px 650px 100px 650px 100px;
+  margin-bottom:50px;
 }
 
 #customers {
@@ -394,6 +395,7 @@ export default {
 
 .btn-group{
   margin-left: 35%;
+  margin-bottom:4%;
 }
 
 .input-group{

@@ -101,6 +101,7 @@
                 </option>
               </select>
             </div>
+            <br>
           </div>
             <input
               class="form-control"
@@ -336,7 +337,7 @@ td{
 }
 
 .input_cls {
-  padding: 50px 80px 50px 150px;
+  padding: 50px 80px 50px 180px;
   border: solid 1px black;
   border-radius: 15px;
 }

@@ -4,8 +4,8 @@
   <h1>상품 관리</h1>
   <br/>
   <div style="display:flex;">
-    <h3>상품 조회, 수정 및 히트맵 확인이 가능합니다.</h3>
-    <h3 style="font-style: italic; color:gray; margin-left:51%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
+    <h3>상품 조회, 수정 및 NFT 증명서 등록이 가능합니다.</h3>
+    <h3 style="font-style: italic; color:gray; margin-left:49%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
     <a @click="logout" style="margin-left: 4%;">
       <div style="display:flex; margin-bottom: 0px;">
         <span class="material-icons-sharp">logout</span>
@@ -57,7 +57,7 @@
             style="
               width: 140px;
               height: 50px;
-              margin-left: 50px;
+              margin-left: 13%;
               /* margin-top: 30px; */
             "
             @click="productSearch"
@@ -79,7 +79,6 @@
         <th>소분류</th>
         <th>수정</th>
         <th>삭제</th>
-        <th>히트</th>
         <th>증명서 등록</th>
       </tr>
       <tr v-for="(product, i) in productList" :key="i">
@@ -128,20 +127,6 @@
               color: black;
               border: solid 1px black;
             "
-            @click="checkHeatmap"
-          >
-            히트맵확인
-          </button>
-        </td>
-        <td>
-          <button
-            style="
-              background-color: white;
-              width: 100px;
-              height: 50px;
-              color: black;
-              border: solid 1px black;
-            "
             @click="addNft(product)"
           >
             증명서 등록
@@ -156,6 +141,7 @@
 import axios from "axios";
 import router from "@/router";
 import Swal from "sweetalert2";
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   data() {
@@ -404,10 +390,12 @@ export default {
 .select_div{
   display:flex;
   margin-top:30px;
+  margin-bottom: 20px;
+  margin-left:10%;
 }
 
 .select_div select {
-  width:100px;
+  width:60px;
   height: 50px;
   float:left;
 }
@@ -415,5 +403,9 @@ export default {
   align-content: center;
   margin-left:100px;
   margin-right:100px;
+}
+
+.input-group {
+  width: 65%;
 }
 </style>
