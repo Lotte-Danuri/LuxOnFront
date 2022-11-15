@@ -1,33 +1,45 @@
 <template>
-  <br/>
-  <br/>
+  <br />
+  <br />
   <h1>상품 관리</h1>
-  <br/>
-  <div style="display:flex;">
+  <br />
+  <div style="display: flex">
     <h3>상품 조회, 수정 및 히트맵 확인이 가능합니다.</h3>
-    <h3 style="font-style: italic; color:gray; margin-left:51%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
-    <a @click="logout" style="margin-left: 4%;">
-      <div style="display:flex; margin-bottom: 0px;">
+    <h3 style="font-style: italic; color: gray; margin-left: 51%">
+      {{ userName }}
+    </h3>
+    <h3>　님 안녕하세요</h3>
+    <a @click="logout" style="margin-left: 4%">
+      <div style="display: flex; margin-bottom: 0px">
         <span class="material-icons-sharp">logout</span>
         <h3>Logout</h3>
       </div>
     </a>
   </div>
-  <hr/>
-  <br/>
+  <hr />
+  <br />
   <main class="main_div">
     <div class="regi_grid">
       <div class="top_div">
         <div class="select_div">
           <div class="input-group mb-3">
-            <select @change="changeCategoryFirst($event)" id="first_category_id" class="form-select" aria-label="Default select example">
+            <select
+              @change="changeCategoryFirst($event)"
+              id="first_category_id"
+              class="form-select"
+              aria-label="Default select example"
+            >
               <option :value="-1">- 대분류-</option>
               <option v-for="(category, i) in categoryList" :key="i" :value="i">
                 <p>{{ category.categoryName }}</p>
                 <div :id="`${category.id}`" style="dispaly: none"></div>
               </option>
             </select>
-            <select @change="changeCategorySecond($event)" class="form-select" aria-label="Default select example">
+            <select
+              @change="changeCategorySecond($event)"
+              class="form-select"
+              aria-label="Default select example"
+            >
               <option :value="-1">- 중분류 -</option>
               <option
                 v-for="(categorySecond, i) in categorySecondList"
@@ -38,7 +50,11 @@
                 <p :id="`${categorySecond.id}`" style="dispaly: none"></p>
               </option>
             </select>
-            <select @change="changeCategoryThird($event)" class="form-select" aria-label="Default select example">
+            <select
+              @change="changeCategoryThird($event)"
+              class="form-select"
+              aria-label="Default select example"
+            >
               <option :value="-1">- 소분류 -</option>
               <option
                 v-for="(categoryThird, i) in categoryThirdList"
@@ -49,7 +65,11 @@
                 <p :id="`${categoryThird.id}`" style="dispaly: none"></p>
               </option>
             </select>
-            <input class="form-control" placeholder="상품명을 입력하세요" id="inputProductName" />
+            <input
+              class="form-control"
+              placeholder="상품명을 입력하세요"
+              id="inputProductName"
+            />
           </div>
           <button
             id="productSearchButton"
@@ -152,10 +172,10 @@
   </main>
 </template>
 <script>
-
-import axios from "axios";
-import router from "@/router";
-import Swal from "sweetalert2";
+import axios from 'axios';
+import router from '@/router';
+import Swal from 'sweetalert2';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   data() {
@@ -164,14 +184,14 @@ export default {
       categoryList: [],
       categorySecondList: [],
       categoryThirdList: [],
-      firstClickValue: "",
-      secondClickValue: "",
-      thirdClickValue: "",
-      firstValue: "",
-      secondValue: "",
-      thirdValue: "",
+      firstClickValue: '',
+      secondClickValue: '',
+      thirdClickValue: '',
+      firstValue: '',
+      secondValue: '',
+      thirdValue: '',
       userName: localStorage.getItem('userName'),
-      router : useRouter(),
+      router: useRouter(),
     };
   },
   created() {
@@ -180,22 +200,22 @@ export default {
   },
   methods: {
     async getCategoryList() {
-      this.categoryList = await this.$api("/product/categories");
+      this.categoryList = await this.$api('/product/categories');
       console.log(this.categoryList);
     },
     async getProductList() {
       axios
         .get(
-          "https://sbbro.xyz/api/product/sellers/products/" +
-            localStorage.getItem("store_id"),
+          'https://sbbro.xyz/api/product/sellers/products/' +
+            localStorage.getItem('store_id'),
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem("token"),
-              "Content-Type": "application/json",
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
             },
-          }
+          },
         )
-        .then((response) => {
+        .then(response => {
           this.productList = response.data;
           console.log(this.productList);
         });
@@ -204,7 +224,7 @@ export default {
       console.log(this.firstClickValue);
       this.firstClickValue = event.target.value;
       if (this.firstClickValue == -1) {
-        this.firstValue = "";
+        this.firstValue = '';
       } else {
         this.categorySecondList =
           this.categoryList[this.firstClickValue].categorySecondDtoList;
@@ -214,7 +234,7 @@ export default {
     changeCategorySecond(event) {
       this.secondClickValue = event.target.value;
       if (this.secondClickValue == -1) {
-        this.secondValue = "";
+        this.secondValue = '';
       } else {
         this.categoryThirdList =
           this.categorySecondList[this.secondClickValue].categoryThirdDtoList;
@@ -227,7 +247,7 @@ export default {
     changeCategoryThird(event) {
       this.thirdClickValue = event.target.value;
       if (this.thirdClickValue == -1) {
-        this.thirdValue = "";
+        this.thirdValue = '';
       } else {
         this.thirdValue =
           this.categoryList[this.firstClickValue].categorySecondDtoList[
@@ -239,12 +259,12 @@ export default {
       let firstClickId = parseInt(this.firstValue);
       let secondClickId = parseInt(this.secondValue);
       let thirdClickId = parseInt(this.thirdValue);
-      let inputProductName = document.getElementById("inputProductName").value;
+      let inputProductName = document.getElementById('inputProductName').value;
       axios
         .post(
-          "https://sbbro.xyz/api/product/sellers/products/category",
+          'https://sbbro.xyz/api/product/sellers/products/category',
           {
-            stordId: localStorage.getItem("store_id"),
+            stordId: localStorage.getItem('store_id'),
             categoryFirstId: firstClickId,
             categorySecondId: secondClickId,
             categoryThirdId: thirdClickId,
@@ -252,40 +272,40 @@ export default {
           },
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem("token"),
-              "Content-Type": "application/json",
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
             },
-          }
+          },
         )
-        .then((response) => {
+        .then(response => {
           console.log(response.data);
           this.productList = response.data;
         });
     },
 
     updateProduct(productId) {
-      router.push({ path: "updateProduct", query: { productId: productId } });
+      router.push({ path: 'updateProduct', query: { productId: productId } });
     },
 
     deleteProduct(productId) {
       var id = parseInt(productId);
       axios
-        .delete("https://sbbro.xyz/api/product/sellers/products", {
+        .delete('https://sbbro.xyz/api/product/sellers/products', {
           data: {
             id: id,
           },
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
-            "Content-Type": "application/json",
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
           },
         })
-        .then((response) => {
-          alert("상품 삭제 완료!");
-          document.getElementById("productSearchButton").click();
+        .then(response => {
+          alert('상품 삭제 완료!');
+          document.getElementById('productSearchButton').click();
         });
     },
 
-    logout(){
+    logout() {
       localStorage.removeItem('login_id');
       localStorage.removeItem('role');
       localStorage.removeItem('userName');
@@ -298,35 +318,34 @@ export default {
       console.log(product);
 
       Swal.fire({
-        title: "상품의 영수증을 NFT로 관리하시겠습니까?",
+        title: '상품의 영수증을 NFT로 관리하시겠습니까?',
         showCancelButton: true,
-        confirmButtonText: "네",
+        confirmButtonText: '네',
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return axios.post("http://43.200.203.135:5000/contract", {
+          return axios.post('http://43.200.203.135:5000/contract', {
             productId: product.id,
             name: product.productName,
             symbol: product.productCode,
             image: product.thumbnailUrl,
             price: product.price,
-            brandName : product.brandName,
-            sellerId: localStorage.getItem('store_id')
+            brandName: product.brandName,
+            sellerId: localStorage.getItem('store_id'),
           });
         },
         allowOutsideClick: () => !Swal.isLoading(),
-      }).then((result) => {
+      }).then(result => {
         console.log(result);
         if (result.value.status == 200) {
           Swal.fire({
-            icon:'success',
-            text:"등록이 완료되었습니다."
+            icon: 'success',
+            text: '등록이 완료되었습니다.',
           });
-        }
-        else{
+        } else {
           Swal.fire({
-           icon: 'error',
-           text:'등록에 실패하였습니다.' 
-          })
+            icon: 'error',
+            text: '등록에 실패하였습니다.',
+          });
         }
       });
     },
@@ -335,14 +354,13 @@ export default {
 </script>
 
 <style scoped>
-
 .regi_grid {
   grid-template-columns: 700px 200px 200px;
   gap: 30px;
   padding: 10px 50px 10px 50px;
   border: solid 1px black;
   border-radius: 10px;
-  margin-bottom:50px;
+  margin-bottom: 50px;
 }
 .category_grid {
   /* display: grid; */
@@ -361,8 +379,8 @@ export default {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   text-align: center;
-  width:90%;
-  margin-left:5%;
+  width: 90%;
+  margin-left: 5%;
 }
 
 #customers td,
@@ -401,19 +419,19 @@ export default {
   border: solid 2px gray;
 }
 
-.select_div{
-  display:flex;
-  margin-top:30px;
+.select_div {
+  display: flex;
+  margin-top: 30px;
 }
 
 .select_div select {
-  width:100px;
+  width: 100px;
   height: 50px;
-  float:left;
+  float: left;
 }
 .main_div {
   align-content: center;
-  margin-left:100px;
-  margin-right:100px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 </style>
