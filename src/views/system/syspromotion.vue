@@ -1,84 +1,113 @@
 <template>
   <main>
-    <h1>프로모션 관리</h1>
+    <h1>프로모션 전송</h1>
+    <br />
+    <div style="display: flex">
+      <h3>선택한 사용자에게 프로모션 정보를 챗으로 전달합니다.</h3>
+      <h3 style="font-style: italic; color: gray; margin-left: 44%">
+        {{ userName }}
+      </h3>
+      <h3>　님 안녕하세요</h3>
+      <a @click="logout" style="margin-left: 4%">
+        <div style="display: flex; margin-bottom: 0px">
+          <span class="material-icons-sharp">logout</span>
+          <h3>Logout</h3>
+        </div>
+      </a>
+    </div>
+    <hr />
+    <br />
     <div class="input_body">
-      <div>
-        <input
-          type="text"
-          class="search_userId"
-          v-model="inputName"
-          placeholder="빈칸시 전체 조회"
-        />
-        <button class="btn btn-primary" @click="getMember(inputName)">
-          조회 <i class="fa fa-search" />
-        </button>
-      </div>
-      <div class="info">
-        <div class="memberList">
-          <table class="table">
-            <thead>
-              <tr>
-                <th><input type="checkbox" v-model="selectMemberAll" /></th>
-                <th>아이디</th>
-                <th>이름</th>
-              </tr>
-            </thead>
-            <tbody id="memberData">
-              <tr v-for="member in searchMembers" :key="member.loginId">
-                <td>
-                  <input
-                    type="checkbox"
-                    :value="member.loginId.split('@')[0]"
-                    v-model="selectedMembers"
-                  />
-                </td>
-                <td>{{ member.loginId }}</td>
-                <td>{{ member.name }}</td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="lr">
+        <div class="input_user">
+          <h4>사용자 이름 검색</h4>
+          <div>
+            <input
+              type="text"
+              class="search_userId"
+              v-model="inputName"
+              placeholder="빈칸시 전체 조회"
+            />
+            <button class="btn btn-dark" @click="getMember(inputName)">
+              조회 <i class="fa fa-search" />
+            </button>
+          </div>
         </div>
-        <div class="promotionList">
-          <table class="table">
-            <thead>
-              <tr>
-                <th><input type="checkbox" v-model="selectPromotionAll" /></th>
-                <th>프로모션명</th>
-                <th>시작일</th>
-                <th>종료일</th>
-                <th>
-                  <button class="btn" @click="getPromotion()">
-                    <i class="fa fa-refresh" aria-hidden="true"></i>
-                  </button>
-                </th>
-              </tr>
-            </thead>
-            <tbody id="promotionData">
-              <tr v-for="promotion in promotions" :key="promotion.id">
-                <td>
-                  <input
-                    type="checkbox"
-                    :value="promotion.id"
-                    v-model="selectedPromotions"
-                  />
-                </td>
-                <td>{{ promotion.title }}</td>
-                <td>{{ promotion.startDate }}</td>
-                <td>{{ promotion.endDate }}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div>
+          <div class="info">
+            <table class="table table-striped table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th>
+                    <input type="checkbox" v-model="selectMemberAll" />
+                  </th>
+                  <th>아이디</th>
+                  <th>이름</th>
+                </tr>
+              </thead>
+              <tbody id="memberData">
+                <tr v-for="member in searchMembers" :key="member.loginId">
+                  <td>
+                    <input
+                      type="checkbox"
+                      :value="member.loginId.split('@')[0]"
+                      v-model="selectedMembers"
+                    />
+                  </td>
+                  <td>{{ member.loginId }}</td>
+                  <td>{{ member.name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <div class="message_form">
-        <input type="text" v-model="content" />
-        <button
-          class="btn btn-primary"
-          @click="sendMessages(content, selectedMembers)"
-        >
-          보내기
-          <i class="fa fa-envelope" />
-        </button>
+        <div class="lr">
+          <div class="input_user">
+            <br />
+            <h4>프로모션 전송</h4>
+            <input type="text" class="search_userId" v-model="content" />
+            <button
+              class="btn btn-dark"
+              @click="sendMessages(content, selectedMembers)"
+            >
+              보내기
+              <i class="fa fa-envelope" />
+            </button>
+          </div>
+          <div class="info">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>
+                    <input type="checkbox" v-model="selectPromotionAll" />
+                  </th>
+                  <th>프로모션명</th>
+                  <th>시작일</th>
+                  <th>종료일</th>
+                  <th>
+                    <button class="btn" @click="getPromotion()">
+                      <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="promotionData">
+                <tr v-for="promotion in promotions" :key="promotion.id">
+                  <td>
+                    <input
+                      type="checkbox"
+                      :value="promotion.id"
+                      v-model="selectedPromotions"
+                    />
+                  </td>
+                  <td>{{ promotion.title }}</td>
+                  <td>{{ promotion.startDate }}</td>
+                  <td>{{ promotion.endDate }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -86,11 +115,13 @@
 
 <script>
 import axios from 'axios';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   name: 'SysPromotion',
   data() {
     return {
+      userName: localStorage.getItem('userName'),
       picked: 0,
       members: [],
       selectedMembers: [],
@@ -100,6 +131,7 @@ export default {
       content: '',
       recList: [],
       promotions: [],
+      router: useRouter(),
     };
   },
   methods: {
@@ -163,6 +195,14 @@ export default {
           .catch(err => console.log(err));
       });
     },
+    logout() {
+      localStorage.removeItem('login_id');
+      localStorage.removeItem('role');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('token');
+      localStorage.removeItem('store_id');
+      this.router.push('../');
+    },
   },
   mounted: function () {
     this.getPromotion();
@@ -208,18 +248,32 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .input_body {
   display: flex;
   flex-direction: column;
-  background-color: lightgray;
-}
-.select_reciver {
-  display: flex;
-  flex-direction: row;
+  justify-content: space-between;
 }
 .info {
   display: flex;
   flex-direction: column;
+  width: 50%;
+  height: 300px;
+  overflow-y: auto;
+  background-color: white;
+  font-size: large;
+  border: 3px solid black;
+}
+.search_userId {
+  width: 35%;
+  height: 30px;
+  border: 3px solid black;
+}
+
+.btn {
+  width: 15%;
+  border-top-left-radius: 0%;
+  border-bottom-left-radius: 0%;
+  height: 32px;
 }
 </style>
