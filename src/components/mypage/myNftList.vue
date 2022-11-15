@@ -11,7 +11,7 @@
           <div class="product__thum gray">
             <router-link :to="{
               name: 'nft',
-              params: { userId: state.userInfo.id, productId: product.productId },
+              params: { userId: state.userInfo.id, productId: product.productId, orderId : product.orderId },
             }">
               <img :src="product.image" :alt="product.productName"
                 onError="this.src='https://image.sivillage.com/upload/C00001/common/noimg.jpg?RS=300&SP=1'" />
@@ -21,7 +21,7 @@
             <p class="product__data-brand">{{ product.brandName }}</p>
             <router-link :to="{
               name: 'nft',
-              params: { userId: state.userInfo.id, productId: product.productId },
+              params: { userId: state.userInfo.id, productId: product.productId, orderId : product.orderId },
             }">
               <p class="product__data-name">
                 {{ product.name }}

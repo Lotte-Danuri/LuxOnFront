@@ -89,7 +89,9 @@
     </swiper>
   </section>
   <section>
-    <div style="margin-left: 25%; margin-top: 3%; width: 60%">
+    <div
+      style="margin-left: 25%; margin-top: 3%; width: 60%; margin-bottom: 1%"
+    >
       <div style="display: grid; grid-template-columns: 25% 25% 25% 25%">
         <div class="listBtn">
           <router-link
@@ -272,21 +274,21 @@
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h2 style="font-size: 50px">Sale</h2>
+                  <p style="color: white; margin-top: 20px">Sale</p>
                 </div>
               </div>
             </div>
             <div class="item color2">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/048/00/221100000306048.jpg?cVer=11100211&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">뷰티</h1>
+                  <p style="color: white; margin-top: 20px">Beauty</p>
                 </div>
               </div>
             </div>
@@ -298,34 +300,34 @@
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">여성</h1>
+                  <p style="color: white; margin-top: 20px">For Girls</p>
                 </div>
               </div>
             </div>
             <div class="item color4">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/991/00/221100000305991.jpg?cVer=11101746&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">OFF</h1>
+                  <p style="color: white; margin-top: 20px">Season OFF</p>
                 </div>
               </div>
             </div>
             <div class="item color5">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/328/00/220900000285328.jpg?cVer=14102550&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">패션</h1>
+                  <p style="color: white; margin-top: 20px">악세서리</p>
                 </div>
               </div>
             </div>
@@ -335,14 +337,14 @@
           <div class="coupon_grid">
             <div class="item color5">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/991/00/221100000305991.jpg?cVer=11101746&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">Special</h1>
+                  <p style="color: white; margin-top: 20px">특별상품</p>
                 </div>
               </div>
             </div>
@@ -354,21 +356,21 @@
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">화장품</h1>
+                  <p style="color: white; margin-top: 20px">cosmetic</p>
                 </div>
               </div>
             </div>
             <div class="item color7">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/883/00/221100000305883.jpg?cVer=10045922&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">시계</h1>
+                  <p style="color: white; margin-top: 20px">watch</p>
                 </div>
               </div>
             </div>
@@ -380,21 +382,21 @@
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">시즌</h1>
+                  <p style="color: white; margin-top: 20px">Season</p>
                 </div>
               </div>
             </div>
             <div class="item color9">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/328/00/220900000285328.jpg?cVer=14102550&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">여성</h1>
+                  <p style="color: white; margin-top: 20px">For Girs</p>
                 </div>
               </div>
             </div>
@@ -406,8 +408,8 @@
 
   <section>
     <div style="margin-left: 20%">
-      <div class="all_procut" style="margin-top: -80px">
-        <button
+      <div class="all_procut" style="margin-top: 3%">
+        <!-- <button
           style="
             background-color: black;
             width: 40px;
@@ -421,7 +423,7 @@
           @click="bestBtn"
         >
           ?
-        </button>
+        </button> -->
         <h2 style="font-weight: bold">Best Product</h2>
         <br />
         <div class="product_grid">
@@ -727,7 +729,8 @@ a {
   font-weight: bold;
   border: 3px solid #f1f1f1;
   position: relative;
-  margin-top: -70%;
+  margin-top: -60%;
+  top: -100px;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;

@@ -5,8 +5,9 @@
       id="style-3"
       style="height: 600px; overflow-x: hidden; position: sticky; top: 200px"
     >
-      <div>
-        <h2>Category</h2>
+      <div class="div_category">
+        <h2 style="font-weight: bold">Category</h2>
+        <br />
         <ul class="first_category">
           <li v-for="categoryFirst in categoryList" :key="categoryFirst.id">
             <a
@@ -18,12 +19,15 @@
                   getBrandProduct();
                 }
               "
+              style="font-weight: bold"
               >{{ categoryFirst.categoryName }}</a
             >
+            <br />
             <ul class="second_category">
               <li
                 v-for="categorySecond in categoryFirst.categorySecondDtoList"
                 :key="categorySecond.id"
+                style="margin-bottom: 5px"
               >
                 <a
                   href="#"
@@ -76,7 +80,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 300px; height: 300px"
+                      style="width: 400px; height: 400px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -113,7 +117,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 300px; height: 300px"
+                      style="width: 400px; height: 400px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -125,7 +129,7 @@
       </div>
       <br />
       <br />
-      <div class="all_procut" style="margin-top: -100px">
+      <div class="all_procut" style="margin-top: 0px">
         <h2 style="font-weight: bold">All Product</h2>
         <br />
         <div class="product_grid">
@@ -346,6 +350,29 @@ export default {
 /* @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'; */
 
 /* Write your own CSS for pagination */
+/* 임의의 영역 생성 */
+.div_category {
+  width: 200px;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+/* 아래의 모든 코드는 영역::코드로 사용 */
+
+.div_category::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+.div_category::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #000000; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+.div_category::-webkit-scrollbar-track {
+  background: rgba(102, 102, 102, 0.1); /*스크롤바 뒷 배경 색상*/
+}
 
 a {
   text-decoration: none;
@@ -450,5 +477,13 @@ p {
 }
 .product_grid div span p {
   margin: 0px;
+}
+
+.div_category li a {
+  font-size: 15px;
+}
+
+.div_category ul {
+  margin-bottom: 40px;
 }
 </style>

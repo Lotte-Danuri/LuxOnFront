@@ -108,6 +108,7 @@
 </template>
 
 <script>
+
 import { reactive } from "vue";
 import { onBeforeMount } from "vue";
 import axios from "axios";
@@ -145,12 +146,13 @@ export default {
         });
     });
 
-    const checkNft = async (productId) => {
+    const checkNft = async (productId, orderId) => {
       try {
         const response = await axios.post('http://43.200.203.135:5000/api/checknft',
           {
             productId: productId,
             userId: state.orderList[0].buyerId,
+            orderId: orderId,
           },)
           console.log("checkNft response",response)
         if (response.data.length != 0) {
@@ -190,6 +192,7 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           return axios.post('http://43.200.203.135:5000/api/receipts', {
+            orderId: order.id,
             productId: order.productId,
             userId: state.orderList[0].buyerId,
           })
@@ -213,7 +216,7 @@ export default {
     }
 
     const pushNft = async (order) => {
-      if (await checkNft(order.productId) == false) {
+      if (await checkNft(order.productId, order.id) == false) {
         publishNft(order)
         return;
       }
@@ -221,6 +224,7 @@ export default {
       router.push({
         name: "nft",
         params: {
+          orderId: order.id,
           userId: state.orderList[0].buyerId,
           productId: order.productId
         },
