@@ -267,6 +267,7 @@ export default {
 
 .input-group{
   height:50px;
+  margin-bottom:30px;
 }
 
 .input-group-file{
@@ -275,5 +276,6 @@ export default {
   flex-wrap: wrap;
   align-items: stretch;
   width: 100%;
+  margin-bottom:30px;
 }
 </style>

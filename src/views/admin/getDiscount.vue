@@ -1,10 +1,10 @@
 <template>
   <br/>
   <br/>
-  <h1>쿠폰 등록</h1>
+  <h1>특별 할인</h1>
   <br/>
   <div style="display:flex;">
-    <h3>쿠폰 정보와 적용 상품을 선택하여 쿠폰 등록이 가능합니다.</h3>
+    <h3>한 명의 사용자에게 특별할인을 제공할 수 있습니다.</h3>
     <h3 style="font-style: italic; color:gray; margin-left:44%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
     <a @click="logout" style="margin-left: 4%;">
       <div style="display:flex; margin-bottom: 0px;">
@@ -16,7 +16,7 @@
   <hr/>
   <br/>
   <main>
-    <div class="regi_grid">
+    <!-- <div class="regi_grid">
       <div class="top_div">
         <input placeholder="쿠폰명" id="couponName" class="form-control" style="margin-left:25%;"/>
         <input placeholder="내용" id="couponContent" class="form-control" style="margin-left:25%;"/>
@@ -27,7 +27,56 @@
         </div>
         <br>
         <br>
+        
+      </div>
+    </div> -->
+    <br>
+    <br>
+    
+    <div class="inner_grid">
+      <div></div>
+      <div style="
+        width: 620px;
+        height: 500px;
+        border: 1px solid black;
+        border-radius: 15px;
+        overflow-x: hidden;
+        padding-top: 15px;
+      ">
         <div class="select_div">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="사용자 닉네임을 입력하세요" id="nickName" />
+            <button
+              class="btn btn-outline-secondary"
+              @click="searchUser"
+            >
+              사용자 찾기
+            </button>
+          </div>
+          <table id="customers" class="customers" style="margin-left: 40%;">
+            <tr>
+              <th>선택</th>
+              <th>이름</th>
+              <th>아이디</th>
+            </tr>
+            <tr v-for="(user, i) in userList" :key="i">
+              <td>
+              <input
+                type="radio"
+                v-model="userCheckVmodel"
+                :value="user.loginId"
+                id="i"
+              />
+            </td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.loginId }}</td>
+            </tr>
+          </table>
+          <input placeholder="할인율" id="discountRate" class="form-control" style="margin-left:25%; margin-top: 5%; height: 40px;"/>
+          <div class="input-group" style="width: 50%; margin-bottom:1px; margin-left:25%;">
+            <input type="datetime-local" data-placeholder="시작일" id="startDate" class="form-control"/>
+            <input type="datetime-local" data-placeholder="종료일" id="endDate" class="form-control"/>
+          </div>
           <div class="input-group" style="width:50%; margin-left:25%;">
             <select @change="changeCategoryFirst($event)" id="first_category_id" class="form-control">
               <option :value="-1">- 대분류 - </option>
@@ -66,8 +115,8 @@
             style="
               width: 140px;
               height: 50px;
-              margin-left: 42%;
-              margin-top: 2%;
+              margin-left: 39%;
+              margin-top: 5%;
               /* margin-top: 30px; */
             "
             @click="productSearch"
@@ -76,10 +125,7 @@
           </button>
         </div>
       </div>
-    </div>
-    <br>
-    <br>
-    <div class="inner_grid">
+      
       <div></div>
       <div
       style="
@@ -109,68 +155,10 @@
           <tr v-for="product in productList">
             <td>
               <input
-                type="checkbox"
+                type="radio"
                 v-model="productCheckVmodel"
                 :value="product"
                 class="customers_check"
-              />
-            </td>
-            <td>
-              <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
-            </td>
-            <td>{{ product.productName }}</td>
-            <td>{{ product.price }}원</td>
-            <td>{{ product.stock }}개</td>
-            <td>{{ product.warranty }}개월</td>
-            <td>{{ product.createdDate }}</td>
-          </tr>
-        </table>
-      </div>
-      <div>
-        <button
-          style="
-            background-color: white;
-            width: 50px;
-            height: 50px;
-            color: black;
-            border: solid 1px black;
-            margin-top: 200px;
-            margin-left: 10px;
-          "
-          @click="productAdd"
-        >
-          >>>
-        </button>
-      </div>
-      <div style="
-        width: 620px;
-        height: 500px;
-        background-color: white;
-        border: 1px solid black;
-        border-radius: 15px;
-        overflow: scroll;
-        overflow-x: hidden;
-        padding-top: 15px;
-      ">
-        <h2 style="margin-left: 38%; margin-bottom: 20px;">쿠폰 적용 상품 LIST</h2>
-        <table id="customers" style="width: 600px">
-          <tr>
-            <th>취소</th>
-            <th>이미지</th>
-            <th>상품명</th>
-            <th>상품가격</th>
-            <th>재고</th>
-            <th>보증기간</th>
-            <th>게시일</th>
-          </tr>
-          <tr v-for="product in productCheckList" :key="i">
-            <td>
-              <input
-                type="button"
-                value="취소"
-                :id="`cancel_${product.id}`"
-                style="background-color: wheat"
-                @click="cancel_btn($event)"
               />
             </td>
             <td>
@@ -195,9 +183,9 @@
             margin-left: 46%;
             margin-top: 2%;
           "
-          @click="createCoupon"
+          @click="specialCoupon"
         >
-          쿠폰등록
+          특별할인 등록
         </button>
       </div>
   </main>
@@ -228,7 +216,10 @@ export default {
       endDate: '',
       productIdList: [],
       userName: localStorage.getItem('userName'),
+      userList: [],
+      couponId: 0,
       router : useRouter(),
+      userCheckVmodel: ''
     };
   },
   created() {
@@ -304,52 +295,21 @@ export default {
           this.productList = response.data;
         });
     },
-    productAdd() {
-      let check = 0;
-      this.productCheckVmodel.some(v => {
-        this.productCheckList.some(w => {
-          if (w.id == v.id) {
-            alert('중복 상품이 포함되어있습니다.');
-            check = 1;
-            return true;
-          }
-        });
-        if (check == 1) {
-          return true;
-        }
-      });
-
-      if (check == 0) {
-        this.productCheckVmodel.forEach(v => {
-          this.productCheckList.push(v);
-        });
-      }
-
-      console.log(this.productCheckList);
+    logout(){
+      localStorage.removeItem('login_id');
+      localStorage.removeItem('role');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('token');
+      localStorage.removeItem('store_id');
+      this.router.push('../');
     },
-
-    createCoupon() {
-      this.productCheckList.forEach(v => {
-        this.productIdList.push(v.id);
-      });
-      console.log(this.productIdList);
-      this.couponName = document.getElementById('couponName').value;
-      this.couponContent = document.getElementById('couponContent').value;
-      this.discountRate = document.getElementById('discountRate').value;
-      this.startDate = Date.parse(document.getElementById('startDate').value);
-      this.endDate = Date.parse(document.getElementById('endDate').value);
-      console.log(localStorage.getItem('store_id'));
+    searchUser() {
+      this.nickName = document.getElementById('nickName').value;
       axios
         .post(
-          'https://sbbro.xyz/api/product/admin/coupons',
+          'https://sbbro.xyz/api/auth/info',
           {
-            storeId: localStorage.getItem('store_id'),
-            name: this.couponName,
-            contents: this.couponContent,
-            startDate: new Date(this.startDate),
-            endDate: new Date(this.endDate),
-            discountRate: this.discountRate,
-            productId: this.productIdList,
+            name: this.nickName,
           },
           {
             headers: {
@@ -359,35 +319,77 @@ export default {
           },
         )
         .then(response => {
-          alert('쿠폰이 등록되었습니다');
+          this.userList = response.data;
+          console.log(this.userList);
         });
     },
-    selectAll(event) {
-      // let checkboxes = document.querySelectorAll('.customers_check');
-      // for (let i = 0, n = checkboxes.length; i < n; i++) {
-      //   console.log(checkboxes[i]);
-      //   checkboxes[i].checked = event.currentTarget.checked;
-      //   if (checkboxes[i].checked) {
-      //     this.productCheckVmodel.push(checkboxes[i].value);
-      //   }
-      // }
-    },
-    cancel_btn(event) {
-      let target_num = event.currentTarget.id.slice(7);
-      for (let i = 0; i < this.productCheckList.length; i++) {
-        if (target_num == this.productCheckList[i].id) {
-          this.productCheckList.pop();
-        }
+    specialCoupon(){
+      this.startDate = Date.parse(document.getElementById('startDate').value);
+      this.endDate = Date.parse(document.getElementById('endDate').value);
+      this.discountRate = document.getElementById('discountRate').value;
+
+      if( this.userCheckVmodel == null){
+        alert("사용자를 지정해주세요");
+        return;
       }
-    },
-    logout(){
-      localStorage.removeItem('login_id');
-      localStorage.removeItem('role');
-      localStorage.removeItem('userName');
-      localStorage.removeItem('token');
-      localStorage.removeItem('store_id');
-      this.router.push('../');
-    },
+      if ( this.productCheckVmodel.id == null){
+        alert("상품을 지정해주세요");
+        return;
+      }
+      
+      this.productCheckList.push(this.productCheckVmodel.id);
+
+      axios
+        .post(
+          'https://sbbro.xyz/api/product/admin/coupons',
+          {
+            storeId: localStorage.getItem('store_id'),
+            name: "특별할인",
+            contents: "특별할인 쿠폰입니다",
+            startDate: new Date(this.startDate),
+            endDate: new Date(this.endDate),
+            discountRate: this.discountRate,
+            productId: this.productCheckList,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then(response => {
+          this.couponId = response.data;
+          this.productCheckList = [];
+
+          const strSplit = this.userCheckVmodel;
+          const userName = strSplit.split("@")[0]
+
+          axios
+            .post(
+              'https://sbbro.xyz/api/chat/chatRoom/chat',
+              {
+                id: null,
+                content: '특별할인 쿠폰입니다',
+                contentType: '특별할인',
+                sendBy: localStorage.getItem('login_id'),
+                sendTo: String(userName),
+                source: String(this.productCheckVmodel.id)+'/'+String(this.couponId)
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ` + localStorage.getItem('token'),
+                  'Content-Type': 'application/json',
+                },
+              },
+            )
+            .then(response => {
+              alert("특별할인 전송 성공!");
+              this.userCheckVmodel = "";
+              this.productCheckVmodel = []
+            });
+        });
+    }
   },
 };
 </script>
@@ -416,6 +418,7 @@ export default {
   border-collapse: collapse;
   text-align: center;
   font-size: 13px;
+  margin-top: 5%;
 }
 
 #customers td,
@@ -447,7 +450,7 @@ export default {
 
 .select_div select {
   width: 100px;
-  height: 50px;
+  height: 40px;
 }
 
 .regi_grid{
@@ -460,5 +463,12 @@ export default {
 
 .form-control{
   width:50%;
+}
+
+.input-group{
+  width: 50%;
+  height: 40px;
+  margin-left:25%;
+  margin-top:5%;
 }
 </style>
