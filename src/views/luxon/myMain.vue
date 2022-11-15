@@ -409,7 +409,7 @@
   <section>
     <div style="margin-left: 20%">
       <div class="all_procut" style="margin-top: 3%">
-        <button
+        <!-- <button
           style="
             background-color: black;
             width: 40px;
@@ -423,7 +423,7 @@
           @click="bestBtn"
         >
           ?
-        </button>
+        </button> -->
         <h2 style="font-weight: bold">Best Product</h2>
         <br />
         <div class="product_grid">
