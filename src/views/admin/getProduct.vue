@@ -1,60 +1,70 @@
 <template>
+  <br/>
+  <br/>
   <h1>상품 관리</h1>
-  <h3>상품 조회, 수정 및 히트맵 확인이 가능합니다.</h3>
-  <main>
+  <br/>
+  <div style="display:flex;">
+    <h3>상품 조회, 수정 및 히트맵 확인이 가능합니다.</h3>
+    <h3 style="font-style: italic; color:gray; margin-left:51%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
+    <a @click="logout" style="margin-left: 4%;">
+      <div style="display:flex; margin-bottom: 0px;">
+        <span class="material-icons-sharp">logout</span>
+        <h3>Logout</h3>
+      </div>
+    </a>
+  </div>
+  <hr/>
+  <br/>
+  <main class="main_div">
     <div class="regi_grid">
       <div class="top_div">
         <div class="select_div">
-          <select @change="changeCategoryFirst($event)" id="first_category_id">
-            <option :value="-1">-- 전체 -- (첫번째 카테고리)</option>
-            <option v-for="(category, i) in categoryList" :key="i" :value="i">
-              <p>{{ category.categoryName }}</p>
-              <div :id="`${category.id}`" style="dispaly: none"></div>
-            </option>
-          </select>
-          <br />
-          <br />
-          <select @change="changeCategorySecond($event)">
-            <option :value="-1">-- 전체 -- (두번째 카테고리)</option>
-            <option
-              v-for="(categorySecond, i) in categorySecondList"
-              :key="i"
-              :value="i"
-            >
-              <p>{{ categorySecond.categoryName }}</p>
-              <p :id="`${categorySecond.id}`" style="dispaly: none"></p>
-            </option>
-          </select>
-          <br />
-          <br />
-          <select @change="changeCategoryThird($event)">
-            <option :value="-1">-- 전체 -- (세번째 카테고리)</option>
-            <option
-              v-for="(categoryThird, i) in categoryThirdList"
-              :key="i"
-              :value="i"
-            >
-              <p>{{ categoryThird.categoryName }}</p>
-              <p :id="`${categoryThird.id}`" style="dispaly: none"></p>
-            </option>
-          </select>
-          <input placeholder="상품명을 입력하세요" id="inputProductName" />
+          <div class="input-group mb-3">
+            <select @change="changeCategoryFirst($event)" id="first_category_id" class="form-select" aria-label="Default select example">
+              <option :value="-1">- 대분류-</option>
+              <option v-for="(category, i) in categoryList" :key="i" :value="i">
+                <p>{{ category.categoryName }}</p>
+                <div :id="`${category.id}`" style="dispaly: none"></div>
+              </option>
+            </select>
+            <select @change="changeCategorySecond($event)" class="form-select" aria-label="Default select example">
+              <option :value="-1">- 중분류 -</option>
+              <option
+                v-for="(categorySecond, i) in categorySecondList"
+                :key="i"
+                :value="i"
+              >
+                <p>{{ categorySecond.categoryName }}</p>
+                <p :id="`${categorySecond.id}`" style="dispaly: none"></p>
+              </option>
+            </select>
+            <select @change="changeCategoryThird($event)" class="form-select" aria-label="Default select example">
+              <option :value="-1">- 소분류 -</option>
+              <option
+                v-for="(categoryThird, i) in categoryThirdList"
+                :key="i"
+                :value="i"
+              >
+                <p>{{ categoryThird.categoryName }}</p>
+                <p :id="`${categoryThird.id}`" style="dispaly: none"></p>
+              </option>
+            </select>
+            <input class="form-control" placeholder="상품명을 입력하세요" id="inputProductName" />
+          </div>
+          <button
+            id="productSearchButton"
+            class="btn btn-outline-dark"
+            style="
+              width: 140px;
+              height: 50px;
+              margin-left: 50px;
+              /* margin-top: 30px; */
+            "
+            @click="productSearch"
+          >
+            상품검색
+          </button>
         </div>
-        <button
-          id="productSearchButton"
-          style="
-            background-color: white;
-            width: 200px;
-            height: 70px;
-            color: black;
-            border: solid 1px black;
-            margin-left: 10px;
-            /* margin-top: 30px; */
-          "
-          @click="productSearch"
-        >
-          상품검색
-        </button>
       </div>
     </div>
     <table id="customers">
@@ -129,6 +139,7 @@
 <script>
 import axios from 'axios';
 import router from '@/router';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   data() {
@@ -143,6 +154,8 @@ export default {
       firstValue: '',
       secondValue: '',
       thirdValue: '',
+      userName: localStorage.getItem('userName'),
+      router : useRouter(),
     };
   },
   created() {
@@ -255,15 +268,28 @@ export default {
           document.getElementById('productSearchButton').click();
         });
     },
+
+    logout(){
+      localStorage.removeItem('login_id');
+      localStorage.removeItem('role');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('token');
+      localStorage.removeItem('store_id');
+      this.router.push('../');
+    },
   },
 };
 </script>
 
 <style scoped>
+
 .regi_grid {
-  display: grid;
   grid-template-columns: 700px 200px 200px;
   gap: 30px;
+  padding: 10px 50px 10px 50px;
+  border: solid 1px black;
+  border-radius: 10px;
+  margin-bottom:50px;
 }
 .category_grid {
   /* display: grid; */
@@ -278,17 +304,12 @@ export default {
   height: 30px;
 }
 
-.top_div input {
-  width: 200px;
-  height: 40px;
-  border: 2px solid black;
-  margin-left: 30px;
-  margin-bottom: 30px;
-}
-
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
+  text-align: center;
+  width:90%;
+  margin-left:5%;
 }
 
 #customers td,
@@ -308,7 +329,6 @@ export default {
 #customers th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
   background-color: #9b9b9b;
   color: white;
 }
@@ -328,9 +348,19 @@ export default {
   border: solid 2px gray;
 }
 
+.select_div{
+  display:flex;
+  margin-top:30px;
+}
+
 .select_div select {
-  width: 200px;
+  width:100px;
   height: 50px;
-  border: solid 1px gray;
+  float:left;
+}
+.main_div {
+  align-content: center;
+  margin-left:100px;
+  margin-right:100px;
 }
 </style>

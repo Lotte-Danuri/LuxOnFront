@@ -1,11 +1,11 @@
 <template>
-  <div class="dashContainer">
+  <div class="top_top">
     <aside>
       <div class="top">
         <div class="logo">
           <router-link to="/main">
             <img
-              src="@/assets/logo/logo_black.png"
+              src="@/assets/logo/logo_white.png"
               style="width: 180px; height: 120px; margin-left: 5%"
             />
           </router-link>
@@ -51,8 +51,7 @@
           <h3>환경설정</h3>
         </a> -->
         <a href="#">
-          <span class="material-icons-sharp">logout</span>
-          <h3>Logout</h3>
+          <h3 style="margin-left:20%;">LUXON</h3>
         </a>
       </div>
     </aside>
@@ -125,12 +124,12 @@ body {
   color: var(--color-dark);
 }
 
-.dashContainer {
+.top_top {
   display: grid;
   width: 96%;
   margin: 0 auto;
   gap: 1.8rem;
-  grid-template-columns: 14rem auto 23rem;
+  grid-template-columns: 14rem auto;
 }
 
 a {
@@ -302,10 +301,6 @@ aside .sidebar .message-count {
 /* ================== MAIN =============== */
 main {
   margin-top: 1.4rem;
-}
-
-main div {
-  margin-bottom: 30px;
 }
 
 main .date {
