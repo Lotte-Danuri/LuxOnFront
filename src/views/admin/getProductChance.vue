@@ -192,6 +192,7 @@ export default {
 .top_div {
   display:flex;
   margin-top: 35px;
+  margin-bottom: 25px;
 }
 
 .top_div input {

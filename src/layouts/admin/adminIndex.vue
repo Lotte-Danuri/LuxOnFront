@@ -46,6 +46,11 @@
           <h3>쿠폰 나누기</h3>
           <!-- <span class="message-count">26</span> -->
         </router-link>
+        <router-link to="/admin/getDiscount">
+          <span class="material-icons-sharp"> discount </span>
+          <h3>특별 할인</h3>
+          <!-- <span class="message-count">26</span> -->
+        </router-link>
         <!-- <a href="#">
           <span class="material-icons-sharp">settings</span>
           <h3>환경설정</h3>
