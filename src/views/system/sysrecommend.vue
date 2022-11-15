@@ -83,6 +83,7 @@ export default {
         })
         .then(res => (this.members = res.data))
         .catch(err => console.log(err));
+      console.log('get');
       console.log(this.members);
       if (value == null) {
         this.searchMembers = this.members;
@@ -119,7 +120,7 @@ export default {
         rec.productCode.length != 0
           ? await axios
               .post(
-                'https://sbbro.xyz/api/chat/chatRoom/chats',
+                'https://sbbro.xyz/api/chat/chatRoom/chat',
                 {
                   id: null,
                   content: content,
@@ -135,10 +136,11 @@ export default {
                   },
                 },
               )
-              .then(alert('상품 추천 메세지 전송 완료!'))
+              .then()
               .catch(err => console.log(err))
           : false;
       });
+      alert('상품 추천 메세지 전송 완료!');
     },
   },
   computed: {

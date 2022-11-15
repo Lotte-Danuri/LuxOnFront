@@ -40,6 +40,18 @@
     </aside>
     <!-- --------------------------------------- END OF ASIDE ---------------------------- -->
     <admin-view></admin-view>
+    <TheChat
+      v-if="state.localStorage.login_id != null"
+      style="position: fixed; z-index: 999; right: 30px; bottom: 30px"
+      @click="buttonClick"
+    ></TheChat>
+    <Transition>
+      <TheChatApp
+        @closeBtn="buttonClick"
+        v-if="state.chatShow"
+        style="position: fixed; right: 30px; bottom: 30px; z-index: 999"
+      ></TheChatApp>
+    </Transition>
   </div>
 </template>
 
@@ -47,15 +59,55 @@
 // import TheSide from '@/layouts/admin/theSide.vue';
 import AdminView from '@/layouts/admin/adminView.vue';
 
+import TheChat from '@/layouts/luxon/theChat.vue';
+import TheChatApp from '@/layouts/luxon/theChatApp.vue';
+
+import { getCurrentInstance } from 'vue';
+import { onBeforeMount } from 'vue';
+import { reactive } from 'vue';
+import { onMounted } from 'vue';
+
 export default {
   name: 'DefaultLayout',
   components: {
     AdminView,
+    TheChat,
+    TheChatApp,
+  },
+
+  setup() {
+    let login = false;
+    const emitter =
+      getCurrentInstance().appContext.config.globalProperties.$emitter;
+    const globalProperties =
+      getCurrentInstance().appContext.config.globalProperties;
+    onBeforeMount(() => {
+      if (globalProperties.$isLogin() == false) {
+        login = true;
+      }
+    });
+    const state = reactive({
+      localStorage: '',
+      chatShow: false,
+    });
+    let buttonClick = () => {
+      state.chatShow = !state.chatShow;
+    };
+
+    onMounted(() => {
+      state.localStorage = localStorage;
+      emitter.on('chatShow', buttonClick);
+    });
+    return {
+      state,
+      login,
+      buttonClick,
+    };
   },
 };
 </script>
 
-<style>
+<style scoped>
 :root {
   --color-primary: #7380ec;
   --color-danger: #ff7782;

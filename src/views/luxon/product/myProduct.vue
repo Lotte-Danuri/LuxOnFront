@@ -9,11 +9,26 @@
           <span>
             <div style="display: flex; justify-content: space-between">
               <p>상품코드 {{ state.productCode }}</p>
+
               <button>
                 <like-button
                   v-bind:productCode="state.productCode"
                 ></like-button>
               </button>
+            </div>
+            <div
+              class="brand_info"
+              @click="
+                router.push({
+                  path: '/store',
+                  query: {
+                    brandId: state.brand.id,
+                  },
+                })
+              "
+            >
+              <img class="brand_thumnail" :src="state.brand.imageUrl" />
+              <div class="brand_name">{{ state.brand.name }}</div>
             </div>
             <h1>{{ state.products[0]?.productName }}</h1>
             <h2 style="font-weight: bold">
@@ -186,6 +201,7 @@ export default {
       sumPrice: 0,
       selectedStoreIndex: '',
       quantity: 0,
+      brand: {},
     });
     const comma =
       getCurrentInstance().appContext.config.globalProperties.$comma;
@@ -206,20 +222,28 @@ export default {
             state.sumPrice =
               document.getElementById('countValue').value *
               state.products[0].price;
-            state.products.forEach((product) => {
+            state.products.forEach(product => {
               if (globalProperties.$isLogin() == false) {
-                console.log('비로그인')
-                axios.get(`https://sbbro.xyz/api/recommend/recommends/click/unlogin/`+product.id)
-              }else{
-                console.log('로그인')
-                axios.get(`https://sbbro.xyz/api/recommend/recommends/click/login/`+product.id,{
-                  headers:{
-                    Authorization: "Bearer " + localStorage.getItem("token"),
-                  }
-                })
+                console.log('비로그인');
+                axios.get(
+                  `https://sbbro.xyz/api/recommend/recommends/click/unlogin/` +
+                    product.id,
+                );
+              } else {
+                console.log('로그인');
+                axios.get(
+                  `https://sbbro.xyz/api/recommend/recommends/click/login/` +
+                    product.id,
+                  {
+                    headers: {
+                      Authorization: 'Bearer ' + localStorage.getItem('token'),
+                    },
+                  },
+                );
               }
             });
           }
+          getBrand();
           console.log(state.products);
         })
         .catch(() => {
@@ -358,6 +382,22 @@ export default {
           }
         });
     };
+    const getBrand = async () => {
+      await axios
+        .get(
+          'https://sbbro.xyz/api/member/store/brand/' +
+            state.products[0].brandId,
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
+            },
+          },
+        )
+        .then(res => (state.brand = res.data));
+
+      console.log(state.brand);
+    };
 
     const sendChat = () => {
       if (!isSelectStore()) {
@@ -388,18 +428,20 @@ export default {
     };
 
     const click_review = () => {
-      document.getElementById("product_detail").style.display = "none";
-      document.getElementById("product_review").style.display = "block";
-      document.getElementById("review_btn").style.color = "black";
-      document.getElementById("detail_btn").style.color = "gray";
+      document.getElementById('product_detail').style.display = 'none';
+      document.getElementById('product_review').style.display = 'block';
+      document.getElementById('review_btn').style.color = 'black';
+      document.getElementById('detail_btn').style.color = 'gray';
     };
 
     const click_detail = () => {
-      document.getElementById("product_review").style.display = "none";
-      document.getElementById("product_detail").style.display = "block";
-      document.getElementById("review_btn").style.color = "gray";
-      document.getElementById("detail_btn").style.color = "black";
+      document.getElementById('product_review').style.display = 'none';
+      document.getElementById('product_detail').style.display = 'block';
+      document.getElementById('review_btn').style.color = 'gray';
+      document.getElementById('detail_btn').style.color = 'black';
     };
+
+    window.scrollTo(0, 0);
 
     return {
       state,
@@ -407,6 +449,7 @@ export default {
       plusBtn,
       initOrder,
       comma,
+      router,
       emitter,
       sendChat,
       addCart,
@@ -519,5 +562,20 @@ input[type='radio']:checked + label {
   font-size: 40px;
   font-weight: bold;
   color: gray;
+}
+.brand_info {
+  color: black;
+  display: flex;
+}
+.brand_name {
+  align-self: center;
+  margin-left: 20px;
+  font-size: medium;
+  margin-bottom: 5px;
+}
+.brand_thumnail {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
 }
 </style>

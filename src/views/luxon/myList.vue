@@ -3,372 +3,45 @@
     <div
       class="side_menu"
       id="style-3"
-      style="
-        height: 600px;
-        overflow: scroll;
-        overflow-x: hidden;
-        position: sticky;
-        top: 200px;
-      "
+      style="height: 600px; overflow-x: hidden; position: sticky; top: 200px"
     >
-      <div v-for="(category, i) in categoryList" :key="i" :value="i">
-        <h1>
-          {{ category.categoryName }}
-        </h1>
-        <br />
-        <ul>
-          <li><h4>전체</h4></li>
-          <li
-            v-for="(categorySecond, j) in category.categorySecondDtoList"
-            :key="j"
-            :value="j"
-            @click="myFilter($event)"
-          >
-            <h4>
-              {{ categorySecond.categoryName }}
-            </h4>
-            <ul>
+      <div>
+        <h2>Category</h2>
+        <ul class="first_category">
+          <li v-for="categoryFirst in categoryList" :key="categoryFirst.id">
+            <a
+              href="#"
+              @click="
+                () => {
+                  secondValue = '';
+                  firstValue = categoryFirst.id;
+                  getBrandProduct();
+                }
+              "
+              >{{ categoryFirst.categoryName }}</a
+            >
+            <ul class="second_category">
               <li
-                v-for="(
-                  categoryThird, k
-                ) in categorySecond.categoryThirdDtoList"
-                :key="k"
-                :value="k"
+                v-for="categorySecond in categoryFirst.categorySecondDtoList"
+                :key="categorySecond.id"
               >
-                {{ categoryThird.categoryName }}
+                <a
+                  href="#"
+                  @click="
+                    () => {
+                      firstValue = '';
+                      secondValue = categorySecond.id;
+                      getBrandProduct2(secondValue);
+                    }
+                  "
+                >
+                  {{ categorySecond.categoryName }}
+                </a>
               </li>
             </ul>
           </li>
         </ul>
       </div>
-
-      <div class="inputPrice">
-        <h3>가격</h3>
-        <label for="minPrice">최소</label>
-        <input type="text" id="minPrice" name="minP" placeholder="min Price" />
-        <br />
-        <br />
-        <label for="maxPrice">최대</label>
-        <input type="text" id="maxPrice" name="maxP" placeholder="max Price" />
-      </div>
-      <!-- <div>
-        <h3>색상</h3>
-        <ul class="color_grid" style="width: 150px; margin: 0px">
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_01"
-                data-selector="targetLink"
-                data-filter_cd="01"
-                data-text="화이트"
-                value="화이트"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_010005_210114010651.png"
-                  alt="화이트"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_02"
-                data-selector="targetLink"
-                data-filter_cd="02"
-                data-text="베이지"
-                value="베이지"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_020065_210114011229.png"
-                  alt="베이지"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_03"
-                data-selector="targetLink"
-                data-filter_cd="03"
-                data-text="그레이"
-                value="그레이"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_030005_210114010650.png"
-                  alt="그레이"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_04"
-                data-selector="targetLink"
-                data-filter_cd="04"
-                data-text="블랙"
-                value="블랙"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_040002_210114011352.png"
-                  alt="블랙"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_05"
-                data-selector="targetLink"
-                data-filter_cd="05"
-                data-text="브라운"
-                value="브라운"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_110021_210114010651.png"
-                  alt="브라운"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_06"
-                data-selector="targetLink"
-                data-filter_cd="06"
-                data-text="레드"
-                value="레드"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_060027_210114011352.png"
-                  alt="레드"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_07"
-                data-selector="targetLink"
-                data-filter_cd="07"
-                data-text="핑크"
-                value="핑크"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_070070_210114011352.png"
-                  alt="핑크"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_08"
-                data-selector="targetLink"
-                data-filter_cd="08"
-                data-text="오렌지"
-                value="오렌지"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_080018_210114011352.png"
-                  alt="오렌지"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_09"
-                data-selector="targetLink"
-                data-filter_cd="09"
-                data-text="옐로우"
-                value="옐로우"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_120010_210114010651.png"
-                  alt="옐로우"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_10"
-                data-selector="targetLink"
-                data-filter_cd="10"
-                data-text="그린"
-                value="그린"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_110022_210114010650.png"
-                  alt="그린"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_11"
-                data-selector="targetLink"
-                data-filter_cd="11"
-                data-text="블루"
-                value="블루"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_100018_210114010651.png"
-                  alt="블루"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_12"
-                data-selector="targetLink"
-                data-filter_cd="12"
-                data-text="퍼플"
-                value="퍼플"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_110023_210114010651.png"
-                  alt="퍼플"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_13"
-                data-selector="targetLink"
-                data-filter_cd="13"
-                data-text="골드"
-                value="골드"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_110024_210114010650.png"
-                  alt="골드"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_14"
-                data-selector="targetLink"
-                data-filter_cd="14"
-                data-text="실버"
-                value="실버"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_110025_210114010651.png"
-                  alt="실버"
-                />
-              </span>
-            </label>
-          </li>
-          <li class="option-color">
-            <label class="option-detail">
-              <input
-                type="checkbox"
-                autocomplete="off"
-                class="checkEvent"
-                id="ftrCk_color_15"
-                data-selector="targetLink"
-                data-filter_cd="15"
-                data-text="기타"
-                value="기타"
-              />
-              <span class="color-wrap">
-                <img
-                  src="https://image.sivillage.com/upload/C00001/goods/color/color_15_210114025641.png"
-                  alt="기타"
-                />
-              </span>
-            </label>
-          </li>
-        </ul>
-      </div> -->
-      <hr style="width: 160px" />
-      <br />
-      <button
-        style="
-          width: 160px;
-          height: 50px;
-          background-color: black;
-          color: white;
-          border-radius: 5px;
-        "
-      >
-        필터 적용
-      </button>
     </div>
     <div
       class="category__content"
@@ -392,18 +65,18 @@
               :key="text.description"
               class="pb-14 sm:flex sm:justify-evenly"
             >
-              <div style="background-color: gray; position: relative">
+              <div style="background-color: black; position: relative">
                 <div class="firstSwiper">
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
                     <h1 style="font-size: 50px">Luxury On</h1>
-                    <p>겨울 test</p>
+                    <!-- <p>겨울 test</p> -->
                   </div>
                   <div>
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 523px; height: 523px"
+                      style="width: 300px; height: 300px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -429,18 +102,18 @@
               :key="text.description"
               class="pb-14 sm:flex sm:justify-evenly"
             >
-              <div style="background-color: gray; position: relative">
+              <div style="background-color: black; position: relative">
                 <div class="firstSwiper">
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
                     <h1 style="font-size: 50px">Luxury On</h1>
-                    <p>겨울 test</p>
+                    <!-- <p>겨울 test</p> -->
                   </div>
                   <div>
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 523px; height: 523px"
+                      style="width: 300px; height: 300px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -456,7 +129,7 @@
         <h2 style="font-weight: bold">All Product</h2>
         <br />
         <div class="product_grid">
-          <div v-for="product in productList" v-bind:key="product">
+          <div v-for="product in showList" v-bind:key="product">
             <router-link
               :to="{
                 path: '/product/myProduct',
@@ -495,28 +168,118 @@ export default {
       categoryList: [],
       selectedUl: [],
       isActive: false,
+      searchValue: '',
+      searchValue2: '',
+      showList: [],
+      firstValue: '',
     };
   },
+  watch: {
+    searchValue() {
+      this.searchValue2 = this.searchValue;
+    },
+    $route(to, from) {
+      if (to.path != from.path) {
+        // console.log('감지');
+        this.firstValue = this.$route.query.id;
+      }
+    },
+  },
   created() {
-    this.getProductList();
-    console.log(this.$route.query.id);
     this.getCategoryList();
+
+    // this.showList = this.productList;
+
+    // const url = decodeURI(window.location.href);
+    // alert(url);
+    // this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
+  },
+  mounted() {
+    this.getProductList();
+    this.firstValue = this.$route.query.id;
+    this.searchValue = this.$route.query.searchValue;
   },
   methods: {
     async getProductList() {
       this.productList = await this.$api('/product/products');
+      this.showList = this.productList;
+      if (this.firstValue != undefined) {
+        this.getBrandProduct();
+      }
+      if (this.$route.query.searchValue != undefined) {
+        console.log(this.$route.query.searchValue);
+        this.getSearchProduct();
+      }
     },
     async getCategoryList() {
       this.categoryList = await this.$api('/product/categories');
-      console.log(this.categoryList);
     },
-    clickCallback(pageNum) {
-      console.log(pageNum);
+    getSearchProduct() {
+      // this.productList = await this.$api('/product/products');
+      let newList = [];
+      let search = this.searchValue;
+      // alert(
+      //   decodeURI(window.location.href)
+      //     .slice(window.location.href.indexOf('searchValue'))
+      //     .slice(12),
+      // );
+      // alert(search);
+      // if (
+      //   window.location.href.includes('list') &&
+      //   decodeURI(window.location.href)
+      //     .slice(window.location.href.indexOf('searchValue'))
+      //     .slice(12) != search
+      // ) {
+      //   alert(search);
+      //   search = decodeURI(window.location.href)
+      //     .slice(window.location.href.indexOf('searchValue'))
+      //     .slice(12);
+      // }
+      // let reloadFlag = 0;
+      // if (window.location.href.includes('list') && reloadFlag == 0) {
+      //   // location.reload();
+      //   reloadFlag = 1;
+      // }
+      // window.onload = function () {
+      //   if (!window.location.hash) {
+      //     window.location = window.location + '#loaded';
+      //     window.location.reload();
+      //   }
+      // };
+      for (let i = 0; i < this.productList.length; i++) {
+        if (this.productList[i].productName.includes(search)) {
+          newList.push(JSON.parse(JSON.stringify(this.productList[i])));
+        }
+      }
+      let proxy = new Proxy(newList, {});
+      this.showList = proxy;
+      // window.scrollTo(1500, 0);
     },
-    myFilter(event) {
-      // alert(this.selectedUl);
-      this.isActive = !this.isActive;
-      console.log(event.target.children);
+    getBrandProduct() {
+      // this.productList = await this.$api('/product/products');
+      let newList = [];
+      let first = this.firstValue;
+      for (let i = 0; i < this.productList.length; i++) {
+        if (first == this.productList[i].categoryFirstId) {
+          newList.push(JSON.parse(JSON.stringify(this.productList[i])));
+        }
+      }
+      let proxy = new Proxy(newList, {});
+      this.showList = proxy;
+      // window.scrollTo(1500, 0);
+    },
+    getBrandProduct2(secondValue) {
+      // this.productList = await this.$api('/product/products');
+      let newList = [];
+      let second = secondValue;
+      for (let i = 0; i < this.productList.length; i++) {
+        if (second == this.productList[i].categorySecondId) {
+          newList.push(JSON.parse(JSON.stringify(this.productList[i])));
+        }
+      }
+      let proxy = new Proxy(newList, {});
+      this.showList = proxy;
+      // window.scrollTo(1500, 0);
     },
   },
   setup() {
@@ -524,7 +287,7 @@ export default {
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/096/00/221000000299096.jpg?cVer=31105502&RS=&SP=1',
       },
       {
         author: 'Elon Musk',
@@ -534,12 +297,12 @@ export default {
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/374/00/221000000288374.jpg?cVer=17020031&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/481/00/221000000299481.jpg?cVer=03094826&RS=&SP=1',
       },
       {
         author: 'Elon Musk',
         description: 'ghjhgjgj',
-        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/225/00/220900000284225.jpg?cVer=10023119&RS=&SP=1',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/511/00/221000000288511.jpg?cVer=01093513&RS=&SP=1',
       },
     ]);
     const swiperTextBase2 = ref([
@@ -608,21 +371,6 @@ p {
 .side_menu {
   float: left;
   width: 200px;
-  overflow-y: scroll;
-}
-
-#style-3::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #f5f5f5;
-}
-
-#style-3::-webkit-scrollbar {
-  width: 6px;
-  background-color: #f5f5f5;
-}
-
-#style-3::-webkit-scrollbar-thumb {
-  background-color: #000000;
 }
 
 .inputPrice input {

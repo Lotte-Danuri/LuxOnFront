@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section style="margin-top: -70px">
     <swiper
       class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
       :space-between="20"
@@ -89,43 +89,71 @@
     </swiper>
   </section>
   <section>
-    <div style="margin-left: 20%; margin-top: 3%; width: 60%">
+    <div style="margin-left: 25%; margin-top: 3%; width: 60%">
       <div style="display: grid; grid-template-columns: 25% 25% 25% 25%">
-        <div>
-          <button>
-            <img
-              src="//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_642/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 642w,//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_960/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 960w,//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_1280/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 1280w"
-              style="width: 150px; height: 150px; border-radius: 100px"
-            />
-            <h3>여성</h3>
-          </button>
+        <div class="listBtn">
+          <router-link
+            :to="{
+              name: 'MyList',
+              query: { id: 3 },
+            }"
+          >
+            <button>
+              <img
+                src="//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_642/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 642w,//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_960/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 960w,//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_1280/prd-emea/sys-master/content/P1/haf/h52/9795611951134-Homepage_Fashion_ONE_Mobile(26).jpg 1280w"
+                style="width: 150px; height: 150px; border-radius: 100px"
+              />
+              <h3>여성</h3>
+            </button>
+          </router-link>
         </div>
-        <div>
-          <button>
-            <img
-              src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/088/00/221000000303088.jpg?cVer=03041533&RS=&SP=1"
-              style="width: 150px; height: 150px; border-radius: 100px"
-            />
-            <h3>남성</h3>
-          </button>
+        <div class="listBtn">
+          <router-link
+            :to="{
+              name: 'MyList',
+              query: { id: 5 },
+            }"
+          >
+            <button>
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/088/00/221000000303088.jpg?cVer=03041533&RS=&SP=1"
+                style="width: 150px; height: 150px; border-radius: 100px"
+              />
+              <h3>남성</h3>
+            </button>
+          </router-link>
         </div>
-        <div>
-          <button>
-            <img
-              src="https://puls-img.chanel.com/1665492769363-pushbaspageone1210x680pximg03jpg_680x1210.jpg"
-              style="width: 150px; height: 150px; border-radius: 100px"
-            />
-            <h3>패션잡화</h3>
-          </button>
+        <div class="listBtn">
+          <router-link
+            :to="{
+              name: 'MyList',
+              query: { id: 6 },
+            }"
+          >
+            <button>
+              <img
+                src="https://puls-img.chanel.com/1665492769363-pushbaspageone1210x680pximg03jpg_680x1210.jpg"
+                style="width: 150px; height: 150px; border-radius: 100px"
+              />
+              <h3>패션잡화</h3>
+            </button>
+          </router-link>
         </div>
-        <div>
-          <button>
-            <img
-              src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/801/00/220900000287801.jpg?cVer=31104641&RS=&SP=1"
-              style="width: 150px; height: 150px; border-radius: 100px"
-            />
-            <h3>뷰티</h3>
-          </button>
+        <div class="listBtn">
+          <router-link
+            :to="{
+              name: 'MyList',
+              query: { id: 7 },
+            }"
+          >
+            <button>
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/801/00/220900000287801.jpg?cVer=31104641&RS=&SP=1"
+                style="width: 150px; height: 150px; border-radius: 100px"
+              />
+              <h3>뷰티</h3>
+            </button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -176,12 +204,19 @@
               v-for="(recommend, i) in productList.slice(0, 4)"
               :key="i"
             >
-              <img :src="`${recommend.thumbnailUrl}`" alt="image" />
-              <br />
-              <span>
-                <h5 style="color: white">{{ recommend.productName }}</h5>
-                <p style="color: white">￦{{ comma(recommend.price) }}</p>
-              </span>
+              <router-link
+                :to="{
+                  path: '/product/myProduct',
+                  query: { productCode: recommend.productCode },
+                }"
+              >
+                <img :src="`${recommend.thumbnailUrl}`" alt="image" />
+                <br />
+                <span>
+                  <h5 style="color: white">{{ recommend.productName }}</h5>
+                  <p style="color: white">￦{{ comma(recommend.price) }}</p>
+                </span>
+              </router-link>
             </div>
           </div>
         </swiper-slide>
@@ -192,136 +227,26 @@
               v-for="(recommend, i) in productList.slice(4, 8)"
               :key="i"
             >
-              <img :src="`${recommend.thumbnailUrl}`" alt="image" />
-              <br />
-              <span>
-                <h5 style="color: white">{{ recommend.productName }}</h5>
-                <p style="color: white">￦{{ comma(recommend.price) }}</p>
-              </span>
+              <router-link
+                :to="{
+                  path: '/product/myProduct',
+                  query: { productCode: recommend.productCode },
+                }"
+              >
+                <img :src="`${recommend.thumbnailUrl}`" alt="image" />
+                <br />
+                <span>
+                  <h5 style="color: white">{{ recommend.productName }}</h5>
+                  <p style="color: white">￦{{ comma(recommend.price) }}</p>
+                </span>
+              </router-link>
             </div>
           </div>
         </swiper-slide>
       </swiper>
     </div>
   </section>
-  <!-- <section style="margin-top: 50px" class="favorite_cls" id="favorite_cls">
-    <div class="container" style="margin-left: 15%">
-      <h1 style="margin-left: -200px; font-family: RegularBoldCell">
-        Favorite Brand
-      </h1>
-      <br /><br />
-      <swiper
-        class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-        :space-between="20"
-        :loop="true"
-        :pagination="{ clickable: true }"
-        :autoplay="{
-          delay: 2000,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        }"
-        @click="showAlert"
-      >
-        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
-          <div class="container_grid">
-            <div class="item color1">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color2">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color3">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color4">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide class="pb-14 sm:flex sm:justify-evenly">
-          <div class="container_grid">
-            <div class="item color5">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/621/211201001837621.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color6">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/523/221017003322523.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color7">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/705/221019003338705.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-            <div class="item color8">
-              <img
-                src="https://image.sivillage.com/upload/C00001/goods/org/621/211201001837621.jpg?RS=350&SP=1"
-                alt="image"
-              />
-              <span>
-                <p>J.LINDEBERG</p>
-                <p>[Women] 에블리나 봄버 자켓</p>
-                <p>390,000</p>
-              </span>
-            </div>
-          </div>
-        </swiper-slide>
-      </swiper>
-    </div>
-  </section> -->
-  <section style="margin-top: 50px" class="coupon_cls" id="coupon_cls">
+  <section style="margin-top: 10px" class="coupon_cls" id="coupon_cls">
     <div class="container" style="margin-left: 15%">
       <!-- <h1 style="margin-left: -200px">기능1</h1> -->
       <br /><br />
@@ -481,17 +406,42 @@
 
   <section>
     <div style="margin-left: 20%">
-      <div class="all_procut" style="margin-top: -100px">
+      <div class="all_procut" style="margin-top: -80px">
+        <button
+          style="
+            background-color: black;
+            width: 40px;
+            height: 30px;
+            border-radius: 20px;
+            position: absolute;
+            left: 29%;
+            margin-top: 3px;
+            color: white;
+          "
+          @click="bestBtn"
+        >
+          ?
+        </button>
         <h2 style="font-weight: bold">Best Product</h2>
         <br />
         <div class="product_grid">
-          <div v-for="product in productList.slice(0, 16)" v-bind:key="product">
+          <div
+            v-for="(product, index) in bestList.slice(0, 16)"
+            v-bind:key="product"
+            style="position: relative"
+          >
             <router-link
               :to="{
                 path: '/product/myProduct',
                 query: { productCode: product.productCode },
               }"
             >
+              <div
+                class="rank_num"
+                style="width: 30px; height: 30px; background-color: black"
+              >
+                {{ index + 1 }}
+              </div>
               <img :src="product.thumbnailUrl" />
               <br />
               <span>
@@ -517,7 +467,7 @@
       "
     >
       <div class="main__styling-text">
-        <h2 class="regularbold">Exclusive</h2>
+        <h2 class="regularbold">NFT 보증서</h2>
 
         <div class="main__styling-info">
           <p class="main__styling-text-strong">PERFUME GALLERY</p>
@@ -537,7 +487,7 @@
     </div>
   </div>
   <div style="margin-left: 10%">
-    <iframe
+    <!-- <iframe
       width="1500"
       height="800"
       src="https://www.youtube.com/embed/DsZhTIwJV5E"
@@ -545,7 +495,7 @@
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen
-    ></iframe>
+    ></iframe> -->
   </div>
   <br />
   <br />
@@ -639,6 +589,7 @@ export default {
     const state = reactive({
       products: [],
       productList: [],
+      bestList: [],
     });
 
     onBeforeMount(() => {});
@@ -648,28 +599,42 @@ export default {
   data() {
     return {
       productList: [],
+      bestList: [],
     };
   },
   created() {
     this.getProductList();
     window.addEventListener('scroll', this.handleScroll);
+    this.getBestList();
   },
   methods: {
-    leftBtn() {
-      alert('left');
-    },
-    rightBtn() {
-      alert('right');
+    bestBtn() {
+      this.$swal(
+        '클릭수와 주문수에대해 상품전체갯수*0.5 한것의 순위를 각각 뽑고 각각 뽑은 순위가 서로 겹치는 상품에 대한 배열을 만든다음에 그 배열에서 상품전환율로 rank 오름차순처리한다.',
+      );
     },
     comma(val) {
       return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
     async getProductList() {
       this.productList = await this.$api('/product/products');
-      console.log(this.productList);
+    },
+    async getBestList() {
+      try {
+        const response = await axios.get(
+          'https://sbbro.xyz/api/product/products/best/list',
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+            },
+          },
+        );
+        this.bestList = response.data;
+      } catch (err) {
+        console.log(err);
+      }
     },
     handleScroll() {
-      // console.log(document.querySelector('html').scrollTop);
       if (window.location.href.includes('main')) {
         let nowScroll = document.querySelector('html').scrollTop;
         // alert(nowScroll);
@@ -709,7 +674,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+a {
+  text-decoration: none;
+}
 .coupon_cls .swiper-pagination-bullets span {
   display: none;
 }
@@ -720,6 +688,9 @@ export default {
 </style>
 
 <style scoped>
+.listBtn button {
+  background-color: transparent;
+}
 .firstSwiper {
   width: 100%;
   height: 600px;
@@ -889,5 +860,14 @@ export default {
 }
 .product_grid div span p {
   margin: 0px;
+}
+
+.rank_num {
+  position: absolute;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  margin: 0;
+  text-align: center;
 }
 </style>
