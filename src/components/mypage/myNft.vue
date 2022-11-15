@@ -1,34 +1,82 @@
 <template>
-  <div class="mypage col-12 col-md-9 col-lg-8 offset-lg-1">
-    <h2>주문/배송 조회</h2>
-    <!-- Order -->
-    <div class="card card-lg mb-5 border">
-      <div class="pc-wrap">
-        <div
-          class="main__styling-slide"
-          style="
-            background-image: url('https://cdn-fo.sivillage.com/fo/assets/comm/image/main_styling_pattern.svg');
-          "
-        >
-          <div class="main__styling-text">
-            <h2 class="regularbold">NFT</h2>
+  <div class="mypage">
+    <h2>NFT 인증서</h2>
 
-            <div class="main__styling-info">
-              <p class="main__styling-text-strong">PERFUME GALLERY</p>
-              <p class="main__styling-text-description">
-                {{ state.nftData.name }}
-              </p>
-            </div>
-          </div>
-          <div class="main__styling-img">
+    <!-- Order -->
+    <div
+      class="main__styling-slide"
+      style="
+        background-image: url('https://cdn-fo.sivillage.com/fo/assets/comm/image/main_styling_pattern.svg');
+        background-size: 1000px 600px;
+        background-repeat: no-repeat;
+        width: 1000px;
+        height: 800px;
+        padding: 80px;
+        padding-left: 20px;
+        margin-left: 5%;
+      "
+    >
+      <div class="nft_grid" style="margin-left: 0%; margin-top: 0%">
+        <!-- <div class="">
+              {{ state.nftData.name }}
+            </div> -->
+        <div class="" style="background-color: black">
+          <img
+            style="width: 450px; height: 400px"
+            :src="state.nftData.image"
+            alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
+          />
+        </div>
+        <div style="margin-left: 50px">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 100px 50px;
+              margin-left: 30%;
+            "
+          >
+            <h1 style="text-align: center">NFT</h1>
             <img
-              :src="state.nftData.image"
-              alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
+              style="width: 50px; background-color: transparent"
+              src="@/assets/img/gold.png"
             />
+          </div>
+          <!-- <vue-qr
+            :bgSrc="src"
+            :logoSrc="src2"
+            text="Hello world!"
+            :size="200"
+          ></vue-qr>
+          <vue-qr text="Hello world!" :callback="test" qid="testid"></vue-qr> -->
+          <a href="http://m.site.naver.com/13j7l"
+            ><img
+              style="width: 150px; margin-left: 145px"
+              src="https://qrcodethumb-phinf.pstatic.net/20221115_52/1668484058096jOxDz_PNG/13j7l.png"
+          /></a>
+          <div class="data_grid">
+            <h3>상품명</h3>
+            <p>{{ state.nftData.name }}</p>
+          </div>
+          <div class="data_grid">
+            <h3>브랜드명</h3>
+            <p>{{ state.nftData.brandName }}</p>
+          </div>
+          <div class="data_grid">
+            <h3>판매자</h3>
+            <p>{{ state.nftData.sellerId }}</p>
+          </div>
+          <div class="data_grid">
+            <h3>발급일</h3>
+            <p>{{ state.nftData.registeredDate.slice(0, 10) }}</p>
+          </div>
+          <div class="data_grid">
+            <h3>NFT 주소</h3>
+            <p>{{ state.nftData.contractAddr }}</p>
           </div>
         </div>
       </div>
     </div>
+    {{ state }}
   </div>
 
   <!-- mypage-shopping__content end -->
@@ -42,8 +90,11 @@ import { getCurrentInstance } from 'vue';
 import Swal from 'sweetalert2';
 import { useRoute, useRouter } from 'vue-router';
 import { computed } from 'vue';
+// import vueQr from 'vue-qr';
 
 export default {
+  // components: { vueQr },
+
   setup() {
     const route = useRoute();
     const router = useRouter();
@@ -92,62 +143,21 @@ export default {
   background-color: #fff;
   border: 1px solid #e0e0e0;
   width: 1182px;
-  min-height: 1467px;
+  height: 500px;
+  /* min-height: 1467px; */
   padding: 40px;
   box-sizing: border-box;
   margin-left: 0;
 }
 
-.main__styling-img img {
-  height: 650px;
-  width: 433px;
-  object-fit: cover;
+.nft_grid {
+  display: grid;
+  grid-template-columns: 400px 500px;
+  width: 800px;
 }
 
-.main__styling-slide {
-  position: relative;
-  display: flex;
-  height: 730px;
-  padding: 0 183px 0 200px;
-  box-sizing: border-box;
-}
-
-.main__styling-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.main__styling-img {
-  position: absolute;
-  top: 41px;
-  right: 223px;
-}
-
-.main__styling-text h2 {
-  margin-bottom: 57px;
-  font-size: 72px;
-  color: #141a23;
-}
-
-.main__styling-text-strong {
-  white-space: nowrap;
-  margin-bottom: 8px;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: 0.5px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.main__styling-text-description {
-  white-space: nowrap;
-  font-size: 16px;
-  line-height: 22px;
-  color: #404040;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.data_grid {
+  display: grid;
+  grid-template-columns: 150px 300px;
 }
 </style>

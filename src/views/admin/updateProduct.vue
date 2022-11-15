@@ -1,111 +1,144 @@
 <template>
+  <br/>
+  <br/>
   <h1>상품 수정</h1>
-  <h3>상품에 대한 수정이 가능합니다.</h3>
+  <br/>
+  <div style="display:flex;">
+    <h3>상품에 대한 수정이 가능합니다.</h3>
+    <h3 style="font-style: italic; color:gray; margin-left:57%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
+    <a @click="logout" style="margin-left: 4%;">
+      <div style="display:flex; margin-bottom: 0px;">
+        <span class="material-icons-sharp">logout</span>
+        <h3>Logout</h3>
+      </div>
+    </a>
+  </div>
+  <hr/>
   <main>
-    <div class="regi">
-      <br />
-      상품명 <input
-        type="text"
-        :placeholder="this.product.productName"
-        name="productName"
-        id="productName"
-        required
-      />
-      <br />
-      가격 <input
-        type="text"
-        :placeholder="this.product.price"
-        name="price"
-        id="price"
-        required
-      />
-      <br />
-      재고 <input
-        type="text"
-        :placeholder="this.product.stock"
-        name="stock"
-        id="stock"
-        required
-      />
-      <br />
-      상품 코드 <input
-        type="text"
-        :placeholder="this.product.productCode"
-        name="productCode"
-        id="productCode"
-        required
-      />
-      <br />
-      대 카테고리 : {{this.product.categoryFirstName}}<select @change="changeCategoryFirst($event)" id="first_select">
-        <option>첫번째 카테고리를 선택해주세요</option>
-        <option v-for="(category, i) in categoryList" :key="i" :value="i">
-          <p>{{ category.categoryName }}</p>
-          <div :id="`${category.id}`" style="dispaly: none"></div>
-        </option>
-      </select>
-      <br />
-      <br />
-      중 카테고리 : {{this.product.categorySecondName}}<select @change="changeCategorySecond($event)" id="second_select">
-        <option>두번째 카테고리를 선택해주세요</option>
-        <option
-          v-for="(categorySecond, i) in categorySecondList"
-          :key="i"
-          :value="i"
+    <div class="div-regi">
+      <div class="regi">
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon1">상품명</span>
+          <input
+            type="text"
+            class="form-control"
+            aria-describedby="basic-addon1"
+            :placeholder="this.product.productName"
+            name="productName"
+            id="productName"
+            required
+          />
+        </div>
+        <div class="input-group">
+        <span class="input-group-text" id="basic-addon1">가격</span>
+        <input
+          type="text"
+          class="form-control"
+            aria-describedby="basic-addon1"
+          :placeholder="this.product.price"
+          name="price"
+          id="price"
+          required
+          />
+        </div>
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon1">재고</span>
+          <input
+            type="text"
+            class="form-control"
+            aria-describedby="basic-addon1"
+            :placeholder="this.product.stock"
+            name="stock"
+            id="stock"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon1">상품 코드</span>
+          <input
+            type="text"
+            class="form-control"
+            aria-describedby="basic-addon1"
+            :placeholder="this.product.productCode"
+            name="productCode"
+            id="productCode"
+            required
+          />
+        </div>
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon1">카테고리</span>
+          <span class="input-group-text">기존 : [{{this.product.categoryFirstName}}-{{this.product.categorySecondName}}-{{this.product.categoryThirdName}}]</span>
+          <select @change="changeCategoryFirst($event)" id="first_select" class="form-control">
+            <option>- 대분류 -</option>
+            <option v-for="(category, i) in categoryList" :key="i" :value="i">
+              <p>{{ category.categoryName }}</p>
+              <div :id="`${category.id}`" style="dispaly: none"></div>
+            </option>
+          </select>
+          <select @change="changeCategorySecond($event)" id="second_select" class="form-control">
+            <option>- 중분류 -</option>
+            <option
+              v-for="(categorySecond, i) in categorySecondList"
+              :key="i"
+              :value="i"
+            >
+              <p>{{ categorySecond.categoryName }}</p>
+              <p :id="`${categorySecond.id}`" style="dispaly: none"></p>
+            </option>
+          </select>
+          <select id="third_select" @change="changeCategoryThird()" class="form-control">
+            <option>- 소분류 -</option>
+            <option
+              v-for="(categoryThird, i) in categoryThirdList"
+              :key="i"
+              :value="i"
+            >
+              <p>{{ categoryThird.categoryName }}</p>
+              <p :id="`${categoryThird.id}`" style="dispaly: none"></p>
+            </option>
+          </select>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">보증기간</span>
+          <input
+            type="text"
+            class="form-control"
+            aria-describedby="basic-addon1"
+            :placeholder="this.product.warranty"
+            name="warranty"
+            id="warranty"
+            required
+          />
+        </div>
+        <div class="input-group-file">
+          <input
+            multiple="multiple"
+            class="form-control"
+            aria-describedby="basic-addon1"
+            type="file"
+            id="file-upload"
+            ref="serveImage"
+          />
+        </div>
+
+        <button
+          class="btn btn-outline-dark"
+          style="
+            width: 100px;
+            height: 50px;
+            margin-left:41%;
+          "
+          @click="updateProduct"
         >
-          <p>{{ categorySecond.categoryName }}</p>
-          <p :id="`${categorySecond.id}`" style="dispaly: none"></p>
-        </option>
-      </select>
-      <br />
-      <br />
-      소 카테고리 : {{this.product.categoryThirdName}}<select id="third_select" @change="changeCategoryThird()">
-        <option>세번째 카테고리를 선택해주세요</option>
-        <option
-          v-for="(categoryThird, i) in categoryThirdList"
-          :key="i"
-          :value="i"
-        >
-          <p>{{ categoryThird.categoryName }}</p>
-          <p :id="`${categoryThird.id}`" style="dispaly: none"></p>
-        </option>
-      </select>
-      <br />
-      <br />
-      <br />
-      <br />
-      보증기간 : <input
-        type="text"
-        :placeholder="this.product.warranty"
-        name="warranty"
-        id="warranty"
-        required
-      />
-      <br />
-      <input
-        multiple="multiple"
-        type="file"
-        id="file-upload"
-        ref="serveImage"
-      />
-      <br />
-      <button
-        style="
-          width: 100px;
-          height: 50px;
-          background-color: black;
-          color: white;
-        "
-        @click="updateProduct"
-      >
-        수정
-      </button>
+          수정
+        </button>
+      </div>
     </div>
-    
   </main>
 </template>
 <script>
 import axios from 'axios';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   data() {
@@ -114,7 +147,9 @@ export default {
       categoryList: [],
       categorySecondList: [],
       categoryThirdList: [],
-      product: ""
+      product: "",
+      router : useRouter(),
+      userName: localStorage.getItem('userName'),
     };
   },
   created() {
@@ -197,14 +232,48 @@ export default {
     changeCategoryThird() {
       let sel = document.getElementById('third_select');
     },
+    logout(){
+      localStorage.removeItem('login_id');
+      localStorage.removeItem('role');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('token');
+      localStorage.removeItem('store_id');
+      this.router.push('../');
+    },
   },
 };
 </script>
 <style scoped>
-.regi input {
-  width: 200px;
-  height: 20px;
-  border: 1px solid black;
-  margin-bottom: 10px;
+.input-group-text{
+  border-radius: .375rem .01rem .01rem .375rem;
+}
+
+.input-group-prepend{
+  margin-bottom: 0px;
+}
+
+.regi{
+  width: 50%;
+  margin-left:25%;
+  margin-top:7%;
+  padding: 50px 100px 50px 100px;
+  border:solid 1px black;
+  border-radius: 15px;
+}
+
+#div-text{
+  margin-bottom:0px;
+}
+
+.input-group{
+  height:50px;
+}
+
+.input-group-file{
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
 }
 </style>

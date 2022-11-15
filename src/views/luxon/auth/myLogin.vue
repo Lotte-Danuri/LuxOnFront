@@ -8,6 +8,7 @@
         <input placeholder="아이디" v-model="state.id" />
         <input
           placeholder="비밀번호"
+          type="password"
           v-model="state.password"
           v-on:keyup.enter="login"
         />

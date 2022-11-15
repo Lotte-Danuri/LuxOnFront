@@ -37,7 +37,7 @@
           </span>
           <hr />
 
-          <div class="option_grid">
+          <div class="option_grid" style="margin-bottom: 10px">
             <div class="option_name">
               <h3>지점</h3>
             </div>
@@ -78,6 +78,7 @@
               <button @click="plusBtn">+</button>
             </div>
           </div>
+          <br />
           <hr style="border: 3px solid black !important" />
           <div class="option_grid">
             <div class="option_name">

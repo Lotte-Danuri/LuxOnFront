@@ -26,13 +26,43 @@
                   "
                   @click="search"
                 >
-                  입력
+                  주소 변경
                 </button>
                 <br />
                 상세주소
                 <input
                   style="margin-top: 5px; width : 450px"
                   :value="state.userInfo.addressDetail"
+                />
+              </div>
+              <div style="margin-left: 18px">
+                <input
+                  placeholder="주소찾기를 눌러주세요"
+                  style="width: 180px"
+                />
+                <button
+                  style="
+                    background-color: black;
+                    width: 100px;
+                    height: 41px;
+                    margin-left: 20px;
+                    color: white;
+                  "
+                  @click="search"
+                >
+                  주소찾기
+                </button>
+                <input
+                  type="text"
+                  id="big_address"
+                  placeholder="도로명주소"
+                  v-model="state.bigaddress"
+                />
+                <input
+                  type="text"
+                  id="small_address"
+                  placeholder="상세주소"
+                  v-model="state.smalladdress"
                 />
               </div>
               <div class="small_grid">

@@ -8,7 +8,14 @@ address: this.address,
 birthDate: this.birthDate -->
 
 <template>
-  <section style="margin-top: 50px; margin-left: 40%; margin-right: 100px">
+  <section
+    style="
+      margin-top: 50px;
+      margin-left: 40%;
+      margin-right: 100px;
+      height: 1200px;
+    "
+  >
     <div class="signup_grid">
       <div class="signDiv">
         <br />
