@@ -3,7 +3,7 @@
     <div class="list_contents">
       <div class="div_top">
         <div>
-          <img :src="state.products[0]?.imageList[0]" />
+          <img :src="state.products[0]?.thumbnailUrl" />
         </div>
         <div style="margin-left: 10%">
           <span>
