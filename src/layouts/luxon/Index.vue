@@ -88,4 +88,6 @@ export default {
 .v-leave-to {
   opacity: 0;
 }
+
+/* 아래의 모든 코드는 영역::코드로 사용 */
 </style>
