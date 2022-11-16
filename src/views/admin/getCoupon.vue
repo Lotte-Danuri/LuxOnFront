@@ -1,35 +1,42 @@
 <template>
-  <br/>
-  <br/>
+  <br />
+  <br />
   <h1>쿠폰 조회 및 전송</h1>
-  <br/>
-  <div style="display:flex;">
-    <h3>쿠폰을 조회할 수 있으며 팔로워, 지정 사용자에게 쿠폰 전송이 가능합니다.</h3>
-    <h3 style="font-style: italic; color:gray; margin-left:37%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
-    <a @click="logout" style="margin-left: 4%;">
-      <div style="display:flex; margin-bottom: 0px;">
+  <br />
+  <div style="display: flex">
+    <h3>
+      쿠폰을 조회할 수 있으며 팔로워, 지정 사용자에게 쿠폰 전송이 가능합니다.
+    </h3>
+    <h3 style="font-style: italic; color: gray; margin-left: 37%">
+      {{ userName }}
+    </h3>
+    <h3>　님 안녕하세요</h3>
+    <a @click="logout" style="margin-left: 4%">
+      <div style="display: flex; margin-bottom: 0px">
         <span class="material-icons-sharp">logout</span>
         <h3>Logout</h3>
       </div>
     </a>
   </div>
-  <hr/>
-  <br/>
+  <hr />
+  <br />
   <main>
     <br />
     <div class="inner_grid">
       <div></div>
-      <div style="
-        width: 620px;
-        height: 500px;
-        background-color: white;
-        border: 1px solid black;
-        border-radius: 15px;
-        overflow: scroll;
-        overflow-x: hidden;
-        padding-top: 15px;
-      ">
-        <h2 style="margin-left: 38%; margin-bottom: 20px;">쿠폰 LIST</h2>
+      <div
+        style="
+          width: 620px;
+          height: 500px;
+          background-color: white;
+          border: 1px solid black;
+          border-radius: 15px;
+          overflow: scroll;
+          overflow-x: hidden;
+          padding-top: 15px;
+        "
+      >
+        <h2 style="margin-left: 38%; margin-bottom: 20px">쿠폰 LIST</h2>
         <table id="customers" style="width: 600px">
           <tr>
             <th>선택</th>
@@ -75,17 +82,21 @@
           </tr>
         </table>
       </div>
-      <div style="
-        width: 620px;
-        height: 500px;
-        background-color: white;
-        border: 1px solid black;
-        border-radius: 15px;
-        overflow: scroll;
-        overflow-x: hidden;
-        padding-top: 15px;
-      ">
-        <h2 style="margin-left: 36%; margin-bottom: 20px;">쿠폰 적용 상품 LIST</h2>
+      <div
+        style="
+          width: 620px;
+          height: 500px;
+          background-color: white;
+          border: 1px solid black;
+          border-radius: 15px;
+          overflow: scroll;
+          overflow-x: hidden;
+          padding-top: 15px;
+        "
+      >
+        <h2 style="margin-left: 36%; margin-bottom: 20px">
+          쿠폰 적용 상품 LIST
+        </h2>
         <table id="customers" style="width: 600px">
           <tr>
             <th>이미지</th>
@@ -108,46 +119,60 @@
         </table>
       </div>
     </div>
-    
+
     <div class="container">
       <div class="btn-group" role="group" aria-label="...">
-        <button type="button" class="btn btn-primary" id="button-class1" @click="toggle1()">팔로워에게 쿠폰전송</button>
-        <button type="button" class="btn btn-default" id="button-class2" @click="toggle2()">사용자에게 쿠폰전송</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          style="background-color: gray; border: solid 1px gray; color: white"
+          id="button-class1"
+          @click="toggle1()"
+        >
+          팔로워에게 쿠폰전송
+        </button>
+        <button
+          type="button"
+          class="btn btn-default"
+          id="button-class2"
+          style="background-color: white; border: solid 1px black; color: black"
+          @click="toggle2()"
+        >
+          사용자에게 쿠폰전송
+        </button>
       </div>
     </div>
     <div id="id_bottom">
-    <button
-      class="btn btn-outline-dark"
-      style="
-        width: 200px;
-        height: 60px;
-        margin-left: 41%;
-      "
-      @click="CouponToFollower"
-    >
-      팔로워에게 쿠폰전송
-    </button>
-  </div>
-      <div id="id_top" style="display:none">
-        <div class="top_div">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="사용자 닉네임을 입력하세요" id="nickName" />
-            <button
-              class="btn btn-outline-secondary"
-              @click="searchUser"
-            >
-              사용자 찾기
-            </button>
-          </div>
+      <button
+        class="btn btn-outline-dark"
+        style="width: 200px; height: 60px; margin-left: 41%"
+        @click="CouponToFollower"
+      >
+        팔로워에게 쿠폰전송
+      </button>
+    </div>
+    <div id="id_top" style="display: none">
+      <div class="top_div">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="사용자 닉네임을 입력하세요"
+            id="nickName"
+          />
+          <button class="btn btn-outline-secondary" @click="searchUser">
+            사용자 찾기
+          </button>
         </div>
-        <table id="customers" class="customers">
-          <tr>
-            <th>선택</th>
-            <th>이름</th>
-            <th>아이디</th>
-          </tr>
-          <tr v-for="(user, i) in userList" :key="i">
-            <td>
+      </div>
+      <table id="customers" class="customers">
+        <tr>
+          <th>선택</th>
+          <th>이름</th>
+          <th>아이디</th>
+        </tr>
+        <tr v-for="(user, i) in userList" :key="i">
+          <td>
             <input
               type="checkbox"
               v-model="userCheckVmodel"
@@ -159,15 +184,11 @@
           <td>{{ user.loginId }}</td>
         </tr>
       </table>
-      <br>
-      <br>
+      <br />
+      <br />
       <button
         class="btn btn-outline-dark"
-        style="
-          width: 200px;
-          height: 60px;
-          margin-left: 41%;
-        "
+        style="width: 200px; height: 60px; margin-left: 41%"
         @click="CouponToUser"
       >
         사용자에게 쿠폰전송
@@ -189,7 +210,7 @@ export default {
       userList: [],
       nickName: '',
       userName: localStorage.getItem('userName'),
-      router : useRouter(),
+      router: useRouter(),
     };
   },
   created() {
@@ -316,32 +337,30 @@ export default {
         });
     },
 
-    toggle1(){
-      document.getElementById("button-class1").className="btn btn-primary";
-      document.getElementById("button-class2").className="btn btn-default";
-      document.getElementById("id_top").style.display="none"
-      document.getElementById("id_bottom").style.display="block"
+    toggle1() {
+      document.getElementById('button-class1').className = 'btn btn-primary';
+      document.getElementById('button-class2').className = 'btn btn-default';
+      document.getElementById('id_top').style.display = 'none';
+      document.getElementById('id_bottom').style.display = 'block';
     },
 
-    toggle2(){
-      document.getElementById("button-class1").className='btn btn-default';
-      document.getElementById("button-class2").className="btn btn-primary";
-      document.getElementById("id_top").style.display="block"
-      document.getElementById("id_bottom").style.display="none"
+    toggle2() {
+      document.getElementById('button-class1').className = 'btn btn-default';
+      document.getElementById('button-class2').className = 'btn btn-primary';
+      document.getElementById('id_top').style.display = 'block';
+      document.getElementById('id_bottom').style.display = 'none';
     },
 
-    logout(){
+    logout() {
       localStorage.removeItem('login_id');
       localStorage.removeItem('role');
       localStorage.removeItem('userName');
       localStorage.removeItem('token');
       localStorage.removeItem('store_id');
       this.router.push('../');
-    }
-  }
-}
-
-
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -361,7 +380,7 @@ export default {
 .inner_grid {
   display: grid;
   grid-template-columns: 130px 650px 100px 650px 100px;
-  margin-bottom:50px;
+  margin-bottom: 50px;
 }
 
 #customers {
@@ -393,17 +412,17 @@ export default {
   color: white;
 }
 
-.btn-group{
+.btn-group {
   margin-left: 35%;
-  margin-bottom:4%;
+  margin-bottom: 4%;
 }
 
-.input-group{
+.input-group {
   width: 20%;
-  margin-left:37%;
+  margin-left: 37%;
 }
 
-.customers{
-  margin-left:43%;
+.customers {
+  margin-left: 43%;
 }
 </style>
