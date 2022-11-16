@@ -1,10 +1,10 @@
 <template>
-  <div class="mypage-shopping__content">
+  <div class="mypage-shopping__content" style="">
     <form id="searchForm" method="post">
       <input type="hidden" name="page_idx" value="1" />
     </form>
     <br />
-    <div class="signup_grid" style="margin-left: 33%">
+    <div class="signup_grid" style="margin-left: 33%; height: 700px">
       <div class="signDiv">
         <br />
         <h2>개인정보 수정</h2>
