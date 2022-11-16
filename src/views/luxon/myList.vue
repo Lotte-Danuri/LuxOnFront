@@ -164,6 +164,9 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { ref } from 'vue';
 
+window.addEventListener('locationchange', function () {
+  console.log('onlocationchange event occurred!');
+});
 export default {
   components: { Swiper, SwiperSlide },
   data() {
@@ -179,29 +182,21 @@ export default {
     };
   },
   watch: {
-    searchValue() {
-      this.searchValue2 = this.searchValue;
-    },
-    $route(to, from) {
-      if (to.path != from.path) {
-        // console.log('감지');
-        this.firstValue = this.$route.query.id;
-      }
+    //해당 라우트에서 주소가 바꼈을시 호출됨
+    $route() {
+      const url = decodeURI(window.location.href);
+      this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
+      this.getSearchProduct();
     },
   },
   created() {
     this.getCategoryList();
-
-    // this.showList = this.productList;
-
-    // const url = decodeURI(window.location.href);
-    // alert(url);
-    // this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
   },
   mounted() {
     this.getProductList();
     this.firstValue = this.$route.query.id;
     this.searchValue = this.$route.query.searchValue;
+    console.log('mounted' + this.searchValue);
   },
   methods: {
     async getProductList() {
@@ -213,43 +208,15 @@ export default {
       if (this.$route.query.searchValue != undefined) {
         console.log(this.$route.query.searchValue);
         this.getSearchProduct();
+        // location.reload();
       }
     },
     async getCategoryList() {
       this.categoryList = await this.$api('/product/categories');
     },
     getSearchProduct() {
-      // this.productList = await this.$api('/product/products');
       let newList = [];
       let search = this.searchValue;
-      // alert(
-      //   decodeURI(window.location.href)
-      //     .slice(window.location.href.indexOf('searchValue'))
-      //     .slice(12),
-      // );
-      // alert(search);
-      // if (
-      //   window.location.href.includes('list') &&
-      //   decodeURI(window.location.href)
-      //     .slice(window.location.href.indexOf('searchValue'))
-      //     .slice(12) != search
-      // ) {
-      //   alert(search);
-      //   search = decodeURI(window.location.href)
-      //     .slice(window.location.href.indexOf('searchValue'))
-      //     .slice(12);
-      // }
-      // let reloadFlag = 0;
-      // if (window.location.href.includes('list') && reloadFlag == 0) {
-      //   // location.reload();
-      //   reloadFlag = 1;
-      // }
-      // window.onload = function () {
-      //   if (!window.location.hash) {
-      //     window.location = window.location + '#loaded';
-      //     window.location.reload();
-      //   }
-      // };
       for (let i = 0; i < this.productList.length; i++) {
         if (this.productList[i].productName.includes(search)) {
           newList.push(JSON.parse(JSON.stringify(this.productList[i])));
@@ -257,10 +224,8 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
-      // window.scrollTo(1500, 0);
     },
     getBrandProduct() {
-      // this.productList = await this.$api('/product/products');
       let newList = [];
       let first = this.firstValue;
       for (let i = 0; i < this.productList.length; i++) {
@@ -270,10 +235,8 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
-      // window.scrollTo(1500, 0);
     },
     getBrandProduct2(secondValue) {
-      // this.productList = await this.$api('/product/products');
       let newList = [];
       let second = secondValue;
       for (let i = 0; i < this.productList.length; i++) {
@@ -283,7 +246,6 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
-      // window.scrollTo(1500, 0);
     },
   },
   setup() {
