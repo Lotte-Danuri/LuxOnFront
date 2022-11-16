@@ -20,10 +20,6 @@
           <span class="material-icons-sharp">grid_view</span>
           <h3>메인 센터</h3>
         </router-link>
-        <router-link to="/admin/analytics">
-          <span class="material-icons-sharp">insights</span>
-          <h3>통계</h3>
-        </router-link>
         <router-link to="/admin/getProduct">
           <span class="material-icons-sharp">receipt_long</span>
           <h3>상품 관리</h3>
@@ -56,7 +52,7 @@
           <h3>환경설정</h3>
         </a> -->
         <a href="#">
-          <h3 style="margin-left:20%;">LUXON</h3>
+          <h3 style="margin-left: 20%">LUXON</h3>
         </a>
       </div>
     </aside>

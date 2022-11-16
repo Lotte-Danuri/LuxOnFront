@@ -507,6 +507,10 @@ a {
   border-radius: 10px;
   width: 358px;
 }
+/*
+.store_btns button {
+  width: 110px;
+} */
 
 .store_follow_true {
   width: 100px;

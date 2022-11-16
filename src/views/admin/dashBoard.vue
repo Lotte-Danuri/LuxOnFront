@@ -1,75 +1,48 @@
 <template>
+  <br />
+  <br />
+  <h1>메인 센터</h1>
+  <br />
+  <div style="display: flex">
+    <h3>주문량, 클릭수, 좋아요 데이터를 제공할 수 있습니다.</h3>
+    <h3 style="font-style: italic; color: gray; margin-left: 44%">
+      {{ userName }}
+    </h3>
+    <h3>　님 안녕하세요</h3>
+    <a @click="logout" style="margin-left: 4%">
+      <div style="display: flex; margin-bottom: 0px">
+        <span class="material-icons-sharp">logout</span>
+        <h3>Logout</h3>
+      </div>
+    </a>
+  </div>
+  <hr />
+  <br />
   <main>
-    <h1>메인 센터</h1>
-    <br />
-    <br />
     <div class="zero_grid">
       <div>
-        <span class="material-icons-sharp"> today </span>
-        총판매량 1111111
-      </div>
-      <div><span class="material-icons-sharp"> poll </span>거래건수</div>
-      <div><span class="material-icons-sharp"> cloud_queue </span>순수익</div>
-      <div>뭐넣징</div>
-    </div>
-    <div class="first_grid">
-      <div style="background-color: white">
-        <canvas id="myChart" style="width: 100%; max-width: 1000px"></canvas>
-      </div>
-      <!-- <v-calendar /> -->
-      <v-date-picker v-model="date" is-expanded style="height: 500px" />
-    </div>
-    <div class="second_grid">
-      <div style="overflow: scroll">
-        <h1>등록상품</h1>
-        <hr />
-        <div class="table_grid">
-          <div>
-            <table id="customers">
-              <tr>
-                <th>이미지</th>
-                <th>상품명</th>
-                <th>상품가격</th>
-                <th>재고</th>
-                <th>보증기간</th>
-              </tr>
-              <tr v-for="product in productList">
-                <td>
-                  <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
-                </td>
-                <td>{{ product.productName }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.stock }}</td>
-                <td>{{ product.warranty }}</td>
-              </tr>
-            </table>
-          </div>
-        </div>
+        <span class="material-icons-sharp"> today 주문량</span>
+        <h1>20,148</h1>
       </div>
       <div>
-        <h1>거래내역</h1>
-        <hr />
-        <div>
-          <table>
-            <tr>
-              <th>이름</th>
-              <th>상품명</th>
-            </tr>
-          </table>
-        </div>
+        <span class="material-icons-sharp"> poll 클릭 수</span>
+        <h1>33,600</h1>
+      </div>
+      <div>
+        <span class="material-icons-sharp"> cloud_queue 좋아요</span>
+        <h1>21,210</h1>
       </div>
     </div>
-    <div></div>
-    <!-- <div class="third_grid">
-      <div></div>
-      <div></div>
-    </div> -->
+    <div class="first_grid">
+      <div style="width: 80%; margin-left: 10%; height: 90%">
+        <canvas id="myChart2"></canvas>
+      </div>
+    </div>
   </main>
 </template>
 <script>
-import 'v-calendar/dist/style.css';
-
 import axios from 'axios';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   data() {
@@ -93,6 +66,8 @@ export default {
       endDate: '',
       productIdList: [],
       myChart: '',
+      router: useRouter(),
+      userName: localStorage.getItem('userName'),
     };
   },
   created() {
@@ -124,31 +99,55 @@ export default {
         this.productList = response.data;
       });
 
-    var xValues = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
-    new Chart('myChart', {
-      type: 'line',
+    var xValues = [
+      11.12,
+      11.13,
+      11.14,
+      11.15,
+      11.16,
+      11.17,
+      11.18,
+      11.19,
+      '11.20',
+      11.21,
+    ];
+
+    new Chart('myChart2', {
+      type: 'bar',
       data: {
         labels: xValues,
         datasets: [
           {
             data: [860, 1140, 1060, 1060, 1070, 1110, 1330, 2210, 7830, 2478],
-            borderColor: 'red',
-            fill: false,
+            backgroundColor: 'black',
+            fill: true,
+            label: '주문량',
           },
           {
             data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000],
-            borderColor: 'green',
-            fill: false,
+            backgroundColor: '#666666',
+            fill: true,
+            label: '클릭수',
           },
           {
             data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100],
-            borderColor: 'blue',
-            fill: false,
+            backgroundColor: '#CCCCCC',
+            label: '좋아요',
           },
         ],
       },
       options: {
-        legend: { display: false },
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              // This more specific font property overrides the global property
+              font: {
+                size: 14,
+              },
+            },
+          },
+        },
       },
     });
   },
@@ -222,6 +221,14 @@ export default {
           this.productList = response.data;
         });
     },
+    logout() {
+      localStorage.removeItem('login_id');
+      localStorage.removeItem('role');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('token');
+      localStorage.removeItem('store_id');
+      this.router.push('../');
+    },
   },
 };
 </script>
@@ -229,23 +236,26 @@ export default {
 <style scoped>
 .zero_grid {
   display: grid;
-  grid-template-columns: 325px 325px 325px 325px;
-  margin-bottom: 0px;
-  gap: 50px;
+  grid-template-columns: 325px 325px 325px;
+  margin-left: 7%;
+  margin-bottom: 5%;
+  gap: 100px;
   /* grid-auto-rows: minmax(25px, auto); */
 }
 
 .zero_grid div {
+  padding: 30px;
   border: solid 1px black;
   border-radius: 20px;
   background-color: white;
+  width: 350px;
   height: 150px;
   font-size: 5px;
+  margin-left: 25%;
 }
 
 .first_grid {
   display: grid;
-  grid-template-columns: 1000px 400px;
   margin-bottom: 0px;
   gap: 50px;
   /* grid-auto-rows: minmax(25px, auto); */

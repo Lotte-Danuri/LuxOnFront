@@ -281,7 +281,7 @@
             </div>
             <div class="item color2">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/048/00/221100000306048.jpg?cVer=11100211&RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/042/00/220900000284042.jpg?cVer=31105127&RS=400&SP=1"
                 alt="image"
               />
               <div>
@@ -294,7 +294,7 @@
             </div>
             <div class="item color3">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/042/00/220900000284042.jpg?cVer=31105127&RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/048/00/221100000306048.jpg?cVer=11100211&RS=400&SP=1"
                 alt="image"
               />
               <div>
@@ -357,20 +357,20 @@
                 <div class="coupon-text">
                   <h2>Coupon</h2>
                   <h1 style="font-size: 50px">화장품</h1>
-                  <p style="color: white; margin-top: 20px">cosmetic</p>
+                  <p style="color: white; margin-top: 20px">Cosmetic</p>
                 </div>
               </div>
             </div>
             <div class="item color7">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/883/00/221100000305883.jpg?cVer=10045922&RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/143/00/221000000298143.jpg?cVer=15104557&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">시계</h1>
-                  <p style="color: white; margin-top: 20px">watch</p>
+                  <h1 style="font-size: 50px">Luxury</h1>
+                  <p style="color: white; margin-top: 20px">Lux</p>
                 </div>
               </div>
             </div>
@@ -469,23 +469,42 @@
       "
     >
       <div class="main__styling-text">
-        <h2 class="regularbold">NFT 보증서</h2>
-
+        <h2 class="regularbold" style="margin-bottom: 0px">NFT</h2>
+        <h2>보증서</h2>
         <div class="main__styling-info">
           <p class="main__styling-text-strong">PERFUME GALLERY</p>
           <p class="main__styling-text-description">
             [아무아쥬] 아너 오드퍼퓸 포 우먼 100ml
           </p>
         </div>
+        <a href="#"
+          ><img
+            style="width: 150px; margin-left: 10px"
+            src="https://qrcodethumb-phinf.pstatic.net/20221115_52/1668484058096jOxDz_PNG/13j7l.png"
+          />
+        </a>
       </div>
       <div class="main__styling-img">
         <a href="javascript:void(0);"
           ><img
+            style="height: 550px; margin-top: 50px"
             src="https://image.sivillage.com/upload/C00001/goods/org/819/221012003299819.jpg?RS=600&amp;SP=1"
             alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
           />
         </a>
       </div>
+      <div
+        class=""
+        style="
+          background-image: url('https://pixy.org/src/474/thumbs350/4743058.jpg');
+          background-size: 1000px 900px;
+          background-repeat: no-repeat;
+          margin-top: 60px;
+          width: 700px;
+          height: 620px;
+          margin-left: 200px;
+        "
+      ></div>
     </div>
   </div>
   <div style="margin-left: 10%">
@@ -607,7 +626,9 @@ export default {
   created() {
     this.getProductList();
     window.addEventListener('scroll', this.handleScroll);
-    this.getBestList();
+    if (localStorage.token) {
+      this.getBestList();
+    }
   },
   methods: {
     bestBtn() {
@@ -675,6 +696,23 @@ export default {
   },
 };
 </script>
+
+<style>
+::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #000000; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(102, 102, 102, 0.1); /*스크롤바 뒷 배경 색상*/
+}
+</style>
 
 <style scoped>
 a {
@@ -872,5 +910,20 @@ a {
   font-size: 20px;
   margin: 0;
   text-align: center;
+}
+
+.nft_grid {
+  display: grid;
+  grid-template-columns: 400px 500px;
+  width: 800px;
+}
+
+.data_grid {
+  display: grid;
+  grid-template-columns: 150px 300px;
+}
+
+.data_grid h3 {
+  font-weight: bold;
 }
 </style>

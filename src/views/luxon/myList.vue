@@ -11,7 +11,6 @@
         <ul class="first_category">
           <li v-for="categoryFirst in categoryList" :key="categoryFirst.id">
             <a
-              href="#"
               @click="
                 () => {
                   secondValue = '';
@@ -30,7 +29,6 @@
                 style="margin-bottom: 5px"
               >
                 <a
-                  href="#"
                   @click="
                     () => {
                       firstValue = '';
@@ -164,6 +162,9 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { ref } from 'vue';
 
+window.addEventListener('locationchange', function () {
+  console.log('onlocationchange event occurred!');
+});
 export default {
   components: { Swiper, SwiperSlide },
   data() {
@@ -176,27 +177,22 @@ export default {
       searchValue2: '',
       showList: [],
       firstValue: '',
+      secondValue: '',
     };
   },
   watch: {
-    searchValue() {
-      this.searchValue2 = this.searchValue;
-    },
-    $route(to, from) {
-      if (to.path != from.path) {
-        // console.log('감지');
-        this.firstValue = this.$route.query.id;
+    //해당 라우트에서 주소가 바꼈을시 호출됨
+    $route() {
+      // console.log('this.secondValue' + this.secondValue);
+      const url = decodeURI(window.location.href);
+      this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
+      if (this.searchValue) {
+        this.getSearchProduct();
       }
     },
   },
   created() {
     this.getCategoryList();
-
-    // this.showList = this.productList;
-
-    // const url = decodeURI(window.location.href);
-    // alert(url);
-    // this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
   },
   mounted() {
     this.getProductList();
@@ -211,45 +207,18 @@ export default {
         this.getBrandProduct();
       }
       if (this.$route.query.searchValue != undefined) {
-        console.log(this.$route.query.searchValue);
+        // console.log(this.$route.query.searchValue);
         this.getSearchProduct();
+        // location.reload();
       }
     },
     async getCategoryList() {
       this.categoryList = await this.$api('/product/categories');
     },
     getSearchProduct() {
-      // this.productList = await this.$api('/product/products');
       let newList = [];
       let search = this.searchValue;
-      // alert(
-      //   decodeURI(window.location.href)
-      //     .slice(window.location.href.indexOf('searchValue'))
-      //     .slice(12),
-      // );
-      // alert(search);
-      // if (
-      //   window.location.href.includes('list') &&
-      //   decodeURI(window.location.href)
-      //     .slice(window.location.href.indexOf('searchValue'))
-      //     .slice(12) != search
-      // ) {
-      //   alert(search);
-      //   search = decodeURI(window.location.href)
-      //     .slice(window.location.href.indexOf('searchValue'))
-      //     .slice(12);
-      // }
-      // let reloadFlag = 0;
-      // if (window.location.href.includes('list') && reloadFlag == 0) {
-      //   // location.reload();
-      //   reloadFlag = 1;
-      // }
-      // window.onload = function () {
-      //   if (!window.location.hash) {
-      //     window.location = window.location + '#loaded';
-      //     window.location.reload();
-      //   }
-      // };
+      // console.log(this.productList);
       for (let i = 0; i < this.productList.length; i++) {
         if (this.productList[i].productName.includes(search)) {
           newList.push(JSON.parse(JSON.stringify(this.productList[i])));
@@ -257,10 +226,9 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
-      // window.scrollTo(1500, 0);
+      // console.log('search' + this.productList);
     },
     getBrandProduct() {
-      // this.productList = await this.$api('/product/products');
       let newList = [];
       let first = this.firstValue;
       for (let i = 0; i < this.productList.length; i++) {
@@ -270,10 +238,10 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
-      // window.scrollTo(1500, 0);
+      // console.log('brand' + this.productList);
     },
     getBrandProduct2(secondValue) {
-      // this.productList = await this.$api('/product/products');
+      this.secondValue = secondValue;
       let newList = [];
       let second = secondValue;
       for (let i = 0; i < this.productList.length; i++) {
@@ -283,7 +251,7 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
-      // window.scrollTo(1500, 0);
+      // console.log('brand2' + this.productList);
     },
   },
   setup() {
@@ -344,6 +312,23 @@ export default {
   },
 };
 </script>
+
+<style>
+::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #000000; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(102, 102, 102, 0.1); /*스크롤바 뒷 배경 색상*/
+}
+</style>
 
 <style scoped>
 /* Adopt bootstrap pagination stylesheet. */
@@ -485,5 +470,9 @@ p {
 
 .div_category ul {
   margin-bottom: 40px;
+}
+
+.second_category li a:hover {
+  cursor: pointer;
 }
 </style>
