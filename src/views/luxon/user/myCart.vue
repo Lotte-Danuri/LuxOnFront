@@ -1,14 +1,14 @@
 <template>
   <!-- CONTENT -->
-  <section class="pt-7 pb-12" style="height: 500px">
+  <section class="pt-7 pb-12" style="height: 1500px">
     <div class="container">
       <div class="row">
         <div class="col-12">
           <!-- Heading -->
-          <h3 class="mb-10 text-center">Shopping Cart</h3>
+          <h1 class="mb-10 text-center">Shopping Cart</h1>
         </div>
       </div>
-      <div class="row">
+      <div class="row" style="margin-top: 10%">
         <div class="col-12 col-md-7">
           <!-- List group -->
           <ul

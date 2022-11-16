@@ -477,11 +477,12 @@
             [아무아쥬] 아너 오드퍼퓸 포 우먼 100ml
           </p>
         </div>
-        <a href="http://m.site.naver.com/13j7l"
+        <a href="#"
           ><img
             style="width: 150px; margin-left: 10px"
             src="https://qrcodethumb-phinf.pstatic.net/20221115_52/1668484058096jOxDz_PNG/13j7l.png"
-        /></a>
+          />
+        </a>
       </div>
       <div class="main__styling-img">
         <a href="javascript:void(0);"
@@ -625,7 +626,9 @@ export default {
   created() {
     this.getProductList();
     window.addEventListener('scroll', this.handleScroll);
-    this.getBestList();
+    if (localStorage.token) {
+      this.getBestList();
+    }
   },
   methods: {
     bestBtn() {
@@ -693,6 +696,23 @@ export default {
   },
 };
 </script>
+
+<style>
+::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #000000; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(102, 102, 102, 0.1); /*스크롤바 뒷 배경 색상*/
+}
+</style>
 
 <style scoped>
 a {

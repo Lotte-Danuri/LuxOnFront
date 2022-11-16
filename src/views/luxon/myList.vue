@@ -11,7 +11,6 @@
         <ul class="first_category">
           <li v-for="categoryFirst in categoryList" :key="categoryFirst.id">
             <a
-              href="#"
               @click="
                 () => {
                   secondValue = '';
@@ -30,7 +29,6 @@
                 style="margin-bottom: 5px"
               >
                 <a
-                  href="#"
                   @click="
                     () => {
                       firstValue = '';
@@ -179,14 +177,18 @@ export default {
       searchValue2: '',
       showList: [],
       firstValue: '',
+      secondValue: '',
     };
   },
   watch: {
     //해당 라우트에서 주소가 바꼈을시 호출됨
     $route() {
+      // console.log('this.secondValue' + this.secondValue);
       const url = decodeURI(window.location.href);
       this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
-      this.getSearchProduct();
+      if (this.searchValue) {
+        this.getSearchProduct();
+      }
     },
   },
   created() {
@@ -196,7 +198,6 @@ export default {
     this.getProductList();
     this.firstValue = this.$route.query.id;
     this.searchValue = this.$route.query.searchValue;
-    console.log('mounted' + this.searchValue);
   },
   methods: {
     async getProductList() {
@@ -206,7 +207,7 @@ export default {
         this.getBrandProduct();
       }
       if (this.$route.query.searchValue != undefined) {
-        console.log(this.$route.query.searchValue);
+        // console.log(this.$route.query.searchValue);
         this.getSearchProduct();
         // location.reload();
       }
@@ -217,6 +218,7 @@ export default {
     getSearchProduct() {
       let newList = [];
       let search = this.searchValue;
+      // console.log(this.productList);
       for (let i = 0; i < this.productList.length; i++) {
         if (this.productList[i].productName.includes(search)) {
           newList.push(JSON.parse(JSON.stringify(this.productList[i])));
@@ -224,6 +226,7 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
+      // console.log('search' + this.productList);
     },
     getBrandProduct() {
       let newList = [];
@@ -235,8 +238,10 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
+      // console.log('brand' + this.productList);
     },
     getBrandProduct2(secondValue) {
+      this.secondValue = secondValue;
       let newList = [];
       let second = secondValue;
       for (let i = 0; i < this.productList.length; i++) {
@@ -246,6 +251,7 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
+      // console.log('brand2' + this.productList);
     },
   },
   setup() {
@@ -306,6 +312,23 @@ export default {
   },
 };
 </script>
+
+<style>
+::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #000000; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(102, 102, 102, 0.1); /*스크롤바 뒷 배경 색상*/
+}
+</style>
 
 <style scoped>
 /* Adopt bootstrap pagination stylesheet. */
@@ -447,5 +470,9 @@ p {
 
 .div_category ul {
   margin-bottom: 40px;
+}
+
+.second_category li a:hover {
+  cursor: pointer;
 }
 </style>
