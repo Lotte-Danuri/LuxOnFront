@@ -9,7 +9,6 @@
           <span>
             <div style="display: flex; justify-content: space-between">
               <p>상품코드 {{ state.productCode }}</p>
-
               <button>
                 <like-button
                   v-bind:productCode="state.productCode"
@@ -28,13 +27,18 @@
               "
             >
               <img class="brand_thumnail" :src="state.brand.imageUrl" />
-              <div class="brand_name">{{ state.brand.name }}</div>
+              <div class="brand_name">
+                <h1>{{ state.brand.name }}</h1>
+              </div>
             </div>
-            <h1>{{ state.products[0]?.productName }}</h1>
-            <h2 style="font-weight: bold">
-              ￦{{ comma(state.products[0]?.price) }}원
+            <br />
+            <h2>{{ state.products[0]?.productName }}</h2>
+            <br />
+            <h2 style="font-weight: bold; color: black">
+              {{ comma(state.products[0]?.price) }}원
             </h2>
           </span>
+          <br />
           <hr />
 
           <div class="option_grid" style="margin-bottom: 10px">
@@ -396,7 +400,6 @@ export default {
           },
         )
         .then(res => (state.brand = res.data));
-
       console.log(state.brand);
     };
 
@@ -460,6 +463,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 input[type='radio'] {
   display: none;
@@ -552,6 +556,7 @@ input[type='radio']:checked + label {
   margin-top: 40px;
   margin-right: 10px;
   margin-left: 30px;
+  border-radius: 10px;
 }
 
 .click_nav {
@@ -571,7 +576,7 @@ input[type='radio']:checked + label {
 .brand_name {
   align-self: center;
   margin-left: 20px;
-  font-size: medium;
+  font-size: large;
   margin-bottom: 5px;
 }
 .brand_thumnail {

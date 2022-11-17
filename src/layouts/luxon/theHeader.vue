@@ -5,7 +5,9 @@
         <nav class="navbar">
           <div class="navbar__logo">
             <router-link to="/main"
-              ><img style="margin-left: 10%" src="@/assets/logo/logo_white.png"
+              ><img
+                style="margin-left: 10%; width: 200px"
+                src="@/assets/logo/logo_white_6.png"
             /></router-link>
           </div>
           <ul class="navbar__menu">
@@ -13,7 +15,7 @@
               <div class="search">
                 <input
                   type="text"
-                  style="height: 36px"
+                  style="height: 40px"
                   class="searchTerm"
                   placeholder="검색어를 입력하세요"
                   id="searchValue"
@@ -69,7 +71,10 @@
       </section>
       <section class="header_bottom">
         <nav class="navbar_bottom">
-          <ul class="navbar__menu" style="margin-left: 200px; font-size: 15px">
+          <ul
+            class="navbar__menu"
+            style="margin-left: 200px; margin-top: -10px; font-size: 15px"
+          >
             <li @click="reload">
               <router-link
                 :to="{
@@ -294,7 +299,7 @@ header {
 
 .header_bottom {
   margin: 0;
-  font-family: 'Source Sans Pro';
+  font-family: 'NotoSansKR,Malgun Gothic,arial,sans-serif';
   /* border-style: solid;
   border-color: gray;
   border-width: 1px 0px 0px 0px; */
@@ -343,13 +348,13 @@ a {
 }
 
 .search {
-  width: 100%;
+  width: 120%;
   position: relative;
   display: flex;
 }
 
 .searchTerm {
-  width: 100%;
+  width: 110%;
   border: 3px solid black;
   border-right: none;
   padding: 5px;
@@ -365,7 +370,7 @@ a {
 
 .searchButton {
   width: 40px;
-  height: 36px;
+  height: 40px;
   border: 1px solid #0f0f0f;
   background: black;
   text-align: center;
@@ -380,7 +385,7 @@ a {
   margin-left: -100px;
   width: 30%;
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -401,7 +406,7 @@ a {
 }
 
 .navbar__icons {
-  margin-bottom: -20px;
+  margin-bottom: -40px;
   list-style: none;
   color: rgb(14, 14, 14);
   display: flex;
@@ -413,7 +418,7 @@ a {
 }
 
 .navbar__icons li i {
-  font-size: 15px;
+  font-size: 25px;
 }
 
 .navbar__icons li p {
