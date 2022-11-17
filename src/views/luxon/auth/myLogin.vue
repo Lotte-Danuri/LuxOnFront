@@ -128,7 +128,6 @@ export default {
   margin-top: 7%;
 }
 .inputDiv {
-  background-color: rgb(245, 245, 245);
   width: 80%;
   display: absolute;
   left: 60%;

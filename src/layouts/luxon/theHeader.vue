@@ -351,55 +351,16 @@ hr{
 .navbar__menu {
   display: flex;
   list-style: none;
-  /* padding-left: 0; */
-  margin-bottom: -20px;
-  /* margin-left: 50px; */
   margin-top: -5px;
   font-size: 15px;
 }
 .navbar__menu .category {
   display: flex;
   list-style: none;
-  /* padding-left: 0; */
-  margin-bottom: -20px;
-  /* margin-left: 50px; */
   font-size: 17px;
   margin-right: 20px;
   text-align: center;
 }
-
-/* .search {
-  width: 120%;
-  position: relative;
-  display: flex;
-}
-
-.searchTerm {
-  width: 110%;
-  border: 3px solid black;
-  border-right: none;
-  padding: 5px;
-  height: 20px;
-  border-radius: 5px 0 0 5px;
-  outline: none;
-  color: #000000;
-}
-
-.searchTerm:focus {
-  color: #080808;
-}
-
-.searchButton {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #0f0f0f;
-  background: black;
-  text-align: center;
-  color: #fff;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  font-size: 20px;
-} */
 
 .search {
   position: absolute;
