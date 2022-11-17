@@ -21,12 +21,13 @@ import NaverLogin from '@/components/social_login/naverLogin.vue';
 import MyPage from '@/views/luxon/user/myPage.vue';
 import MyOrder from '@/components/mypage/myOrder.vue';
 import MyLike from '@/components/mypage/myLike.vue';
+import MyInfo from '@/components/mypage/myInfo.vue';
 import MySystem from '@/layouts/system/systemIndex.vue';
 import SystemView from '@/views/system/systemView.vue';
 import GetProductChance from '@/views/admin/getProductChance.vue';
 import GetProduct from '@/views/admin/getProduct.vue';
+import GetDiscount from '@/views/admin/getDiscount.vue';
 import UpdateProduct from '@/views/admin/updateProduct.vue';
-import Test from '@/views/admin/test.vue';
 import SysPromotion from '@/views/system/syspromotion.vue';
 import SysNotification from '@/views/system/sysnotification.vue';
 import SysRecommend from '@/views/system/sysrecommend.vue';
@@ -114,19 +115,24 @@ const routes = [
             component: MyLike,
           },
           {
-            path : 'nft',
-            name : 'nft',
+            path: 'nft',
+            name: 'nft',
             component: () => import('@/components/mypage/myNft.vue'),
           },
           {
-            path : 'nftlist',
-            name : 'nftlist',
+            path: 'nftlist',
+            name: 'nftlist',
             component: () => import('@/components/mypage/myNftList.vue'),
           },
           {
-            path : 'coupon',
-            name : 'coupon',
-            component: () => import('@/components/mypage/myCoupon.vue'),
+            path: 'coupon',
+            name: 'coupon',
+            component: () => import('@/components/mypage/myCoupon.vue')
+          },
+          {
+            path: 'myinfo',
+            name: 'myinfo',
+            component: MyInfo,
           },
         ],
       },
@@ -182,9 +188,9 @@ const routes = [
         component: UpdateProduct,
       },
       {
-        path: '/admin/test',
-        name: 'Test',
-        component: Test,
+        path: '/admin/getDiscount',
+        name: 'GetDiscount',
+        component: GetDiscount,
       },
     ],
   },

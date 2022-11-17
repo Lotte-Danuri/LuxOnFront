@@ -1,11 +1,11 @@
 <template>
-  <div class="dashContainer">
+  <div class="top_top">
     <aside>
       <div class="top">
         <div class="logo">
           <router-link to="/main">
             <img
-              src="@/assets/logo/logo_black.png"
+              src="@/assets/logo/logo_white.png"
               style="width: 180px; height: 120px; margin-left: 5%"
             />
           </router-link>
@@ -19,10 +19,6 @@
         <router-link to="/admin/dashBoard">
           <span class="material-icons-sharp">grid_view</span>
           <h3>메인 센터</h3>
-        </router-link>
-        <router-link to="/admin/analytics">
-          <span class="material-icons-sharp">insights</span>
-          <h3>통계</h3>
         </router-link>
         <router-link to="/admin/getProduct">
           <span class="material-icons-sharp">receipt_long</span>
@@ -46,13 +42,17 @@
           <h3>쿠폰 나누기</h3>
           <!-- <span class="message-count">26</span> -->
         </router-link>
+        <router-link to="/admin/getDiscount">
+          <span class="material-icons-sharp"> discount </span>
+          <h3>특별 할인</h3>
+          <!-- <span class="message-count">26</span> -->
+        </router-link>
         <!-- <a href="#">
           <span class="material-icons-sharp">settings</span>
           <h3>환경설정</h3>
         </a> -->
         <a href="#">
-          <span class="material-icons-sharp">logout</span>
-          <h3>Logout</h3>
+          <h3 style="margin-left: 20%">LUXON</h3>
         </a>
       </div>
     </aside>
@@ -187,12 +187,12 @@ body {
   color: var(--color-dark);
 }
 
-.dashContainer {
+.top_top {
   display: grid;
   width: 96%;
   margin: 0 auto;
   gap: 1.8rem;
-  grid-template-columns: 14rem auto 23rem;
+  grid-template-columns: 14rem auto;
 }
 
 a {
@@ -364,10 +364,6 @@ aside .sidebar .message-count {
 /* ================== MAIN =============== */
 main {
   margin-top: 1.4rem;
-}
-
-main div {
-  margin-bottom: 30px;
 }
 
 main .date {

@@ -3,7 +3,12 @@
     <h2>주문/배송 조회</h2>
     <!-- Order -->
     <div class="card card-lg mb-5 border">
-      <div v-for="order in state.orderList" v-bind:key="order" class="card-body pb-0">
+      <div
+        v-for="order in state.orderList"
+        v-bind:key="order"
+        class="card-body pb-0"
+        style=""
+      >
         <!-- Info -->
         <div class="card card-sm">
           <div class="card-body bg-light">
@@ -40,55 +45,81 @@
               </div>
               <div>
                 <br />
-                <div v-for="o in order.orderDataDtoList" v-bind:key="o">
+                <div
+                  v-for="o in order.orderDataDtoList"
+                  v-bind:key="o"
+                  style="height: 200px"
+                >
                   <div>
                     <div class="row">
                       <div class="col-3 col-lg-2">
-                        <img :src="o.thumbnail" />
+                        <img
+                          :src="o.thumbnail"
+                          style="width: 150px; height: 200px"
+                        />
                       </div>
-                      <div class="col-7 col-lg-6" style="
+                      <div
+                        class="col-7 col-lg-6"
+                        style="
                           font-family: 'Lucida Sans', 'Lucida Sans Regular',
                             'Lucida Grande', 'Lucida Sans Unicode', Geneva,
                             Verdana, sans-serif;
-                        ">
-                        <div style="margin-top: 7%">
-                          <span>[상품명] {{ o.productName.substring(0, 15) }}</span>
+                        "
+                      >
+                        <div style="margin-top: 7%; margin-left: 5%">
+                          <span
+                            >[상품명] {{ o.productName.substring(0, 15) }}</span
+                          >
                           <br />
                           <span>[가격] {{ comma(o.productPrice) }}원</span>
                           <br />
-                          <span>[보증기간] {{ o.warrantyStartDate }} [2022-10-19 ~
-                            {{ o.warrantyEndDate }}2025-10-19]</span>
+                          <span
+                            >[보증기간] {{ o.warrantyStartDate }} [2022-10-19 ~
+                            {{ o.warrantyEndDate }}2025-10-19]</span
+                          >
                         </div>
                       </div>
-                      <div class="col-2 col-lg-4" style="
+                      <div
+                        class="col-2 col-lg-4"
+                        style="
                           font-family: 'Franklin Gothic Medium', 'Arial Narrow',
                             Arial, sans-serif;
-                        ">
-                        <router-link :to="{
-                          path: '/product/myProduct',
-                          query: {
-                            productCode: o.productCode,
-                          },
-                        }">
-                          <button style="
+                        "
+                      >
+                        <router-link
+                          :to="{
+                            path: '/product/myProduct',
+                            query: {
+                              productCode: o.productCode,
+                            },
+                          }"
+                        >
+                          <button
+                            style="
                               width: 200px;
                               height: 50px;
-                              margin-top: 15%;
+                              margin-top: 5%;
+                              margin-bottom: 0px;
                               background-color: black;
                               color: white;
                               border-radius: 5px;
-                            ">
+                            "
+                          >
                             상품상세
                           </button>
                         </router-link>
-                        <button style="
+                        <button
+                          style="
                             width: 200px;
                             height: 50px;
-                            margin-top: 15%;
+                            margin-top: 10%;
+                            margin-bottom: 0px;
                             background-color: black;
                             color: white;
                             border-radius: 5px;
-                          " @click="pushNft(o)">
+                          "
+                          @click="pushNft(o)"
+                        >
                           NFT 증명서
                         </button>
                       </div>
@@ -108,12 +139,12 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import { onBeforeMount } from "vue";
-import axios from "axios";
-import { getCurrentInstance } from "vue";
-import Swal from "sweetalert2";
-import { useRouter } from "vue-router";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
+import { getCurrentInstance } from 'vue';
+import Swal from 'sweetalert2';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
@@ -128,31 +159,34 @@ export default {
 
     onBeforeMount(() => {
       if (globalProperties.$isLogin() == false) {
-        Swal.fire("로그인 해주세요").then(() => {
-          router.push("/login");
+        Swal.fire('로그인 해주세요').then(() => {
+          router.push('/login');
         });
       }
 
       axios
-        .get("https://sbbro.xyz/api/member/products", {
+        .get('https://sbbro.xyz/api/member/products', {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
+            Authorization: `Bearer ` + localStorage.getItem('token'),
           },
         })
-        .then((response) => {
+        .then(response => {
           console.log(response);
           state.orderList = response.data;
         });
     });
 
-    const checkNft = async (productId) => {
+    const checkNft = async (productId, orderId) => {
       try {
-        const response = await axios.post('http://43.200.203.135:5000/api/checknft',
+        const response = await axios.post(
+          'http://43.200.203.135:5000/api/checknft',
           {
             productId: productId,
             userId: state.orderList[0].buyerId,
-          },)
-          console.log("checkNft response",response)
+            orderId: orderId,
+          },
+        );
+        console.log('checkNft response', response);
         if (response.data.length != 0) {
           return true;
         }
@@ -162,12 +196,14 @@ export default {
       }
     };
 
-    const isNftMinting = async (productId) => {
+    const isNftMinting = async productId => {
       try {
-        const response = await axios.post('http://43.200.203.135:5000/api/checkmint',
+        const response = await axios.post(
+          'http://43.200.203.135:5000/api/checkmint',
           {
             productId: productId,
-          },)
+          },
+        );
         if (response.data.length == 0) {
           return false;
         }
@@ -175,59 +211,60 @@ export default {
       } catch {
         return false;
       }
-    }
+    };
 
-    const publishNft = async (order) => {
-      if (await isNftMinting(order.productId) == false) {
-        Swal.fire('판매자가 상품을 NFT로 등록하지 않았습니다.')
+    const publishNft = async order => {
+      if ((await isNftMinting(order.productId)) == false) {
+        Swal.fire('판매자가 상품을 NFT로 등록하지 않았습니다.');
         return;
       }
 
       Swal.fire({
-        title: "NFT 증명서를 발급 하시겠습니까?",
+        title: 'NFT 증명서를 발급 하시겠습니까?',
         showCancelButton: true,
         confirmButtonText: '네',
         showLoaderOnConfirm: true,
         preConfirm: () => {
           return axios.post('http://43.200.203.135:5000/api/receipts', {
+            orderId: order.id,
             productId: order.productId,
             userId: state.orderList[0].buyerId,
-          })
+          });
         },
         allowOutsideClick: () => !Swal.isLoading(),
-      }).then((result) => {
-        console.log(result)
+      }).then(result => {
+        console.log(result);
         if (result.value.status == 200) {
           Swal.fire({
             icon: 'success',
-            text: "발급이 완료되었습니다."
+            text: '발급이 완료되었습니다.',
           });
-        }
-        else {
+        } else {
           Swal.fire({
             icon: 'error',
-            text: '발급에 실패하였습니다.'
-          })
+            text: '발급에 실패하였습니다.',
+          });
         }
       });
-    }
+    };
 
-    const pushNft = async (order) => {
-      if (await checkNft(order.productId) == false) {
-        publishNft(order)
+    const pushNft = async order => {
+      if ((await checkNft(order.productId, order.id)) == false) {
+        publishNft(order);
         return;
       }
 
       router.push({
-        name: "nft",
+        name: 'nft',
         params: {
+          orderId: order.id,
           userId: state.orderList[0].buyerId,
-          productId: order.productId
+          productId: order.productId,
         },
       });
     };
 
-    return { state, comma, pushNft, };
+    return { state, comma, pushNft };
   },
 };
 </script>

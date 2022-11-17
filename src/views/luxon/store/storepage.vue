@@ -73,8 +73,9 @@
         top: 200px;
       "
     >
-      <div>
-        <h3>Category</h3>
+      <div class="div_category">
+        <h2 style="font-weight: bold">Category</h2>
+        <br />
         <ul class="first_category">
           <li v-for="categoryFirst in categoryList" :key="categoryFirst.id">
             <a
@@ -324,6 +325,32 @@ export default {
 /* @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'; */
 
 /* Write your own CSS for pagination */
+a {
+  text-decoration: none;
+}
+
+.div_category {
+  width: 200px;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+/* 아래의 모든 코드는 영역::코드로 사용 */
+
+.div_category::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+.div_category::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #000000; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+.div_category::-webkit-scrollbar-track {
+  background: rgba(102, 102, 102, 0.1); /*스크롤바 뒷 배경 색상*/
+}
 
 .side_menu div h3 {
   margin-bottom: 10px;
@@ -480,6 +507,10 @@ export default {
   border-radius: 10px;
   width: 358px;
 }
+/*
+.store_btns button {
+  width: 110px;
+} */
 
 .store_follow_true {
   width: 100px;
@@ -508,5 +539,13 @@ export default {
 }
 .store_chat:hover {
   background-color: black;
+}
+
+.div_category li a {
+  font-size: 15px;
+}
+
+.div_category ul {
+  margin-bottom: 40px;
 }
 </style>

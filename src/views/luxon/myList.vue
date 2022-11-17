@@ -5,12 +5,12 @@
       id="style-3"
       style="height: 600px; overflow-x: hidden; position: sticky; top: 200px"
     >
-      <div>
-        <h2>Category</h2>
+      <div class="div_category">
+        <h2 style="font-weight: bold">Category</h2>
+        <br />
         <ul class="first_category">
           <li v-for="categoryFirst in categoryList" :key="categoryFirst.id">
             <a
-              href="#"
               @click="
                 () => {
                   secondValue = '';
@@ -18,15 +18,17 @@
                   getBrandProduct();
                 }
               "
+              style="font-weight: bold"
               >{{ categoryFirst.categoryName }}</a
             >
+            <br />
             <ul class="second_category">
               <li
                 v-for="categorySecond in categoryFirst.categorySecondDtoList"
                 :key="categorySecond.id"
+                style="margin-bottom: 5px"
               >
                 <a
-                  href="#"
                   @click="
                     () => {
                       firstValue = '';
@@ -76,7 +78,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 300px; height: 300px"
+                      style="width: 400px; height: 400px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -113,7 +115,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 300px; height: 300px"
+                      style="width: 400px; height: 400px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -125,7 +127,7 @@
       </div>
       <br />
       <br />
-      <div class="all_procut" style="margin-top: -100px">
+      <div class="all_procut" style="margin-top: 0px">
         <h2 style="font-weight: bold">All Product</h2>
         <br />
         <div class="product_grid">
@@ -160,6 +162,9 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { ref } from 'vue';
 
+window.addEventListener('locationchange', function () {
+  console.log('onlocationchange event occurred!');
+});
 export default {
   components: { Swiper, SwiperSlide },
   data() {
@@ -172,27 +177,22 @@ export default {
       searchValue2: '',
       showList: [],
       firstValue: '',
+      secondValue: '',
     };
   },
   watch: {
-    searchValue() {
-      this.searchValue2 = this.searchValue;
-    },
-    $route(to, from) {
-      if (to.path != from.path) {
-        // console.log('감지');
-        this.firstValue = this.$route.query.id;
+    //해당 라우트에서 주소가 바꼈을시 호출됨
+    $route() {
+      // console.log('this.secondValue' + this.secondValue);
+      const url = decodeURI(window.location.href);
+      this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
+      if (this.searchValue) {
+        this.getSearchProduct();
       }
     },
   },
   created() {
     this.getCategoryList();
-
-    // this.showList = this.productList;
-
-    // const url = decodeURI(window.location.href);
-    // alert(url);
-    // this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
   },
   mounted() {
     this.getProductList();
@@ -207,45 +207,18 @@ export default {
         this.getBrandProduct();
       }
       if (this.$route.query.searchValue != undefined) {
-        console.log(this.$route.query.searchValue);
+        // console.log(this.$route.query.searchValue);
         this.getSearchProduct();
+        // location.reload();
       }
     },
     async getCategoryList() {
       this.categoryList = await this.$api('/product/categories');
     },
     getSearchProduct() {
-      // this.productList = await this.$api('/product/products');
       let newList = [];
       let search = this.searchValue;
-      // alert(
-      //   decodeURI(window.location.href)
-      //     .slice(window.location.href.indexOf('searchValue'))
-      //     .slice(12),
-      // );
-      // alert(search);
-      // if (
-      //   window.location.href.includes('list') &&
-      //   decodeURI(window.location.href)
-      //     .slice(window.location.href.indexOf('searchValue'))
-      //     .slice(12) != search
-      // ) {
-      //   alert(search);
-      //   search = decodeURI(window.location.href)
-      //     .slice(window.location.href.indexOf('searchValue'))
-      //     .slice(12);
-      // }
-      // let reloadFlag = 0;
-      // if (window.location.href.includes('list') && reloadFlag == 0) {
-      //   // location.reload();
-      //   reloadFlag = 1;
-      // }
-      // window.onload = function () {
-      //   if (!window.location.hash) {
-      //     window.location = window.location + '#loaded';
-      //     window.location.reload();
-      //   }
-      // };
+      // console.log(this.productList);
       for (let i = 0; i < this.productList.length; i++) {
         if (this.productList[i].productName.includes(search)) {
           newList.push(JSON.parse(JSON.stringify(this.productList[i])));
@@ -253,10 +226,9 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
-      // window.scrollTo(1500, 0);
+      // console.log('search' + this.productList);
     },
     getBrandProduct() {
-      // this.productList = await this.$api('/product/products');
       let newList = [];
       let first = this.firstValue;
       for (let i = 0; i < this.productList.length; i++) {
@@ -266,10 +238,10 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
-      // window.scrollTo(1500, 0);
+      // console.log('brand' + this.productList);
     },
     getBrandProduct2(secondValue) {
-      // this.productList = await this.$api('/product/products');
+      this.secondValue = secondValue;
       let newList = [];
       let second = secondValue;
       for (let i = 0; i < this.productList.length; i++) {
@@ -279,7 +251,7 @@ export default {
       }
       let proxy = new Proxy(newList, {});
       this.showList = proxy;
-      // window.scrollTo(1500, 0);
+      // console.log('brand2' + this.productList);
     },
   },
   setup() {
@@ -341,11 +313,51 @@ export default {
 };
 </script>
 
+<style>
+::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #000000; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(102, 102, 102, 0.1); /*스크롤바 뒷 배경 색상*/
+}
+</style>
+
 <style scoped>
 /* Adopt bootstrap pagination stylesheet. */
 /* @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'; */
 
 /* Write your own CSS for pagination */
+/* 임의의 영역 생성 */
+.div_category {
+  width: 200px;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+/* 아래의 모든 코드는 영역::코드로 사용 */
+
+.div_category::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+.div_category::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #000000; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+.div_category::-webkit-scrollbar-track {
+  background: rgba(102, 102, 102, 0.1); /*스크롤바 뒷 배경 색상*/
+}
 
 a {
   text-decoration: none;
@@ -450,5 +462,17 @@ p {
 }
 .product_grid div span p {
   margin: 0px;
+}
+
+.div_category li a {
+  font-size: 15px;
+}
+
+.div_category ul {
+  margin-bottom: 40px;
+}
+
+.second_category li a:hover {
+  cursor: pointer;
 }
 </style>

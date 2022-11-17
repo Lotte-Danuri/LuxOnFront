@@ -1,107 +1,126 @@
 <template>
+  <br/>
+  <br/>
+  <h1>상품 등록</h1>
+  <br/>
+  <div style="display:flex;">
+    <h3>상품 정보를 입력하여 상품 등록이 가능합니다.</h3>
+    <h3 style="font-style: italic; color:gray; margin-left:50%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
+    <a @click="logout" style="margin-left: 4%;">
+      <div style="display:flex; margin-bottom: 0px;">
+        <span class="material-icons-sharp">logout</span>
+        <h3>Logout</h3>
+      </div>
+    </a>
+  </div>
+  <hr/>
+  <br/>
   <main class="main_grid">
     <div class="regi">
-      <h1>상품 등록</h1>
       <div class="inner_grid">
+        <div></div>
         <div class="input_cls">
-          <input
-            type="text"
-            placeholder="상품명을 입력하세요"
-            name="productName"
-            id="productName"
-            required
-          />
-          <br />
-          <input
-            type="text"
-            placeholder="가격을 입력하세요"
-            name="price"
-            id="price"
-            required
-          />
-          <br />
-          <input
-            type="text"
-            placeholder="재고를 입력하세요"
-            name="stock"
-            id="stock"
-            required
-          />
-          <br />
-          <input
-            type="text"
-            placeholder="상품 코드를 입력하세요"
-            name="productCode"
-            id="productCode"
-            required
-          />
-          <br />
-          <input
-            type="text"
-            placeholder="보증기간을 입력하세요"
-            name="warranty"
-            id="warranty"
-            required
-          />
-          <br />
-          <select @change="changeCategoryFirst($event)" id="first_select">
-            <option>첫번째 카테고리를 선택해주세요</option>
-            <option v-for="(category, i) in categoryList" :key="i" :value="i">
-              <p>{{ category.categoryName }}</p>
-              <div :id="`${category.id}`" style="dispaly: none"></div>
-            </option>
-          </select>
-          <br />
-          <br />
-          <select @change="changeCategorySecond($event)" id="second_select">
-            <option>두번째 카테고리를 선택해주세요</option>
-            <option
-              v-for="(categorySecond, i) in categorySecondList"
-              :key="i"
-              :value="i"
+          <div>
+            <input
+              class="form-control"
+              type="text"
+              placeholder="상품명을 입력하세요"
+              name="productName"
+              id="productName"
+              required
+            />
+            <br />
+            <input
+              class="form-control"
+              type="text"
+              placeholder="가격을 입력하세요"
+              name="price"
+              id="price"
+              required
+            />
+            <br />
+            <input
+              class="form-control"
+              type="text"
+              placeholder="재고를 입력하세요"
+              name="stock"
+              id="stock"
+              required
+            />
+            <br />
+            <input
+              class="form-control"
+              type="text"
+              placeholder="상품 코드를 입력하세요"
+              name="productCode"
+              id="productCode"
+              required
+            />
+            <br />
+            <input
+              class="form-control"
+              type="text"
+              placeholder="보증기간을 입력하세요"
+              name="warranty"
+              id="warranty"
+              required
+            />
+            <br />
+            <div class="input-group mb-3">
+              <select @change="changeCategoryFirst($event)" id="first_select" class="form-control">
+                <option>- 대분류 -</option>
+                <option v-for="(category, i) in categoryList" :key="i" :value="i">
+                  <p>{{ category.categoryName }}</p>
+                  <div :id="`${category.id}`" style="dispaly: none"></div>
+                </option>
+              </select>
+              <br />
+              <br />
+              <select @change="changeCategorySecond($event)" id="second_select" class="form-control">
+                <option>- 중분류 -</option>
+                <option
+                  v-for="(categorySecond, i) in categorySecondList"
+                  :key="i"
+                  :value="i"
+                >
+                  <p>{{ categorySecond.categoryName }}</p>
+                  <p :id="`${categorySecond.id}`" style="dispaly: none"></p>
+                </option>
+              </select>
+              <br />
+              <br />
+              <select id="third_select" @change="changeCategoryThird()" class="form-control">
+                <option>- 소분류 -</option>
+                <option
+                  v-for="(categoryThird, i) in categoryThirdList"
+                  :key="i"
+                  :value="i"
+                >
+                  <p>{{ categoryThird.categoryName }}</p>
+                  <p :id="`${categoryThird.id}`" style="dispaly: none"></p>
+                </option>
+              </select>
+            </div>
+            <br>
+          </div>
+            <input
+              class="form-control"
+              multiple="multiple"
+              type="file"
+              id="file-upload"
+              ref="serveImage"
+            />
+            <br />
+            <button
+              class="btn btn-outline-dark"
+              style="
+                width: 300px;
+                height: 70px;
+              "
+              @click="regiProduct"
             >
-              <p>{{ categorySecond.categoryName }}</p>
-              <p :id="`${categorySecond.id}`" style="dispaly: none"></p>
-            </option>
-          </select>
-          <br />
-          <br />
-          <select id="third_select" @change="changeCategoryThird()">
-            <option>세번째 카테고리를 선택해주세요</option>
-            <option
-              v-for="(categoryThird, i) in categoryThirdList"
-              :key="i"
-              :value="i"
-            >
-              <p>{{ categoryThird.categoryName }}</p>
-              <p :id="`${categoryThird.id}`" style="dispaly: none"></p>
-            </option>
-          </select>
-          <br />
-          <br />
-          <br />
-          <br />
-          <img id="img1" src="" />
-          <img id="img2" src="" />
-          <img id="img3" src="" />
-          <input
-            multiple="multiple"
-            type="file"
-            id="file-upload"
-            ref="serveImage"
-          />
-          <br />
-          <button
-            style="
-              width: 300px;
-              height: 70px;
-              background-color: black;
-              color: white;
-            "
-            @click="regiProduct"
-          >
-            등록
-          </button>
+              등록
+            </button>
         </div>
         <div>
           <button
@@ -112,6 +131,7 @@
               font-weight: bold;
               width: 50px;
               height: 50px;
+              margin-left:25px;
             "
           >
             >>>
@@ -122,40 +142,39 @@
             width: 620px;
             height: 700px;
             background-color: white;
-            border: 2px solid black;
+            border: 1px solid black;
+            border-radius: 15px;
             overflow: scroll;
             overflow-x: hidden;
+            padding-top: 15px;
           "
         >
-          <h2 style="margin-left: 38%">등록 상품 List</h2>
+          <h2 style="margin-left: 38%; margin-bottom: 20px;">등록 상품 List</h2>
           <table id="customers" style="width: 600px">
             <tr>
               <th>이미지</th>
               <th>상품명</th>
               <th>상품가격</th>
               <th>재고</th>
-              <th>보증기간</th>
-              <th>게시일</th>
             </tr>
             <tr v-for="product in productList.slice().reverse()">
               <td>
                 <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
               </td>
               <td>{{ product.productName }}</td>
-              <td>{{ product.price }}</td>
-              <td>{{ product.stock }}</td>
-              <td>{{ product.warranty }}</td>
-              <td>{{ product.createdDate }}</td>
+              <td>{{ product.price }}원</td>
+              <td>{{ product.stock }}개</td>
             </tr>
           </table>
         </div>
+        <div></div>
       </div>
     </div>
-    <div></div>
   </main>
 </template>
 <script>
 import axios from 'axios';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   data() {
@@ -164,6 +183,8 @@ export default {
       categorySecondList: [],
       categoryThirdList: [],
       productList: [],
+      userName: localStorage.getItem('userName'),
+      router : useRouter(),
     };
   },
   mounted() {
@@ -275,40 +296,60 @@ export default {
       let sel = document.getElementById('third_select');
       // alert(sel.options[sel.selectedIndex].childNodes[1].id);
     },
+    logout(){
+      localStorage.removeItem('login_id');
+      localStorage.removeItem('role');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('token');
+      localStorage.removeItem('store_id');
+      this.router.push('../');
+    },
   },
 };
 </script>
 <style scoped>
-.main_grid {
-  display: grid;
-  grid-template-columns: 500px 500px;
-  gap: 30px;
+tbody, td, tfoot, th, thead, tr {
+  text-align: center;
 }
 
+td{
+  size:15px;
+  font-size: 14px;
+}
 .main_grid div {
   background-color: (245, 245, 245);
-  width: 500px;
 }
 .regi input {
   width: 300px;
-  height: 50px;
-  border: 1px solid black;
   margin-bottom: 10px;
 }
 
+.form-control{
+  height:50px;
+}
+
+.form-control[type=file]{
+  height:auto;
+}
+
 .regi select {
-  width: 300px;
-  height: 50px;
+  width: 70px;
 }
 
 .input_cls {
-  margin-left: 100px;
-  margin-top: 50px;
+  padding: 50px 80px 50px 180px;
+  border: solid 1px black;
+  border-radius: 15px;
 }
 
 .inner_grid {
   display: grid;
-  grid-template-columns: 500px 100px 800px;
+  grid-template-columns: 130px 650px 100px 650px 100px;
+  /* grid-template-columns: 650px 100px 650px ; */
+}
+
+.input-group {
+  width: 300px;
 }
 
 #customers {
@@ -333,7 +374,7 @@ export default {
 #customers th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #9b9b9b;
   color: white;
 }

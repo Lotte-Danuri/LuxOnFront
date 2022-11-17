@@ -89,7 +89,9 @@
     </swiper>
   </section>
   <section>
-    <div style="margin-left: 25%; margin-top: 3%; width: 60%">
+    <div
+      style="margin-left: 25%; margin-top: 3%; width: 60%; margin-bottom: 1%"
+    >
       <div style="display: grid; grid-template-columns: 25% 25% 25% 25%">
         <div class="listBtn">
           <router-link
@@ -272,25 +274,12 @@
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h2 style="font-size: 50px">Sale</h2>
+                  <p style="color: white; margin-top: 20px">Sale</p>
                 </div>
               </div>
             </div>
             <div class="item color2">
-              <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
-                alt="image"
-              />
-              <div>
-                <div class="coupon-text">
-                  <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
-                </div>
-              </div>
-            </div>
-            <div class="item color3">
               <img
                 src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/042/00/220900000284042.jpg?cVer=31105127&RS=400&SP=1"
                 alt="image"
@@ -298,34 +287,47 @@
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">뷰티</h1>
+                  <p style="color: white; margin-top: 20px">Beauty</p>
+                </div>
+              </div>
+            </div>
+            <div class="item color3">
+              <img
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/048/00/221100000306048.jpg?cVer=11100211&RS=400&SP=1"
+                alt="image"
+              />
+              <div>
+                <div class="coupon-text">
+                  <h2>Coupon</h2>
+                  <h1 style="font-size: 50px">여성</h1>
+                  <p style="color: white; margin-top: 20px">For Girls</p>
                 </div>
               </div>
             </div>
             <div class="item color4">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/991/00/221100000305991.jpg?cVer=11101746&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">OFF</h1>
+                  <p style="color: white; margin-top: 20px">Season OFF</p>
                 </div>
               </div>
             </div>
             <div class="item color5">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/328/00/220900000285328.jpg?cVer=14102550&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">패션</h1>
+                  <p style="color: white; margin-top: 20px">악세서리</p>
                 </div>
               </div>
             </div>
@@ -335,14 +337,14 @@
           <div class="coupon_grid">
             <div class="item color5">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/105/00/221000000300105.jpg?cVer=28085649&RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/991/00/221100000305991.jpg?cVer=11101746&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">Special</h1>
+                  <p style="color: white; margin-top: 20px">특별상품</p>
                 </div>
               </div>
             </div>
@@ -354,21 +356,21 @@
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">화장품</h1>
+                  <p style="color: white; margin-top: 20px">Cosmetic</p>
                 </div>
               </div>
             </div>
             <div class="item color7">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/143/00/221000000298143.jpg?cVer=15104557&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">Luxury</h1>
+                  <p style="color: white; margin-top: 20px">Lux</p>
                 </div>
               </div>
             </div>
@@ -380,21 +382,21 @@
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">시즌</h1>
+                  <p style="color: white; margin-top: 20px">Season</p>
                 </div>
               </div>
             </div>
             <div class="item color9">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/90/276/00/221000000303276.jpg?RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/328/00/220900000285328.jpg?cVer=14102550&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">쿠폰제목</h1>
-                  <p style="color: white; margin-top: 20px">쿠폰 상세</p>
+                  <h1 style="font-size: 50px">여성</h1>
+                  <p style="color: white; margin-top: 20px">For Girs</p>
                 </div>
               </div>
             </div>
@@ -406,8 +408,8 @@
 
   <section>
     <div style="margin-left: 20%">
-      <div class="all_procut" style="margin-top: -80px">
-        <button
+      <div class="all_procut" style="margin-top: 3%">
+        <!-- <button
           style="
             background-color: black;
             width: 40px;
@@ -421,19 +423,28 @@
           @click="bestBtn"
         >
           ?
-        </button>
+        </button> -->
         <h2 style="font-weight: bold">Best Product</h2>
         <br />
         <div class="product_grid">
-          <div v-for="product in bestList.slice(0, 16)" v-bind:key="product">
+          <div
+            v-for="(product, index) in bestList.slice(0, 16)"
+            v-bind:key="product"
+            style="position: relative"
+          >
             <router-link
               :to="{
                 path: '/product/myProduct',
                 query: { productCode: product.productCode },
               }"
             >
+              <div
+                class="rank_num"
+                style="width: 30px; height: 30px; background-color: black"
+              >
+                {{ index + 1 }}
+              </div>
               <img :src="product.thumbnailUrl" />
-              <div style="position: absolute; top: 10px">sfdsfdsfsdf</div>
               <br />
               <span>
                 <p style="color: black">
@@ -458,23 +469,42 @@
       "
     >
       <div class="main__styling-text">
-        <h2 class="regularbold">NFT 보증서</h2>
-
+        <h2 class="regularbold" style="margin-bottom: 0px">NFT</h2>
+        <h2>보증서</h2>
         <div class="main__styling-info">
           <p class="main__styling-text-strong">PERFUME GALLERY</p>
           <p class="main__styling-text-description">
             [아무아쥬] 아너 오드퍼퓸 포 우먼 100ml
           </p>
         </div>
+        <a href="#"
+          ><img
+            style="width: 150px; margin-left: 10px"
+            src="https://qrcodethumb-phinf.pstatic.net/20221115_52/1668484058096jOxDz_PNG/13j7l.png"
+          />
+        </a>
       </div>
       <div class="main__styling-img">
         <a href="javascript:void(0);"
           ><img
+            style="height: 550px; margin-top: 50px"
             src="https://image.sivillage.com/upload/C00001/goods/org/819/221012003299819.jpg?RS=600&amp;SP=1"
             alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
           />
         </a>
       </div>
+      <div
+        class=""
+        style="
+          background-image: url('https://pixy.org/src/474/thumbs350/4743058.jpg');
+          background-size: 1000px 900px;
+          background-repeat: no-repeat;
+          margin-top: 60px;
+          width: 700px;
+          height: 620px;
+          margin-left: 200px;
+        "
+      ></div>
     </div>
   </div>
   <div style="margin-left: 10%">
@@ -596,7 +626,9 @@ export default {
   created() {
     this.getProductList();
     window.addEventListener('scroll', this.handleScroll);
-    this.getBestList();
+    if (localStorage.token) {
+      this.getBestList();
+    }
   },
   methods: {
     bestBtn() {
@@ -665,6 +697,23 @@ export default {
 };
 </script>
 
+<style>
+::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #000000; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(102, 102, 102, 0.1); /*스크롤바 뒷 배경 색상*/
+}
+</style>
+
 <style scoped>
 a {
   text-decoration: none;
@@ -718,7 +767,8 @@ a {
   font-weight: bold;
   border: 3px solid #f1f1f1;
   position: relative;
-  margin-top: -70%;
+  margin-top: -60%;
+  top: -100px;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
@@ -851,5 +901,29 @@ a {
 }
 .product_grid div span p {
   margin: 0px;
+}
+
+.rank_num {
+  position: absolute;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  margin: 0;
+  text-align: center;
+}
+
+.nft_grid {
+  display: grid;
+  grid-template-columns: 400px 500px;
+  width: 800px;
+}
+
+.data_grid {
+  display: grid;
+  grid-template-columns: 150px 300px;
+}
+
+.data_grid h3 {
+  font-weight: bold;
 }
 </style>
