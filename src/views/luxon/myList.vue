@@ -18,7 +18,7 @@
                   getBrandProduct();
                 }
               "
-              style="font-weight: bold"
+              style="font-weight: bold;;"
               >{{ categoryFirst.categoryName }}</a
             >
             <br />
@@ -26,7 +26,7 @@
               <li
                 v-for="categorySecond in categoryFirst.categorySecondDtoList"
                 :key="categorySecond.id"
-                style="margin-bottom: 5px"
+                style="margin-top: 10px;margin-bottom: -3px"
               >
                 <a
                   @click="
@@ -129,7 +129,7 @@
       <br />
       <div
         class="all_procut"
-        style="margin-top: 0px; width: 1100px; margin-left: 100px"
+        style="margin-top: 0px; width: 1100px; margin-left: 50px"
       >
         <h2 style="font-weight: bold">All Product</h2>
         <br />
@@ -468,8 +468,9 @@ p {
 
 .product_grid div {
   /* background-color: rgb(238, 238, 238); */
-  width: 250px;
-  height: 400px;
+  width: 270px;
+  height: 405px;
+  margin-right: 15px;
   margin-bottom: 120px;
   background-color: #f5f4f4;
   position: relative;

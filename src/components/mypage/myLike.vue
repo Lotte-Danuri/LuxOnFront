@@ -3,16 +3,49 @@
     <form id="searchForm" method="post">
       <input type="hidden" name="page_idx" value="1" />
     </form>
-    <h2 class="page-title">찜 목록</h2>
+    <h2 style="font-weight: bold">찜 목록</h2>
     <br />
-    <div class="product hide-scroll">
+    <div
+      class="all_procut"
+      style="margin-top: 0px; width: 100%; margin-left: 20px"
+    >
+      <div class="product_grid">
+        <div v-for="product in state.products" v-bind:key="product">
+          <LikeButton
+            class="like"
+            v-bind:productCode="product.productCode"
+          ></LikeButton>
+          <router-link
+            :to="{
+              path: '/product/myProduct',
+              query: { productCode: product.productCode },
+            }"
+          >
+            <img :src="product.thumbnailUrl" />
+            <br />
+            <span>
+              <p class="cls_productName" style="color: black">
+                {{ product.productName }}
+              </p>
+              <p class="cls_productPrice" style="font-weight: ">
+                ￦&nbsp;{{ comma(product.price) }}
+              </p>
+            </span>
+          </router-link>
+        </div>
+        <br />
+        <br />
+      </div>
+    </div>
+    <!-- <div class="product hide-scroll">
       <ul class="product__list thum--4 gap--mid">
         <li
           class="product__item"
           v-for="product in state.products"
           v-bind:key="product"
         >
-          <div class="product__thum gray">
+          <div class="product__thum">
+            <LikeButton class ="like" v-bind:productCode="product.productCode"></LikeButton>
             <router-link
               :to="{
                 path: '/product/myProduct',
@@ -42,20 +75,24 @@
           </a>
         </li>
       </ul>
-    </div>
+    </div> -->
   </div>
   <!-- mypage-shopping__content end -->
 </template>
 
 <script>
-import { reactive } from 'vue';
-import { onBeforeMount } from 'vue';
-import axios from 'axios';
-import { getCurrentInstance } from 'vue';
+import { reactive } from "vue";
+import { onBeforeMount } from "vue";
+import axios from "axios";
+import { getCurrentInstance } from "vue";
+import LikeButton from "@/components/button/likeButton.vue";
 
 // let self;
 
 export default {
+  components: {
+    LikeButton
+  },
   created() {
     // self = this;
   },
@@ -67,13 +104,13 @@ export default {
     });
     onBeforeMount(() => {
       axios
-        .post('https://sbbro.xyz/api/member/like', null, {
+        .post("https://sbbro.xyz/api/member/like", null, {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+            "Content-Type": "application/json",
           },
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           state.products = response.data;
         });
@@ -85,323 +122,197 @@ export default {
 </script>
 
 <style>
-.product__thum a,
-.product__thum .no-click {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+a {
+  text-decoration: none;
 }
-.product__thum a img,
-.product__thum .no-click img {
+.coupon_cls .swiper-pagination-bullets span {
+  display: none;
+}
+
+.swiper-pagination-bullets span {
+  background-color: black;
+}
+</style>
+
+<style>
+::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #000000; /* 스크롤바의 색상 */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(102, 102, 102, 0.1); /*스크롤바 뒷 배경 색상*/
+}
+</style>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+/* Adopt bootstrap pagination stylesheet. */
+/* @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'; */
+
+/* Write your own CSS for pagination */
+/* 임의의 영역 생성 */
+.div_category {
+  width: 200px;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+/* 아래의 모든 코드는 영역::코드로 사용 */
+
+.div_category::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+.div_category::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #000000; /* 스크롤바의 색상 */
+  border-radius: 10px;
+}
+
+.div_category::-webkit-scrollbar-track {
+  background: rgba(102, 102, 102, 0.1); /*스크롤바 뒷 배경 색상*/
+}
+
+a {
+  text-decoration: none;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+p {
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.active .side_menu div h3 {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.side_menu div ul li {
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+/* sidebar css */
+
+.side_menu {
+  float: left;
+  width: 200px;
+}
+
+.inputPrice input {
+  height: 30px;
+  margin-left: 10px;
+}
+
+.color_grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+  grid-auto-rows: minmax(5px, auto);
+  padding-left: 0px;
+}
+
+.listSwiper {
   width: 100%;
+  height: 700px;
+  /* postion: absolute; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.list_grid {
+  margin-top: 5%;
+  margin-left: 10%;
+  display: grid;
+  grid-template-columns: 15% 85%;
+}
+.list-text {
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
+
+.swiper-content {
+  margin-right: 10%;
+  display: grid;
+  grid-template-columns: 46% 46%;
+}
+
+.swiper_content div swiper {
+  /* width: 10px; */
+}
+
+.product_grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  grid-auto-rows: minmax(5px, auto);
+  margin-right: 20%;
+}
+
+.product_grid div {
+  /* background-color: rgb(238, 238, 238); */
+  width: 250px;
+  height: 400px;
+  margin-bottom: 120px;
+  background-color: #f1f1f1;
+  position: relative;
+}
+.product_grid div .like{
+  position: absolute;
+  left:80%;
+  z-index: 3;
+  background-color: transparent;
+}
+
+.product_grid div img {
+  height: 400px;
   mix-blend-mode: darken;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-.product__data .like-btn {
-  position: absolute;
-}
-.detail__top-cart_sns ul li .like-btn {
-  position: initial;
-}
-.sb-order__thum .like-btn {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  z-index: 2;
-}
-.like-btn {
-  width: 24px;
-  height: 24px;
-  background-image: url(../image/icon_heart_light_off.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  font-size: 0;
-  text-indent: -9999px;
-  overflow: hidden;
-}
-.like-btn.on {
-  background-image: url(../image/icon_heart_light_on.svg);
-}
-.like-btn.on {
-  -webkit-animation: like-on 1s;
-  animation: like-on 1s;
-  -webkit-animation-direction: alternate;
-  animation-direction: alternate;
-  -webkit-animation-iteration-count: 1;
-  animation-iteration-count: 1;
 }
 
-.product__thum .like-btn {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  top: 12px;
-  right: 12px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  z-index: 2;
-  font-size: 0;
-  text-indent: -9999px;
-  overflow: hidden;
-  background-image: url(../image/ico_like_off_light.svg);
+.product_grid div span p {
+  /* font-weight: bold; */
+  font-weight: 500;
+  /* font-size: 13px; */
 }
-.product__thum .like-btn.on {
-  background-image: url(../image/ico_like_on_light.svg);
-}
-.siv-product__thum .like-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 2;
-}
-.filter__option .options .option .like-btn {
-  width: 16px;
-  height: 16px;
-  margin: 0 6px;
-}
-.module-cody-recom__tab .product__list.type-w80px .product__thum {
-  width: 80px;
-  height: 120px;
-}
-.module-cody-recom__tab .product__list.type-w80px .product__thum > a {
-  position: relative;
-}
-.module-cody-recom__tab
-  .product__list.type-w80px
-  .product__thum
-  > a.active
-  img {
-  opacity: 1;
-}
-.module-cody-recom__tab
-  .product__list.type-w80px
-  .product__thum
-  > a.active
-  .module-cody-recom__bedge {
-  background: #d99c63;
-}
-.module-cody-recom__tab
-  .product__list.type-w80px
-  .product__thum
-  > a.active::after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  box-sizing: border-box;
-  border: 1px solid #d99c63;
-  content: '';
-}
-.module-cody-recom__tab .product__list.type-w80px .product__thum > a img {
-  opacity: 0.5;
-}
-.product__thum {
-  aspect-ratio: 264/396;
-}
-.product__list.square-type .product__thum {
-  aspect-ratio: 1/1;
-}
-.product__list.square-type .product__thum img {
-  max-width: 100%;
-  max-height: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.product_grid div span p {
+  margin: 0px;
 }
 
-.product__thum > a,
-.product__thum > .no-click {
-  justify-content: center;
-}
-.product__thum .siv-product__cover {
-  z-index: 10;
-}
-.product__item.type_v .product__thum {
-  width: 56px;
-  height: 84px;
-  background-color: #f8f8f8;
-}
-.product__thum {
-  position: relative;
-  width: 100%;
-  height: auto;
-  background: #f8f8f8;
-}
-.product__thum .like-btn {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  top: 12px;
-  right: 12px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  z-index: 2;
-  font-size: 0;
-  text-indent: -9999px;
-  overflow: hidden;
-  background-image: url(../image/ico_like_off_light.svg);
-}
-.product__thum .like-btn.on {
-  background-image: url(../image/ico_like_on_light.svg);
-}
-.product__list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-.product.swiper-container .product__list {
-  flex-wrap: nowrap;
+.cls_productName {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 18px;
 }
 
-.product__list.gap--sml {
-  gap: 12px;
+.cls_productPrice {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 15px;
 }
-.product__list.gap--mid {
-  gap: 24px;
+
+.div_category li a {
+  font-size: 15px;
 }
-.product__list.gap--big {
-  gap: 84px;
+
+.div_category ul {
+  margin-bottom: 40px;
 }
-.product__list.thum--2.gap--sml .product__item,
-.product__list.thum--2.gap--sml .product__more {
-  flex-basis: calc((100% - 12px) / 2);
-}
-.product__list.thum--2.gap--sml .product__item:nth-of-type(2n),
-.product__list.thum--2.gap--sml .product__more:nth-of-type(2n) {
-  margin-right: -12px;
-}
-.product__list.thum--2.gap--mid .product__item,
-.product__list.thum--2.gap--mid .product__more {
-  flex-basis: calc((100% - 24px) / 2);
-}
-.product__list.thum--2.gap--mid .product__item:nth-of-type(2n),
-.product__list.thum--2.gap--mid .product__more:nth-of-type(2n) {
-  margin-right: -24px;
-}
-.product__list.thum--2.gap--big .product__item,
-.product__list.thum--2.gap--big .product__more {
-  flex-basis: calc((100% - 84px) / 2);
-}
-.product__list.thum--2.gap--big .product__item:nth-of-type(2n),
-.product__list.thum--2.gap--big .product__more:nth-of-type(2n) {
-  margin-right: -84px;
-}
-.product__list.thum--3.gap--sml .product__item,
-.product__list.thum--3.gap--sml .product__more {
-  flex-basis: calc((100% - 24px) / 3);
-}
-.product__list.thum--3.gap--sml .product__item:nth-of-type(3n),
-.product__list.thum--3.gap--sml .product__more:nth-of-type(3n) {
-  margin-right: -12px;
-}
-.product__list.thum--3.gap--mid .product__item,
-.product__list.thum--3.gap--mid .product__more {
-  flex-basis: calc((100% - 48px) / 3);
-}
-.product__list.thum--3.gap--mid .product__item:nth-of-type(3n),
-.product__list.thum--3.gap--mid .product__more:nth-of-type(3n) {
-  margin-right: -24px;
-}
-.product__list.thum--3.gap--big .product__item,
-.product__list.thum--3.gap--big .product__more {
-  flex-basis: calc((100% - 168px) / 3);
-}
-.product__list.thum--3.gap--big .product__item:nth-of-type(3n),
-.product__list.thum--3.gap--big .product__more:nth-of-type(3n) {
-  margin-right: -84px;
-}
-.product__list.thum--4.gap--sml .product__item,
-.product__list.thum--4.gap--sml .product__more {
-  flex-basis: calc((100% - 36px) / 4);
-}
-.product__list.thum--4.gap--sml .product__item:nth-of-type(4n),
-.product__list.thum--4.gap--sml .product__more:nth-of-type(4n) {
-  margin-right: -12px;
-}
-.product__list.thum--4.gap--mid .product__item,
-.product__list.thum--4.gap--mid .product__more {
-  flex-basis: calc((100% - 72px) / 4);
-}
-.product__list.thum--4.gap--mid .product__item:nth-of-type(4n),
-.product__list.thum--4.gap--mid .product__more:nth-of-type(4n) {
-  margin-right: -24px;
-}
-.product__list.thum--4.gap--big .product__item,
-.product__list.thum--4.gap--big .product__more {
-  flex-basis: calc((100% - 252px) / 4);
-}
-.product__list.thum--4.gap--big .product__item:nth-of-type(4n),
-.product__list.thum--4.gap--big .product__more:nth-of-type(4n) {
-  margin-right: -84px;
-}
-.product__list.thum--5.gap--sml .product__item,
-.product__list.thum--5.gap--sml .product__more {
-  flex-basis: calc((100% - 48px) / 5);
-}
-.product__list.thum--5.gap--sml .product__item:nth-of-type(5n),
-.product__list.thum--5.gap--sml .product__more:nth-of-type(5n) {
-  margin-right: -12px;
-}
-.product__list.thum--5.gap--mid .product__item,
-.product__list.thum--5.gap--mid .product__more {
-  flex-basis: calc((100% - 96px) / 5);
-}
-.product__list.thum--5.gap--mid .product__item:nth-of-type(5n),
-.product__list.thum--5.gap--mid .product__more:nth-of-type(5n) {
-  margin-right: -24px;
-}
-.product__list.thum--5.gap--big .product__item,
-.product__list.thum--5.gap--big .product__more {
-  flex-basis: calc((100% - 336px) / 5);
-}
-.product__list.thum--5.gap--big .product__item:nth-of-type(5n),
-.product__list.thum--5.gap--big .product__more:nth-of-type(5n) {
-  margin-right: -84px;
-}
-.product__list.thum--6.gap--sml .product__item,
-.product__list.thum--6.gap--sml .product__more {
-  flex-basis: calc((100% - 60px) / 6);
-}
-.product__list.thum--6.gap--sml .product__item:nth-of-type(6n),
-.product__list.thum--6.gap--sml .product__more:nth-of-type(6n) {
-  margin-right: -12px;
-}
-.product__list.thum--6.gap--mid .product__item,
-.product__list.thum--6.gap--mid .product__more {
-  flex-basis: calc((100% - 120px) / 6);
-}
-.product__list.thum--6.gap--mid .product__item:nth-of-type(6n),
-.product__list.thum--6.gap--mid .product__more:nth-of-type(6n) {
-  margin-right: -24px;
-}
-.product__list.thum--6.gap--big .product__item,
-.product__list.thum--6.gap--big .product__more {
-  flex-basis: calc((100% - 420px) / 6);
-}
-.product__list.thum--6.gap--big .product__item:nth-of-type(6n),
-.product__list.thum--6.gap--big .product__more:nth-of-type(6n) {
-  margin-right: -84px;
-}
-.product__list.exception {
-  gap: 0;
-}
-.product__list.square-type .product__thum {
-  aspect-ratio: 1/1;
-}
-.product__list.square-type .product__thum img {
-  max-width: 100%;
-  max-height: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
+.second_category li a:hover {
+  cursor: pointer;
 }
 </style>
