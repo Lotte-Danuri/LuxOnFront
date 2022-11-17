@@ -72,7 +72,7 @@
         <nav class="navbar_bottom">
           <ul
             class="navbar__menu"
-            style="margin-left: 200px; margin-top: -10px; font-size: 15px"
+            style="margin-left: 200px; margin-top: -5px; font-size: 15px"
           >
             <li @click="reload">
               <router-link
@@ -320,6 +320,7 @@ img {
 a {
   text-decoration: none;
   color: rgb(0, 0, 0);
+  font-family: 'Do Hyeon', sans-serif;
 }
 
 .navbar {

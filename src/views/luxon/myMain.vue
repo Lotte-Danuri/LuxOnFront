@@ -717,7 +717,10 @@ export default {
 <style scoped>
 a {
   text-decoration: none;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 15px;
 }
+
 .coupon_cls .swiper-pagination-bullets span {
   display: none;
 }
@@ -889,7 +892,7 @@ a {
   background-color: rgb(238, 238, 238);
   width: 250px;
   height: 400px;
-  margin-bottom: 80px;
+  margin-bottom: 90px;
 }
 
 .product_grid div img {

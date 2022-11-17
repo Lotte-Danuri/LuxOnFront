@@ -34,9 +34,9 @@
             <br />
             <h2>{{ state.products[0]?.productName }}</h2>
             <br />
-            <h2 style="font-weight: bold; color: black">
+            <h1 style="font-weight: bold; color: black">
               {{ comma(state.products[0]?.price) }}원
-            </h2>
+            </h1>
           </span>
           <br />
           <hr />
@@ -73,13 +73,16 @@
               <h3>수량</h3>
             </div>
             <div class="count">
-              <button @click="minusBtn">-</button>
+              <button class="minus_Btn" @click="minusBtn">-</button>
               <input
                 id="countValue"
                 :value="state.quantity"
                 style="text-align: center"
               />
-              <button @click="plusBtn">+</button>
+              <button class="plus_Btn" @click="plusBtn">+</button>
+              <h2 style="margin-left: 50%; font-weight: bold">
+                {{ comma(state.sumPrice) }} 원
+              </h2>
             </div>
           </div>
           <br />
@@ -95,11 +98,18 @@
             </div>
           </div>
           <div class="actionBtn">
-            <button style="background-color: gray" @click="addCart">
-              장바구니
+            <button style="background-color: white" @click="addCart">
+              <span class="material-icons-sharp" style="font-size: 15px">
+                add_shopping_cart장바구니
+              </span>
             </button>
-            <button @click="initOrder">바로구매</button>
-            <button @click="sendChat" style="background-color: black">
+            <button
+              @click="initOrder"
+              style="background-color: black; color: white"
+            >
+              바로구매
+            </button>
+            <button @click="sendChat" style="background-color: white">
               <i class="bi bi-chat-left-dots"></i>
               채팅문의
             </button>
@@ -488,6 +498,14 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+h2 {
+  font-family: 'Do Hyeon', sans-serif;
+}
+
 input[type='radio'] {
   display: none;
   margin: 10px;
@@ -510,13 +528,14 @@ input[type='radio']:checked + label {
   background-color: #38363656;
 }
 .list_contents {
-  margin-left: 20%;
+  margin-left: 25%;
   margin-top: 5%;
+  width: 1100px;
 }
 .div_top {
   margin-right: 20%;
   display: grid;
-  grid-template-columns: 40% 60%;
+  grid-template-columns: 50% 50%;
 }
 
 .option_grid {
@@ -555,14 +574,27 @@ input[type='radio']:checked + label {
   display: flex;
 }
 .count input {
-  width: 250px;
-  height: 40px;
-  border: solid 1px black;
+  width: 55px;
+  height: 35px;
+  border: solid 1px gray;
+  border-left: none;
+  border-right: none;
 }
 
 .count button {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
+  border: solid 1px gray;
+}
+
+.minus_Btn {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.plus_Btn {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .actionBtn {
@@ -572,14 +604,14 @@ input[type='radio']:checked + label {
 
 .actionBtn button {
   width: 250px;
-  height: 70px;
-  font-size: 20px;
-  background-color: black;
-  color: white;
+  height: 50px;
+  font-size: 15px;
+  background-color: rgb(255, 255, 255);
+  color: black;
   margin-top: 40px;
-  margin-right: 10px;
-  margin-left: 30px;
   border-radius: 10px;
+  margin-right: 5px;
+  border: solid 1px black;
 }
 
 .click_nav {
