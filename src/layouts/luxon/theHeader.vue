@@ -21,9 +21,9 @@
                   id="searchValue"
                   ref="ref_search"
                   @keyup.enter="searchBtn"
-                />
+                >
                 <button type="submit" class="searchButton" @click="searchBtn">
-                  <i class="fa fa-search"></i>
+                  <i class="fa fa-search icon"></i>
                 </button>
               </div>
             </div>
@@ -32,23 +32,28 @@
           <ul class="navbar__icons">
             <li v-if="state.localStorage.token == null">
               <router-link to="/login">
-                <i class="fa-solid fa-right-to-bracket"></i>
+                <span class="material-symbols-outlined"> login </span>
+                <!-- <i class="fa-solid fa-right-to-bracket"></i> -->
                 <p>로그인</p>
               </router-link>
             </li>
             <li v-else>
               <router-link to="/logout">
-                <i class="fa-solid fa-right-to-bracket"></i>
+                <span class="material-symbols-outlined"> login </span>
                 <p>로그아웃</p>
               </router-link>
             </li>
             <li @click="sendMessage()">
-              <i class="fa-solid fa-commenting"></i>
+              <!-- <i class="fa-solid fa-commenting"></i> -->
+              <span class="material-symbols-outlined"> headset_mic </span>
               <p>고객센터</p>
             </li>
             <li>
               <router-link to="/mypage/order">
-                <i class="fa-solid fa-user"></i>
+                <!-- <i class="fa-solid fa-user"></i> -->
+                <span class="material-symbols-outlined">
+person_filled
+</span>
                 <p>마이페이지</p>
               </router-link>
             </li>
@@ -58,7 +63,10 @@
             </li> -->
             <li>
               <router-link :to="{ name: 'cart' }">
-                <i class="fa-solid fa-bag-shopping"></i>
+                <!-- <i class="fa-solid fa-bag-shopping"></i> -->
+                <span class="material-symbols-outlined">
+shopping_cart
+</span>
                 <p>쇼핑백</p>
               </router-link>
             </li>
@@ -125,93 +133,93 @@
   </header>
 </template>
 <script>
-import { reactive } from 'vue';
-import { onMounted } from 'vue';
-import { initializeApp } from 'firebase/app';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
-import axios from 'axios';
-import { useRouter } from 'vue-router';
-import { getCurrentInstance } from 'vue';
+import { reactive } from "vue";
+import { onMounted } from "vue";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import axios from "axios";
+import { useRouter } from "vue-router";
+import { getCurrentInstance } from "vue";
 
 // const toggleBtn = document.querySelector('.navbar__toogleBtn');
-const menu = document.querySelector('.navbar__menu');
-const icons = document.querySelector('.navbar__icons');
+const menu = document.querySelector(".navbar__menu");
+const icons = document.querySelector(".navbar__icons");
 
 export default {
   components: {},
   data() {
     return {
-      searchValue: '',
+      searchValue: "",
     };
   },
   watch: {
     searchValue() {
-      alert('search작동');
+      alert("search작동");
     },
   },
   setup() {
     const router = useRouter();
     const state = reactive({
-      localStorage: '',
-      searchValue: '',
+      localStorage: "",
+      searchValue: "",
     });
 
     onMounted(() => {
       state.localStorage = localStorage;
-      if (localStorage.getItem('login_id') !== null) {
+      if (localStorage.getItem("login_id") !== null) {
         const firebaseConfig = {
-          apiKey: 'AIzaSyAHFnEL7qoOi2fQB9opoZeOFFy9MUH7GDM',
-          authDomain: 'luxon-c4fb2.firebaseapp.com',
-          projectId: 'luxon-c4fb2',
-          storageBucket: 'luxon-c4fb2.appspot.com',
-          messagingSenderId: '626968263040',
-          appId: '1:626968263040:web:874cdbaa275151e4daa965',
-          measurementId: 'G-ST05ZTCPJB',
+          apiKey: "AIzaSyAHFnEL7qoOi2fQB9opoZeOFFy9MUH7GDM",
+          authDomain: "luxon-c4fb2.firebaseapp.com",
+          projectId: "luxon-c4fb2",
+          storageBucket: "luxon-c4fb2.appspot.com",
+          messagingSenderId: "626968263040",
+          appId: "1:626968263040:web:874cdbaa275151e4daa965",
+          measurementId: "G-ST05ZTCPJB",
         };
 
         const app = initializeApp(firebaseConfig);
         const messaging = getMessaging(app);
-        Notification.requestPermission().then(permission => {
-          console.log('permission ', permission);
-          if (permission !== 'granted') {
-            alert('알림을 허용해주세요');
+        Notification.requestPermission().then((permission) => {
+          console.log("permission ", permission);
+          if (permission !== "granted") {
+            alert("알림을 허용해주세요");
           }
         });
 
         // TODO: Send token to server for send notification
         getToken(messaging, {
           vapidKey:
-            'BOX3DLO4QFmqhmQwbOUtXGFXqeGizpGhDx5GQ1WnkDTqp9nFRDc5WC1YK8VpJQ23SgOiiYvgygoQK2HvJ9b_U5c',
+            "BOX3DLO4QFmqhmQwbOUtXGFXqeGizpGhDx5GQ1WnkDTqp9nFRDc5WC1YK8VpJQ23SgOiiYvgygoQK2HvJ9b_U5c",
         })
-          .then(currentToken => {
+          .then((currentToken) => {
             if (currentToken) {
               axios
                 .post(
-                  'https://sbbro.xyz/api/chat/user/fcmToken',
+                  "https://sbbro.xyz/api/chat/user/fcmToken",
                   {
-                    userId: localStorage.getItem('login_id'),
+                    userId: localStorage.getItem("login_id"),
                     fcmToken: currentToken,
                   },
                   {
                     headers: {
-                      Authorization: `Bearer ` + localStorage.getItem('token'),
-                      contentType: 'application/json',
+                      Authorization: `Bearer ` + localStorage.getItem("token"),
+                      contentType: "application/json",
                     },
-                  },
+                  }
                 )
-                .catch(err => console.log(err));
+                .catch((err) => console.log(err));
             } else {
               console.log(
-                'No registration token available. Request permission to generate one.',
+                "No registration token available. Request permission to generate one."
               );
             }
           })
-          .catch(err => {
-            console.log('An error occurred while retrieving token. ', err);
+          .catch((err) => {
+            console.log("An error occurred while retrieving token. ", err);
           });
 
         // Handle received push notification at foreground
-        onMessage(messaging, payload => {
+        onMessage(messaging, (payload) => {
           console.log(payload);
           alert(payload.data.message);
         });
@@ -223,33 +231,33 @@ export default {
     const sendMessage = async () => {
       await axios
         .post(
-          'https://sbbro.xyz/api/chat/chatRoom/chat',
+          "https://sbbro.xyz/api/chat/chatRoom/chat",
           {
             id: null,
-            content: '고객센터에 문의하기',
-            contentType: '메세지',
-            sendBy: localStorage.getItem('login_id'),
-            sendTo: 'admin',
-            source: '',
+            content: "고객센터에 문의하기",
+            contentType: "메세지",
+            sendBy: localStorage.getItem("login_id"),
+            sendTo: "admin",
+            source: "",
           },
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-              'Content-Type': 'application/json',
+              Authorization: `Bearer ` + localStorage.getItem("token"),
+              "Content-Type": "application/json",
             },
-          },
+          }
         )
-        .then(emitter.emit('chatShow'))
-        .catch(err => console.log(err));
+        .then(emitter.emit("chatShow"))
+        .catch((err) => console.log(err));
     };
 
     const btnClick = () => {
-      menu.classList.toggle('active');
-      icons.classList.toggle('active');
+      menu.classList.toggle("active");
+      icons.classList.toggle("active");
     };
 
     const searchBtn = () => {
-      let searchValue = document.getElementById('searchValue').value;
+      let searchValue = document.getElementById("searchValue").value;
       // if (
       //   window.location.href.includes('list') &&
       //   decodeURI(window.location.href)
@@ -260,7 +268,7 @@ export default {
       //   location.reload();
       // }
       router.push({
-        name: 'MyList',
+        name: "MyList",
         query: { searchValue: searchValue },
       });
     };
@@ -299,7 +307,7 @@ header {
 
 .header_bottom {
   margin: 0;
-  font-family: 'NotoSansKR,Malgun Gothic,arial,sans-serif';
+  font-family: "NotoSansKR,Malgun Gothic,arial,sans-serif";
   /* border-style: solid;
   border-color: gray;
   border-width: 1px 0px 0px 0px; */
@@ -347,7 +355,7 @@ a {
   margin-bottom: -20px;
 }
 
-.search {
+/* .search {
   width: 120%;
   position: relative;
   display: flex;
@@ -378,6 +386,28 @@ a {
   border-radius: 0 5px 5px 0;
   cursor: pointer;
   font-size: 20px;
+} */
+
+.search {
+  position: relative;
+  width: 100%;
+  display: flex;
+}
+
+input {
+  width: 100%;
+  border: 2px solid #bbb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.icon {
+  position : absolute;
+  width: 17px;
+  top: 15px;
+  right: 12px;
+  margin: 0;
 }
 
 /*Resize the wrap to see the search bar change!*/
@@ -425,7 +455,7 @@ a {
   font-size: 8px;
 }
 
-.navbar__icons li i,
+.navbar__icons li span,
 p {
   display: flex;
   justify-content: center;

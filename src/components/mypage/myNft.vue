@@ -128,7 +128,7 @@ export default {
     const getNftData = async () => {
       try {
         const response = await axios.post(
-          "http://43.200.203.135:5000/api/nft",
+          "https://sbbro.xyz/v2/nft/api/nft",
           {
             userId: userId.value,
             productId: productId.value,
