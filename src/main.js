@@ -20,10 +20,7 @@ import VCalendar from 'v-calendar';
 
 import YoutubeIframe from '@techassi/vue-youtube-iframe';
 
-import vueQr from 'vue-qr';
-
 createApp(App)
-  .use(vueQr)
   .use(YoutubeIframe)
   .use(VCalendar)
   .use(VueSweetalert2)

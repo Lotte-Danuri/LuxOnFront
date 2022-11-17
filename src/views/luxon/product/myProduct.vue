@@ -121,7 +121,7 @@
         </div>
         <div id="product_review">
           <!-- <hr style="width: 80%" /> -->
-          <div>
+          <div v-for="review in state.reviews" :key="review">
             <div
               style="
                 display: grid;
@@ -129,24 +129,26 @@
                 margin-bottom: 0px;
               "
             >
-              <p>jeyz******</p>
-              <p>2022.11.05</p>
+              <p>{{ review.name }}</p>
+              <p>
+                {{
+                  globalProperties.$formatDatetime(new Date(review.createdDate))
+                }}
+              </p>
             </div>
             <div>
               <p style="font-size: 20px; font-weight: bold; margin-bottom: 0px">
-                멜란지 그레이/M
+                {{ review.title }}
               </p>
               <br />
               <p style="font-size: 15px">
-                소재도 부드럽고 따뜻하니 마음에 들어요 색감도 사진이랑 똑같고
-                특히 핏이 너무 예쁘네요 기장이 긴 편이라 키 큰 사람한테 더 잘
-                어울릴 것 같아요.
+                {{ review.contents }}
               </p>
             </div>
             <div>
               <img
                 style="width: 100px; height: 100px"
-                src="https://image.sivillage.com/upload/C00001/eval/281/202211050726281_00001.jpeg?RS=90&SP=1&AO=1"
+                :src="review.thumbnailImage"
               />
             </div>
             <div
@@ -184,23 +186,24 @@
   </main>
 </template>
 <script>
-import { reactive } from 'vue';
-import { onBeforeMount } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import axios from 'axios';
-import Swal from 'sweetalert2';
-import LikeButton from '@/components/button/likeButton.vue';
-import { getCurrentInstance } from 'vue';
+import { reactive } from "vue";
+import { onBeforeMount } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import axios from "axios";
+import Swal from "sweetalert2";
+import LikeButton from "@/components/button/likeButton.vue";
+import { getCurrentInstance } from "vue";
 
 export default {
   components: { LikeButton },
   setup() {
     const router = useRouter();
     const state = reactive({
-      productCode: '',
+      productCode: "",
       products: [],
+      reviews: [],
       sumPrice: 0,
-      selectedStoreIndex: '',
+      selectedStoreIndex: "",
       quantity: 0,
       brand: {},
     });
@@ -213,45 +216,50 @@ export default {
       getCurrentInstance().appContext.config.globalProperties.$emitter;
     onBeforeMount(() => {
       var route = useRoute();
+
       state.productCode = route.query.productCode;
+
+      getProduct();
+
+      getReviews();
+    });
+
+    const getProduct = () => {
       axios
-        .get('https://sbbro.xyz/api/product/products/list/' + state.productCode)
-        .then(response => {
+        .get("https://sbbro.xyz/api/product/products/list/" + state.productCode)
+        .then((response) => {
+          console.log("getProduct", response);
           if (response.status == 200) {
             state.products = response.data;
-            console.log(state.products);
             state.sumPrice =
-              document.getElementById('countValue').value *
+              document.getElementById("countValue").value *
               state.products[0].price;
-            state.products.forEach(product => {
+            state.products.forEach((product) => {
               if (globalProperties.$isLogin() == false) {
-                console.log('비로그인');
                 axios.get(
                   `https://sbbro.xyz/api/recommend/recommends/click/unlogin/` +
-                    product.id,
+                    product.id
                 );
               } else {
-                console.log('로그인');
                 axios.get(
                   `https://sbbro.xyz/api/recommend/recommends/click/login/` +
                     product.id,
                   {
                     headers: {
-                      Authorization: 'Bearer ' + localStorage.getItem('token'),
+                      Authorization: "Bearer " + localStorage.getItem("token"),
                     },
-                  },
+                  }
                 );
               }
             });
           }
           getBrand();
-          console.log(state.products);
         })
         .catch(() => {
-          alert('해당 상품은 조회할 수 없습니다.');
+          alert("해당 상품은 조회할 수 없습니다.");
           history.back();
         });
-    });
+    };
 
     const minusBtn = () => {
       if (state.quantity > 0) {
@@ -265,12 +273,12 @@ export default {
     };
 
     const loginCheck = () => {
-      if (localStorage.getItem('token') == null) {
+      if (localStorage.getItem("token") == null) {
         Swal.fire({
-          title: '로그인 해주세요',
-          icon: 'error',
+          title: "로그인 해주세요",
+          icon: "error",
           showCancelButton: false,
-          confirmButtonText: '확인',
+          confirmButtonText: "확인",
         }).then(() => {
           return false;
         });
@@ -280,8 +288,8 @@ export default {
     };
 
     const isSelectStore = () => {
-      if (state.selectedStoreIndex === '') {
-        Swal.fire('지점을 선택해주세요');
+      if (state.selectedStoreIndex === "") {
+        Swal.fire("지점을 선택해주세요");
         return false;
       }
       return true;
@@ -289,7 +297,7 @@ export default {
 
     const isSelectQuantity = () => {
       if (state.quantity === 0) {
-        Swal.fire('수량을 선택해주세요');
+        Swal.fire("수량을 선택해주세요");
         return false;
       }
       return true;
@@ -309,12 +317,12 @@ export default {
       }
 
       Swal.fire({
-        title: '주문 하시겠습니까?',
-        icon: 'success',
+        title: "주문 하시겠습니까?",
+        icon: "success",
         showCancelButton: true,
-        confirmButtonText: '네',
-        cancelButtonText: '아니요',
-      }).then(result => {
+        confirmButtonText: "네",
+        cancelButtonText: "아니요",
+      }).then((result) => {
         if (result.isConfirmed) {
           var productsData = [];
           var product = {
@@ -332,7 +340,7 @@ export default {
           };
           productsData.push(product);
           router.push({
-            name: 'initOrder',
+            name: "initOrder",
             params: {
               products: JSON.stringify(productsData),
             },
@@ -356,48 +364,61 @@ export default {
 
       axios
         .post(
-          'https://sbbro.xyz/api/member/cart',
+          "https://sbbro.xyz/api/member/cart",
           {
             productId: state.products[state.selectedStoreIndex].id,
             quantity: state.quantity,
           },
           {
             headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
-          },
+          }
         )
-        .then(response => {
+        .then((response) => {
           if (response.status == 200) {
             Swal.fire({
-              title: '상품이 장바구니에 담겼습니다.',
-              icon: 'success',
+              title: "상품이 장바구니에 담겼습니다.",
+              icon: "success",
               showCancelButton: true,
-              confirmButtonText: '장바구니로 이동',
-              cancelButtonText: '계속 쇼핑하기',
-            }).then(result => {
+              confirmButtonText: "장바구니로 이동",
+              cancelButtonText: "계속 쇼핑하기",
+            }).then((result) => {
               if (result.isConfirmed) {
-                router.push('/cart');
+                router.push("/cart");
               }
             });
           }
         });
     };
+
+    const getReviews = async () => {
+      try {
+        const response = await axios.get(
+          "https://sbbro.xyz/api/review/code/" + state.productCode
+        );
+        console.log("getReviews", response);
+        state.reviews = response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     const getBrand = async () => {
       await axios
         .get(
-          'https://sbbro.xyz/api/member/store/brand/' +
+          "https://sbbro.xyz/api/member/store/brand/" +
             state.products[0].brandId,
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-              contentType: 'application/json',
+              Authorization: `Bearer ` + localStorage.getItem("token"),
+              contentType: "application/json",
             },
-          },
+          }
         )
-        .then(res => (state.brand = res.data));
+        .then((res) => (state.brand = res.data));
 
-      console.log(state.brand);
+      console.log("brand", state.brand);
     };
 
     const sendChat = () => {
@@ -406,40 +427,40 @@ export default {
       }
       axios
         .post(
-          'https://sbbro.xyz/api/chat/chatRoom/chat',
+          "https://sbbro.xyz/api/chat/chatRoom/chat",
           {
             id: null,
             content:
               state.products[state.selectedStoreIndex].productName +
-              ' 상품 문의',
-            contentType: '상품정보',
-            sendBy: localStorage.getItem('login_id'),
+              " 상품 문의",
+            contentType: "상품정보",
+            sendBy: localStorage.getItem("login_id"),
             sendTo: state.products[state.selectedStoreIndex].storeId,
             source: state.products[state.selectedStoreIndex].id,
           },
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-              'Content-Type': 'application/json',
+              Authorization: `Bearer ` + localStorage.getItem("token"),
+              "Content-Type": "application/json",
             },
-          },
+          }
         )
-        .then(emitter.emit('chatShow'))
-        .catch(err => console.log(err));
+        .then(emitter.emit("chatShow"))
+        .catch((err) => console.log(err));
     };
 
     const click_review = () => {
-      document.getElementById('product_detail').style.display = 'none';
-      document.getElementById('product_review').style.display = 'block';
-      document.getElementById('review_btn').style.color = 'black';
-      document.getElementById('detail_btn').style.color = 'gray';
+      document.getElementById("product_detail").style.display = "none";
+      document.getElementById("product_review").style.display = "block";
+      document.getElementById("review_btn").style.color = "black";
+      document.getElementById("detail_btn").style.color = "gray";
     };
 
     const click_detail = () => {
-      document.getElementById('product_review').style.display = 'none';
-      document.getElementById('product_detail').style.display = 'block';
-      document.getElementById('review_btn').style.color = 'gray';
-      document.getElementById('detail_btn').style.color = 'black';
+      document.getElementById("product_review").style.display = "none";
+      document.getElementById("product_detail").style.display = "block";
+      document.getElementById("review_btn").style.color = "gray";
+      document.getElementById("detail_btn").style.color = "black";
     };
 
     window.scrollTo(0, 0);
@@ -456,17 +477,18 @@ export default {
       addCart,
       click_review,
       click_detail,
+      globalProperties,
     };
   },
 };
 </script>
 <style scoped>
-input[type='radio'] {
+input[type="radio"] {
   display: none;
   margin: 10px;
 }
 
-input[type='radio'] + label {
+input[type="radio"] + label {
   display: inline-block;
   margin: -2px;
   padding: 8px 19px;
@@ -479,7 +501,7 @@ input[type='radio'] + label {
   white-space: nowrap;
 }
 
-input[type='radio']:checked + label {
+input[type="radio"]:checked + label {
   background-color: #38363656;
 }
 .list_contents {
