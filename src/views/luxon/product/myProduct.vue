@@ -125,7 +125,7 @@
         </div>
         <div id="product_review">
           <!-- <hr style="width: 80%" /> -->
-          <div>
+          <div v-for="review in state.reviews" :key="review">
             <div
               style="
                 display: grid;
@@ -133,24 +133,26 @@
                 margin-bottom: 0px;
               "
             >
-              <p>jeyz******</p>
-              <p>2022.11.05</p>
+              <p>{{ review.name }}</p>
+              <p>
+                {{
+                  globalProperties.$formatDatetime(new Date(review.createdDate))
+                }}
+              </p>
             </div>
             <div>
               <p style="font-size: 20px; font-weight: bold; margin-bottom: 0px">
-                멜란지 그레이/M
+                {{ review.title }}
               </p>
               <br />
               <p style="font-size: 15px">
-                소재도 부드럽고 따뜻하니 마음에 들어요 색감도 사진이랑 똑같고
-                특히 핏이 너무 예쁘네요 기장이 긴 편이라 키 큰 사람한테 더 잘
-                어울릴 것 같아요.
+                {{ review.contents }}
               </p>
             </div>
             <div>
               <img
                 style="width: 100px; height: 100px"
-                src="https://image.sivillage.com/upload/C00001/eval/281/202211050726281_00001.jpeg?RS=90&SP=1&AO=1"
+                :src="review.thumbnailImage"
               />
             </div>
             <div
@@ -203,6 +205,7 @@ export default {
     const state = reactive({
       productCode: '',
       products: [],
+      reviews: [],
       sumPrice: 0,
       selectedStoreIndex: '',
       quantity: 0,
@@ -217,25 +220,31 @@ export default {
       getCurrentInstance().appContext.config.globalProperties.$emitter;
     onBeforeMount(() => {
       var route = useRoute();
+
       state.productCode = route.query.productCode;
+
+      getProduct();
+
+      getReviews();
+    });
+
+    const getProduct = () => {
       axios
         .get('https://sbbro.xyz/api/product/products/list/' + state.productCode)
         .then(response => {
+          console.log('getProduct', response);
           if (response.status == 200) {
             state.products = response.data;
-            console.log(state.products);
             state.sumPrice =
               document.getElementById('countValue').value *
               state.products[0].price;
             state.products.forEach(product => {
               if (globalProperties.$isLogin() == false) {
-                console.log('비로그인');
                 axios.get(
                   `https://sbbro.xyz/api/recommend/recommends/click/unlogin/` +
                     product.id,
                 );
               } else {
-                console.log('로그인');
                 axios.get(
                   `https://sbbro.xyz/api/recommend/recommends/click/login/` +
                     product.id,
@@ -249,13 +258,12 @@ export default {
             });
           }
           getBrand();
-          console.log(state.products);
         })
         .catch(() => {
           alert('해당 상품은 조회할 수 없습니다.');
           history.back();
         });
-    });
+    };
 
     const minusBtn = () => {
       if (state.quantity > 0) {
@@ -387,6 +395,19 @@ export default {
           }
         });
     };
+
+    const getReviews = async () => {
+      try {
+        const response = await axios.get(
+          'https://sbbro.xyz/api/review/code/' + state.productCode,
+        );
+        console.log('getReviews', response);
+        state.reviews = response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     const getBrand = async () => {
       await axios
         .get(
@@ -400,7 +421,8 @@ export default {
           },
         )
         .then(res => (state.brand = res.data));
-      console.log(state.brand);
+
+      console.log('brand', state.brand);
     };
 
     const sendChat = () => {
@@ -459,6 +481,7 @@ export default {
       addCart,
       click_review,
       click_detail,
+      globalProperties,
     };
   },
 };

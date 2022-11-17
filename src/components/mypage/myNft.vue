@@ -43,18 +43,17 @@
               <h1 style="text-align: center">NFT</h1>
             </div>
           </div>
-          <!-- <vue-qr
-            :bgSrc="src"
-            :logoSrc="src2"
-            text="Hello world!"
-            :size="200"
-          ></vue-qr>
-          <vue-qr text="Hello world!" :callback="test" qid="testid"></vue-qr> -->
-          <a href="http://m.site.naver.com/13j7l"
-            ><img
-              style="width: 150px; margin-left: 145px"
-              src="https://qrcodethumb-phinf.pstatic.net/20221115_52/1668484058096jOxDz_PNG/13j7l.png"
-          /></a>
+          <a href="">
+            <VueQrcode
+              style="margin-left: 145px"
+              :value="
+                'https://baobab.scope.klaytn.com/account/' +
+                state.nftData.contractAddr
+              "
+              tag="svg"
+              :options="{ width: 120 }"
+            ></VueQrcode>
+          </a>
           <div class="data_grid">
             <h3>상품명</h3>
             <p>{{ state.nftData.name }}</p>
@@ -72,14 +71,16 @@
             <p>
               {{
                 globalProperties.$formatDatetime(
-                  new Date(state.nftData.registeredDate),
+                  new Date(state.nftData.registeredDate)
                 )
               }}
             </p>
           </div>
           <div class="data_grid">
             <h3>NFT 주소</h3>
-            <p>{{ state.nftData.contractAddr }}</p>
+            <button @click="clickContractAddr">
+              <p>{{ state.nftData.contractAddr }}</p>
+            </button>
           </div>
         </div>
       </div>
@@ -90,17 +91,17 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
-import { onBeforeMount } from 'vue';
-import axios from 'axios';
-import { getCurrentInstance } from 'vue';
-import Swal from 'sweetalert2';
-import { useRoute, useRouter } from 'vue-router';
-import { computed } from 'vue';
-// import vueQr from 'vue-qr';
+import { reactive } from "vue";
+import { onBeforeMount } from "vue";
+import axios from "axios";
+import { getCurrentInstance } from "vue";
+import Swal from "sweetalert2";
+import { useRoute, useRouter } from "vue-router";
+import { computed } from "vue";
+import VueQrcode from "@chenfengyuan/vue-qrcode";
 
 export default {
-  // components: { vueQr },
+  components: { VueQrcode },
 
   setup() {
     const route = useRoute();
@@ -112,13 +113,13 @@ export default {
       getCurrentInstance().appContext.config.globalProperties;
 
     const state = reactive({
-      nftData: '',
+      nftData: "",
     });
 
     onBeforeMount(async () => {
       if (!userId.value || !productId.value || !orderId.value) {
-        Swal.fire('정상적인 경로로 접근해주세요');
-        router.push('order');
+        Swal.fire("정상적인 경로로 접근해주세요");
+        router.push("order");
       }
 
       await getNftData();
@@ -126,25 +127,30 @@ export default {
 
     const getNftData = async () => {
       try {
-        console.log(userId.value);
-        console.log(productId.value);
-        console.log(orderId.value);
         const response = await axios.post(
-          'http://43.200.203.135:5000/api/nft',
+          "http://43.200.203.135:5000/api/nft",
           {
             userId: userId.value,
             productId: productId.value,
             orderId: orderId.value,
-          },
+          }
         );
         state.nftData = response.data[0];
-        console.log('data', state.nftData);
+        console.log("data", state.nftData);
       } catch (err) {
         console.log(err);
       }
     };
 
-    return { state, globalProperties };
+    const clickContractAddr = () => {
+      var win = window.open(
+        "https://baobab.scope.klaytn.com/account/" + state.nftData.contractAddr,
+        "_blank"
+      );
+      win.focus();
+    };
+
+    return { state, globalProperties, clickContractAddr };
   },
 };
 </script>

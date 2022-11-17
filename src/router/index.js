@@ -125,6 +125,11 @@ const routes = [
             component: () => import('@/components/mypage/myNftList.vue'),
           },
           {
+            path: 'coupon',
+            name: 'coupon',
+            component: () => import('@/components/mypage/myCoupon.vue')
+          },
+          {
             path: 'myinfo',
             name: 'myinfo',
             component: MyInfo,
