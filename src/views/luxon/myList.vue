@@ -47,7 +47,7 @@
     </div>
     <div
       class="category__content"
-      style="margin-left: 50px; margin-bottom: 0px"
+      style="margin-left: 00px; margin-bottom: 0px"
     >
       <div class="swiper-content" style="margin-top: -70px">
         <div class="leftSwiper">
@@ -90,7 +90,7 @@
         <div class="rightSwiper">
           <swiper
             class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-            :space-between="20"
+            :space-between="0"
             :loop="true"
             :pagination="{ clickable: true }"
             :autoplay="{
@@ -127,7 +127,10 @@
       </div>
       <br />
       <br />
-      <div class="all_procut" style="margin-top: 0px">
+      <div
+        class="all_procut"
+        style="margin-top: 0px; width: 1100px; margin-left: 90px"
+      >
         <h2 style="font-weight: bold">All Product</h2>
         <br />
         <div class="product_grid">
@@ -141,16 +144,7 @@
               <img :src="product.thumbnailUrl" />
               <br />
               <span>
-                <p
-                  class="cls_productName"
-                  style="
-                    color: black;
-                    font-family: -apple-system, BlinkMacSystemFont,
-                      'SF Pro Display', 'Apple SD Gothic Neo', 'Apple-Gothic',
-                      'Roboto', 'Noto Sans KR', 'Droid Sans', 'dotum',
-                      sans-serif;
-                  "
-                >
+                <p class="cls_productName" style="color: black">
                   {{ product.productName }}
                 </p>
                 <p class="cls_productPrice" style="font-weight: ">
@@ -388,9 +382,7 @@ a {
 }
 
 p {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
-    'Apple SD Gothic Neo', 'Apple-Gothic', 'Roboto', 'Noto Sans KR',
-    'Droid Sans', 'dotum', sans-serif;
+  font-family: 'Do Hyeon', sans-serif;
 }
 
 .active .side_menu div h3 {
@@ -453,13 +445,13 @@ p {
 }
 
 .swiper-content {
-  margin-right: 20%;
+  margin-right: 10%;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 46% 46%;
 }
 
 .swiper_content div swiper {
-  width: 400px;
+  /* width: 10px; */
 }
 
 .product_grid {
@@ -474,7 +466,7 @@ p {
   background-color: rgb(238, 238, 238);
   width: 250px;
   height: 400px;
-  margin-bottom: 100px;
+  margin-bottom: 120px;
 }
 
 .product_grid div img {
@@ -492,12 +484,12 @@ p {
 
 .cls_productName {
   font-family: 'Do Hyeon', sans-serif;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .cls_productPrice {
   font-family: fantasy;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .div_category li a {
