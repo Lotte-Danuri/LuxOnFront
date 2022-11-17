@@ -7,7 +7,7 @@
       <h3 style="font-style: italic; color: gray; margin-left: 44%">
         {{ userName }}
       </h3>
-      <h3>　님 안녕하세요</h3>
+      <h3>님 안녕하세요</h3>
       <a @click="logout" style="margin-left: 4%">
         <div style="display: flex; margin-bottom: 0px">
           <span class="material-icons-sharp">logout</span>
@@ -101,8 +101,8 @@
                     />
                   </td>
                   <td>{{ promotion.title }}</td>
-                  <td>{{ promotion.startDate }}</td>
-                  <td>{{ promotion.endDate }}</td>
+                  <td>{{ formatDatetime(new Date(promotion.startDate)) }}</td>
+                  <td>{{ formatDatetime(new Date(promotion.endDate)) }}</td>
                 </tr>
               </tbody>
             </table>
@@ -116,11 +116,14 @@
 <script>
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
+import { getCurrentInstance } from 'vue';
 
 export default {
   name: 'SysPromotion',
   data() {
     return {
+      formatDatetime:
+        getCurrentInstance().appContext.config.globalProperties.$formatDatetime,
       userName: localStorage.getItem('userName'),
       picked: 0,
       members: [],
