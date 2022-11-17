@@ -53,7 +53,7 @@
         <div class="leftSwiper">
           <swiper
             class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-            :space-between="20"
+            :space-between="0"
             :loop="true"
             :pagination="{ clickable: true }"
             :autoplay="{
@@ -67,7 +67,7 @@
               :key="text.description"
               class="pb-14 sm:flex sm:justify-evenly"
             >
-              <div style="background-color: white; position: relative">
+              <div style="background-color: transparent; position: relative">
                 <div class="firstSwiper">
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
@@ -104,7 +104,7 @@
               :key="text.description"
               class="pb-14 sm:flex sm:justify-evenly"
             >
-              <div style="background-color: white; position: relative">
+              <div style="background-color: transparent; position: relative">
                 <div class="firstSwiper">
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
@@ -129,7 +129,7 @@
       <br />
       <div
         class="all_procut"
-        style="margin-top: 0px; width: 1100px; margin-left: 90px"
+        style="margin-top: 0px; width: 1100px; margin-left: 100px"
       >
         <h2 style="font-weight: bold">All Product</h2>
         <br />

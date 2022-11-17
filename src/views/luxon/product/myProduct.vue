@@ -41,11 +41,8 @@
           <br />
           <hr />
 
-          <div class="option_grid" style="margin-bottom: 10px">
-            <div class="option_name">
-              <h3>지점</h3>
-            </div>
-            <div class="size_div" style="float: left">
+          <div class="" style="margin-bottom: 10px">
+            <div class="size_div" style="">
               <div
                 v-for="(product, index) in state.products"
                 v-bind:key="index"
@@ -68,10 +65,7 @@
             </div>
           </div>
           <hr />
-          <div class="option_grid">
-            <div class="option_name">
-              <h3>수량</h3>
-            </div>
+          <div class="countClass">
             <div class="count">
               <button class="minus_Btn" @click="minusBtn">-</button>
               <input
@@ -80,23 +74,15 @@
                 style="text-align: center"
               />
               <button class="plus_Btn" @click="plusBtn">+</button>
-              <h2 style="margin-left: 50%; font-weight: bold">
+            </div>
+            <div>
+              <h2 style="margin-left: 35%; margin-top: 2%; font-weight: bold">
                 {{ comma(state.sumPrice) }} 원
               </h2>
             </div>
           </div>
           <br />
           <hr style="border: 3px solid black !important" />
-          <div class="option_grid">
-            <div class="option_name">
-              <h3>판매가</h3>
-            </div>
-            <div class="size_div" style="float: left">
-              <h2 style="margin-left: 50%; font-weight: bold">
-                {{ comma(state.sumPrice) }} 원
-              </h2>
-            </div>
-          </div>
           <div class="actionBtn">
             <button style="background-color: white" @click="addCart">
               <span class="material-icons-sharp" style="font-size: 15px">
@@ -515,8 +501,10 @@ input[type='radio'] + label {
   display: inline-block;
   margin: -2px;
   padding: 8px 19px;
-  background-color: #ffffff;
-  border: 1px solid rgb(0, 0, 0);
+  background-color: #f6e7f8;
+  color: #bc6aff;
+  /* border: 1px solid rgb(0, 0, 0); */
+  border-radius: 20px;
   font-size: 13px !important;
   width: 130px;
   text-align: center;
@@ -525,7 +513,8 @@ input[type='radio'] + label {
 }
 
 input[type='radio']:checked + label {
-  background-color: #38363656;
+  background-color: #bc6aff;
+  color: white;
 }
 .list_contents {
   margin-left: 25%;
@@ -536,6 +525,19 @@ input[type='radio']:checked + label {
   margin-right: 20%;
   display: grid;
   grid-template-columns: 50% 50%;
+}
+
+.countClass {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  background-color: rgb(227, 227, 227);
+  height: 80px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.countClass button {
+  background-color: white;
 }
 
 .option_grid {
@@ -572,9 +574,10 @@ input[type='radio']:checked + label {
 
 .count {
   display: flex;
+  margin-left: 10px;
 }
 .count input {
-  width: 55px;
+  width: 50px;
   height: 35px;
   border: solid 1px gray;
   border-left: none;
@@ -608,7 +611,7 @@ input[type='radio']:checked + label {
   font-size: 15px;
   background-color: rgb(255, 255, 255);
   color: black;
-  margin-top: 40px;
+  margin-top: 10px;
   border-radius: 10px;
   margin-right: 5px;
   border: solid 1px black;
