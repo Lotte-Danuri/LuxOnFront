@@ -1,10 +1,11 @@
 <template>
   <main>
     <div class="promotion_container">
-      <p style="font-size: 20px; " class="period">[프로모션 기간] {{ $route.query.startDate }}~{{ $route.query.endDate }}</p>
+      <p style="font-size: 15px; color: black; " class="period">[프로모션 기간] 
+        {{ globalProperties.$formatDatetime(new Date($route.query.startDate)) }} ~ {{ globalProperties.$formatDatetime(new Date($route.query.endDate)) }}</p>
       <img :src="$route.query.imageUrl" class="promotionImage" />
       <button class="btn btn-dark getInBtn" @click="sendPromotion()">
-        이벤트 참여하기
+        응모하기
       </button>
 
     </div>
@@ -17,6 +18,7 @@ import router from '@/router';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2';
+import { getCurrentInstance } from "vue";
 // axios.defaults.baseURL = 'http://localhost:5174';
 // axios.defaults.headers.get['Content-Type'] = 'application/json;charset=utf-8';
 // axios.defaults.headers.get['Access-Control-Allow-Origin'] = 'http://43.200.203.135:42213';
@@ -38,6 +40,7 @@ export default {
       isSuccess: false,
       pathUri: '',
       isLoading: true,
+      globalProperties: getCurrentInstance().appContext.config.globalProperties,
     }
   },
   methods: {
@@ -174,21 +177,21 @@ export default {
 }
 
 .getInBtn {
-  width: 300px;
-  height: 100px;
+  width: 170px;
+  height: 70px;
   align-self: center;
+  margin-bottom: 68px;
 }
 
 .promotionImage {
-  width: 1100px;
-  height: 1200px;
+  width: 1140px;
+  height: 745px;
   align-self: center;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
 }
 
 .period {
-  margin-top: 5%;
-  margin-left: 50%;
+  margin-left: 54%;
 }
 
 .popupTitle {
