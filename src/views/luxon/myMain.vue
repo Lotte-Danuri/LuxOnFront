@@ -715,9 +715,11 @@ export default {
 </style>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 a {
   text-decoration: none;
-  font-family: 'Do Hyeon', sans-serif;
+  /* font-family: 'Do Hyeon', sans-serif; */
+  font-family: "Noto Sans KR", sans-serif;
   font-size: 15px;
 }
 
