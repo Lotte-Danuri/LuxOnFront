@@ -224,7 +224,7 @@ export default {
             content: '고객센터에 문의하기',
             contentType: '메세지',
             sendBy: localStorage.getItem('login_id'),
-            sendTo: '고객센터',
+            sendTo: 'admin',
             source: '',
           },
           {
