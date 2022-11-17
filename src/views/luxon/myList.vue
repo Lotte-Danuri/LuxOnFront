@@ -18,7 +18,7 @@
                   getBrandProduct();
                 }
               "
-              style="font-weight: bold"
+              style="font-weight: bold;;"
               >{{ categoryFirst.categoryName }}</a
             >
             <br />
@@ -26,7 +26,7 @@
               <li
                 v-for="categorySecond in categoryFirst.categorySecondDtoList"
                 :key="categorySecond.id"
-                style="margin-bottom: 5px"
+                style="margin-top: 10px;margin-bottom: -3px"
               >
                 <a
                   @click="
@@ -47,13 +47,13 @@
     </div>
     <div
       class="category__content"
-      style="margin-left: 50px; margin-bottom: 0px"
+      style="margin-left: 00px; margin-bottom: 0px"
     >
       <div class="swiper-content" style="margin-top: -70px">
         <div class="leftSwiper">
           <swiper
             class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-            :space-between="20"
+            :space-between="0"
             :loop="true"
             :pagination="{ clickable: true }"
             :autoplay="{
@@ -67,7 +67,7 @@
               :key="text.description"
               class="pb-14 sm:flex sm:justify-evenly"
             >
-              <div style="background-color: black; position: relative">
+              <div style="background-color: transparent; position: relative">
                 <div class="firstSwiper">
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
@@ -78,7 +78,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 400px; height: 400px"
+                      style="width: 500px; height: 500px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -90,7 +90,7 @@
         <div class="rightSwiper">
           <swiper
             class="border-b-2 cursor-grab border-gray-500 max-w-screen-lg m-auto p-4 mt-24"
-            :space-between="20"
+            :space-between="0"
             :loop="true"
             :pagination="{ clickable: true }"
             :autoplay="{
@@ -104,7 +104,7 @@
               :key="text.description"
               class="pb-14 sm:flex sm:justify-evenly"
             >
-              <div style="background-color: black; position: relative">
+              <div style="background-color: transparent; position: relative">
                 <div class="firstSwiper">
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
@@ -115,7 +115,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 400px; height: 400px"
+                      style="width: 500px; height: 500px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -127,11 +127,18 @@
       </div>
       <br />
       <br />
-      <div class="all_procut" style="margin-top: 0px">
+      <div
+        class="all_procut"
+        style="margin-top: 0px; width: 1100px; margin-left: 50px"
+      >
         <h2 style="font-weight: bold">All Product</h2>
         <br />
         <div class="product_grid">
           <div v-for="product in showList" v-bind:key="product">
+            <LikeButton
+              class="like"
+              v-bind:productCode="product.productCode"
+            ></LikeButton>
             <router-link
               :to="{
                 path: '/product/myProduct',
@@ -141,10 +148,12 @@
               <img :src="product.thumbnailUrl" />
               <br />
               <span>
-                <p style="color: black">
+                <p class="cls_productName" style="color: black">
                   {{ product.productName }}
                 </p>
-                <p style="font-weight: ">￦&nbsp;{{ comma(product.price) }}</p>
+                <p class="cls_productPrice" style="font-weight: ">
+                  ￦&nbsp;{{ comma(product.price) }}
+                </p>
               </span>
             </router-link>
           </div>
@@ -161,12 +170,14 @@ import { Autoplay, Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { ref } from 'vue';
+import LikeButton from '@/components/button/likeButton.vue';
 
 window.addEventListener('locationchange', function () {
   console.log('onlocationchange event occurred!');
 });
+
 export default {
-  components: { Swiper, SwiperSlide },
+  components: { Swiper, SwiperSlide, LikeButton },
   data() {
     return {
       productList: [],
@@ -211,6 +222,7 @@ export default {
         this.getSearchProduct();
         // location.reload();
       }
+      console.log(this.productList);
     },
     async getCategoryList() {
       this.categoryList = await this.$api('/product/categories');
@@ -314,6 +326,23 @@ export default {
 </script>
 
 <style>
+a {
+  text-decoration: none;
+}
+.coupon_cls .swiper-pagination-bullets span {
+  display: none;
+}
+
+.swiper-pagination-bullets {
+}
+
+.swiper-pagination-bullets span {
+  background-color: black;
+  margin-top: -100px;
+}
+</style>
+
+<style>
 ::-webkit-scrollbar {
   width: 10px; /* 스크롤바의 너비 */
 }
@@ -321,7 +350,6 @@ export default {
 ::-webkit-scrollbar-thumb {
   height: 30%; /* 스크롤바의 길이 */
   background: #000000; /* 스크롤바의 색상 */
-
   border-radius: 10px;
 }
 
@@ -331,6 +359,7 @@ export default {
 </style>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 /* Adopt bootstrap pagination stylesheet. */
 /* @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'; */
 
@@ -351,7 +380,6 @@ export default {
 .div_category::-webkit-scrollbar-thumb {
   height: 30%; /* 스크롤바의 길이 */
   background: #000000; /* 스크롤바의 색상 */
-
   border-radius: 10px;
 }
 
@@ -361,12 +389,11 @@ export default {
 
 a {
   text-decoration: none;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 p {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
-    'Apple SD Gothic Neo', 'Apple-Gothic', 'Roboto', 'Noto Sans KR',
-    'Droid Sans', 'dotum', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .active .side_menu div h3 {
@@ -400,7 +427,7 @@ p {
 
 .listSwiper {
   width: 100%;
-  height: 700px;
+  height: 600px;
   /* postion: absolute; */
   background-position: center;
   background-repeat: no-repeat;
@@ -429,13 +456,13 @@ p {
 }
 
 .swiper-content {
-  margin-right: 20%;
+  margin-right: 10%;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 46% 46%;
 }
 
 .swiper_content div swiper {
-  width: 400px;
+  /* width: 10px; */
 }
 
 .product_grid {
@@ -447,21 +474,43 @@ p {
 }
 
 .product_grid div {
-  background-color: rgb(238, 238, 238);
-  width: 250px;
-  height: 400px;
-  margin-bottom: 80px;
+  /* background-color: rgb(238, 238, 238); */
+  width: 270px;
+  height: 405px;
+  margin-right: 15px;
+  margin-bottom: 120px;
+  background-color: #f5f4f4;
+  position: relative;
+}
+.product_grid div .like {
+  position: absolute;
+  left: 80%;
+  z-index: 3;
+  background-color: transparent;
 }
 
 .product_grid div img {
   height: 400px;
+  mix-blend-mode: darken;
 }
 
 .product_grid div span p {
-  font-weight: bold;
+  /* font-weight: bold; */
+  font-weight: 500;
+  /* font-size: 13px; */
 }
 .product_grid div span p {
   margin: 0px;
+}
+
+.cls_productName {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+}
+
+.cls_productPrice {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px;
 }
 
 .div_category li a {

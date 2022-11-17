@@ -129,8 +129,12 @@
             >
               <img :src="product.thumbnailUrl" />
               <span>
-                <p>{{ product.productName }}</p>
-                <p>￦{{ comma(product.price) }}</p>
+                <p class="cls_productName" style="color: black">
+                  {{ product.productName }}
+                </p>
+                <p class="cls_productPrice" style="font-weight: ">
+                  ￦&nbsp;{{ comma(product.price) }}
+                </p>
               </span>
             </router-link>
           </div>
@@ -327,6 +331,21 @@ export default {
 /* Write your own CSS for pagination */
 a {
   text-decoration: none;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+p {
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+.cls_productName {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 18px;
+}
+
+.cls_productPrice {
+  font-family: fantasy;
+  font-size: 15px;
 }
 
 .div_category {
@@ -500,6 +519,7 @@ a {
   background-color: white;
   height: 40px;
   margin: auto;
+  margin-top: 30px;
   padding-top: 4px;
   padding-left: 30px;
   padding-right: 30px;
@@ -507,10 +527,10 @@ a {
   border-radius: 10px;
   width: 358px;
 }
-/*
+
 .store_btns button {
   width: 110px;
-} */
+}
 
 .store_follow_true {
   width: 100px;

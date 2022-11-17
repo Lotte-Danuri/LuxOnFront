@@ -22,17 +22,17 @@
             background-image: url('https://pixy.org/src/474/thumbs350/4743058.jpg');
             background-size: 1000px 900px;
             background-repeat: no-repeat;
-            width: 520px;
+            width: 380px;
             height: 440px;
             margin-left: 50px;
           "
         >
           <img
             style="
-              width: 450px;
+              width: 330px;
               height: 400px;
               margin-top: 20px;
-              margin-left: 35px;
+              margin-left: 25px;
             "
             :src="state.nftData.image"
           />
@@ -43,17 +43,19 @@
               <h1 style="text-align: center">NFT</h1>
             </div>
           </div>
-          <a href="">
-            <VueQrcode
-              style="margin-left: 145px"
-              :value="
-                'https://baobab.scope.klaytn.com/account/' +
-                state.nftData.contractAddr
-              "
-              tag="svg"
-              :options="{ width: 120 }"
-            ></VueQrcode>
-          </a>
+          <div style="margin-bottom: 40px">
+            <a href="">
+              <VueQrcode
+                style="margin-left: 170px"
+                :value="
+                  'https://baobab.scope.klaytn.com/account/' +
+                  state.nftData.contractAddr
+                "
+                tag="svg"
+                :options="{ width: 120 }"
+              ></VueQrcode>
+            </a>
+          </div>
           <div class="data_grid">
             <h3>상품명</h3>
             <p>{{ state.nftData.name }}</p>
@@ -71,13 +73,13 @@
             <p>
               {{
                 globalProperties.$formatDatetime(
-                  new Date(state.nftData.registeredDate)
+                  new Date(state.nftData.registeredDate),
                 )
               }}
             </p>
           </div>
           <div class="data_grid">
-            <h3>NFT 주소</h3>
+            <h3 style="background-color: none">NFT 주소</h3>
             <button @click="clickContractAddr">
               <p>{{ state.nftData.contractAddr }}</p>
             </button>
@@ -91,14 +93,14 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import { onBeforeMount } from "vue";
-import axios from "axios";
-import { getCurrentInstance } from "vue";
-import Swal from "sweetalert2";
-import { useRoute, useRouter } from "vue-router";
-import { computed } from "vue";
-import VueQrcode from "@chenfengyuan/vue-qrcode";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
+import { getCurrentInstance } from 'vue';
+import Swal from 'sweetalert2';
+import { useRoute, useRouter } from 'vue-router';
+import { computed } from 'vue';
+import VueQrcode from '@chenfengyuan/vue-qrcode';
 
 export default {
   components: { VueQrcode },
@@ -113,13 +115,13 @@ export default {
       getCurrentInstance().appContext.config.globalProperties;
 
     const state = reactive({
-      nftData: "",
+      nftData: '',
     });
 
     onBeforeMount(async () => {
       if (!userId.value || !productId.value || !orderId.value) {
-        Swal.fire("정상적인 경로로 접근해주세요");
-        router.push("order");
+        Swal.fire('정상적인 경로로 접근해주세요');
+        router.push('order');
       }
 
       await getNftData();
@@ -128,15 +130,15 @@ export default {
     const getNftData = async () => {
       try {
         const response = await axios.post(
-          "http://43.200.203.135:5000/api/nft",
+          "https://sbbro.xyz/v2/nft/api/nft",
           {
             userId: userId.value,
             productId: productId.value,
             orderId: orderId.value,
-          }
+          },
         );
         state.nftData = response.data[0];
-        console.log("data", state.nftData);
+        console.log('data', state.nftData);
       } catch (err) {
         console.log(err);
       }
@@ -144,8 +146,8 @@ export default {
 
     const clickContractAddr = () => {
       var win = window.open(
-        "https://baobab.scope.klaytn.com/account/" + state.nftData.contractAddr,
-        "_blank"
+        'https://baobab.scope.klaytn.com/account/' + state.nftData.contractAddr,
+        '_blank',
       );
       win.focus();
     };

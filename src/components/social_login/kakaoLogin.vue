@@ -1,8 +1,9 @@
 <template>
-  <button class="socialButton" @click="kakaoLogin">
+  <button class="socialButton" @click="kakaoLogin" style="background-color: transparent;">
     <img
       src="//cdn-fo.sivillage.com/fo/assets/comm/image/icon_sns_kakaotalk.svg"
-      style="width: 60px; height: 60px"
+      style="width: 60px; height: 60px;
+      "
     />
   </button>
 </template>
