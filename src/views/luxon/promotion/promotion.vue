@@ -19,9 +19,6 @@ import axios from 'axios';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2';
 import { getCurrentInstance } from "vue";
-// axios.defaults.baseURL = 'http://localhost:5174';
-// axios.defaults.headers.get['Content-Type'] = 'application/json;charset=utf-8';
-// axios.defaults.headers.get['Access-Control-Allow-Origin'] = 'http://43.200.203.135:42213';
 
 export default {
   name: 'Prommotion',
@@ -56,8 +53,7 @@ export default {
     },
     sendPromotion: function () {
       axios
-        //.get('http://43.200.203.135:42213/join',
-        .get('http://localhost:54954/join',
+        .get('https://sbbro.xyz/v2/promotion/join',
           {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -82,7 +78,7 @@ export default {
 
                 this.interval = setInterval(() => {
                   axios
-                    .get('http://localhost:54954/check',
+                    .get('https://sbbro.xyz/v2/promotion/check',
                       {
                         headers: {
                           Authorization: `Bearer ` + localStorage.getItem('token'),
