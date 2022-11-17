@@ -124,8 +124,8 @@
       <div class="btn-group" role="group" aria-label="...">
         <button
           type="button"
-          class="btn btn-primary"
-          style="background-color: gray; border: solid 1px gray; color: white"
+          class="btn btn-dark"
+          style=""
           id="button-class1"
           @click="toggle1()"
         >
@@ -133,9 +133,9 @@
         </button>
         <button
           type="button"
-          class="btn btn-default"
+          class="btn btn-secondary"
           id="button-class2"
-          style="background-color: white; border: solid 1px black; color: black"
+          style=""
           @click="toggle2()"
         >
           사용자에게 쿠폰전송
@@ -338,15 +338,15 @@ export default {
     },
 
     toggle1() {
-      document.getElementById('button-class1').className = 'btn btn-primary';
-      document.getElementById('button-class2').className = 'btn btn-default';
+      document.getElementById('button-class1').className = 'btn btn-dark';
+      document.getElementById('button-class2').className = 'btn btn-secondary';
       document.getElementById('id_top').style.display = 'none';
       document.getElementById('id_bottom').style.display = 'block';
     },
 
     toggle2() {
-      document.getElementById('button-class1').className = 'btn btn-default';
-      document.getElementById('button-class2').className = 'btn btn-primary';
+      document.getElementById('button-class1').className = 'btn btn-secondary';
+      document.getElementById('button-class2').className = 'btn btn-dark';
       document.getElementById('id_top').style.display = 'block';
       document.getElementById('id_bottom').style.display = 'none';
     },

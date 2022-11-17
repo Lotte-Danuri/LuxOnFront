@@ -9,7 +9,6 @@
           <span>
             <div style="display: flex; justify-content: space-between">
               <p>상품코드 {{ state.productCode }}</p>
-
               <button>
                 <like-button
                   v-bind:productCode="state.productCode"
@@ -28,13 +27,18 @@
               "
             >
               <img class="brand_thumnail" :src="state.brand.imageUrl" />
-              <div class="brand_name">{{ state.brand.name }}</div>
+              <div class="brand_name">
+                <h1>{{ state.brand.name }}</h1>
+              </div>
             </div>
-            <h1>{{ state.products[0]?.productName }}</h1>
-            <h2 style="font-weight: bold">
-              ￦{{ comma(state.products[0]?.price) }}원
+            <br />
+            <h2>{{ state.products[0]?.productName }}</h2>
+            <br />
+            <h2 style="font-weight: bold; color: black">
+              {{ comma(state.products[0]?.price) }}원
             </h2>
           </span>
+          <br />
           <hr />
 
           <div class="option_grid" style="margin-bottom: 10px">
@@ -186,24 +190,24 @@
   </main>
 </template>
 <script>
-import { reactive } from "vue";
-import { onBeforeMount } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import axios from "axios";
-import Swal from "sweetalert2";
-import LikeButton from "@/components/button/likeButton.vue";
-import { getCurrentInstance } from "vue";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import LikeButton from '@/components/button/likeButton.vue';
+import { getCurrentInstance } from 'vue';
 
 export default {
   components: { LikeButton },
   setup() {
     const router = useRouter();
     const state = reactive({
-      productCode: "",
+      productCode: '',
       products: [],
       reviews: [],
       sumPrice: 0,
-      selectedStoreIndex: "",
+      selectedStoreIndex: '',
       quantity: 0,
       brand: {},
     });
@@ -226,19 +230,19 @@ export default {
 
     const getProduct = () => {
       axios
-        .get("https://sbbro.xyz/api/product/products/list/" + state.productCode)
-        .then((response) => {
-          console.log("getProduct", response);
+        .get('https://sbbro.xyz/api/product/products/list/' + state.productCode)
+        .then(response => {
+          console.log('getProduct', response);
           if (response.status == 200) {
             state.products = response.data;
             state.sumPrice =
-              document.getElementById("countValue").value *
+              document.getElementById('countValue').value *
               state.products[0].price;
-            state.products.forEach((product) => {
+            state.products.forEach(product => {
               if (globalProperties.$isLogin() == false) {
                 axios.get(
                   `https://sbbro.xyz/api/recommend/recommends/click/unlogin/` +
-                    product.id
+                    product.id,
                 );
               } else {
                 axios.get(
@@ -246,9 +250,9 @@ export default {
                     product.id,
                   {
                     headers: {
-                      Authorization: "Bearer " + localStorage.getItem("token"),
+                      Authorization: 'Bearer ' + localStorage.getItem('token'),
                     },
-                  }
+                  },
                 );
               }
             });
@@ -256,7 +260,7 @@ export default {
           getBrand();
         })
         .catch(() => {
-          alert("해당 상품은 조회할 수 없습니다.");
+          alert('해당 상품은 조회할 수 없습니다.');
           history.back();
         });
     };
@@ -273,12 +277,12 @@ export default {
     };
 
     const loginCheck = () => {
-      if (localStorage.getItem("token") == null) {
+      if (localStorage.getItem('token') == null) {
         Swal.fire({
-          title: "로그인 해주세요",
-          icon: "error",
+          title: '로그인 해주세요',
+          icon: 'error',
           showCancelButton: false,
-          confirmButtonText: "확인",
+          confirmButtonText: '확인',
         }).then(() => {
           return false;
         });
@@ -288,8 +292,8 @@ export default {
     };
 
     const isSelectStore = () => {
-      if (state.selectedStoreIndex === "") {
-        Swal.fire("지점을 선택해주세요");
+      if (state.selectedStoreIndex === '') {
+        Swal.fire('지점을 선택해주세요');
         return false;
       }
       return true;
@@ -297,7 +301,7 @@ export default {
 
     const isSelectQuantity = () => {
       if (state.quantity === 0) {
-        Swal.fire("수량을 선택해주세요");
+        Swal.fire('수량을 선택해주세요');
         return false;
       }
       return true;
@@ -317,12 +321,12 @@ export default {
       }
 
       Swal.fire({
-        title: "주문 하시겠습니까?",
-        icon: "success",
+        title: '주문 하시겠습니까?',
+        icon: 'success',
         showCancelButton: true,
-        confirmButtonText: "네",
-        cancelButtonText: "아니요",
-      }).then((result) => {
+        confirmButtonText: '네',
+        cancelButtonText: '아니요',
+      }).then(result => {
         if (result.isConfirmed) {
           var productsData = [];
           var product = {
@@ -340,7 +344,7 @@ export default {
           };
           productsData.push(product);
           router.push({
-            name: "initOrder",
+            name: 'initOrder',
             params: {
               products: JSON.stringify(productsData),
             },
@@ -364,28 +368,28 @@ export default {
 
       axios
         .post(
-          "https://sbbro.xyz/api/member/cart",
+          'https://sbbro.xyz/api/member/cart',
           {
             productId: state.products[state.selectedStoreIndex].id,
             quantity: state.quantity,
           },
           {
             headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
             },
-          }
+          },
         )
-        .then((response) => {
+        .then(response => {
           if (response.status == 200) {
             Swal.fire({
-              title: "상품이 장바구니에 담겼습니다.",
-              icon: "success",
+              title: '상품이 장바구니에 담겼습니다.',
+              icon: 'success',
               showCancelButton: true,
-              confirmButtonText: "장바구니로 이동",
-              cancelButtonText: "계속 쇼핑하기",
-            }).then((result) => {
+              confirmButtonText: '장바구니로 이동',
+              cancelButtonText: '계속 쇼핑하기',
+            }).then(result => {
               if (result.isConfirmed) {
-                router.push("/cart");
+                router.push('/cart');
               }
             });
           }
@@ -395,9 +399,9 @@ export default {
     const getReviews = async () => {
       try {
         const response = await axios.get(
-          "https://sbbro.xyz/api/review/code/" + state.productCode
+          'https://sbbro.xyz/api/review/code/' + state.productCode,
         );
-        console.log("getReviews", response);
+        console.log('getReviews', response);
         state.reviews = response.data;
       } catch (err) {
         console.log(err);
@@ -407,18 +411,18 @@ export default {
     const getBrand = async () => {
       await axios
         .get(
-          "https://sbbro.xyz/api/member/store/brand/" +
+          'https://sbbro.xyz/api/member/store/brand/' +
             state.products[0].brandId,
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem("token"),
-              contentType: "application/json",
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              contentType: 'application/json',
             },
-          }
+          },
         )
-        .then((res) => (state.brand = res.data));
+        .then(res => (state.brand = res.data));
 
-      console.log("brand", state.brand);
+      console.log('brand', state.brand);
     };
 
     const sendChat = () => {
@@ -427,40 +431,40 @@ export default {
       }
       axios
         .post(
-          "https://sbbro.xyz/api/chat/chatRoom/chat",
+          'https://sbbro.xyz/api/chat/chatRoom/chat',
           {
             id: null,
             content:
               state.products[state.selectedStoreIndex].productName +
-              " 상품 문의",
-            contentType: "상품정보",
-            sendBy: localStorage.getItem("login_id"),
+              ' 상품 문의',
+            contentType: '상품정보',
+            sendBy: localStorage.getItem('login_id'),
             sendTo: state.products[state.selectedStoreIndex].storeId,
             source: state.products[state.selectedStoreIndex].id,
           },
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem("token"),
-              "Content-Type": "application/json",
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
             },
-          }
+          },
         )
-        .then(emitter.emit("chatShow"))
-        .catch((err) => console.log(err));
+        .then(emitter.emit('chatShow'))
+        .catch(err => console.log(err));
     };
 
     const click_review = () => {
-      document.getElementById("product_detail").style.display = "none";
-      document.getElementById("product_review").style.display = "block";
-      document.getElementById("review_btn").style.color = "black";
-      document.getElementById("detail_btn").style.color = "gray";
+      document.getElementById('product_detail').style.display = 'none';
+      document.getElementById('product_review').style.display = 'block';
+      document.getElementById('review_btn').style.color = 'black';
+      document.getElementById('detail_btn').style.color = 'gray';
     };
 
     const click_detail = () => {
-      document.getElementById("product_review").style.display = "none";
-      document.getElementById("product_detail").style.display = "block";
-      document.getElementById("review_btn").style.color = "gray";
-      document.getElementById("detail_btn").style.color = "black";
+      document.getElementById('product_review').style.display = 'none';
+      document.getElementById('product_detail').style.display = 'block';
+      document.getElementById('review_btn').style.color = 'gray';
+      document.getElementById('detail_btn').style.color = 'black';
     };
 
     window.scrollTo(0, 0);
@@ -482,13 +486,14 @@ export default {
   },
 };
 </script>
+
 <style scoped>
-input[type="radio"] {
+input[type='radio'] {
   display: none;
   margin: 10px;
 }
 
-input[type="radio"] + label {
+input[type='radio'] + label {
   display: inline-block;
   margin: -2px;
   padding: 8px 19px;
@@ -501,7 +506,7 @@ input[type="radio"] + label {
   white-space: nowrap;
 }
 
-input[type="radio"]:checked + label {
+input[type='radio']:checked + label {
   background-color: #38363656;
 }
 .list_contents {
@@ -574,6 +579,7 @@ input[type="radio"]:checked + label {
   margin-top: 40px;
   margin-right: 10px;
   margin-left: 30px;
+  border-radius: 10px;
 }
 
 .click_nav {
@@ -593,7 +599,7 @@ input[type="radio"]:checked + label {
 .brand_name {
   align-self: center;
   margin-left: 20px;
-  font-size: medium;
+  font-size: large;
   margin-bottom: 5px;
 }
 .brand_thumnail {

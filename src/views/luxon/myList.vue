@@ -67,7 +67,7 @@
               :key="text.description"
               class="pb-14 sm:flex sm:justify-evenly"
             >
-              <div style="background-color: black; position: relative">
+              <div style="background-color: white; position: relative">
                 <div class="firstSwiper">
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
@@ -78,7 +78,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 400px; height: 400px"
+                      style="width: 500px; height: 450px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -104,7 +104,7 @@
               :key="text.description"
               class="pb-14 sm:flex sm:justify-evenly"
             >
-              <div style="background-color: black; position: relative">
+              <div style="background-color: white; position: relative">
                 <div class="firstSwiper">
                   <div class="list-text">
                     <h2>Winter LuxOn</h2>
@@ -115,7 +115,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 400px; height: 400px"
+                      style="width: 500px; height: 450px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -141,7 +141,15 @@
               <img :src="product.thumbnailUrl" />
               <br />
               <span>
-                <p style="color: black">
+                <p
+                  style="
+                    color: black;
+                    font-family: -apple-system, BlinkMacSystemFont,
+                      'SF Pro Display', 'Apple SD Gothic Neo', 'Apple-Gothic',
+                      'Roboto', 'Noto Sans KR', 'Droid Sans', 'dotum',
+                      sans-serif;
+                  "
+                >
                   {{ product.productName }}
                 </p>
                 <p style="font-weight: ">￦&nbsp;{{ comma(product.price) }}</p>
@@ -211,6 +219,7 @@ export default {
         this.getSearchProduct();
         // location.reload();
       }
+      console.log(this.productList);
     },
     async getCategoryList() {
       this.categoryList = await this.$api('/product/categories');
@@ -314,6 +323,19 @@ export default {
 </script>
 
 <style>
+a {
+  text-decoration: none;
+}
+.coupon_cls .swiper-pagination-bullets span {
+  display: none;
+}
+
+.swiper-pagination-bullets span {
+  background-color: black;
+}
+</style>
+
+<style>
 ::-webkit-scrollbar {
   width: 10px; /* 스크롤바의 너비 */
 }
@@ -321,7 +343,6 @@ export default {
 ::-webkit-scrollbar-thumb {
   height: 30%; /* 스크롤바의 길이 */
   background: #000000; /* 스크롤바의 색상 */
-
   border-radius: 10px;
 }
 
@@ -351,7 +372,6 @@ export default {
 .div_category::-webkit-scrollbar-thumb {
   height: 30%; /* 스크롤바의 길이 */
   background: #000000; /* 스크롤바의 색상 */
-
   border-radius: 10px;
 }
 
@@ -361,6 +381,9 @@ export default {
 
 a {
   text-decoration: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+    'Apple SD Gothic Neo', 'Apple-Gothic', 'Roboto', 'Noto Sans KR',
+    'Droid Sans', 'dotum', sans-serif;
 }
 
 p {
@@ -450,7 +473,7 @@ p {
   background-color: rgb(238, 238, 238);
   width: 250px;
   height: 400px;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
 }
 
 .product_grid div img {
@@ -458,7 +481,10 @@ p {
 }
 
 .product_grid div span p {
-  font-weight: bold;
+  /* font-weight: bold; */
+  font-family: fantasy;
+  font-weight: 500;
+  font-size: 13px;
 }
 .product_grid div span p {
   margin: 0px;
