@@ -22,15 +22,15 @@
     <div class="zero_grid">
       <div>
         <span class="material-icons-sharp"> today 주문량</span>
-        <h1>20,148</h1>
+        <h1>148</h1>
       </div>
       <div>
         <span class="material-icons-sharp"> poll 클릭 수</span>
-        <h1>33,600</h1>
+        <h1>3,600</h1>
       </div>
       <div>
         <span class="material-icons-sharp"> cloud_queue 좋아요</span>
-        <h1>21,210</h1>
+        <h1>1,210</h1>
       </div>
     </div>
     <div class="first_grid">
@@ -118,19 +118,19 @@ export default {
         labels: xValues,
         datasets: [
           {
-            data: [860, 1140, 1060, 1060, 1070, 1110, 1330, 2210, 7830, 2478],
+            data: [6, 14, 10, 10, 10, 11, 13, 22, 78, 24],
             backgroundColor: 'black',
             fill: true,
             label: '주문량',
           },
           {
-            data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000],
+            data: [160, 170, 170, 390, 200, 270, 400, 300, 300, 400],
             backgroundColor: '#666666',
             fill: true,
             label: '클릭수',
           },
           {
-            data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100],
+            data: [300, 200, 200, 300, 300, 400, 200, 100, 200, 100],
             backgroundColor: '#CCCCCC',
             label: '좋아요',
           },

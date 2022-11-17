@@ -78,7 +78,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 500px; height: 450px"
+                      style="width: 500px; height: 500px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -115,7 +115,7 @@
                     <img
                       :src="text.img"
                       alt="image"
-                      style="width: 500px; height: 450px"
+                      style="width: 500px; height: 500px"
                       class="w-32 h-32 rounded-full object-cover mt-5 m-auto lg:m-0"
                     />
                   </div>
@@ -135,7 +135,10 @@
         <br />
         <div class="product_grid">
           <div v-for="product in showList" v-bind:key="product">
-            <LikeButton class ="like" v-bind:productCode="product.productCode"></LikeButton>
+            <LikeButton
+              class="like"
+              v-bind:productCode="product.productCode"
+            ></LikeButton>
             <router-link
               :to="{
                 path: '/product/myProduct',
@@ -162,15 +165,15 @@
   </main>
 </template>
 <script>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay, Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
-import { ref } from "vue";
-import LikeButton from "@/components/button/likeButton.vue";
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay, Pagination } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { ref } from 'vue';
+import LikeButton from '@/components/button/likeButton.vue';
 
-window.addEventListener("locationchange", function () {
-  console.log("onlocationchange event occurred!");
+window.addEventListener('locationchange', function () {
+  console.log('onlocationchange event occurred!');
 });
 
 export default {
@@ -181,11 +184,11 @@ export default {
       categoryList: [],
       selectedUl: [],
       isActive: false,
-      searchValue: "",
-      searchValue2: "",
+      searchValue: '',
+      searchValue2: '',
       showList: [],
-      firstValue: "",
-      secondValue: "",
+      firstValue: '',
+      secondValue: '',
     };
   },
   watch: {
@@ -193,7 +196,7 @@ export default {
     $route() {
       // console.log('this.secondValue' + this.secondValue);
       const url = decodeURI(window.location.href);
-      this.searchValue = url.slice(url.indexOf("searchValue")).slice(12);
+      this.searchValue = url.slice(url.indexOf('searchValue')).slice(12);
       if (this.searchValue) {
         this.getSearchProduct();
       }
@@ -209,7 +212,7 @@ export default {
   },
   methods: {
     async getProductList() {
-      this.productList = await this.$api("/product/products");
+      this.productList = await this.$api('/product/products');
       this.showList = this.productList;
       if (this.firstValue != undefined) {
         this.getBrandProduct();
@@ -222,7 +225,7 @@ export default {
       console.log(this.productList);
     },
     async getCategoryList() {
-      this.categoryList = await this.$api("/product/categories");
+      this.categoryList = await this.$api('/product/categories');
     },
     getSearchProduct() {
       let newList = [];
@@ -266,51 +269,51 @@ export default {
   setup() {
     const swiperTextBase = ref([
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/096/00/221000000299096.jpg?cVer=31105502&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/096/00/221000000299096.jpg?cVer=31105502&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/496/00/221000000288496.jpg?cVer=12125857&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/496/00/221000000288496.jpg?cVer=12125857&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/481/00/221000000299481.jpg?cVer=03094826&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/481/00/221000000299481.jpg?cVer=03094826&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/511/00/221000000288511.jpg?cVer=01093513&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/511/00/221000000288511.jpg?cVer=01093513&RS=&SP=1',
       },
     ]);
     const swiperTextBase2 = ref([
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/374/00/221000000288374.jpg?cVer=17020031&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/374/00/221000000288374.jpg?cVer=17020031&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/225/00/220900000284225.jpg?cVer=10023119&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/225/00/220900000284225.jpg?cVer=10023119&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/519/00/221000000296519.jpg?cVer=19044659&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/519/00/221000000296519.jpg?cVer=19044659&RS=&SP=1',
       },
       {
-        author: "Elon Musk",
-        description: "ghjhgjgj",
-        img: "https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1",
+        author: 'Elon Musk',
+        description: 'ghjhgjgj',
+        img: 'https://image.sivillage.com/upload/C00001/dspl/banner/1010/608/00/221000000297608.jpg?cVer=20091259&RS=&SP=1',
       },
     ]);
 
-    const comma = (val) => {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const comma = val => {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
     return {
       modules: [Pagination, Autoplay],
@@ -330,8 +333,12 @@ a {
   display: none;
 }
 
+.swiper-pagination-bullets {
+}
+
 .swiper-pagination-bullets span {
   background-color: black;
+  margin-top: -100px;
 }
 </style>
 
@@ -352,7 +359,7 @@ a {
 </style>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 /* Adopt bootstrap pagination stylesheet. */
 /* @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'; */
 
@@ -382,11 +389,11 @@ a {
 
 a {
   text-decoration: none;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 p {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .active .side_menu div h3 {
@@ -420,7 +427,7 @@ p {
 
 .listSwiper {
   width: 100%;
-  height: 700px;
+  height: 600px;
   /* postion: absolute; */
   background-position: center;
   background-repeat: no-repeat;
@@ -474,9 +481,9 @@ p {
   background-color: #f5f4f4;
   position: relative;
 }
-.product_grid div .like{
+.product_grid div .like {
   position: absolute;
-  left:80%;
+  left: 80%;
   z-index: 3;
   background-color: transparent;
 }
@@ -496,12 +503,12 @@ p {
 }
 
 .cls_productName {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 18px;
 }
 
 .cls_productPrice {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 15px;
 }
 
