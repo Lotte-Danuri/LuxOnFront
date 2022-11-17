@@ -488,6 +488,14 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+h2 {
+  font-family: 'Do Hyeon', sans-serif;
+}
+
 input[type='radio'] {
   display: none;
   margin: 10px;

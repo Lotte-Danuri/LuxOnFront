@@ -89,5 +89,10 @@ export default {
   opacity: 0;
 }
 
+p {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 15px;
+}
+
 /* 아래의 모든 코드는 영역::코드로 사용 */
 </style>

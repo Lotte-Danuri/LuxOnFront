@@ -717,7 +717,9 @@ export default {
 <style scoped>
 a {
   text-decoration: none;
+  font-family: 'Do Hyeon', sans-serif;
 }
+
 .coupon_cls .swiper-pagination-bullets span {
   display: none;
 }

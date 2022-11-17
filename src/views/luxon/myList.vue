@@ -142,6 +142,7 @@
               <br />
               <span>
                 <p
+                  class="cls_productName"
                   style="
                     color: black;
                     font-family: -apple-system, BlinkMacSystemFont,
@@ -152,7 +153,9 @@
                 >
                   {{ product.productName }}
                 </p>
-                <p style="font-weight: ">￦&nbsp;{{ comma(product.price) }}</p>
+                <p class="cls_productPrice" style="font-weight: ">
+                  ￦&nbsp;{{ comma(product.price) }}
+                </p>
               </span>
             </router-link>
           </div>
@@ -381,9 +384,7 @@ a {
 
 a {
   text-decoration: none;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
-    'Apple SD Gothic Neo', 'Apple-Gothic', 'Roboto', 'Noto Sans KR',
-    'Droid Sans', 'dotum', sans-serif;
+  font-family: 'Do Hyeon', sans-serif;
 }
 
 p {
@@ -482,12 +483,21 @@ p {
 
 .product_grid div span p {
   /* font-weight: bold; */
-  font-family: fantasy;
   font-weight: 500;
-  font-size: 13px;
+  /* font-size: 13px; */
 }
 .product_grid div span p {
   margin: 0px;
+}
+
+.cls_productName {
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 15px;
+}
+
+.cls_productPrice {
+  font-family: fantasy;
+  font-size: 13px;
 }
 
 .div_category li a {
