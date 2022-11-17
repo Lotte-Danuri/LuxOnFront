@@ -3,33 +3,32 @@
     <div style="margin-left: 10%; width: 80%">
       <section class="header_top">
         <nav class="navbar">
-          <div class="navbar__logo">
+          <div class="navbar__logo col-3">
             <router-link to="/main"
               ><img
                 style="margin-left: 10%; width: 200px"
                 src="@/assets/logo/logo_white_6.png"
             /></router-link>
           </div>
-          <ul class="navbar__menu">
-            <div class="wrap">
-              <div class="search">
-                <input
-                  type="text"
-                  style="height: 40px"
-                  class="searchTerm"
-                  placeholder="검색어를 입력하세요"
-                  id="searchValue"
-                  ref="ref_search"
-                  @keyup.enter="searchBtn"
-                >
-                <button type="submit" class="searchButton" @click="searchBtn">
-                  <i class="fa fa-search icon"></i>
-                </button>
-              </div>
+
+          <ul class="navbar__menu col-6">
+            <div class="search">
+              <input
+                type="text"
+                style="height: 40px"
+                class="searchTerm"
+                placeholder="검색어를 입력하세요"
+                id="searchValue"
+                ref="ref_search"
+                @keyup.enter="searchBtn"
+              />
+              <button type="submit" class="searchButton" @click="searchBtn">
+                <i class="fa fa-search icon"></i>
+              </button>
             </div>
           </ul>
 
-          <ul class="navbar__icons">
+          <ul class="navbar__icons col-3">
             <li v-if="state.localStorage.token == null">
               <router-link to="/login">
                 <span class="material-symbols-outlined"> login </span>
@@ -51,30 +50,22 @@
             <li>
               <router-link to="/mypage/order">
                 <!-- <i class="fa-solid fa-user"></i> -->
-                <span class="material-symbols-outlined">
-person_filled
-</span>
+                <span class="material-symbols-outlined"> person_filled </span>
                 <p>마이페이지</p>
               </router-link>
             </li>
-            <!-- <li>
-              <i class="fa-regular fa-clock"></i>
-              <p>최근본상품</p>
-            </li> -->
             <li>
               <router-link :to="{ name: 'cart' }">
                 <!-- <i class="fa-solid fa-bag-shopping"></i> -->
-                <span class="material-symbols-outlined">
-shopping_cart
-</span>
+                <span class="material-symbols-outlined"> shopping_cart </span>
                 <p>쇼핑백</p>
               </router-link>
             </li>
           </ul>
 
-          <a href="#" class="navbar__toogleBtn" @click="btnClick">
+          <!-- <a href="#" class="navbar__toogleBtn" @click="btnClick">
             <i class="fas fa-bars"></i>
-          </a>
+          </a> -->
         </nav>
       </section>
       <section class="header_bottom">
@@ -389,9 +380,13 @@ a {
 } */
 
 .search {
-  position: relative;
-  width: 100%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  width: 30%;
   display: flex;
+  margin-top: 1%;
 }
 
 input {
@@ -403,7 +398,7 @@ input {
 }
 
 .icon {
-  position : absolute;
+  position: absolute;
   width: 17px;
   top: 15px;
   right: 12px;
