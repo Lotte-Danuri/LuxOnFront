@@ -43,18 +43,17 @@
               <h1 style="text-align: center">NFT</h1>
             </div>
           </div>
-          <!-- <vue-qr
-            :bgSrc="src"
-            :logoSrc="src2"
-            text="Hello world!"
-            :size="200"
-          ></vue-qr>
-          <vue-qr text="Hello world!" :callback="test" qid="testid"></vue-qr> -->
-          <a href="http://m.site.naver.com/13j7l"
-            ><img
-              style="width: 150px; margin-left: 145px"
-              src="https://qrcodethumb-phinf.pstatic.net/20221115_52/1668484058096jOxDz_PNG/13j7l.png"
-          /></a>
+          <a href="">
+            <VueQrcode
+              style="margin-left: 145px"
+              :value="
+                'https://baobab.scope.klaytn.com/account/' +
+                state.nftData.contractAddr
+              "
+              tag="svg"
+              :options="{ width: 120 }"
+            ></VueQrcode>
+          </a>
           <div class="data_grid">
             <h3>상품명</h3>
             <p>{{ state.nftData.name }}</p>
@@ -99,10 +98,10 @@ import { getCurrentInstance } from "vue";
 import Swal from "sweetalert2";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
-// import vueQr from 'vue-qr';
+import VueQrcode from "@chenfengyuan/vue-qrcode";
 
 export default {
-  // components: { vueQr },
+  components: { VueQrcode },
 
   setup() {
     const route = useRoute();
@@ -128,9 +127,6 @@ export default {
 
     const getNftData = async () => {
       try {
-        console.log(userId.value);
-        console.log(productId.value);
-        console.log(orderId.value);
         const response = await axios.post(
           "http://43.200.203.135:5000/api/nft",
           {
@@ -148,9 +144,8 @@ export default {
 
     const clickContractAddr = () => {
       var win = window.open(
-        "https://baobab.scope.klaytn.com/account/" +
-          state.nftData.contractAddr,
-          "_blank"
+        "https://baobab.scope.klaytn.com/account/" + state.nftData.contractAddr,
+        "_blank"
       );
       win.focus();
     };
