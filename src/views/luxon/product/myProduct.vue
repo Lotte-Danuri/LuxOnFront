@@ -9,8 +9,9 @@
           <span>
             <div style="display: flex; justify-content: space-between">
               <p>상품코드 {{ state.productCode }}</p>
-              <button>
+              <button style="background-color: transparent">
                 <like-button
+                  style="background-color: transparent"
                   v-bind:productCode="state.productCode"
                 ></like-button>
               </button>
@@ -130,6 +131,21 @@
           </div>
         </div>
         <div id="product_review" style="margin-top: 50px">
+          <div
+            style="margin-bottom: 20px; border: solid 1px gray; width: 800px"
+          >
+            <input
+              placeholder="제목을 입력해 주세요"
+              style="width: 200px; height: 30px; border: 1px solid black"
+            />
+            {{ state.login_id }}
+            <br />
+            <br />
+            <input
+              placeholder="리뷰를 입력해 주세요"
+              style="width: 200px; height: 30px; border: 1px solid black"
+            />
+          </div>
           <!-- <hr style="width: 80%" /> -->
           <div v-for="review in state.reviews" :key="review">
             <div
@@ -195,34 +211,6 @@
                 :src="review.thumbnailImage"
               />
             </div>
-            <!-- <div
-              style="
-                margin-left: 5%;
-                display: grid;
-                grid-template-columns: 3% 45% 10%;
-              "
-            >
-              <p style="font-size: 30px">└</p>
-              <input
-                style="
-                  width: 300px;
-                  height: 40px;
-                  border: solid 1px black;
-                  margin-left: ;
-                  border-radius: 10px;
-                "
-                placeholder="답글을 작성해주세요"
-              />
-              <button
-                style="
-                  background-color: black;
-                  color: white;
-                  border-radius: 10px;
-                "
-              >
-                답글 작성
-              </button>
-            </div> -->
             <hr style="width: 80%" />
           </div>
           <hr />
@@ -252,6 +240,7 @@ export default {
       selectedStoreIndex: '',
       quantity: 0,
       brand: {},
+      login_id: localStorage.getItem('login_id'),
     });
     const comma =
       getCurrentInstance().appContext.config.globalProperties.$comma;
@@ -530,20 +519,20 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-main{
+main {
   background: white;
 }
 
 h1 {
   /* font-family: 'Do Hyeon', sans-serif; */
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 h2 {
   /* font-family: 'Do Hyeon', sans-serif; */
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 input[type='radio'] {
@@ -583,7 +572,7 @@ input[type='radio']:checked + label {
 .countClass {
   display: grid;
   grid-template-columns: 35% 65%;
-  background-color: rgb(227, 227, 227);
+  background-color: rgb(240, 240, 240);
   height: 80px;
   padding: 20px;
   border-radius: 10px;
