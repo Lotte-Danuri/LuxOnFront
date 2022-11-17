@@ -41,7 +41,7 @@
           <br />
           <hr />
 
-          <div class="" style="margin-bottom: 10px">
+          <div class="" style="margin-bottom: 10px; margin-left: 30px">
             <div class="size_div" style="">
               <div
                 v-for="(product, index) in state.products"
@@ -501,9 +501,9 @@ input[type='radio'] + label {
   display: inline-block;
   margin: -2px;
   padding: 8px 19px;
-  background-color: #f6e7f8;
-  color: #bc6aff;
-  /* border: 1px solid rgb(0, 0, 0); */
+  background-color: white;
+  color: #000000;
+  border: 1px solid rgb(0, 0, 0);
   border-radius: 20px;
   font-size: 13px !important;
   width: 130px;
@@ -513,7 +513,7 @@ input[type='radio'] + label {
 }
 
 input[type='radio']:checked + label {
-  background-color: #bc6aff;
+  background-color: #000000;
   color: white;
 }
 .list_contents {
