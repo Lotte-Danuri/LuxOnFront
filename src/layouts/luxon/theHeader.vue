@@ -1,6 +1,6 @@
 <template>
   <header style="background-color: white; height: 150px">
-    <div style="margin-left: 10%; width: 80%">
+    <div style="margin-left: 10%; width: 80%;">
       <section class="header_top">
         <nav class="navbar">
           <div class="navbar__logo col-3">
@@ -325,12 +325,18 @@ a {
   font-family: "Noto Sans KR", sans-serif;
 }
 
+hr{
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fcfcfc;
-  padding: 8px 12px;
+  padding: 0px 12px;
+  
 }
 
 .navbar__logo {
@@ -419,10 +425,6 @@ input {
   top: 15px;
   right: 12px;
   margin: 0;
-}
-
-.icon p {
-  /* font-family: 'Noto Sans KR', sans-serif; */
 }
 
 /*Resize the wrap to see the search bar change!*/
