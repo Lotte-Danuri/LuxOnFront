@@ -16,6 +16,9 @@
             <router-link to="/mypage/nftlist">
               <a>NFT 증명서 목록</a>
             </router-link>
+            <router-link to="/mypage/coupon">
+              <a>쿠폰 목록</a>
+            </router-link>
           </li>
         </ul>
       </div>
