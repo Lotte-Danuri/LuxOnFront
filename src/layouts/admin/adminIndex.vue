@@ -181,7 +181,7 @@ body {
   height: 100vh;
   font-family: poppins, sans-serif;
   font-size: 0.88rem;
-  background: var(--color-background);
+  background: var(--color-white);
   user-select: none;
   overflow-x: hidden;
   color: var(--color-dark);

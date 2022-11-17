@@ -530,12 +530,20 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+main{
+  background: white;
+}
+
 h1 {
-  font-family: 'Do Hyeon', sans-serif;
+  /* font-family: 'Do Hyeon', sans-serif; */
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 h2 {
-  font-family: 'Do Hyeon', sans-serif;
+  /* font-family: 'Do Hyeon', sans-serif; */
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 input[type='radio'] {
@@ -564,7 +572,6 @@ input[type='radio']:checked + label {
 }
 .list_contents {
   margin-left: 25%;
-  margin-top: 5%;
   width: 1100px;
 }
 .div_top {
