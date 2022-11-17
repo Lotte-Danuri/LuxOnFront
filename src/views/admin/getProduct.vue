@@ -326,7 +326,7 @@ export default {
         confirmButtonText: '네',
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return axios.post('http://43.200.203.135:5000/contract', postData);
+          return axios.post('https://sbbro.xyz/v2/nft/contract', postData);
         },
         allowOutsideClick: () => !Swal.isLoading(),
       }).then(result => {
