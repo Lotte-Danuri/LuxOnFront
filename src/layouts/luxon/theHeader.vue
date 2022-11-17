@@ -68,22 +68,21 @@
           </a> -->
         </nav>
       </section>
+      <hr/>
       <section class="header_bottom">
         <nav class="navbar_bottom">
-          <ul
-            class="navbar__menu"
-            style="margin-left: 200px; margin-top: -5px; font-size: 15px"
-          >
-            <li @click="reload">
+          <ul class="navbar__menu" style="margin-left: 10px;">
+            <li class="category" @click="reload">
               <router-link
                 :to="{
                   name: 'MyList',
                   query: { id: 3 },
                 }"
-                >여성</router-link
               >
+                여성
+              </router-link>
             </li>
-            <li @click="reload">
+            <li class="category" @click="reload">
               <router-link
                 :to="{
                   name: 'MyList',
@@ -92,7 +91,7 @@
                 >남성</router-link
               >
             </li>
-            <li @click="reload">
+            <li class="category" @click="reload">
               <router-link
                 :to="{
                   name: 'MyList',
@@ -101,7 +100,7 @@
                 >패션잡화</router-link
               >
             </li>
-            <li @click="reload">
+            <li class="category" @click="reload">
               <router-link
                 :to="{
                   name: 'MyList',
@@ -284,11 +283,12 @@ export default {
 </script>
 
 <style scoped>
-:root {
-  /* --text-color:
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+/* :root { */
+/* --text-color:
   --background-color:
   --accent-color: */
-}
+/* } */
 
 header {
   position: sticky;
@@ -298,7 +298,8 @@ header {
 
 .header_bottom {
   margin: 0;
-  font-family: "NotoSansKR,Malgun Gothic,arial,sans-serif";
+  /* font-family: "NotoSansKR,Malgun Gothic,arial,sans-serif"; */
+  /* font-family: 'Noto Sans KR', sans-serif; */
   /* border-style: solid;
   border-color: gray;
   border-width: 1px 0px 0px 0px; */
@@ -320,7 +321,8 @@ img {
 a {
   text-decoration: none;
   color: rgb(0, 0, 0);
-  font-family: 'Do Hyeon', sans-serif;
+  /* font-family: 'Do Hyeon', sans-serif; */
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 .navbar {
@@ -343,8 +345,21 @@ a {
 .navbar__menu {
   display: flex;
   list-style: none;
-  padding-left: 0;
+  /* padding-left: 0; */
   margin-bottom: -20px;
+  /* margin-left: 50px; */
+  margin-top: -5px;
+  font-size: 15px;
+}
+.navbar__menu .category {
+  display: flex;
+  list-style: none;
+  /* padding-left: 0; */
+  margin-bottom: -20px;
+  /* margin-left: 50px; */
+  font-size: 17px;
+  margin-right: 20px;
+  text-align: center;
 }
 
 /* .search {
@@ -404,6 +419,10 @@ input {
   top: 15px;
   right: 12px;
   margin: 0;
+}
+
+.icon p {
+  /* font-family: 'Noto Sans KR', sans-serif; */
 }
 
 /*Resize the wrap to see the search bar change!*/
