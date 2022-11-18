@@ -203,7 +203,7 @@
           <div class="container_grid">
             <div
               class="item color5"
-              v-for="(recommend, i) in productList.slice(0, 4)"
+              v-for="(recommend, i) in recommendList.slice(0, 4)"
               :key="i"
             >
               <router-link
@@ -226,7 +226,7 @@
           <div class="container_grid">
             <div
               class="item color5"
-              v-for="(recommend, i) in productList.slice(4, 8)"
+              v-for="(recommend, i) in recommendList.slice(4, 8)"
               :key="i"
             >
               <router-link
@@ -620,15 +620,14 @@ export default {
   data() {
     return {
       productList: [],
+      recommendList: [],
       bestList: [],
     };
   },
   created() {
     this.getProductList();
     window.addEventListener('scroll', this.handleScroll);
-    if (localStorage.token) {
-      this.getBestList();
-    }
+    this.getBestList();
   },
   methods: {
     bestBtn() {
@@ -642,17 +641,58 @@ export default {
     async getProductList() {
       this.productList = await this.$api('/product/products');
     },
+    // async getRecommendList() {
+    //   try {
+    //     const response = await axios.get(
+    //       'https://sbbro.xyz/api/recommend/recommends/list/',
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ` + localStorage.getItem('token'),
+    //         },
+    //       },
+    //     );
+    //     this.recommendList = response.data;
+    //     if (this.recommendList.length) {
+    //       this.recommendList.push(this.bestList);
+    //       console.log('test' + this.bestList);
+    //       console.log(this.recommendList);
+    //     }
+    //     console.log('recommendLength' + this.recommendList.length);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // },
     async getBestList() {
       try {
         const response = await axios.get(
           'https://sbbro.xyz/api/product/products/best/list',
-          {
-            headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-            },
-          },
+          // {
+          //   headers: {
+          //     Authorization: `Bearer ` + localStorage.getItem('token'),
+          //   },
+          // },
         );
         this.bestList = response.data;
+        try {
+          const response = await axios.get(
+            'https://sbbro.xyz/api/recommend/recommends/list/',
+            {
+              headers: {
+                Authorization: `Bearer ` + localStorage.getItem('token'),
+              },
+            },
+          );
+          this.recommendList = response.data;
+          if (this.recommendList.length < 8) {
+            for (let i = 0; i < this.bestList.length; i++) {
+              this.recommendList.push(
+                JSON.parse(JSON.stringify(this.bestList[i])),
+              );
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
       } catch (err) {
         console.log(err);
       }
