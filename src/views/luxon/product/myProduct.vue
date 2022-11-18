@@ -134,11 +134,41 @@
           <div
             style="margin-bottom: 20px; border: solid 1px gray; width: 800px"
           >
+            <div style="display: grid; grid-template-columns: 13% 20% 20%">
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 20% 20% 20% 20% 20%;
+                "
+              >
+                <img
+                  src="@/assets/img/star-images-9454.png"
+                  style="width: 20px"
+                />
+                <img
+                  src="@/assets/img/star-images-9454.png"
+                  style="width: 20px"
+                />
+                <img
+                  src="@/assets/img/star-images-9454.png"
+                  style="width: 20px"
+                />
+                <img
+                  src="@/assets/img/star-images-9454.png"
+                  style="width: 20px"
+                />
+                <img
+                  src="@/assets/img/star-images-9454.png"
+                  style="width: 20px"
+                />
+              </div>
+              <h3>{{ state.login_id }}</h3>
+            </div>
             <input
               placeholder="제목을 입력해 주세요"
               style="width: 200px; height: 30px; border: 1px solid black"
             />
-            {{ state.login_id }}
+
             <br />
             <br />
             <input
