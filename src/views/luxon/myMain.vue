@@ -487,7 +487,7 @@
       <div class="main__styling-img">
         <a href="javascript:void(0);"
           ><img
-            style="height: 550px; margin-top: 50px"
+            style="height: 450px; margin-top: 100px"
             src="https://image.sivillage.com/upload/C00001/goods/org/819/221012003299819.jpg?RS=600&amp;SP=1"
             alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
           />
