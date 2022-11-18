@@ -33,6 +33,9 @@
         <h1>{{ this.likeTotal }}</h1>
       </div>
     </div>
+    <!-- <div>
+      {{ chartList }}
+    </div> -->
     <div class="first_grid">
       <div style="width: 80%; margin-left: 10%; height: 90%">
         <canvas id="myChart2"></canvas>
@@ -64,7 +67,7 @@ export default {
     this.getRecommendProductList();
     this.getdayList();
     this.getChartList();
-    console.log('day' + this.dayList);
+    // console.log('day' + this.dayList);
   },
   mounted() {
     var xValues = [
@@ -152,7 +155,7 @@ export default {
           },
         },
       });
-    }, '2000');
+    }, '3000');
   },
   methods: {
     getdayList() {
@@ -161,13 +164,13 @@ export default {
         dayList.push(this.today.setDate(this.today.getDate() - i));
       }
       this.dayList = dayList;
-      console.log(this.dayList);
+      // console.log(this.dayList);
     },
     async getChartList() {
       for (let i = 0; i < 11; i++) {
         await this.getDateList(this.dayList[i + 1], this.dayList[i]);
       }
-      console.log(this.chartList);
+      // console.log(this.chartList);
     },
     async getDateList(startDate, endDate) {
       try {
@@ -195,6 +198,7 @@ export default {
           forderTotal += JSON.parse(JSON.stringify(dproductList[i].orderCount));
           fclickTotal += JSON.parse(JSON.stringify(dproductList[i].clickCount));
           flikeTotal += JSON.parse(JSON.stringify(dproductList[i].likeCount));
+          // console.log(dproductList[i].likeCount);
         }
         chartList.push([forderTotal, fclickTotal, flikeTotal]);
         // console.log(chartList);
