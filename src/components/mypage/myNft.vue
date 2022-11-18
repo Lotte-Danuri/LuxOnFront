@@ -120,7 +120,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const userId = computed(() => route.params.userId);
-    const productId = computed(() => route.params.productId);
+    const productCode = computed(() => route.params.productCode);
     const orderId = computed(() => route.params.orderId);
     const globalProperties =
       getCurrentInstance().appContext.config.globalProperties;
@@ -130,7 +130,7 @@ export default {
     });
 
     onBeforeMount(async () => {
-      if (!userId.value || !productId.value || !orderId.value) {
+      if (!userId.value || !productCode.value || !orderId.value) {
         Swal.fire("정상적인 경로로 접근해주세요");
         router.push("order");
       }
@@ -142,7 +142,7 @@ export default {
       try {
         const response = await axios.post("https://sbbro.xyz/v2/nft/api/nft", {
           userId: userId.value,
-          productId: productId.value,
+          productCode: productCode.value,
           orderId: orderId.value,
         });
         state.nftData = response.data[0];
