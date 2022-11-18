@@ -122,8 +122,8 @@ export default {
           'https://sbbro.xyz/api/product/sellers/products/chance',
           {
             storeId: localStorage.getItem('store_id'),
-            startDate: new Date(0),
-            endDate: new Date(9999999999999),
+            startDate: new Date(1663062510835),
+            endDate: new Date(1668678510835),
           },
           {
             headers: {
