@@ -705,7 +705,6 @@ export default {
 ::-webkit-scrollbar-thumb {
   height: 30%; /* 스크롤바의 길이 */
   background: #000000; /* 스크롤바의 색상 */
-
   border-radius: 10px;
 }
 
@@ -715,9 +714,14 @@ export default {
 </style>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 a {
   text-decoration: none;
+  /* font-family: 'Do Hyeon', sans-serif; */
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px;
 }
+
 .coupon_cls .swiper-pagination-bullets span {
   display: none;
 }
@@ -889,7 +893,7 @@ a {
   background-color: rgb(238, 238, 238);
   width: 250px;
   height: 400px;
-  margin-bottom: 80px;
+  margin-bottom: 90px;
 }
 
 .product_grid div img {

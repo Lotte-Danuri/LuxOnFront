@@ -1,5 +1,5 @@
 <template>
-  <button class="socialButton" @click="naverLogin">
+  <button class="socialButton" @click="naverLogin" style="background-color: transparent;">
     <img
       src="//cdn-fo.sivillage.com/fo/assets/comm/image/icon_sns_naver.png?cVer=202211090622"
       style="width: 60px; height: 60px"

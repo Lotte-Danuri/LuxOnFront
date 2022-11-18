@@ -9,8 +9,9 @@
           <span>
             <div style="display: flex; justify-content: space-between">
               <p>상품코드 {{ state.productCode }}</p>
-              <button>
+              <button style="background-color: transparent">
                 <like-button
+                  style="background-color: transparent"
                   v-bind:productCode="state.productCode"
                 ></like-button>
               </button>
@@ -34,18 +35,18 @@
             <br />
             <h2>{{ state.products[0]?.productName }}</h2>
             <br />
-            <h2 style="font-weight: bold; color: black">
+            <h1 style="font-weight: bold; color: black">
               {{ comma(state.products[0]?.price) }}원
-            </h2>
+            </h1>
           </span>
           <br />
           <hr />
 
-          <div class="option_grid" style="margin-bottom: 10px">
-            <div class="option_name">
-              <h3>지점</h3>
-            </div>
-            <div class="size_div" style="float: left">
+          <div
+            class=""
+            style="margin-top: 20px; margin-bottom: 10px; margin-left: 30px"
+          >
+            <div class="size_div" style="">
               <div
                 v-for="(product, index) in state.products"
                 v-bind:key="index"
@@ -68,38 +69,44 @@
             </div>
           </div>
           <hr />
-          <div class="option_grid">
-            <div class="option_name">
-              <h3>수량</h3>
-            </div>
+          <div class="countClass">
             <div class="count">
-              <button @click="minusBtn">-</button>
+              <button class="minus_Btn" @click="minusBtn">-</button>
               <input
                 id="countValue"
                 :value="state.quantity"
                 style="text-align: center"
               />
-              <button @click="plusBtn">+</button>
+              <button class="plus_Btn" @click="plusBtn">+</button>
             </div>
-          </div>
-          <br />
-          <hr style="border: 3px solid black !important" />
-          <div class="option_grid">
-            <div class="option_name">
-              <h3>판매가</h3>
-            </div>
-            <div class="size_div" style="float: left">
-              <h2 style="margin-left: 50%; font-weight: bold">
+            <div>
+              <h2
+                style="
+                  margin-left: 35%;
+                  margin-top: 2%;
+                  font-weight: bold;
+                  color: black;
+                "
+              >
                 {{ comma(state.sumPrice) }} 원
               </h2>
             </div>
           </div>
+          <br />
+          <hr style="border: 3px solid black !important" />
           <div class="actionBtn">
-            <button style="background-color: gray" @click="addCart">
-              장바구니
+            <button style="background-color: white" @click="addCart">
+              <span class="material-icons-sharp" style="font-size: 15px">
+                add_shopping_cart장바구니
+              </span>
             </button>
-            <button @click="initOrder">바로구매</button>
-            <button @click="sendChat" style="background-color: black">
+            <button
+              @click="initOrder"
+              style="background-color: black; color: white"
+            >
+              바로구매
+            </button>
+            <button @click="sendChat" style="background-color: white">
               <i class="bi bi-chat-left-dots"></i>
               채팅문의
             </button>
@@ -123,29 +130,78 @@
             <img :src="productImg" alt="/" />
           </div>
         </div>
-        <div id="product_review">
+        <div id="product_review" style="margin-top: 50px">
+          <div
+            style="margin-bottom: 20px; border: solid 1px gray; width: 800px"
+          >
+            <input
+              placeholder="제목을 입력해 주세요"
+              style="width: 200px; height: 30px; border: 1px solid black"
+            />
+            {{ state.login_id }}
+            <br />
+            <br />
+            <input
+              placeholder="리뷰를 입력해 주세요"
+              style="width: 200px; height: 30px; border: 1px solid black"
+            />
+          </div>
           <!-- <hr style="width: 80%" /> -->
           <div v-for="review in state.reviews" :key="review">
             <div
+              class="review_first"
               style="
                 display: grid;
-                grid-template-columns: 5% 5%;
+                grid-template-columns: 12% 10% 30%;
                 margin-bottom: 0px;
               "
             >
-              <p>{{ review.name }}</p>
-              <p>
-                {{
-                  globalProperties.$formatDatetime(new Date(review.createdDate))
-                }}
-              </p>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 20% 20% 20% 20% 20%;
+                "
+              >
+                <img
+                  src="@/assets/img/star-images-9454.png"
+                  style="width: 20px"
+                />
+                <img
+                  src="@/assets/img/star-images-9454.png"
+                  style="width: 20px"
+                />
+                <img
+                  src="@/assets/img/star-images-9454.png"
+                  style="width: 20px"
+                />
+                <img
+                  src="@/assets/img/star-images-9454.png"
+                  style="width: 20px"
+                />
+                <img
+                  src="@/assets/img/star-images-9454.png"
+                  style="width: 20px"
+                />
+              </div>
+              <div>
+                <p>{{ review.memberDto.name }}</p>
+              </div>
+              <div>
+                <p>
+                  {{
+                    globalProperties.$formatDatetime(
+                      new Date(review.createdDate),
+                    )
+                  }}
+                </p>
+              </div>
             </div>
+            <br />
             <div>
-              <p style="font-size: 20px; font-weight: bold; margin-bottom: 0px">
+              <p style="font-size: 15px; font-weight: bold; margin-bottom: 0px">
                 {{ review.title }}
               </p>
-              <br />
-              <p style="font-size: 15px">
+              <p style="font-size: 10px">
                 {{ review.contents }}
               </p>
             </div>
@@ -155,35 +211,9 @@
                 :src="review.thumbnailImage"
               />
             </div>
-            <div
-              style="
-                margin-left: 5%;
-                display: grid;
-                grid-template-columns: 3% 45% 10%;
-              "
-            >
-              <p style="font-size: 30px">└</p>
-              <input
-                style="
-                  width: 700px;
-                  height: 70px;
-                  border: solid 1px black;
-                  margin-left: ;
-                  border-radius: 10px;
-                "
-                placeholder="답글을 작성해주세요"
-              />
-              <button
-                style="
-                  background-color: black;
-                  color: white;
-                  border-radius: 10px;
-                "
-              >
-                답글 작성
-              </button>
-            </div>
+            <hr style="width: 80%" />
           </div>
+          <hr />
         </div>
       </div>
     </div>
@@ -210,6 +240,7 @@ export default {
       selectedStoreIndex: '',
       quantity: 0,
       brand: {},
+      login_id: localStorage.getItem('login_id'),
     });
     const comma =
       getCurrentInstance().appContext.config.globalProperties.$comma;
@@ -399,7 +430,7 @@ export default {
     const getReviews = async () => {
       try {
         const response = await axios.get(
-          'https://sbbro.xyz/api/review/code/' + state.productCode,
+          'https://sbbro.xyz/api/review/code/' + 3112301010,
         );
         console.log('getReviews', response);
         state.reviews = response.data;
@@ -488,6 +519,22 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+main {
+  background: white;
+}
+
+h1 {
+  /* font-family: 'Do Hyeon', sans-serif; */
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+h2 {
+  /* font-family: 'Do Hyeon', sans-serif; */
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
 input[type='radio'] {
   display: none;
   margin: 10px;
@@ -497,26 +544,42 @@ input[type='radio'] + label {
   display: inline-block;
   margin: -2px;
   padding: 8px 19px;
-  background-color: #ffffff;
+  background-color: white;
+  color: #000000;
   border: 1px solid rgb(0, 0, 0);
+  border-radius: 20px;
   font-size: 13px !important;
-  width: 130px;
+  width: 80px;
   text-align: center;
   cursor: pointer;
   white-space: nowrap;
 }
 
 input[type='radio']:checked + label {
-  background-color: #38363656;
+  background-color: #000000;
+  color: white;
 }
 .list_contents {
-  margin-left: 20%;
-  margin-top: 5%;
+  margin-left: 25%;
+  width: 1100px;
 }
 .div_top {
   margin-right: 20%;
   display: grid;
-  grid-template-columns: 40% 60%;
+  grid-template-columns: 50% 50%;
+}
+
+.countClass {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  background-color: rgb(240, 240, 240);
+  height: 80px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.countClass button {
+  background-color: white;
 }
 
 .option_grid {
@@ -553,16 +616,30 @@ input[type='radio']:checked + label {
 
 .count {
   display: flex;
+  margin-left: 10px;
 }
 .count input {
-  width: 250px;
-  height: 40px;
-  border: solid 1px black;
+  width: 50px;
+  height: 35px;
+  border: solid 1px gray;
+  border-left: none;
+  border-right: none;
 }
 
 .count button {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
+  border: solid 1px gray;
+}
+
+.minus_Btn {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.plus_Btn {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .actionBtn {
@@ -572,14 +649,14 @@ input[type='radio']:checked + label {
 
 .actionBtn button {
   width: 250px;
-  height: 70px;
-  font-size: 20px;
-  background-color: black;
-  color: white;
-  margin-top: 40px;
-  margin-right: 10px;
-  margin-left: 30px;
+  height: 50px;
+  font-size: 15px;
+  background-color: rgb(255, 255, 255);
+  color: black;
+  margin-top: 10px;
   border-radius: 10px;
+  margin-right: 5px;
+  border: solid 1px black;
 }
 
 .click_nav {
@@ -606,5 +683,15 @@ input[type='radio']:checked + label {
   border-radius: 50%;
   width: 60px;
   height: 60px;
+}
+
+.review_first {
+  font-size: 13px;
+}
+
+.review_first div {
+  height: 20px;
+  margin-right: 20px;
+  /* border-right: 1px gray solid; */
 }
 </style>
