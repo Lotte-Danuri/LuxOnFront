@@ -18,9 +18,9 @@
     <hr />
     <br />
     <div class="input_body">
-      <div class="lr">
+      <div class="left_div">
         <div class="input_user">
-          <h4>사용자 이름 검색</h4>
+          <h2 style="font-weight: bold">사용자 이름 검색</h2>
           <div>
             <input
               type="text"
@@ -61,52 +61,53 @@
             </table>
           </div>
         </div>
-        <div class="lr">
-          <div class="input_user">
-            <br />
-            <h4>프로모션 전송</h4>
-            <input type="text" class="search_userId" v-model="content" />
-            <button
-              class="btn btn-dark"
-              @click="sendMessages(content, selectedMembers)"
-            >
-              보내기
-              <i class="fa fa-envelope" />
-            </button>
-          </div>
-          <div class="info">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>
-                    <input type="checkbox" v-model="selectPromotionAll" />
-                  </th>
-                  <th>프로모션명</th>
-                  <th>시작일</th>
-                  <th>종료일</th>
-                  <th>
-                    <button class="btn" @click="getPromotion()">
-                      <i class="fa fa-refresh" aria-hidden="true"></i>
-                    </button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="promotionData">
-                <tr v-for="promotion in promotions" :key="promotion.id">
-                  <td>
-                    <input
-                      type="checkbox"
-                      :value="promotion.id"
-                      v-model="selectedPromotions"
-                    />
-                  </td>
-                  <td>{{ promotion.title }}</td>
-                  <td>{{ formatDatetime(new Date(promotion.startDate)) }}</td>
-                  <td>{{ formatDatetime(new Date(promotion.endDate)) }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      </div>
+      <div class="right_div">
+        <div class="input_user">
+          <h2 style="font-weight: bold">프로모션 전송</h2>
+        </div>
+        <div>
+          <input type="text" class="search_userId" v-model="content" />
+          <button
+            class="btn btn-dark"
+            @click="sendMessages(content, selectedMembers)"
+          >
+            보내기
+            <i class="fa fa-envelope" />
+          </button>
+        </div>
+        <div class="info">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  <input type="checkbox" v-model="selectPromotionAll" />
+                </th>
+                <th>프로모션명</th>
+                <th>시작일</th>
+                <th>종료일</th>
+                <th>
+                  <button class="btn" @click="getPromotion()">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="promotionData">
+              <tr v-for="promotion in promotions" :key="promotion.id">
+                <td>
+                  <input
+                    type="checkbox"
+                    :value="promotion.id"
+                    v-model="selectedPromotions"
+                  />
+                </td>
+                <td>{{ promotion.title }}</td>
+                <td>{{ formatDatetime(new Date(promotion.startDate)) }}</td>
+                <td>{{ formatDatetime(new Date(promotion.endDate)) }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -252,25 +253,48 @@ export default {
 </script>
 
 <style scoped>
+input {
+  margin-bottom: -10px;
+}
+.left_div {
+  width: 800px;
+}
+
+.center_Btn {
+  margin-top: 200px;
+}
+
+.center_Btn button {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border: solid 1px black;
+}
+
+.right_div {
+  width: 1200px;
+}
+
 .input_body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  margin-left: 100px;
+  display: grid;
+  grid-template-columns: 500px 100px 1000px;
 }
 .info {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 55%;
   height: 300px;
   overflow-y: auto;
   background-color: white;
   font-size: large;
-  border: 3px solid black;
+  border: 2px solid black;
 }
 .search_userId {
-  width: 35%;
-  height: 30px;
-  border: 3px solid black;
+  padding-bottom: 6px;
+  width: 40%;
+  height: 33px;
+  border: 2px solid black;
 }
 
 .btn {

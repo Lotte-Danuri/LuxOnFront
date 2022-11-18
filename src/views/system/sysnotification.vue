@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h1>공지 전공</h1>
+    <h1>공지 전송</h1>
     <br />
     <div style="display: flex">
       <h3>선택한 사용자에게 프로모션 정보를 챗으로 전달합니다.</h3>
@@ -24,7 +24,7 @@
         <input type="radio" id="판매자" value="1" v-model="picked" />
         <label for="판매자">판매자</label>
         <button class="btn btn-dark" @click="searchRole(picked)">
-          조회 <i class="fa fa-search" />s
+          조회 <i class="fa fa-search" />
         </button>
       </div>
       <div>

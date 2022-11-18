@@ -1,6 +1,6 @@
 <template>
   <section style="margin-top: 50px; margin-left: 40%">
-    <div class="login_grid">
+    <div class="login_grid" style="height: 550px">
       <div class="inputDiv">
         <h2>로그인</h2>
         <br />
@@ -28,10 +28,10 @@
         <div
           style="
             display: grid;
-            width: 400px;
-            grid-template-columns: 40% 30%;
+            width: 300px;
+            grid-template-columns: 50% 50%;
             margin-top: 10%;
-            margin-left: 80%;
+            margin-left: 100px;
           "
         >
           <kakaoLogin></kakaoLogin>
