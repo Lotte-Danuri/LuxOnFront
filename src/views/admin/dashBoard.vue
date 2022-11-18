@@ -20,8 +20,6 @@
   <br />
   <main>
     <div class="zero_grid">
-      <input type="datetime-local" class="form-control" id="startDate" />
-      <button @click="start_btn"></button>
       <div>
         <span class="material-icons-sharp"> dvr 주문량 </span>
         <h1>{{ this.orderTotal }}</h1>
@@ -57,10 +55,16 @@ export default {
       clickTotal: 0,
       orderTotal: 0,
       dateList: [],
+      chartList: [],
+      dayList: [],
+      today: new Date(),
     };
   },
   created() {
     this.getRecommendProductList();
+    this.getdayList();
+    this.getChartList();
+    console.log('day' + this.dayList);
   },
   mounted() {
     var xValues = [
@@ -76,101 +80,128 @@ export default {
       11.21,
     ];
 
-    new Chart('myChart2', {
-      type: 'bar',
-      data: {
-        labels: xValues,
-        datasets: [
-          {
-            data: [6, 14, 10, 10, 10, 11, 13, 22, 78, 24],
-            backgroundColor: 'black',
-            fill: true,
-            label: '주문량',
-          },
-          {
-            data: [160, 170, 170, 390, 200, 270, 400, 300, 300, 400],
-            backgroundColor: '#666666',
-            fill: true,
-            label: '클릭수',
-          },
-          {
-            data: [300, 200, 200, 300, 300, 400, 200, 100, 200, 100],
-            backgroundColor: '#CCCCCC',
-            label: '좋아요',
-          },
-        ],
-      },
-      options: {
-        plugins: {
-          legend: {
-            display: true,
-            labels: {
-              // This more specific font property overrides the global property
-              font: {
-                size: 14,
+    setTimeout(() => {
+      new Chart('myChart2', {
+        type: 'bar',
+        data: {
+          labels: xValues,
+          datasets: [
+            {
+              data: [
+                this.chartList[9][0][0],
+                this.chartList[8][0][0],
+                this.chartList[7][0][0],
+                this.chartList[6][0][0],
+                this.chartList[5][0][0],
+                this.chartList[4][0][0],
+                this.chartList[3][0][0],
+                this.chartList[2][0][0],
+                this.chartList[1][0][0],
+                this.chartList[0][0][0],
+              ],
+              backgroundColor: 'black',
+              fill: true,
+              label: '주문량',
+            },
+            {
+              data: [
+                this.chartList[9][0][1],
+                this.chartList[8][0][1],
+                this.chartList[7][0][1],
+                this.chartList[6][0][1],
+                this.chartList[5][0][1],
+                this.chartList[4][0][1],
+                this.chartList[3][0][1],
+                this.chartList[2][0][1],
+                this.chartList[1][0][1],
+                this.chartList[0][0][1],
+              ],
+              backgroundColor: '#666666',
+              fill: true,
+              label: '클릭수',
+            },
+            {
+              data: [
+                this.chartList[9][0][2],
+                this.chartList[8][0][2],
+                this.chartList[7][0][2],
+                this.chartList[6][0][2],
+                this.chartList[5][0][2],
+                this.chartList[4][0][2],
+                this.chartList[3][0][2],
+                this.chartList[2][0][2],
+                this.chartList[1][0][2],
+                this.chartList[0][0][2],
+              ],
+              backgroundColor: '#CCCCCC',
+              label: '좋아요',
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                // This more specific font property overrides the global property
+                font: {
+                  size: 14,
+                },
               },
             },
           },
         },
-      },
-    });
+      });
+    }, '2000');
   },
   methods: {
-    start_btn() {
+    getdayList() {
       let dayList = [];
-
-      console.log(document.getElementById('startDate').value);
-      console.log(Date.parse('2022-11-17'));
-      console.log(new Date(Date.parse('2022-11-17')));
-      let today = new Date();
-
       for (let i = 1; i < 12; i++) {
-        dayList.push(today.setDate(today.getDate() - i));
+        dayList.push(this.today.setDate(this.today.getDate() - i));
       }
-      console.log(dayList);
-
-      function getDateList(startDate, endDate) {
-        axios
-          .post(
-            'https://sbbro.xyz/api/product/sellers/products/chance',
-            {
-              storeId: localStorage.getItem('store_id'),
-              startDate: new Date(startDate),
-              endDate: new Date(endDate),
-            },
-            {
-              headers: {
-                Authorization: `Bearer ` + localStorage.getItem('token'),
-                'Content-Type': 'application/json',
-              },
-            },
-          )
-          .then(response => {
-            let dproductList = response.data;
-            console.log(startDate + '/' + endDate + '/' + dproductList);
-            let forderTotal = 0;
-            let fclickTotal = 0;
-            let flikeTotal = 0;
-            for (let i = 0; i < dproductList.length; i++) {
-              forderTotal += JSON.parse(
-                JSON.stringify(dproductList[i].orderCount),
-              );
-              fclickTotal += JSON.parse(
-                JSON.stringify(dproductList[i].clickCount),
-              );
-              flikeTotal += JSON.parse(
-                JSON.stringify(dproductList[i].likeCount),
-              );
-            }
-            // this.likeTotal = flikeTotal;
-            // this.clickTotal = fclickTotal;
-            // this.orderTotal = forderTotal;
-            // console.log(flikeTotal, fclickTotal, forderTotal);
-            return { flikeTotal, fclickTotal, forderTotal };
-          });
-      }
+      this.dayList = dayList;
+      console.log(this.dayList);
+    },
+    async getChartList() {
       for (let i = 0; i < 11; i++) {
-        getDateList(dayList[i], dayList[i + 1]);
+        await this.getDateList(this.dayList[i + 1], this.dayList[i]);
+      }
+      console.log(this.chartList);
+    },
+    async getDateList(startDate, endDate) {
+      try {
+        const response = await axios.post(
+          'https://sbbro.xyz/api/product/sellers/products/chance',
+          {
+            storeId: localStorage.getItem('store_id'),
+            startDate: new Date(startDate),
+            endDate: new Date(endDate),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+        let dproductList = response.data;
+        // console.log(startDate + '/' + endDate + '/' + dproductList);
+        let forderTotal = 0;
+        let fclickTotal = 0;
+        let flikeTotal = 0;
+        let chartList = [];
+        for (let i = 0; i < dproductList.length; i++) {
+          forderTotal += JSON.parse(JSON.stringify(dproductList[i].orderCount));
+          fclickTotal += JSON.parse(JSON.stringify(dproductList[i].clickCount));
+          flikeTotal += JSON.parse(JSON.stringify(dproductList[i].likeCount));
+        }
+        chartList.push([forderTotal, fclickTotal, flikeTotal]);
+        // console.log(chartList);
+        // return chartList;
+        this.chartList.push(chartList);
+      } catch (err) {
+        console.log(err);
       }
     },
     async getRecommendProductList() {
@@ -179,8 +210,8 @@ export default {
           'https://sbbro.xyz/api/product/sellers/products/chance',
           {
             storeId: localStorage.getItem('store_id'),
-            startDate: new Date(0),
-            endDate: new Date(9999999999999),
+            startDate: new Date(1663062510835),
+            endDate: new Date(1668678510835),
           },
           {
             headers: {
@@ -209,45 +240,6 @@ export default {
           this.likeTotal = flikeTotal;
           this.clickTotal = fclickTotal;
           this.orderTotal = forderTotal;
-        });
-    },
-    async getDateList(startDate, endDate) {
-      axios
-        .post(
-          'https://sbbro.xyz/api/product/sellers/products/chance',
-          {
-            storeId: localStorage.getItem('store_id'),
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
-          },
-          {
-            headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-              'Content-Type': 'application/json',
-            },
-          },
-        )
-        .then(response => {
-          this.dateList = response.data;
-          // console.log(this.recommendProductList);
-          let flikeTotal = 0;
-          let fclickTotal = 0;
-          let forderTotal = 0;
-          for (let i = 0; i < this.recommendProductList.length; i++) {
-            flikeTotal += JSON.parse(
-              JSON.stringify(this.recommendProductList[i].likeCount),
-            );
-            fclickTotal += JSON.parse(
-              JSON.stringify(this.recommendProductList[i].clickCount),
-            );
-            forderTotal += JSON.parse(
-              JSON.stringify(this.recommendProductList[i].orderCount),
-            );
-          }
-          // this.likeTotal = flikeTotal;
-          // this.clickTotal = fclickTotal;
-          // this.orderTotal = forderTotal;
-          return { flikeTotal, fclickTotal, forderTotal };
         });
     },
     logout() {
