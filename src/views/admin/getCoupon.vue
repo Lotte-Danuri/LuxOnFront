@@ -270,7 +270,7 @@ export default {
               content: '쿠폰이 도착했습니다',
               contentType: '쿠폰',
               sendBy: localStorage.getItem('login_id'),
-              sendTo: this.userCheckVmodel[0],
+              sendTo: this.userCheckVmodel[0].split('@')[0],
               source: String(this.couponCheckVmodel[0]),
             },
             {
