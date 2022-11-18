@@ -189,8 +189,8 @@
   </main>
 </template>
 <script>
-import axios from 'axios';
-import { useRoute, useRouter } from 'vue-router';
+import axios from "axios";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   data() {
@@ -199,25 +199,25 @@ export default {
       categorySecondList: [],
       categoryThirdList: [],
       productList: [],
-      userName: localStorage.getItem('userName'),
+      userName: localStorage.getItem("userName"),
       router: useRouter(),
     };
   },
   mounted() {
     axios
       .post(
-        'https://sbbro.xyz/api/product/sellers/products/category',
+        "https://sbbro.xyz/api/product/sellers/products/category",
         {
-          stordId: localStorage.getItem('store_id'),
+          stordId: localStorage.getItem("store_id"),
         },
         {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+            "Content-Type": "application/json",
           },
-        },
+        }
       )
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
         this.productList = response.data;
       });
@@ -227,35 +227,35 @@ export default {
   },
   methods: {
     comma(val) {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
     async getCategoryList() {
-      this.categoryList = await this.$api('/product/categories');
+      this.categoryList = await this.$api("/product/categories");
       console.log(this.categoryList);
     },
     regiProduct() {
-      let sel_1 = document.getElementById('first_select');
+      let sel_1 = document.getElementById("first_select");
       let fistValue = sel_1.options[sel_1.selectedIndex].childNodes[1].id;
-      let sel_2 = document.getElementById('second_select');
+      let sel_2 = document.getElementById("second_select");
       let secondValue = sel_2.options[sel_2.selectedIndex].childNodes[1].id;
-      let sel_3 = document.getElementById('third_select');
+      let sel_3 = document.getElementById("third_select");
       let thirdValue = sel_3.options[sel_3.selectedIndex].childNodes[1].id;
 
       const formdata = new FormData();
-      formdata.append('categoryFirstId', fistValue);
-      formdata.append('categorySecondId', secondValue);
-      formdata.append('categoryThirdId', thirdValue);
+      formdata.append("categoryFirstId", fistValue);
+      formdata.append("categorySecondId", secondValue);
+      formdata.append("categoryThirdId", thirdValue);
       formdata.append(
-        'productName',
-        document.getElementById('productName').value,
+        "productName",
+        document.getElementById("productName").value
       );
-      formdata.append('price', document.getElementById('price').value);
-      formdata.append('stock', document.getElementById('stock').value);
-      formdata.append('warranty', document.getElementById('warranty').value);
-      formdata.append('storeId', localStorage.getItem('store_id'));
+      formdata.append("price", document.getElementById("price").value);
+      formdata.append("stock", document.getElementById("stock").value);
+      formdata.append("warranty", document.getElementById("warranty").value);
+      formdata.append("storeId", localStorage.getItem("store_id"));
       formdata.append(
-        'productCode',
-        document.getElementById('productCode').value,
+        "productCode",
+        document.getElementById("productCode").value
       );
       const file_length = this.$refs.serveImage.files.length;
 
@@ -264,36 +264,48 @@ export default {
 
       const fd = new FormData();
       const js2 = JSON.stringify(object);
-      const blob = new Blob([js2], { type: 'application/json' });
-      fd.append('productDto', blob);
+      const blob = new Blob([js2], { type: "application/json" });
+      fd.append("productDto", blob);
+      var serveImage = [];
+
       for (let i = 0; i < file_length; i++) {
-        fd.append('imageList', this.$refs.serveImage.files[i]);
+        serveImage.push(this.$refs.serveImage.files[i]);
+      }
+
+      serveImage.sort((a, b) => {
+        if (a.name > b.name) return 1;
+        if (a.name === b.name) return 0;
+        if (a.name < b.name) return -1;
+      });
+
+      for (let i = 0; i < file_length; i++) {
+        fd.append("imageList", serveImage[i]);
       }
 
       axios
-        .post('https://sbbro.xyz/api/product/sellers/products', fd, {
+        .post("https://sbbro.xyz/api/product/sellers/products", fd, {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ` + localStorage.getItem("token"),
+            "Content-Type": "multipart/form-data",
           },
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           console.log(formdata);
           axios
             .post(
-              'https://sbbro.xyz/api/product/sellers/products/category',
+              "https://sbbro.xyz/api/product/sellers/products/category",
               {
-                stordId: localStorage.getItem('store_id'),
+                stordId: localStorage.getItem("store_id"),
               },
               {
                 headers: {
-                  Authorization: `Bearer ` + localStorage.getItem('token'),
-                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ` + localStorage.getItem("token"),
+                  "Content-Type": "application/json",
                 },
-              },
+              }
             )
-            .then(response => {
+            .then((response) => {
               console.log(response.data);
               this.productList = response.data;
             });
@@ -302,26 +314,26 @@ export default {
     changeCategoryFirst(event) {
       this.categorySecondList =
         this.categoryList[event.target.value].categorySecondDtoList;
-      let sel = document.getElementById('first_select');
+      let sel = document.getElementById("first_select");
       // alert(sel.options[sel.selectedIndex].childNodes[1].id);
     },
     changeCategorySecond(event) {
       this.categoryThirdList =
         this.categorySecondList[event.target.value].categoryThirdDtoList;
-      let sel = document.getElementById('second_select');
+      let sel = document.getElementById("second_select");
       // alert(sel.options[sel.selectedIndex].childNodes[1].id);
     },
     changeCategoryThird() {
-      let sel = document.getElementById('third_select');
+      let sel = document.getElementById("third_select");
       // alert(sel.options[sel.selectedIndex].childNodes[1].id);
     },
     logout() {
-      localStorage.removeItem('login_id');
-      localStorage.removeItem('role');
-      localStorage.removeItem('userName');
-      localStorage.removeItem('token');
-      localStorage.removeItem('store_id');
-      this.router.push('../');
+      localStorage.removeItem("login_id");
+      localStorage.removeItem("role");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("token");
+      localStorage.removeItem("store_id");
+      this.router.push("../");
     },
   },
 };
@@ -352,7 +364,7 @@ td {
   height: 50px;
 }
 
-.form-control[type='file'] {
+.form-control[type="file"] {
   height: auto;
 }
 
