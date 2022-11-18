@@ -112,7 +112,23 @@
                           style="
                             width: 200px;
                             height: 50px;
-                            margin-top: 10%;
+                            margin-top: 10px;
+                            margin-bottom: 0px;
+                            background-color: black;
+                            color: white;
+                            border-radius: 5px;
+                          "
+                          @click="
+                            sendChat(o.productName, o.sellerId, o.productCode)
+                          "
+                        >
+                          채팅문의
+                        </button>
+                        <button
+                          style="
+                            width: 200px;
+                            height: 50px;
+                            margin-top: 10px;
                             margin-bottom: 0px;
                             background-color: black;
                             color: white;
@@ -148,6 +164,8 @@ import { useRouter } from 'vue-router';
 
 export default {
   setup() {
+    const emitter =
+      getCurrentInstance().appContext.config.globalProperties.$emitter;
     const router = useRouter();
     const comma =
       getCurrentInstance().appContext.config.globalProperties.$comma;
@@ -175,7 +193,28 @@ export default {
           state.orderList = response.data;
         });
     });
-
+    const sendChat = (pName, storeId, source) => {
+      axios
+        .post(
+          'https://sbbro.xyz/api/chat/chatRoom/chat',
+          {
+            id: null,
+            content: pName + ' 상품 문의',
+            contentType: '상품정보',
+            sendBy: localStorage.getItem('login_id'),
+            sendTo: storeId,
+            source: source,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then(emitter.emit('chatShow'))
+        .catch(err => console.log(err));
+    };
     const checkNft = async (productId, orderId) => {
       try {
         const response = await axios.post(
@@ -264,7 +303,7 @@ export default {
       });
     };
 
-    return { state, comma, pushNft };
+    return { state, comma, pushNft, sendChat };
   },
 };
 </script>
