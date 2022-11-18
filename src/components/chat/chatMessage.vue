@@ -95,7 +95,7 @@
           "
         />
 
-        <div class="chat__mymessage__product">
+        <div class="chat__yourmessage__product">
           <div
             class="product_name"
             @click="
@@ -144,6 +144,7 @@
           </div>
         </div>
       </div>
+
       <div
         v-else-if="msg.contentType == '특별할인'"
         :on-load="getSaleProduct(msg.source.split('/'))"
@@ -161,7 +162,7 @@
           "
         />
 
-        <div class="chat__mymessage__product">
+        <div class="">
           <div
             class="product_name"
             @click="
@@ -238,7 +239,7 @@
       </div>
 
       <ChatRecommend
-        class="chat__mymessage__product"
+        class="chat__yourmessage__product"
         v-else-if="msg.contentType == '추천'"
         :chatData="msg"
       >
@@ -332,7 +333,6 @@
           </div>
 
           <div
-            class="chat__yourmessage__product"
             v-else-if="msg.contentType == '상품정보'"
             :on-load="getProduct(msg.source)"
           >
@@ -348,7 +348,7 @@
                 })
               "
             />
-            <div class="chat__mymessage__product">
+            <div class="chat__yourmessage__product">
               <div
                 class="product_name"
                 @click="
