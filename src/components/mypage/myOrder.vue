@@ -119,7 +119,7 @@
                             border-radius: 5px;
                           "
                           @click="
-                            sendChat(o.productName, o.sellerId, o.productCode)
+                            sendChat(o.productName, o.sellerId, o.productId)
                           "
                         >
                           채팅문의
