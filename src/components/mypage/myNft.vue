@@ -91,7 +91,7 @@
               height: 300px;
               margin-top: 14%;
               margin-left: 10%;
-              
+              mix-blend-mode: hard-light;
             "
             :src="state.nftData.image"
           />

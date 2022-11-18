@@ -215,12 +215,12 @@ export default {
         .then(emitter.emit('chatShow'))
         .catch(err => console.log(err));
     };
-    const checkNft = async (productId, orderId) => {
+    const checkNft = async (productCode, orderId) => {
       try {
         const response = await axios.post(
           'https://sbbro.xyz/v2/nft/api/checknft',
           {
-            productId: productId,
+            productCode: productCode,
             userId: state.orderList[0].buyerId,
             orderId: orderId,
           },
@@ -235,12 +235,12 @@ export default {
       }
     };
 
-    const isNftMinting = async productId => {
+    const isNftMinting = async productCode => {
       try {
         const response = await axios.post(
           'https://sbbro.xyz/v2/nft/api/checkmint',
           {
-            productId: productId,
+            productCode: productCode,
           },
         );
         if (response.data.length == 0) {
@@ -253,7 +253,7 @@ export default {
     };
 
     const publishNft = async order => {
-      if ((await isNftMinting(order.productId)) == false) {
+      if ((await isNftMinting(order.productCode)) == false) {
         Swal.fire('판매자가 상품을 NFT로 등록하지 않았습니다.');
         return;
       }
@@ -266,7 +266,7 @@ export default {
         preConfirm: () => {
           return axios.post('https://sbbro.xyz/v2/nft/api/receipts', {
             orderId: order.id,
-            productId: order.productId,
+            productCode: order.productCode,
             userId: state.orderList[0].buyerId,
           });
         },
@@ -288,7 +288,7 @@ export default {
     };
 
     const pushNft = async order => {
-      if ((await checkNft(order.productId, order.id)) == false) {
+      if ((await checkNft(order.productCode, order.id)) == false) {
         publishNft(order);
         return;
       }
@@ -298,7 +298,7 @@ export default {
         params: {
           orderId: order.id,
           userId: state.orderList[0].buyerId,
-          productId: order.productId,
+          productCode: order.productCode,
         },
       });
     };
