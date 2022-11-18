@@ -20,17 +20,19 @@
   <br />
   <main>
     <div class="zero_grid">
+      <input type="datetime-local" class="form-control" id="startDate" />
+      <button @click="start_btn"></button>
       <div>
-        <span class="material-icons-sharp"> today 주문량</span>
-        <h1>148</h1>
+        <span class="material-icons-sharp"> dvr 주문량 </span>
+        <h1>{{ this.orderTotal }}</h1>
       </div>
       <div>
-        <span class="material-icons-sharp"> poll 클릭 수</span>
-        <h1>3,600</h1>
+        <span class="material-icons-sharp"> ads_click 클릭 수 </span>
+        <h1>{{ this.clickTotal }}</h1>
       </div>
       <div>
-        <span class="material-icons-sharp"> cloud_queue 좋아요</span>
-        <h1>1,210</h1>
+        <span class="material-icons-sharp"> favorite_border 좋아요 </span>
+        <h1>{{ this.likeTotal }}</h1>
       </div>
     </div>
     <div class="first_grid">
@@ -47,58 +49,20 @@ import { useRoute, useRouter } from 'vue-router';
 export default {
   data() {
     return {
-      categoryList: [],
-      categorySecondList: [],
-      categoryThirdList: [],
-      productList: [],
-      firstClickValue: '',
-      secondClickValue: '',
-      thirdClickValue: '',
-      fistValue: '',
-      secondValue: '',
-      thirdValue: '',
-      productCheckVmodel: [],
-      productCheckList: [],
-      couponName: '',
-      couponContent: '',
-      discountRate: 0.0,
-      startDate: '',
-      endDate: '',
-      productIdList: [],
       myChart: '',
       router: useRouter(),
       userName: localStorage.getItem('userName'),
+      recommendProductList: [],
+      likeTotal: 0,
+      clickTotal: 0,
+      orderTotal: 0,
+      dateList: [],
     };
   },
   created() {
-    this.getCategoryList();
+    this.getRecommendProductList();
   },
   mounted() {
-    let firstClickId = parseInt(this.firstValue);
-    let secondClickId = parseInt(this.secondValue);
-    let thirdClickId = parseInt(this.thirdValue);
-    console.log(this.firstValue, this.secondValue, this.thirdValue);
-    axios
-      .post(
-        'https://sbbro.xyz/api/product/sellers/products/category',
-        {
-          stordId: localStorage.getItem('store_id'),
-          categoryFirstId: firstClickId,
-          categorySecondId: secondClickId,
-          categoryThirdId: thirdClickId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      .then(response => {
-        console.log(response.data);
-        this.productList = response.data;
-      });
-
     var xValues = [
       11.12,
       11.13,
@@ -152,62 +116,71 @@ export default {
     });
   },
   methods: {
-    async getCategoryList() {
-      this.categoryList = await this.$api('/product/categories');
-      console.log(this.categoryList);
-    },
-    changeCategoryFirst(event) {
-      this.firstClickValue = event.target.value;
-      if (this.firstClickValue == -1) {
-        this.firstValue = '';
-      } else {
-        this.categorySecondList =
-          this.categoryList[this.firstClickValue].categorySecondDtoList;
-        this.firstValue = this.categoryList[this.firstClickValue].id;
+    start_btn() {
+      let dayList = [];
+
+      console.log(document.getElementById('startDate').value);
+      console.log(Date.parse('2022-11-17'));
+      console.log(new Date(Date.parse('2022-11-17')));
+      let today = new Date();
+
+      for (let i = 1; i < 12; i++) {
+        dayList.push(today.setDate(today.getDate() - i));
+      }
+      console.log(dayList);
+
+      function getDateList(startDate, endDate) {
+        axios
+          .post(
+            'https://sbbro.xyz/api/product/sellers/products/chance',
+            {
+              storeId: localStorage.getItem('store_id'),
+              startDate: new Date(startDate),
+              endDate: new Date(endDate),
+            },
+            {
+              headers: {
+                Authorization: `Bearer ` + localStorage.getItem('token'),
+                'Content-Type': 'application/json',
+              },
+            },
+          )
+          .then(response => {
+            let dproductList = response.data;
+            console.log(startDate + '/' + endDate + '/' + dproductList);
+            let forderTotal = 0;
+            let fclickTotal = 0;
+            let flikeTotal = 0;
+            for (let i = 0; i < dproductList.length; i++) {
+              forderTotal += JSON.parse(
+                JSON.stringify(dproductList[i].orderCount),
+              );
+              fclickTotal += JSON.parse(
+                JSON.stringify(dproductList[i].clickCount),
+              );
+              flikeTotal += JSON.parse(
+                JSON.stringify(dproductList[i].likeCount),
+              );
+            }
+            // this.likeTotal = flikeTotal;
+            // this.clickTotal = fclickTotal;
+            // this.orderTotal = forderTotal;
+            // console.log(flikeTotal, fclickTotal, forderTotal);
+            return { flikeTotal, fclickTotal, forderTotal };
+          });
+      }
+      for (let i = 0; i < 11; i++) {
+        getDateList(dayList[i], dayList[i + 1]);
       }
     },
-    changeCategorySecond(event) {
-      this.secondClickValue = event.target.value;
-      if (this.secondClickValue == -1) {
-        this.secondValue = '';
-      } else {
-        this.categoryThirdList =
-          this.categorySecondList[this.secondClickValue].categoryThirdDtoList;
-        this.secondValue =
-          this.categoryList[this.firstClickValue].categorySecondDtoList[
-            this.secondClickValue
-          ].id;
-      }
-    },
-    changeCategoryThird(event) {
-      this.thirdClickValue = event.target.value;
-      if (this.thirdClickValue == -1) {
-        this.thirdValue = '';
-      } else {
-        this.thirdValue =
-          this.categoryList[this.firstClickValue].categorySecondDtoList[
-            this.secondClickValue
-          ].categoryThirdDtoList[this.thirdClickValue].id;
-      }
-    },
-    calc() {
-      if (document.querySelector('.myCheckbox').checked) {
-        console.log(this.id);
-      }
-    },
-    productSearch() {
-      let firstClickId = parseInt(this.firstValue);
-      let secondClickId = parseInt(this.secondValue);
-      let thirdClickId = parseInt(this.thirdValue);
-      console.log(this.firstValue, this.secondValue, this.thirdValue);
+    async getRecommendProductList() {
       axios
         .post(
-          'https://sbbro.xyz/api/product/sellers/products/category',
+          'https://sbbro.xyz/api/product/sellers/products/chance',
           {
-            stordId: localStorage.getItem('store_id'),
-            categoryFirstId: firstClickId,
-            categorySecondId: secondClickId,
-            categoryThirdId: thirdClickId,
+            storeId: localStorage.getItem('store_id'),
+            startDate: new Date(0),
+            endDate: new Date(9999999999999),
           },
           {
             headers: {
@@ -217,8 +190,64 @@ export default {
           },
         )
         .then(response => {
-          console.log(response.data);
-          this.productList = response.data;
+          this.recommendProductList = response.data;
+          console.log(this.recommendProductList);
+          let flikeTotal = 0;
+          let fclickTotal = 0;
+          let forderTotal = 0;
+          for (let i = 0; i < this.recommendProductList.length; i++) {
+            flikeTotal += JSON.parse(
+              JSON.stringify(this.recommendProductList[i].likeCount),
+            );
+            fclickTotal += JSON.parse(
+              JSON.stringify(this.recommendProductList[i].clickCount),
+            );
+            forderTotal += JSON.parse(
+              JSON.stringify(this.recommendProductList[i].orderCount),
+            );
+          }
+          this.likeTotal = flikeTotal;
+          this.clickTotal = fclickTotal;
+          this.orderTotal = forderTotal;
+        });
+    },
+    async getDateList(startDate, endDate) {
+      axios
+        .post(
+          'https://sbbro.xyz/api/product/sellers/products/chance',
+          {
+            storeId: localStorage.getItem('store_id'),
+            startDate: new Date(startDate),
+            endDate: new Date(endDate),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then(response => {
+          this.dateList = response.data;
+          // console.log(this.recommendProductList);
+          let flikeTotal = 0;
+          let fclickTotal = 0;
+          let forderTotal = 0;
+          for (let i = 0; i < this.recommendProductList.length; i++) {
+            flikeTotal += JSON.parse(
+              JSON.stringify(this.recommendProductList[i].likeCount),
+            );
+            fclickTotal += JSON.parse(
+              JSON.stringify(this.recommendProductList[i].clickCount),
+            );
+            forderTotal += JSON.parse(
+              JSON.stringify(this.recommendProductList[i].orderCount),
+            );
+          }
+          // this.likeTotal = flikeTotal;
+          // this.clickTotal = fclickTotal;
+          // this.orderTotal = forderTotal;
+          return { flikeTotal, fclickTotal, forderTotal };
         });
     },
     logout() {

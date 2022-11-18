@@ -1,7 +1,7 @@
 <template>
   <br />
   <br />
-  <h1>상품 관리</h1>
+  <h1>상품 분석</h1>
   <br />
   <div style="display: flex">
     <h3>상품의 방문횟수, 주문횟수, 주문전환율 조회가 가능합니다.</h3>

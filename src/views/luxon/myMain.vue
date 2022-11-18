@@ -683,15 +683,16 @@ export default {
             },
           );
           this.recommendList = response.data;
-          if (this.recommendList.length < 8) {
-            for (let i = 0; i < this.bestList.length; i++) {
-              this.recommendList.push(
-                JSON.parse(JSON.stringify(this.bestList[i])),
-              );
-            }
-          }
+          console.log(this.recommendList);
         } catch (err) {
           console.log(err);
+        }
+        if (this.recommendList.length < 8) {
+          for (let i = 0; i < this.bestList.length; i++) {
+            this.recommendList.push(
+              JSON.parse(JSON.stringify(this.bestList[i])),
+            );
+          }
         }
       } catch (err) {
         console.log(err);
