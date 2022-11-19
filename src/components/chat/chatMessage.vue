@@ -137,7 +137,7 @@
             </button>
             <button
               class="btn btn-light product_btn"
-              @click="insertCart(product.data.source)"
+              @click="insertCart(product.data.id)"
             >
               장바구니
             </button>
@@ -392,7 +392,7 @@
                 </button>
                 <button
                   class="btn btn-light product_btn"
-                  @click="insertCart(product.data.source)"
+                  @click="insertCart(product.data.id)"
                 >
                   장바구니
                 </button>
@@ -676,7 +676,7 @@ export default {
               cancelButtonText: '계속 쇼핑하기',
             }).then(result => {
               if (result.isConfirmed) {
-                router.push('/cart');
+                this.router.push('/cart');
               }
             });
           }
