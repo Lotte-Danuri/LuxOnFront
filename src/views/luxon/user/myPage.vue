@@ -225,7 +225,7 @@ window.scrollTo(0, 0);
   background-color: #fff;
   border: 1px solid #e0e0e0;
   width: 1192px;
-  min-height: 1467px;
+  /* min-height: 1467px; */
   padding: 40px;
   box-sizing: border-box;
 }

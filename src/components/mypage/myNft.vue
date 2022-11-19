@@ -9,7 +9,7 @@
         background-size: 1000px 600px;
         background-repeat: no-repeat;
         width: 1000px;
-        height: 800px;
+        height: 600px;
         padding: 80px;
         padding-left: 20px;
         margin-left: 5%;
@@ -39,7 +39,7 @@
               </p>
             </div>
             <div style="margin-bottom: 40px">
-              <div style="border: 1px solid green; width: 122px">
+              <div style="border: 2px solid green; width: 124px">
                 <a
                   :href="
                     'https://baobab.scope.klaytn.com/account/' +
@@ -174,7 +174,7 @@ export default {
   border: 1px solid #e0e0e0;
   width: 1182px;
   height: 500px;
-  /* min-height: 1467px; */
+  min-height: 800px;
   padding: 40px;
   box-sizing: border-box;
   margin-left: 0;

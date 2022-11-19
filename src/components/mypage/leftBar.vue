@@ -14,7 +14,7 @@
               <a>주문/배송 조회</a>
             </router-link>
             <router-link to="/mypage/nftlist">
-              <a>NFT 증명서 목록</a>
+              <a>NFT 보증서 목록</a>
             </router-link>
             <router-link to="/mypage/coupon">
               <a>쿠폰 목록</a>

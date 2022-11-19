@@ -483,11 +483,13 @@
             [아무아쥬] 아너 오드퍼퓸 포 우먼 100ml
           </p>
         </div>
-        <a href="#"
-          ><img
-            style="width: 150px; margin-left: 10px"
-            src="https://qrcodethumb-phinf.pstatic.net/20221115_52/1668484058096jOxDz_PNG/13j7l.png"
-          />
+        <a href="#" style="border: 2px solid green; ">
+          <VueQrcode
+            style="margin-left: 0px"
+            :value="'https://sbbro.xyz'"
+            tag="svg"
+            :options="{ width: 120 }"
+          ></VueQrcode>
         </a>
       </div>
       <div class="main__styling-img">
@@ -506,17 +508,23 @@
           position: relative;
         "
       >
-      <img
-            style="
-              margin-left: 5%;
-              width: 150px;
-              position: absolute;
-              mix-blend-mode: darken;
-            "
-            src="@/assets/logo/logo_white_6.png"
-          />
         <img
-          style="height: 450px; width: 400px; margin-top: 100px; margin-left : 60px ;mix-blend-mode: hard-light"
+          style="
+            margin-left: 5%;
+            width: 150px;
+            position: absolute;
+            mix-blend-mode: darken;
+          "
+          src="@/assets/logo/logo_white_6.png"
+        />
+        <img
+          style="
+            height: 450px;
+            width: 400px;
+            margin-top: 100px;
+            margin-left: 60px;
+            mix-blend-mode: hard-light;
+          "
           src="https://image.sivillage.com/upload/C00001/goods/org/819/221012003299819.jpg?RS=600&amp;SP=1"
           alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
         />
@@ -547,13 +555,14 @@ import { ref } from "vue";
 import { reactive } from "vue";
 import { onBeforeMount } from "vue";
 import axios from "axios";
+import VueQrcode from "@chenfengyuan/vue-qrcode";
 
 // import LikeButton from '@/components/button/likeButton.vue';
 
 SwiperCore.use([EffectCube, Pagination, Autoplay]);
 
 export default {
-  components: { Swiper, SwiperSlide },
+  components: { Swiper, SwiperSlide, VueQrcode },
   setup() {
     const swiperTextBase = ref([
       {
