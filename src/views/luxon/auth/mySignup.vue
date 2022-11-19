@@ -29,16 +29,42 @@ birthDate: this.birthDate -->
           placeholder="비밀번호"
           type="password"
           v-model="state.password"
+          minlength="10"
+          maxlength="20"
         />
         <p>숫자, 영문 포함 10자 이상</p>
         <p style="color: red">
           비밀번호는 10자 이상으로, 영문대소문자, 숫자 중 2가지 이상 조합으로
           공백없이 설정해 주세요.
         </p>
+        <label for="psw">Password</label>
+        <input
+          type="password"
+          id="psw"
+          name="psw"
+          :value="myInput"
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+          required
+          @focus="focus"
+          @blur="blur"
+          @keyup="keyup"
+        />
+        <div id="message">
+          <h3>Password must contain the following:</h3>
+          <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+          <p id="capital" class="invalid">
+            A <b>capital (uppercase)</b> letter
+          </p>
+          <p id="number" class="invalid">A <b>number</b></p>
+          <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+        </div>
         <input
           placeholder="비밀번호 확인"
           type="password"
           v-model="state.password2"
+          minlength="10"
+          maxlength="20"
         />
         <br />
         <input placeholder="이름" v-model="state.name" />
@@ -147,6 +173,68 @@ import router from '@/router';
 import Swal from 'sweetalert2';
 
 export default {
+  data() {
+    return {
+      myInput: '',
+      letter: document.getElementById('letter'),
+      capital: document.getElementById('capital'),
+      number: document.getElementById('number'),
+      length: document.getElementById('length'),
+    };
+  },
+  methods: {
+    focus() {
+      document.getElementById('message').style.display = 'block';
+    },
+    blur() {
+      document.getElementById('message').style.display = 'none';
+    },
+    keyup() {
+      var myInput = document.getElementById('psw');
+      var letter = document.getElementById('letter');
+      var capital = document.getElementById('capital');
+      var number = document.getElementById('number');
+      var length = document.getElementById('length');
+
+      var lowerCaseLetters = /[a-z]/g;
+      if (myInput.value.match(lowerCaseLetters)) {
+        letter.classList.remove('invalid');
+        letter.classList.add('valid');
+      } else {
+        letter.classList.remove('valid');
+        letter.classList.add('invalid');
+      }
+
+      // Validate capital letters
+      var upperCaseLetters = /[A-Z]/g;
+      if (myInput.value.match(upperCaseLetters)) {
+        capital.classList.remove('invalid');
+        capital.classList.add('valid');
+      } else {
+        capital.classList.remove('valid');
+        capital.classList.add('invalid');
+      }
+
+      // Validate numbers
+      var numbers = /[0-9]/g;
+      if (myInput.value.match(numbers)) {
+        number.classList.remove('invalid');
+        number.classList.add('valid');
+      } else {
+        number.classList.remove('valid');
+        number.classList.add('invalid');
+      }
+
+      // Validate length
+      if (myInput.value.length >= 8) {
+        length.classList.remove('invalid');
+        length.classList.add('valid');
+      } else {
+        length.classList.remove('valid');
+        length.classList.add('invalid');
+      }
+    },
+  },
   setup() {
     const state = reactive({
       id: '',
@@ -203,6 +291,7 @@ export default {
         },
       }).open();
     };
+
     return { state, signUp, search };
   },
 };
@@ -391,5 +480,42 @@ input[type='radio'] {
 #option-3:checked:checked ~ .option-3 span,
 #option-4:checked:checked ~ .option-4 span {
   color: #fff;
+}
+
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display: none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+#message p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: '✔';
+}
+
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: '✖';
 }
 </style>
