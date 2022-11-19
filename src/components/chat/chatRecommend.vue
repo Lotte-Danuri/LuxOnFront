@@ -49,7 +49,9 @@ export default {
             contentType: 'application/json',
           },
         })
-        .then(res => this.plist.push(res.data[0]))
+        .then(res => {
+          if (res.data[0] != null) this.plist.push(res.data[0]);
+        })
         .catch(err => console.log(err));
     });
   },
