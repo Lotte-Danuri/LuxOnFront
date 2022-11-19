@@ -3,14 +3,12 @@
   <br />
   <h1>쿠폰 등록</h1>
   <br />
-  <div style="display: flex">
+  <div style="display:flex;">
     <h3>쿠폰 정보와 적용 상품을 선택하여 쿠폰 등록이 가능합니다.</h3>
-    <h3 style="font-style: italic; color: gray; margin-left: 44%">
-      {{ userName }}
-    </h3>
+    <h3 style="font-style: italic; color:gray; margin-left:44%;">{{ userName }}</h3>
     <h3>　님 안녕하세요</h3>
-    <a @click="logout" style="margin-left: 4%">
-      <div style="display: flex; margin-bottom: 0px">
+    <a @click="logout" style="margin-left: 4%;">
+      <div style="display:flex; margin-bottom: 0px;">
         <span class="material-icons-sharp">logout</span>
         <h3>Logout</h3>
       </div>
@@ -21,63 +19,27 @@
   <main>
     <div class="regi_grid">
       <div class="top_div">
-        <input
-          placeholder="쿠폰명"
-          id="couponName"
-          class="form-control"
-          style="margin-left: 25%"
-        />
-        <input
-          placeholder="내용"
-          id="couponContent"
-          class="form-control"
-          style="margin-left: 25%"
-        />
-        <input
-          placeholder="할인율"
-          id="discountRate"
-          class="form-control"
-          style="margin-left: 25%"
-        />
-        <div
-          class="input-group"
-          style="width: 50%; margin-bottom: 1px; margin-left: 25%"
-        >
-          <input
-            type="datetime-local"
-            data-placeholder="시작일"
-            id="startDate"
-            class="form-control"
-          />
-          <input
-            type="datetime-local"
-            data-placeholder="종료일"
-            id="endDate"
-            class="form-control"
-          />
+        <input placeholder="쿠폰명" id="couponName" class="form-control" style="margin-left:25%;" />
+        <input placeholder="내용" id="couponContent" class="form-control" style="margin-left:25%;" />
+        <input placeholder="할인율" id="discountRate" class="form-control" style="margin-left:25%;" />
+        <div class="input-group" style="width: 50%; margin-bottom:1px; margin-left:25%;">
+          <input type="datetime-local" data-placeholder="시작일" id="startDate" class="form-control" />
+          <input type="datetime-local" data-placeholder="종료일" id="endDate" class="form-control" />
         </div>
-        <br />
-        <br />
+        <br>
+        <br>
         <div class="select_div">
-          <div class="input-group" style="width: 50%; margin-left: 25%">
-            <select
-              @change="changeCategoryFirst($event)"
-              id="first_category_id"
-              class="form-control"
-            >
-              <option :value="-1">- 대분류 -</option>
+          <div class="input-group" style="width:50%; margin-left:25%;">
+            <select @change="changeCategoryFirst($event)" id="first_category_id" class="form-control">
+              <option :value="-1">- 대분류 - </option>
               <option v-for="(category, i) in categoryList" :key="i" :value="i">
                 <p>{{ category.categoryName }}</p>
                 <div :id="`${category.id}`" style="dispaly: none"></div>
               </option>
             </select>
             <select @change="changeCategorySecond($event)" class="form-control">
-              <option :value="-1">- 중분류 -</option>
-              <option
-                v-for="(categorySecond, i) in categorySecondList"
-                :key="i"
-                :value="i"
-              >
+              <option :value="-1">- 중분류 - </option>
+              <option v-for="(categorySecond, i) in categorySecondList" :key="i" :value="i">
                 <p>{{ categorySecond.categoryName }}</p>
                 <p :id="`${categorySecond.id}`" style="dispaly: none"></p>
               </option>
@@ -85,50 +47,40 @@
             <br />
             <br />
             <select @change="changeCategoryThird($event)" class="form-control">
-              <option :value="-1">- 소분류 -</option>
-              <option
-                v-for="(categoryThird, i) in categoryThirdList"
-                :key="i"
-                :value="i"
-              >
+              <option :value="-1">- 소분류 - </option>
+              <option v-for="(categoryThird, i) in categoryThirdList" :key="i" :value="i">
                 <p>{{ categoryThird.categoryName }}</p>
                 <p :id="`${categoryThird.id}`" style="dispaly: none"></p>
               </option>
             </select>
           </div>
-          <button
-            class="btn btn-outline-dark"
-            style="
+          <button class="btn btn-outline-dark" style="
               width: 140px;
               height: 50px;
               margin-left: 42%;
               margin-top: 2%;
               /* margin-top: 30px; */
-            "
-            @click="productSearch"
-          >
+            " @click="productSearch">
             상품검색
           </button>
         </div>
       </div>
     </div>
-    <br />
-    <br />
+    <br>
+    <br>
     <div class="inner_grid">
       <div></div>
-      <div
-        style="
-          width: 620px;
-          height: 500px;
-          background-color: white;
-          border: 1px solid black;
-          border-radius: 15px;
-          overflow: scroll;
-          overflow-x: hidden;
-          padding-top: 15px;
-        "
-      >
-        <h2 style="margin-left: 38%; margin-bottom: 20px">검색 상품 LIST</h2>
+      <div style="
+        width: 620px;
+        height: 500px;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 15px;
+        overflow: scroll;
+        overflow-x: hidden;
+        padding-top: 15px;
+      ">
+        <h2 style="margin-left: 38%; margin-bottom: 20px;">검색 상품 LIST</h2>
         <table id="customers" style="width: 600px">
           <tr>
             <th>선택</th>
@@ -144,18 +96,13 @@
           </tr> -->
           <tr v-for="product in productList">
             <td>
-              <input
-                type="checkbox"
-                v-model="productCheckVmodel"
-                :value="product"
-                class="customers_check"
-              />
+              <input type="checkbox" v-model="productCheckVmodel" :value="product" class="customers_check" />
             </td>
             <td>
               <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
             </td>
             <td>{{ product.productName }}</td>
-            <td>{{ comma(product.price) }}원</td>
+            <td>{{ product.price }}원</td>
             <td>{{ product.stock }}개</td>
             <td>{{ product.warranty }}개월</td>
             <td>{{ product.createdDate }}</td>
@@ -163,8 +110,7 @@
         </table>
       </div>
       <div>
-        <button
-          style="
+        <button style="
             background-color: white;
             width: 50px;
             height: 50px;
@@ -172,27 +118,21 @@
             border: solid 1px black;
             margin-top: 200px;
             margin-left: 10px;
-          "
-          @click="productAdd"
-        >
+          " @click="productAdd">
           >>>
         </button>
       </div>
-      <div
-        style="
-          width: 620px;
-          height: 500px;
-          background-color: white;
-          border: 1px solid black;
-          border-radius: 15px;
-          overflow: scroll;
-          overflow-x: hidden;
-          padding-top: 15px;
-        "
-      >
-        <h2 style="margin-left: 38%; margin-bottom: 20px">
-          쿠폰 적용 상품 LIST
-        </h2>
+      <div style="
+        width: 620px;
+        height: 500px;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 15px;
+        overflow: scroll;
+        overflow-x: hidden;
+        padding-top: 15px;
+      ">
+        <h2 style="margin-left: 38%; margin-bottom: 20px;">쿠폰 적용 상품 LIST</h2>
         <table id="customers" style="width: 600px">
           <tr>
             <th>취소</th>
@@ -205,19 +145,14 @@
           </tr>
           <tr v-for="product in productCheckList" :key="i">
             <td>
-              <input
-                type="button"
-                value="취소"
-                :id="`cancel_${product.id}`"
-                style="background-color: wheat"
-                @click="cancel_btn($event)"
-              />
+              <input type="button" value="취소" :id="`cancel_${product.id}`" style="background-color: wheat"
+                @click="cancel_btn($event)" />
             </td>
             <td>
               <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
             </td>
             <td>{{ product.productName }}</td>
-            <td>{{ comma(product.price) }}원</td>
+            <td>{{ product.price }}원</td>
             <td>{{ product.stock }}개</td>
             <td>{{ product.warranty }}개월</td>
             <td>{{ product.createdDate }}</td>
@@ -227,11 +162,12 @@
       <div></div>
     </div>
     <div>
-      <button
-        class="btn btn-outline-dark"
-        style="width: 140px; height: 50px; margin-left: 46%; margin-top: 2%"
-        @click="createCoupon"
-      >
+      <button class="btn btn-outline-dark" style="
+            width: 140px;
+            height: 50px;
+            margin-left: 46%;
+            margin-top: 2%;
+          " @click="createCoupon">
         쿠폰등록
       </button>
     </div>
@@ -240,6 +176,7 @@
 <script>
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -270,9 +207,6 @@ export default {
     this.getCategoryList();
   },
   methods: {
-    comma(val) {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    },
     async getCategoryList() {
       this.categoryList = await this.$api('/product/categories');
       console.log(this.categoryList);
@@ -347,8 +281,15 @@ export default {
       this.productCheckVmodel.some(v => {
         this.productCheckList.some(w => {
           if (w.id == v.id) {
-            alert('중복 상품이 포함되어있습니다.');
-            check = 1;
+            Swal.fire({
+              title: '중복 상품이 포함되어있습니다.',
+              icon: 'error',
+              showCancelButton: true,
+            }).then(result => {
+
+            });
+
+            check=1;
             return true;
           }
         });
@@ -397,7 +338,13 @@ export default {
           },
         )
         .then(response => {
-          alert('쿠폰이 등록되었습니다');
+          Swal.fire({
+            title: '쿠폰이 등록되었습니다',
+            icon: 'success',
+            showCancelButton: true,
+          }).then(result => {
+            location.reload();
+          });
         });
     },
     selectAll(event) {

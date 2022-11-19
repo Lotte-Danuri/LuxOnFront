@@ -24,97 +24,40 @@
         <div></div>
         <div class="input_cls">
           <div>
-            <input
-              class="form-control"
-              type="text"
-              placeholder="상품명을 입력하세요"
-              name="productName"
-              id="productName"
-              required
-            />
+            <input class="form-control" type="text" placeholder="상품명을 입력하세요" name="productName" id="productName"
+              required />
             <br />
-            <input
-              class="form-control"
-              type="text"
-              placeholder="가격을 입력하세요"
-              name="price"
-              id="price"
-              required
-            />
+            <input class="form-control" type="text" placeholder="가격을 입력하세요" name="price" id="price" required />
             <br />
-            <input
-              class="form-control"
-              type="text"
-              placeholder="재고를 입력하세요"
-              name="stock"
-              id="stock"
-              required
-            />
+            <input class="form-control" type="text" placeholder="재고를 입력하세요" name="stock" id="stock" required />
             <br />
-            <input
-              class="form-control"
-              type="text"
-              placeholder="상품 코드를 입력하세요"
-              name="productCode"
-              id="productCode"
-              required
-            />
+            <input class="form-control" type="text" placeholder="상품 코드를 입력하세요" name="productCode" id="productCode"
+              required />
             <br />
-            <input
-              class="form-control"
-              type="text"
-              placeholder="보증기간을 입력하세요"
-              name="warranty"
-              id="warranty"
-              required
-            />
+            <input class="form-control" type="text" placeholder="보증기간을 입력하세요" name="warranty" id="warranty" required />
             <br />
             <div class="input-group mb-3">
-              <select
-                @change="changeCategoryFirst($event)"
-                id="first_select"
-                class="form-control"
-              >
+              <select @change="changeCategoryFirst($event)" id="first_select" class="form-control">
                 <option>- 대분류 -</option>
-                <option
-                  v-for="(category, i) in categoryList"
-                  :key="i"
-                  :value="i"
-                >
+                <option v-for="(category, i) in categoryList" :key="i" :value="i">
                   <p>{{ category.categoryName }}</p>
                   <div :id="`${category.id}`" style="dispaly: none"></div>
                 </option>
               </select>
               <br />
               <br />
-              <select
-                @change="changeCategorySecond($event)"
-                id="second_select"
-                class="form-control"
-              >
+              <select @change="changeCategorySecond($event)" id="second_select" class="form-control">
                 <option>- 중분류 -</option>
-                <option
-                  v-for="(categorySecond, i) in categorySecondList"
-                  :key="i"
-                  :value="i"
-                >
+                <option v-for="(categorySecond, i) in categorySecondList" :key="i" :value="i">
                   <p>{{ categorySecond.categoryName }}</p>
                   <p :id="`${categorySecond.id}`" style="dispaly: none"></p>
                 </option>
               </select>
               <br />
               <br />
-              <select
-                id="third_select"
-                @change="changeCategoryThird()"
-                class="form-control"
-              >
+              <select id="third_select" @change="changeCategoryThird()" class="form-control">
                 <option>- 소분류 -</option>
-                <option
-                  v-for="(categoryThird, i) in categoryThirdList"
-                  :key="i"
-                  :value="i"
-                >
+                <option v-for="(categoryThird, i) in categoryThirdList" :key="i" :value="i">
                   <p>{{ categoryThird.categoryName }}</p>
                   <p :id="`${categoryThird.id}`" style="dispaly: none"></p>
                 </option>
@@ -122,31 +65,20 @@
             </div>
             <br />
           </div>
-          <input
-            class="form-control"
-            multiple="multiple"
-            type="file"
-            id="file-upload"
-            ref="serveImage"
-          />
+          <input class="form-control" multiple="multiple" type="file" id="file-upload" ref="serveImage" />
           <br />
-          <button
-            class="btn btn-outline-dark"
-            style="
+          <button class="btn btn-outline-dark" style="
               width: 300px;
               height: 70px;
               background-color: black;
               color: white;
               font-size: 15px;
-            "
-            @click="regiProduct"
-          >
+            " @click="regiProduct">
             등록
           </button>
         </div>
         <div>
-          <button
-            style="
+          <button style="
               margin-top: 300px;
               background-color: gray;
               color: white;
@@ -154,13 +86,11 @@
               width: 50px;
               height: 50px;
               margin-left: 25px;
-            "
-          >
+            ">
             >>>
           </button>
         </div>
-        <div
-          style="
+        <div style="
             width: 620px;
             height: 700px;
             background-color: white;
@@ -169,8 +99,7 @@
             overflow: scroll;
             overflow-x: hidden;
             padding-top: 15px;
-          "
-        >
+          ">
           <h2 style="margin-left: 38%; margin-bottom: 20px">등록 상품 List</h2>
           <table id="customers" style="width: 600px">
             <tr>
@@ -197,6 +126,7 @@
 <script>
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -301,8 +231,17 @@ export default {
             )
             .then(response => {
               console.log(response.data);
-              this.productList = response.data;
-              location.reload();
+              // this.productList = response.data;
+              // location.reload();
+
+              Swal.fire({
+                title: '상품 등록이 완료되었습니다!',
+                icon: 'success',
+                showCancelButton: true,
+              }).then(result => {
+                this.productList = response.data;
+                location.reload();
+              });
             });
         });
     },
@@ -347,9 +286,11 @@ td {
   size: 15px;
   font-size: 14px;
 }
+
 .main_grid div {
   background-color: (245, 245, 245);
 }
+
 .regi input {
   width: 300px;
   margin-bottom: 10px;

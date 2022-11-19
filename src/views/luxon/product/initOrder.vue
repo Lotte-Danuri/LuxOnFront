@@ -383,6 +383,7 @@ export default {
             jsonTemp.productId = products.value[index].productDto.id;
             jsonTemp.productName = products.value[index].productDto.productName;
             jsonTemp.productQuantity = products.value[index].quantity;
+            jsonTemp.sellerId = products.value[index].productDto.storeId;
             jsonTemp.productPrice = products.value[index].productDto.price;
             orderDataDtoList.push(jsonTemp);
           }

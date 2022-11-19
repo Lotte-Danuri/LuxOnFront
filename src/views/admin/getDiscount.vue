@@ -1,11 +1,12 @@
 <template>
-  <br/>
-  <br/>
+  <br />
+  <br />
   <h1>특별 할인</h1>
-  <br/>
+  <br />
   <div style="display:flex;">
     <h3>한 명의 사용자에게 특별할인을 제공할 수 있습니다.</h3>
-    <h3 style="font-style: italic; color:gray; margin-left:44%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
+    <h3 style="font-style: italic; color:gray; margin-left:44%;">{{ userName }}</h3>
+    <h3>　님 안녕하세요</h3>
     <a @click="logout" style="margin-left: 4%;">
       <div style="display:flex; margin-bottom: 0px;">
         <span class="material-icons-sharp">logout</span>
@@ -13,8 +14,8 @@
       </div>
     </a>
   </div>
-  <hr/>
-  <br/>
+  <hr />
+  <br />
   <main>
     <!-- <div class="regi_grid">
       <div class="top_div">
@@ -32,7 +33,7 @@
     </div> -->
     <br>
     <br>
-    
+
     <div class="inner_grid">
       <div></div>
       <div style="
@@ -46,10 +47,7 @@
         <div class="select_div">
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="사용자 닉네임을 입력하세요" id="nickName" />
-            <button
-              class="btn btn-outline-secondary"
-              @click="searchUser"
-            >
+            <button class="btn btn-outline-secondary" @click="searchUser">
               사용자 찾기
             </button>
           </div>
@@ -61,21 +59,17 @@
             </tr>
             <tr v-for="(user, i) in userList" :key="i">
               <td>
-              <input
-                type="radio"
-                v-model="userCheckVmodel"
-                :value="user.loginId"
-                id="i"
-              />
-            </td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.loginId }}</td>
+                <input type="radio" v-model="userCheckVmodel" :value="user.loginId" id="i" />
+              </td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.loginId }}</td>
             </tr>
           </table>
-          <input placeholder="할인율" id="discountRate" class="form-control" style="margin-left:25%; margin-top: 5%; height: 40px;"/>
+          <input placeholder="할인율" id="discountRate" class="form-control"
+            style="margin-left:25%; margin-top: 5%; height: 40px;" />
           <div class="input-group" style="width: 50%; margin-bottom:1px; margin-left:25%;">
-            <input type="datetime-local" data-placeholder="시작일" id="startDate" class="form-control"/>
-            <input type="datetime-local" data-placeholder="종료일" id="endDate" class="form-control"/>
+            <input type="datetime-local" data-placeholder="시작일" id="startDate" class="form-control" />
+            <input type="datetime-local" data-placeholder="종료일" id="endDate" class="form-control" />
           </div>
           <div class="input-group" style="width:50%; margin-left:25%;">
             <select @change="changeCategoryFirst($event)" id="first_category_id" class="form-control">
@@ -87,11 +81,7 @@
             </select>
             <select @change="changeCategorySecond($event)" class="form-control">
               <option :value="-1">- 중분류 - </option>
-              <option
-                v-for="(categorySecond, i) in categorySecondList"
-                :key="i"
-                :value="i"
-              >
+              <option v-for="(categorySecond, i) in categorySecondList" :key="i" :value="i">
                 <p>{{ categorySecond.categoryName }}</p>
                 <p :id="`${categorySecond.id}`" style="dispaly: none"></p>
               </option>
@@ -100,35 +90,26 @@
             <br />
             <select @change="changeCategoryThird($event)" class="form-control">
               <option :value="-1">- 소분류 - </option>
-              <option
-                v-for="(categoryThird, i) in categoryThirdList"
-                :key="i"
-                :value="i"
-              >
+              <option v-for="(categoryThird, i) in categoryThirdList" :key="i" :value="i">
                 <p>{{ categoryThird.categoryName }}</p>
                 <p :id="`${categoryThird.id}`" style="dispaly: none"></p>
               </option>
             </select>
           </div>
-          <button
-            class="btn btn-outline-dark"
-            style="
+          <button class="btn btn-outline-dark" style="
               width: 140px;
               height: 50px;
               margin-left: 39%;
               margin-top: 5%;
               /* margin-top: 30px; */
-            "
-            @click="productSearch"
-          >
+            " @click="productSearch">
             상품검색
           </button>
         </div>
       </div>
-      
+
       <div></div>
-      <div
-      style="
+      <div style="
         width: 620px;
         height: 500px;
         background-color: white;
@@ -154,12 +135,7 @@
           </tr> -->
           <tr v-for="product in productList">
             <td>
-              <input
-                type="radio"
-                v-model="productCheckVmodel"
-                :value="product"
-                class="customers_check"
-              />
+              <input type="radio" v-model="productCheckVmodel" :value="product" class="customers_check" />
             </td>
             <td>
               <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
@@ -175,24 +151,21 @@
       <div></div>
     </div>
     <div>
-        <button
-          class="btn btn-outline-dark"
-          style="
+      <button class="btn btn-outline-dark" style="
             width: 140px;
             height: 50px;
             margin-left: 46%;
             margin-top: 2%;
-          "
-          @click="specialCoupon"
-        >
-          특별할인 등록
-        </button>
-      </div>
+          " @click="specialCoupon">
+        특별할인 등록
+      </button>
+    </div>
   </main>
 </template>
 <script>
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -218,7 +191,7 @@ export default {
       userName: localStorage.getItem('userName'),
       userList: [],
       couponId: 0,
-      router : useRouter(),
+      router: useRouter(),
       userCheckVmodel: ''
     };
   },
@@ -295,7 +268,7 @@ export default {
           this.productList = response.data;
         });
     },
-    logout(){
+    logout() {
       localStorage.removeItem('login_id');
       localStorage.removeItem('role');
       localStorage.removeItem('userName');
@@ -323,20 +296,34 @@ export default {
           console.log(this.userList);
         });
     },
-    specialCoupon(){
+    specialCoupon() {
       this.startDate = Date.parse(document.getElementById('startDate').value);
       this.endDate = Date.parse(document.getElementById('endDate').value);
       this.discountRate = document.getElementById('discountRate').value;
 
-      if( this.userCheckVmodel == null){
-        alert("사용자를 지정해주세요");
-        return;
+      if (this.userCheckVmodel == '') {
+        Swal.fire({
+          title: '사용자를 지정해주세요',
+          icon: 'error',
+          showCancelButton: true,
+        }).then(result => {
+          return;
+        });
+
+        
       }
-      if ( this.productCheckVmodel.id == null){
-        alert("상품을 지정해주세요");
-        return;
+      if (this.productCheckVmodel.id == null) {
+        Swal.fire({
+          title: '상품을 지정해주세요',
+          icon: 'error',
+          showCancelButton: true,
+        }).then(result => {
+          return;
+        });
+
+        
       }
-      
+
       this.productCheckList.push(this.productCheckVmodel.id);
 
       axios
@@ -374,7 +361,7 @@ export default {
                 contentType: '특별할인',
                 sendBy: localStorage.getItem('login_id'),
                 sendTo: String(userName),
-                source: String(this.productCheckVmodel.id)+'/'+String(this.couponId)
+                source: String(this.productCheckVmodel.id) + '/' + String(this.couponId)
               },
               {
                 headers: {
@@ -384,9 +371,15 @@ export default {
               },
             )
             .then(response => {
-              alert("특별할인 전송 성공!");
-              this.userCheckVmodel = "";
-              this.productCheckVmodel = []
+              Swal.fire({
+                title: '특별할인 전송 성공!',
+                icon: 'success',
+                showCancelButton: true,
+              }).then(result => {
+                this.userCheckVmodel = "";
+                this.productCheckVmodel = []
+                location.reload();
+              });
             });
         });
     }
@@ -443,7 +436,7 @@ export default {
   color: white;
 }
 
-.inner_grid{
+.inner_grid {
   display: grid;
   grid-template-columns: 130px 650px 100px 650px 100px;
 }
@@ -453,22 +446,22 @@ export default {
   height: 40px;
 }
 
-.regi_grid{
+.regi_grid {
   border: solid 1px black;
   border-radius: 15px;
   width: 60%;
   padding: 50px 50px 25px 50px;
-  margin-left:20%;
+  margin-left: 20%;
 }
 
-.form-control{
-  width:50%;
+.form-control {
+  width: 50%;
 }
 
-.input-group{
+.input-group {
   width: 50%;
   height: 40px;
-  margin-left:25%;
-  margin-top:5%;
+  margin-left: 25%;
+  margin-top: 5%;
 }
 </style>

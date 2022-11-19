@@ -24,8 +24,7 @@
     <br />
     <div class="inner_grid">
       <div></div>
-      <div
-        style="
+      <div style="
           width: 620px;
           height: 500px;
           background-color: white;
@@ -34,8 +33,7 @@
           overflow: scroll;
           overflow-x: hidden;
           padding-top: 15px;
-        "
-      >
+        ">
         <h2 style="margin-left: 38%; margin-bottom: 20px">쿠폰 LIST</h2>
         <table id="customers" style="width: 600px">
           <tr>
@@ -51,12 +49,7 @@
           </tr>
           <tr v-for="(coupon, i) in couponList">
             <td>
-              <input
-                type="checkbox"
-                v-model="couponCheckVmodel"
-                :value="coupon.id"
-                id="i"
-              />
+              <input type="checkbox" v-model="couponCheckVmodel" :value="coupon.id" id="i" />
             </td>
             <td>{{ coupon.name }}</td>
             <td>{{ coupon.contents }}</td>
@@ -66,24 +59,19 @@
             <td>{{ coupon.startDate }}</td>
             <td>{{ coupon.endDate }}</td>
             <td>
-              <button
-                style="
+              <button style="
                   background-color: black;
                   width: 70px;
                   height: 20px;
                   color: white;
-                "
-                :value="coupon"
-                @click="showProduct(coupon)"
-              >
+                " :value="coupon" @click="showProduct(coupon)">
                 상품보기 >>
               </button>
             </td>
           </tr>
         </table>
       </div>
-      <div
-        style="
+      <div style="
           width: 620px;
           height: 500px;
           background-color: white;
@@ -92,8 +80,7 @@
           overflow: scroll;
           overflow-x: hidden;
           padding-top: 15px;
-        "
-      >
+        ">
         <h2 style="margin-left: 36%; margin-bottom: 20px">
           쿠폰 적용 상품 LIST
         </h2>
@@ -122,44 +109,24 @@
 
     <div class="container">
       <div class="btn-group" role="group" aria-label="...">
-        <button
-          type="button"
-          class="btn btn-dark"
-          style=""
-          id="button-class1"
-          @click="toggle1()"
-        >
+        <button type="button" class="btn btn-dark" style="" id="button-class1" @click="toggle1()">
           팔로워에게 쿠폰전송
         </button>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          id="button-class2"
-          style=""
-          @click="toggle2()"
-        >
+        <button type="button" class="btn btn-secondary" id="button-class2" style="" @click="toggle2()">
           사용자에게 쿠폰전송
         </button>
       </div>
     </div>
     <div id="id_bottom">
-      <button
-        class="btn btn-outline-dark"
-        style="width: 200px; height: 60px; margin-left: 41%"
-        @click="CouponToFollower"
-      >
+      <button class="btn btn-outline-dark" style="width: 200px; height: 60px; margin-left: 41%"
+        @click="CouponToFollower">
         팔로워에게 쿠폰전송
       </button>
     </div>
     <div id="id_top" style="display: none">
       <div class="top_div">
         <div class="input-group mb-3">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="사용자 닉네임을 입력하세요"
-            id="nickName"
-          />
+          <input type="text" class="form-control" placeholder="사용자 닉네임을 입력하세요" id="nickName" />
           <button class="btn btn-outline-secondary" @click="searchUser">
             사용자 찾기
           </button>
@@ -173,12 +140,7 @@
         </tr>
         <tr v-for="(user, i) in userList" :key="i">
           <td>
-            <input
-              type="checkbox"
-              v-model="userCheckVmodel"
-              :value="user.loginId"
-              id="i"
-            />
+            <input type="checkbox" v-model="userCheckVmodel" :value="user.loginId" id="i" />
           </td>
           <td>{{ user.name }}</td>
           <td>{{ user.loginId }}</td>
@@ -186,11 +148,7 @@
       </table>
       <br />
       <br />
-      <button
-        class="btn btn-outline-dark"
-        style="width: 200px; height: 60px; margin-left: 41%"
-        @click="CouponToUser"
-      >
+      <button class="btn btn-outline-dark" style="width: 200px; height: 60px; margin-left: 41%" @click="CouponToUser">
         사용자에게 쿠폰전송
       </button>
     </div>
@@ -222,7 +180,7 @@ export default {
       axios
         .get(
           'https://sbbro.xyz/api/product/admin/coupons/' +
-            localStorage.getItem('store_id'),
+          localStorage.getItem('store_id'),
           {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -258,7 +216,7 @@ export default {
             icon: 'success',
             showCancelButton: true,
           }).then(result => {
-            // location.reload();
+            location.reload();
           });
         });
       console.log(this.couponCheckVmodel);
@@ -290,8 +248,19 @@ export default {
           )
           .then(response => {
             console.log(this.userCheckVmodel);
-            alert('사용자 한명에게 뿌리기 성공!');
-            this.userCheckVmodel = [];
+            // alert('사용자 한명에게 뿌리기 성공!');
+
+            // this.userCheckVmodel = [];
+            // location.reload();
+
+            Swal.fire({
+              title: '사용자 한명에게 뿌리기 성공!',
+              icon: 'success',
+              showCancelButton: true,
+            }).then(result => {
+              this.userCheckVmodel = [];
+              location.reload();
+            });
           });
       } else {
         axios
@@ -314,8 +283,18 @@ export default {
           )
           .then(response => {
             console.log(this.userCheckVmodel);
-            alert('사용자 여러명에게 뿌리기 성공!');
-            this.userCheckVmodel = [];
+            // alert('사용자 여러명에게 뿌리기 성공!');
+            // this.userCheckVmodel = [];
+            // location.reload();
+
+            Swal.fire({
+              title: '사용자 여러명에게 뿌리기 성공!',
+              icon: 'success',
+              showCancelButton: true,
+            }).then(result => {
+              this.userCheckVmodel = [];
+              location.reload();
+            });
           });
       }
     },
