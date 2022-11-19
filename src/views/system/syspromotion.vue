@@ -20,13 +20,14 @@
     <div class="input_body">
       <div class="left_div">
         <div class="input_user">
-          <h2 style="font-weight: bold">사용자 이름 검색</h2>
+          <h2 style="font-weight: bold">사용자 ID 검색</h2>
           <div>
             <input
               type="text"
               class="search_userId"
               v-model="inputName"
               placeholder="빈칸시 전체 조회"
+              @keyup.enter="getMember(inputName)"
             />
             <button class="btn btn-dark" @click="getMember(inputName)">
               조회 <i class="fa fa-search" />
