@@ -90,10 +90,15 @@
                         </div>
                       </div>
                     </div>
-                        <!-- Remove -->
-                    <a @click="removeProduct(index)" style="margin-left: 10px">
-                      <i class="fa-solid fa-trash"></i>&nbspremove
-                        </a>
+                    <!-- Remove -->
+                    <div class="remove col-auto">
+                      <a
+                        @click="removeProduct(index)"
+                        style="margin-left: 300px"
+                      >
+                        <i class="fa-solid fa-trash"></i>&nbspremove
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -292,6 +297,9 @@ export default {
 </script>
 
 <style>
+.remove:hover{
+  cursor: pointer;
+}
 .cart_empty {
   text-align: center;
 }
