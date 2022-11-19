@@ -25,7 +25,7 @@
                 <!-- Text -->
                 <p class="mb-lg-0 fs-sm fw-bold">
                   <time datetime="2019-10-01">
-                    {{ order.orderDate }}
+                    {{ formatDatetime(new Date(order.orderDate)) }}
                   </time>
                 </p>
               </div>
@@ -164,6 +164,8 @@ import { useRouter } from 'vue-router';
 
 export default {
   setup() {
+    const formatDatetime =
+      getCurrentInstance().appContext.config.globalProperties.$formatDatetime;
     const emitter =
       getCurrentInstance().appContext.config.globalProperties.$emitter;
     const router = useRouter();
@@ -305,7 +307,7 @@ export default {
 
     window.scrollTo(0, 0);
 
-    return { state, comma, pushNft, sendChat };
+    return { state, comma, pushNft, sendChat, formatDatetime };
   },
 };
 </script>
