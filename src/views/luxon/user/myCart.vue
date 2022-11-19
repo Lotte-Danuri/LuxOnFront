@@ -79,7 +79,7 @@
                             v-model="product.quantity"
                             type="text"
                             class="form-control"
-                            style="width: 40px"
+                            style="width: 40px; text-align: center"
                           />
                           <span
                             class="input-group-text"
@@ -135,7 +135,8 @@
             type="button"
             style="
               margin-top: 20px;
-              width: 350px;
+              margin-left: 20px;
+              width: 380px;
               height: 50px;
               background-color: black;
               border-radius: 20px;

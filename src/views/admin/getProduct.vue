@@ -2,12 +2,15 @@
   <br />
   <br />
   <h1>상품 관리</h1>
-  <br/>
-  <div style="display:flex;">
+  <br />
+  <div style="display: flex">
     <h3>상품 조회, 수정 및 NFT 증명서 등록이 가능합니다.</h3>
-    <h3 style="font-style: italic; color:gray; margin-left:49%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
-    <a @click="logout" style="margin-left: 4%;">
-      <div style="display:flex; margin-bottom: 0px;">
+    <h3 style="font-style: italic; color: gray; margin-left: 49%">
+      {{ userName }}
+    </h3>
+    <h3>　님 안녕하세요</h3>
+    <a @click="logout" style="margin-left: 4%">
+      <div style="display: flex; margin-bottom: 0px">
         <span class="material-icons-sharp">logout</span>
         <h3>Logout</h3>
       </div>
@@ -90,7 +93,7 @@
         <th>사진</th>
         <th>상품명</th>
         <th>가격</th>
-        <th>좋아요</th>
+        <th style="width: 60px">좋아요</th>
         <th>대분류</th>
         <th>중분류</th>
         <th>소분류</th>
@@ -102,7 +105,7 @@
         <td>{{ i + 1 }}</td>
         <td><img :src="`${product.thumbnailUrl}`" style="height: 100px" /></td>
         <td>{{ product.productName }}</td>
-        <td>{{ product.price }}원</td>
+        <td>{{ comma(product.price) }}원</td>
         <td>{{ product.likeCount }}개</td>
         <td>{{ product.categoryFirstName }}</td>
         <td>{{ product.categorySecondName }}</td>
@@ -154,7 +157,6 @@
   </main>
 </template>
 <script>
-
 import axios from 'axios';
 import router from '@/router';
 import Swal from 'sweetalert2';
@@ -182,6 +184,9 @@ export default {
     this.getCategoryList();
   },
   methods: {
+    comma(val) {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    },
     async getCategoryList() {
       this.categoryList = await this.$api('/product/categories');
       console.log(this.categoryList);
@@ -413,15 +418,15 @@ export default {
   margin-top: 10px;
   border: solid 2px gray;
 }
-.select_div{
-  display:flex;
-  margin-top:30px;
+.select_div {
+  display: flex;
+  margin-top: 30px;
   margin-bottom: 20px;
-  margin-left:10%;
+  margin-left: 10%;
 }
 
 .select_div select {
-  width:60px;
+  width: 60px;
   height: 50px;
   float: left;
 }
