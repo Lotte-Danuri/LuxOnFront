@@ -491,26 +491,36 @@
         </a>
       </div>
       <div class="main__styling-img">
-        <a href="javascript:void(0);"
-          ><img
-            style="height: 450px; margin-top: 100px"
-            src="https://image.sivillage.com/upload/C00001/goods/org/819/221012003299819.jpg?RS=600&amp;SP=1"
-            alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
-          />
-        </a>
+        <a href="javascript:void(0);"> </a>
       </div>
       <div
         class=""
         style="
-          background-image: url('https://pixy.org/src/474/thumbs350/4743058.jpg');
+          background-image: url('https://cdn.pixabay.com/photo/2016/06/02/02/33/triangles-1430105_960_720.png');
           background-size: 1000px 900px;
           background-repeat: no-repeat;
           margin-top: 60px;
           width: 700px;
           height: 620px;
           margin-left: 200px;
+          position: relative;
         "
-      ></div>
+      >
+      <img
+            style="
+              margin-left: 5%;
+              width: 150px;
+              position: absolute;
+              mix-blend-mode: darken;
+            "
+            src="@/assets/logo/logo_white_6.png"
+          />
+        <img
+          style="height: 450px; width: 400px; margin-top: 100px; margin-left : 60px ;mix-blend-mode: hard-light"
+          src="https://image.sivillage.com/upload/C00001/goods/org/819/221012003299819.jpg?RS=600&amp;SP=1"
+          alt="[아무아쥬] 아너 오드퍼퓸 포 우먼 100ml"
+        />
+      </div>
     </div>
   </div>
   <div style="margin-left: 10%">
@@ -528,15 +538,15 @@
   <br />
 </template>
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import SwiperCore, { EffectCube, Pagination, Autoplay } from 'swiper';
+import { Swiper, SwiperSlide } from "swiper/vue";
+import SwiperCore, { EffectCube, Pagination, Autoplay } from "swiper";
 // import 'swiper/css';
 // import 'swiper/css/pagination';
-import { ref } from 'vue';
+import { ref } from "vue";
 // import router from '@/router';
-import { reactive } from 'vue';
-import { onBeforeMount } from 'vue';
-import axios from 'axios';
+import { reactive } from "vue";
+import { onBeforeMount } from "vue";
+import axios from "axios";
 
 // import LikeButton from '@/components/button/likeButton.vue';
 
@@ -547,69 +557,69 @@ export default {
   setup() {
     const swiperTextBase = ref([
       {
-        brand: 'CHANEL',
-        description: '2022/23 코코 네쥬 컬렉션',
-        img: '//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_642/prd-emea/sys-master/content/P1/hf1/he1/10004788412446-Homepage_Fashion_ONE_Mobile2(1).jpg',
+        brand: "CHANEL",
+        description: "2022/23 코코 네쥬 컬렉션",
+        img: "//www.chanel.com/apac/img/t_one/q_auto:good,fl_lossy,dpr_1.2,f_auto/w_642/prd-emea/sys-master/content/P1/hf1/he1/10004788412446-Homepage_Fashion_ONE_Mobile2(1).jpg",
       },
       {
-        brand: 'CELINE',
-        description: 'HAUTE MAROQUINERIE',
-        img: 'https://cms.celine.com/resource/blob/623944/0c7b44b3bb84ed2a755859ae1b7806e3/celine-homme-summer-23-dysfunctional-bauhaus-23-web-data.jpg',
+        brand: "CELINE",
+        description: "HAUTE MAROQUINERIE",
+        img: "https://cms.celine.com/resource/blob/623944/0c7b44b3bb84ed2a755859ae1b7806e3/celine-homme-summer-23-dysfunctional-bauhaus-23-web-data.jpg",
       },
       {
-        brand: 'DIOR',
-        description: 'For GIFT',
-        img: 'https://www.dior.com/couture/var/dior/storage/images/horizon/beauty/beauty-home-components/block-cover-cover-02-xmas-epopup/block-cover-item-xmas02/38380287-2-kor-KR/xmas022_1440_1200.jpg',
+        brand: "DIOR",
+        description: "For GIFT",
+        img: "https://www.dior.com/couture/var/dior/storage/images/horizon/beauty/beauty-home-components/block-cover-cover-02-xmas-epopup/block-cover-item-xmas02/38380287-2-kor-KR/xmas022_1440_1200.jpg",
       },
     ]);
     const swiperTextBase2 = ref([
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/648/220513002497648.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/121/220308002104121.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/868/220228002079868.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
       {
-        img: 'https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1',
-        brand: 'Elon Musk',
-        name: 'ghjhgjgj',
-        price: '390000',
+        img: "https://image.sivillage.com/upload/C00001/goods/org/791/221004003248791.jpg?RS=350&SP=1",
+        brand: "Elon Musk",
+        name: "ghjhgjgj",
+        price: "390000",
       },
     ]);
 
@@ -632,24 +642,24 @@ export default {
   },
   created() {
     this.getProductList();
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener("scroll", this.handleScroll);
     this.getBestList();
     // this.fisRed();
   },
   methods: {
     fisRed() {
-      document.getElementById('0').style.backgroundColor = red;
+      document.getElementById("0").style.backgroundColor = red;
     },
     bestBtn() {
       this.$swal(
-        '클릭수와 주문수에대해 상품전체갯수*0.5 한것의 순위를 각각 뽑고 각각 뽑은 순위가 서로 겹치는 상품에 대한 배열을 만든다음에 그 배열에서 상품전환율로 rank 오름차순처리한다.',
+        "클릭수와 주문수에대해 상품전체갯수*0.5 한것의 순위를 각각 뽑고 각각 뽑은 순위가 서로 겹치는 상품에 대한 배열을 만든다음에 그 배열에서 상품전환율로 rank 오름차순처리한다."
       );
     },
     comma(val) {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
     async getProductList() {
-      this.productList = await this.$api('/product/products');
+      this.productList = await this.$api("/product/products");
     },
     // async getRecommendList() {
     //   try {
@@ -675,7 +685,7 @@ export default {
     async getBestList() {
       try {
         const response = await axios.get(
-          'https://sbbro.xyz/api/product/products/best/list',
+          "https://sbbro.xyz/api/product/products/best/list"
           // {
           //   headers: {
           //     Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -685,12 +695,12 @@ export default {
         this.bestList = response.data;
         try {
           const response = await axios.get(
-            'https://sbbro.xyz/api/recommend/recommends/list/',
+            "https://sbbro.xyz/api/recommend/recommends/list/",
             {
               headers: {
-                Authorization: `Bearer ` + localStorage.getItem('token'),
+                Authorization: `Bearer ` + localStorage.getItem("token"),
               },
-            },
+            }
           );
           this.recommendList = response.data;
           console.log(this.recommendList);
@@ -700,7 +710,7 @@ export default {
         if (this.recommendList.length < 8) {
           for (let i = 0; i < this.bestList.length; i++) {
             this.recommendList.push(
-              JSON.parse(JSON.stringify(this.bestList[i])),
+              JSON.parse(JSON.stringify(this.bestList[i]))
             );
           }
         }
@@ -709,26 +719,26 @@ export default {
       }
     },
     handleScroll() {
-      if (window.location.href.includes('main')) {
-        let nowScroll = document.querySelector('html').scrollTop;
+      if (window.location.href.includes("main")) {
+        let nowScroll = document.querySelector("html").scrollTop;
         // alert(nowScroll);
         if (nowScroll < 100) {
-          document.getElementById('recommend_cls').style.opacity = '0';
-          document.getElementById('recommend_cls').style.transform =
-            'translateY(0)';
+          document.getElementById("recommend_cls").style.opacity = "0";
+          document.getElementById("recommend_cls").style.transform =
+            "translateY(0)";
         }
         if (nowScroll > 200) {
-          document.getElementById('recommend_cls').style.opacity = '1';
-          document.getElementById('recommend_cls').style.transform =
-            'translateY(0)';
+          document.getElementById("recommend_cls").style.opacity = "1";
+          document.getElementById("recommend_cls").style.transform =
+            "translateY(0)";
         }
         if (nowScroll < 400) {
-          document.getElementById('coupon_cls').style.opacity = '0';
+          document.getElementById("coupon_cls").style.opacity = "0";
         }
         if (nowScroll > 1000) {
-          document.getElementById('coupon_cls').style.opacity = '1';
-          document.getElementById('coupon_cls').style.transform =
-            'translateY(0)';
+          document.getElementById("coupon_cls").style.opacity = "1";
+          document.getElementById("coupon_cls").style.transform =
+            "translateY(0)";
         }
         // if (nowScroll < 1500) {
         //   document.getElementById('recommend_cls').style.opacity = '0';
@@ -742,7 +752,7 @@ export default {
     },
     showAlert() {
       // Use sweetalert2
-      this.$swal('준비중 입니다');
+      this.$swal("준비중 입니다");
     },
   },
 };
@@ -765,7 +775,7 @@ export default {
 </style>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 
 .red {
   color: red;
@@ -774,7 +784,7 @@ export default {
 a {
   text-decoration: none;
   /* font-family: 'Do Hyeon', sans-serif; */
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   font-size: 15px;
 }
 
@@ -946,14 +956,16 @@ a {
 }
 
 .product_grid div {
-  background-color: rgb(238, 238, 238);
-  width: 250px;
-  height: 400px;
+  /* background-color: rgb(238, 238, 238); */
+  background-color: #f5f4f4;
+  width: 270px;
+  height: 405px;
   margin-bottom: 110px;
 }
 
 .product_grid div img {
   height: 400px;
+  mix-blend-mode: darken;
 }
 
 .product_grid div span p {
