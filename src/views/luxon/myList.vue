@@ -10,7 +10,11 @@
         <br />
         <ul class="first_category">
           <li v-for="categoryFirst in categoryList" :key="categoryFirst.id">
-            <a
+            <router-link
+              :to="{
+                name: 'MyList',
+                query: { id: categoryFirst.id },
+              }"
               @click="
                 () => {
                   secondValue = '';
@@ -18,17 +22,21 @@
                   getBrandProduct();
                 }
               "
-              style="font-weight: bold;;"
-              >{{ categoryFirst.categoryName }}</a
+              style="font-weight: bold"
+              >{{ categoryFirst.categoryName }}</router-link
             >
             <br />
             <ul class="second_category">
               <li
                 v-for="categorySecond in categoryFirst.categorySecondDtoList"
                 :key="categorySecond.id"
-                style="margin-top: 10px;margin-bottom: -3px"
+                style="margin-top: 10px; margin-bottom: -3px"
               >
-                <a
+                <router-link
+                  :to="{
+                    name: 'MyList',
+                    query: { secondid: categorySecond.id },
+                  }"
                   @click="
                     () => {
                       firstValue = '';
@@ -38,7 +46,7 @@
                   "
                 >
                   {{ categorySecond.categoryName }}
-                </a>
+                </router-link>
               </li>
             </ul>
           </li>
@@ -148,6 +156,12 @@
               <img :src="product.thumbnailUrl" />
               <br />
               <span>
+                <p
+                  class="cls_brandName"
+                  style="color: black; font-weight: bold"
+                >
+                  {{ product.brandName }}
+                </p>
                 <p class="cls_productName" style="color: black">
                   {{ product.productName }}
                 </p>
@@ -206,9 +220,10 @@ export default {
     this.getCategoryList();
   },
   mounted() {
-    this.getProductList();
     this.firstValue = this.$route.query.id;
+    this.secondValue = this.$route.query.secondid;
     this.searchValue = this.$route.query.searchValue;
+    this.getProductList();
   },
   methods: {
     async getProductList() {
@@ -216,6 +231,9 @@ export default {
       this.showList = this.productList;
       if (this.firstValue != undefined) {
         this.getBrandProduct();
+      }
+      if (this.secondValue != undefined) {
+        this.getBrandProduct2(this.secondValue);
       }
       if (this.$route.query.searchValue != undefined) {
         // console.log(this.$route.query.searchValue);
@@ -503,9 +521,14 @@ p {
   margin: 0px;
 }
 
-.cls_productName {
+.cls_brandName {
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 18px;
+}
+
+.cls_productName {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
 }
 
 .cls_productPrice {
