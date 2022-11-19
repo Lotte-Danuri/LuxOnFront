@@ -77,7 +77,7 @@
         <td>{{ recommendProduct.categoryThirdName }}</td>
         <td>{{ recommendProduct.clickCount }}회</td>
         <td>{{ recommendProduct.orderCount }}회</td>
-        <td>{{ recommendProduct.conversionRate }}%</td>
+        <td>{{ recommendProduct.conversionRate.toFixed(2) }}%</td>
         <td>
           <button
             style="
@@ -229,6 +229,7 @@ export default {
 #customers td,
 #customers th {
   border: 1px solid #ddd;
+  width: 60px;
   padding: 8px;
   font-size: 13px;
 }

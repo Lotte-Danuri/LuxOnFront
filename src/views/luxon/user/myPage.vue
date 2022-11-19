@@ -12,21 +12,23 @@
 </template>
 
 <script>
-import leftBar from "@/components/mypage/leftBar.vue";
-import MainContent from "@/components/mypage/mainContent.vue";
-import { onBeforeMount } from "@vue/runtime-core";
-import router from "@/router";
+import leftBar from '@/components/mypage/leftBar.vue';
+import MainContent from '@/components/mypage/mainContent.vue';
+import { onBeforeMount } from 'vue';
+import router from '@/router';
 export default {
   components: { leftBar, MainContent },
   setup() {
     onBeforeMount(() => {
-      if (window.location.pathname == "/mypage") {
-        router.push("/mypage/order");
+      if (window.location.pathname == '/mypage') {
+        router.push('/mypage/order');
       }
     });
     return {};
   },
 };
+
+window.scrollTo(0, 0);
 </script>
 
 <style>

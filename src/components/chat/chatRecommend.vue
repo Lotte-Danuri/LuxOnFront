@@ -5,12 +5,7 @@
       <hr />
       <div
         @click="
-          router.push({
-            path: '/product/myProduct',
-            query: {
-              productCode: product.productCode,
-            },
-          })
+          a.href = '/product/myProduct?productCode=' + product.productCode
         "
       >
         <img :src="product.thumbnailUrl" />
@@ -35,6 +30,7 @@ export default {
     return {
       plist: [],
       router: useRouter(),
+      a: window.location,
     };
   },
 
@@ -49,7 +45,9 @@ export default {
             contentType: 'application/json',
           },
         })
-        .then(res => this.plist.push(res.data[0]))
+        .then(res => {
+          if (res.data[0] != null) this.plist.push(res.data[0]);
+        })
         .catch(err => console.log(err));
     });
   },

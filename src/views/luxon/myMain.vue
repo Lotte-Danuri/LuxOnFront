@@ -949,7 +949,7 @@ a {
   background-color: rgb(238, 238, 238);
   width: 250px;
   height: 400px;
-  margin-bottom: 90px;
+  margin-bottom: 110px;
 }
 
 .product_grid div img {

@@ -79,7 +79,7 @@
                             v-model="product.quantity"
                             type="text"
                             class="form-control"
-                            style="width: 40px"
+                            style="width: 40px; text-align: center"
                           />
                           <span
                             class="input-group-text"
