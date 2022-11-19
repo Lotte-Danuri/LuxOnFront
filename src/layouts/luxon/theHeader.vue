@@ -42,7 +42,7 @@
                 <p>로그아웃</p>
               </router-link>
             </li>
-            <li @click="sendMessage()">
+            <li class="service_center" @click="sendMessage()">
               <!-- <i class="fa-solid fa-commenting"></i> -->
               <span class="material-symbols-outlined"> headset_mic </span>
               <p>고객센터</p>
@@ -294,6 +294,10 @@ header {
   position: sticky;
   top: 0px;
   z-index: 999;
+}
+
+.service_center:hover{
+  cursor: pointer;
 }
 
 .header_bottom {
