@@ -132,7 +132,13 @@
           <br />
           <button
             class="btn btn-outline-dark"
-            style="width: 300px; height: 70px"
+            style="
+              width: 300px;
+              height: 70px;
+              background-color: black;
+              color: white;
+              font-size: 15px;
+            "
             @click="regiProduct"
           >
             등록
@@ -308,6 +314,7 @@ export default {
             .then((response) => {
               console.log(response.data);
               this.productList = response.data;
+              location.reload();
             });
         });
     },

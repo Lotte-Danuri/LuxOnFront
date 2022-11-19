@@ -329,17 +329,19 @@ export default {
 /* @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'; */
 
 /* Write your own CSS for pagination */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
 a {
   text-decoration: none;
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 p {
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .cls_productName {
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 18px;
 }
 

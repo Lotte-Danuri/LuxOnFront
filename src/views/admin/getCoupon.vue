@@ -199,6 +199,7 @@
 <script>
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -251,7 +252,14 @@ export default {
           },
         )
         .then(response => {
-          alert('팔로워들에게 뿌리기 성공!');
+          // alert('팔로워들에게 뿌리기 성공!');
+          Swal.fire({
+            title: '팔로워들에게 뿌리기 성공!',
+            icon: 'success',
+            showCancelButton: true,
+          }).then(result => {
+            // location.reload();
+          });
         });
       console.log(this.couponCheckVmodel);
     },

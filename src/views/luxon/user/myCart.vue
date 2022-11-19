@@ -133,7 +133,15 @@
           <!-- Button -->
           <button
             type="button"
-            class="btn w-100 btn-dark mb-2"
+            style="
+              margin-top: 20px;
+              width: 350px;
+              height: 50px;
+              background-color: black;
+              border-radius: 20px;
+              font-size: 15px;
+              color: white;
+            "
             @click="addOrder(state.products)"
           >
             주문하기
@@ -265,6 +273,8 @@ export default {
         });
       }
     };
+
+    window.scrollTo(0, 0);
 
     return {
       state,
