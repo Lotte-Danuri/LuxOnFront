@@ -3,7 +3,7 @@
     <form id="searchForm" method="post">
       <input type="hidden" name="page_idx" value="1" />
     </form>
-    <h2 style="font-weight: bold">찜 목록</h2>
+    <h2 style="">찜 목록</h2>
     <br />
     <div
       class="all_procut"
@@ -24,6 +24,9 @@
             <img :src="product.thumbnailUrl" />
             <br />
             <span>
+              <p class="cls_brandName" style="color: black; font-weight: bold">
+                {{ product.brandName }}
+              </p>
               <p class="cls_productName" style="color: black">
                 {{ product.productName }}
               </p>
@@ -81,17 +84,17 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import { onBeforeMount } from "vue";
-import axios from "axios";
-import { getCurrentInstance } from "vue";
-import LikeButton from "@/components/button/likeButton.vue";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
+import { getCurrentInstance } from 'vue';
+import LikeButton from '@/components/button/likeButton.vue';
 
 // let self;
 
 export default {
   components: {
-    LikeButton
+    LikeButton,
   },
   created() {
     // self = this;
@@ -104,13 +107,13 @@ export default {
     });
     onBeforeMount(() => {
       axios
-        .post("https://sbbro.xyz/api/member/like", null, {
+        .post('https://sbbro.xyz/api/member/like', null, {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem("token"),
-            "Content-Type": "application/json",
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
           },
         })
-        .then((response) => {
+        .then(response => {
           console.log(response);
           state.products = response.data;
         });
@@ -151,7 +154,7 @@ a {
 </style>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 /* Adopt bootstrap pagination stylesheet. */
 /* @import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'; */
 
@@ -181,11 +184,11 @@ a {
 
 a {
   text-decoration: none;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 p {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .active .side_menu div h3 {
@@ -273,9 +276,9 @@ p {
   background-color: #f1f1f1;
   position: relative;
 }
-.product_grid div .like{
+.product_grid div .like {
   position: absolute;
-  left:80%;
+  left: 80%;
   z-index: 3;
   background-color: transparent;
 }
@@ -294,13 +297,18 @@ p {
   margin: 0px;
 }
 
-.cls_productName {
-  font-family: "Noto Sans KR", sans-serif;
+.cls_brandName {
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 18px;
 }
 
+.cls_productName {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+}
+
 .cls_productPrice {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 15px;
 }
 
