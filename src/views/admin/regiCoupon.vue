@@ -1,43 +1,78 @@
 <template>
-  <br/>
-  <br/>
+  <br />
+  <br />
   <h1>쿠폰 등록</h1>
-  <br/>
-  <div style="display:flex;">
+  <br />
+  <div style="display: flex">
     <h3>쿠폰 정보와 적용 상품을 선택하여 쿠폰 등록이 가능합니다.</h3>
-    <h3 style="font-style: italic; color:gray; margin-left:44%;">{{userName}}</h3><h3>　님 안녕하세요</h3>
-    <a @click="logout" style="margin-left: 4%;">
-      <div style="display:flex; margin-bottom: 0px;">
+    <h3 style="font-style: italic; color: gray; margin-left: 44%">
+      {{ userName }}
+    </h3>
+    <h3>　님 안녕하세요</h3>
+    <a @click="logout" style="margin-left: 4%">
+      <div style="display: flex; margin-bottom: 0px">
         <span class="material-icons-sharp">logout</span>
         <h3>Logout</h3>
       </div>
     </a>
   </div>
-  <hr/>
-  <br/>
+  <hr />
+  <br />
   <main>
     <div class="regi_grid">
       <div class="top_div">
-        <input placeholder="쿠폰명" id="couponName" class="form-control" style="margin-left:25%;"/>
-        <input placeholder="내용" id="couponContent" class="form-control" style="margin-left:25%;"/>
-        <input placeholder="할인율" id="discountRate" class="form-control" style="margin-left:25%;"/>
-        <div class="input-group" style="width: 50%; margin-bottom:1px; margin-left:25%;">
-          <input type="datetime-local" data-placeholder="시작일" id="startDate" class="form-control"/>
-          <input type="datetime-local" data-placeholder="종료일" id="endDate" class="form-control"/>
+        <input
+          placeholder="쿠폰명"
+          id="couponName"
+          class="form-control"
+          style="margin-left: 25%"
+        />
+        <input
+          placeholder="내용"
+          id="couponContent"
+          class="form-control"
+          style="margin-left: 25%"
+        />
+        <input
+          placeholder="할인율"
+          id="discountRate"
+          class="form-control"
+          style="margin-left: 25%"
+        />
+        <div
+          class="input-group"
+          style="width: 50%; margin-bottom: 1px; margin-left: 25%"
+        >
+          <input
+            type="datetime-local"
+            data-placeholder="시작일"
+            id="startDate"
+            class="form-control"
+          />
+          <input
+            type="datetime-local"
+            data-placeholder="종료일"
+            id="endDate"
+            class="form-control"
+          />
         </div>
-        <br>
-        <br>
+        <br />
+        <br />
         <div class="select_div">
-          <div class="input-group" style="width:50%; margin-left:25%;">
-            <select @change="changeCategoryFirst($event)" id="first_category_id" class="form-control">
-              <option :value="-1">- 대분류 - </option>
+          <div class="input-group" style="width: 50%; margin-left: 25%">
+            <select
+              @change="changeCategoryFirst($event)"
+              id="first_category_id"
+              class="form-control"
+            >
+              <option :value="-1">- 대분류 -</option>
               <option v-for="(category, i) in categoryList" :key="i" :value="i">
                 <p>{{ category.categoryName }}</p>
                 <div :id="`${category.id}`" style="dispaly: none"></div>
               </option>
             </select>
             <select @change="changeCategorySecond($event)" class="form-control">
-              <option :value="-1">- 중분류 - </option>
+              <option :value="-1">- 중분류 -</option>
               <option
                 v-for="(categorySecond, i) in categorySecondList"
                 :key="i"
@@ -50,7 +85,7 @@
             <br />
             <br />
             <select @change="changeCategoryThird($event)" class="form-control">
-              <option :value="-1">- 소분류 - </option>
+              <option :value="-1">- 소분류 -</option>
               <option
                 v-for="(categoryThird, i) in categoryThirdList"
                 :key="i"
@@ -77,22 +112,23 @@
         </div>
       </div>
     </div>
-    <br>
-    <br>
+    <br />
+    <br />
     <div class="inner_grid">
       <div></div>
       <div
-      style="
-        width: 620px;
-        height: 500px;
-        background-color: white;
-        border: 1px solid black;
-        border-radius: 15px;
-        overflow: scroll;
-        overflow-x: hidden;
-        padding-top: 15px;
-      ">
-        <h2 style="margin-left: 38%; margin-bottom: 20px;">검색 상품 LIST</h2>
+        style="
+          width: 620px;
+          height: 500px;
+          background-color: white;
+          border: 1px solid black;
+          border-radius: 15px;
+          overflow: scroll;
+          overflow-x: hidden;
+          padding-top: 15px;
+        "
+      >
+        <h2 style="margin-left: 38%; margin-bottom: 20px">검색 상품 LIST</h2>
         <table id="customers" style="width: 600px">
           <tr>
             <th>선택</th>
@@ -119,7 +155,7 @@
               <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
             </td>
             <td>{{ product.productName }}</td>
-            <td>{{ product.price }}원</td>
+            <td>{{ comma(product.price) }}원</td>
             <td>{{ product.stock }}개</td>
             <td>{{ product.warranty }}개월</td>
             <td>{{ product.createdDate }}</td>
@@ -142,17 +178,21 @@
           >>>
         </button>
       </div>
-      <div style="
-        width: 620px;
-        height: 500px;
-        background-color: white;
-        border: 1px solid black;
-        border-radius: 15px;
-        overflow: scroll;
-        overflow-x: hidden;
-        padding-top: 15px;
-      ">
-        <h2 style="margin-left: 38%; margin-bottom: 20px;">쿠폰 적용 상품 LIST</h2>
+      <div
+        style="
+          width: 620px;
+          height: 500px;
+          background-color: white;
+          border: 1px solid black;
+          border-radius: 15px;
+          overflow: scroll;
+          overflow-x: hidden;
+          padding-top: 15px;
+        "
+      >
+        <h2 style="margin-left: 38%; margin-bottom: 20px">
+          쿠폰 적용 상품 LIST
+        </h2>
         <table id="customers" style="width: 600px">
           <tr>
             <th>취소</th>
@@ -177,7 +217,7 @@
               <img :src="`${product.thumbnailUrl}`" style="height: 100px" />
             </td>
             <td>{{ product.productName }}</td>
-            <td>{{ product.price }}원</td>
+            <td>{{ comma(product.price) }}원</td>
             <td>{{ product.stock }}개</td>
             <td>{{ product.warranty }}개월</td>
             <td>{{ product.createdDate }}</td>
@@ -187,19 +227,14 @@
       <div></div>
     </div>
     <div>
-        <button
-          class="btn btn-outline-dark"
-          style="
-            width: 140px;
-            height: 50px;
-            margin-left: 46%;
-            margin-top: 2%;
-          "
-          @click="createCoupon"
-        >
-          쿠폰등록
-        </button>
-      </div>
+      <button
+        class="btn btn-outline-dark"
+        style="width: 140px; height: 50px; margin-left: 46%; margin-top: 2%"
+        @click="createCoupon"
+      >
+        쿠폰등록
+      </button>
+    </div>
   </main>
 </template>
 <script>
@@ -228,13 +263,16 @@ export default {
       endDate: '',
       productIdList: [],
       userName: localStorage.getItem('userName'),
-      router : useRouter(),
+      router: useRouter(),
     };
   },
   created() {
     this.getCategoryList();
   },
   methods: {
+    comma(val) {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    },
     async getCategoryList() {
       this.categoryList = await this.$api('/product/categories');
       console.log(this.categoryList);
@@ -380,7 +418,7 @@ export default {
         }
       }
     },
-    logout(){
+    logout() {
       localStorage.removeItem('login_id');
       localStorage.removeItem('role');
       localStorage.removeItem('userName');
@@ -440,7 +478,7 @@ export default {
   color: white;
 }
 
-.inner_grid{
+.inner_grid {
   display: grid;
   grid-template-columns: 130px 650px 100px 650px 100px;
 }
@@ -450,15 +488,15 @@ export default {
   height: 50px;
 }
 
-.regi_grid{
+.regi_grid {
   border: solid 1px black;
   border-radius: 15px;
   width: 60%;
   padding: 50px 50px 25px 50px;
-  margin-left:20%;
+  margin-left: 20%;
 }
 
-.form-control{
-  width:50%;
+.form-control {
+  width: 50%;
 }
 </style>

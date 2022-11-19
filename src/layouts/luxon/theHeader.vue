@@ -1,6 +1,6 @@
 <template>
   <header style="background-color: white; height: 150px">
-    <div style="margin-left: 10%; width: 80%;">
+    <div style="margin-left: 10%; width: 80%">
       <section class="header_top">
         <nav class="navbar">
           <div class="navbar__logo col-3">
@@ -68,10 +68,10 @@
           </a> -->
         </nav>
       </section>
-      <hr/>
+      <hr />
       <section class="header_bottom">
         <nav class="navbar_bottom">
-          <ul class="navbar__menu" style="margin-left: 10px;">
+          <ul class="navbar__menu" style="margin-left: 10px">
             <li class="category" @click="reload">
               <router-link
                 :to="{
@@ -123,93 +123,93 @@
   </header>
 </template>
 <script>
-import { reactive } from "vue";
-import { onMounted } from "vue";
-import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import axios from "axios";
-import { useRouter } from "vue-router";
-import { getCurrentInstance } from "vue";
+import { reactive } from 'vue';
+import { onMounted } from 'vue';
+import { initializeApp } from 'firebase/app';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+import { getCurrentInstance } from 'vue';
 
 // const toggleBtn = document.querySelector('.navbar__toogleBtn');
-const menu = document.querySelector(".navbar__menu");
-const icons = document.querySelector(".navbar__icons");
+const menu = document.querySelector('.navbar__menu');
+const icons = document.querySelector('.navbar__icons');
 
 export default {
   components: {},
   data() {
     return {
-      searchValue: "",
+      searchValue: '',
     };
   },
   watch: {
     searchValue() {
-      alert("search작동");
+      alert('search작동');
     },
   },
   setup() {
     const router = useRouter();
     const state = reactive({
-      localStorage: "",
-      searchValue: "",
+      localStorage: '',
+      searchValue: '',
     });
 
     onMounted(() => {
       state.localStorage = localStorage;
-      if (localStorage.getItem("login_id") !== null) {
+      if (localStorage.getItem('login_id') !== null) {
         const firebaseConfig = {
-          apiKey: "AIzaSyAHFnEL7qoOi2fQB9opoZeOFFy9MUH7GDM",
-          authDomain: "luxon-c4fb2.firebaseapp.com",
-          projectId: "luxon-c4fb2",
-          storageBucket: "luxon-c4fb2.appspot.com",
-          messagingSenderId: "626968263040",
-          appId: "1:626968263040:web:874cdbaa275151e4daa965",
-          measurementId: "G-ST05ZTCPJB",
+          apiKey: 'AIzaSyAHFnEL7qoOi2fQB9opoZeOFFy9MUH7GDM',
+          authDomain: 'luxon-c4fb2.firebaseapp.com',
+          projectId: 'luxon-c4fb2',
+          storageBucket: 'luxon-c4fb2.appspot.com',
+          messagingSenderId: '626968263040',
+          appId: '1:626968263040:web:874cdbaa275151e4daa965',
+          measurementId: 'G-ST05ZTCPJB',
         };
 
         const app = initializeApp(firebaseConfig);
         const messaging = getMessaging(app);
-        Notification.requestPermission().then((permission) => {
-          console.log("permission ", permission);
-          if (permission !== "granted") {
-            alert("알림을 허용해주세요");
+        Notification.requestPermission().then(permission => {
+          console.log('permission ', permission);
+          if (permission !== 'granted') {
+            alert('알림을 허용해주세요');
           }
         });
 
         // TODO: Send token to server for send notification
         getToken(messaging, {
           vapidKey:
-            "BOX3DLO4QFmqhmQwbOUtXGFXqeGizpGhDx5GQ1WnkDTqp9nFRDc5WC1YK8VpJQ23SgOiiYvgygoQK2HvJ9b_U5c",
+            'BOX3DLO4QFmqhmQwbOUtXGFXqeGizpGhDx5GQ1WnkDTqp9nFRDc5WC1YK8VpJQ23SgOiiYvgygoQK2HvJ9b_U5c',
         })
-          .then((currentToken) => {
+          .then(currentToken => {
             if (currentToken) {
               axios
                 .post(
-                  "https://sbbro.xyz/api/chat/user/fcmToken",
+                  'https://sbbro.xyz/api/chat/user/fcmToken',
                   {
-                    userId: localStorage.getItem("login_id"),
+                    userId: localStorage.getItem('login_id'),
                     fcmToken: currentToken,
                   },
                   {
                     headers: {
-                      Authorization: `Bearer ` + localStorage.getItem("token"),
-                      contentType: "application/json",
+                      Authorization: `Bearer ` + localStorage.getItem('token'),
+                      contentType: 'application/json',
                     },
-                  }
+                  },
                 )
-                .catch((err) => console.log(err));
+                .catch(err => console.log(err));
             } else {
               console.log(
-                "No registration token available. Request permission to generate one."
+                'No registration token available. Request permission to generate one.',
               );
             }
           })
-          .catch((err) => {
-            console.log("An error occurred while retrieving token. ", err);
+          .catch(err => {
+            console.log('An error occurred while retrieving token. ', err);
           });
 
         // Handle received push notification at foreground
-        onMessage(messaging, (payload) => {
+        onMessage(messaging, payload => {
           console.log(payload);
           alert(payload.data.message);
         });
@@ -221,33 +221,33 @@ export default {
     const sendMessage = async () => {
       await axios
         .post(
-          "https://sbbro.xyz/api/chat/chatRoom/chat",
+          'https://sbbro.xyz/api/chat/chatRoom/chat',
           {
             id: null,
-            content: "고객센터에 문의하기",
-            contentType: "메세지",
-            sendBy: localStorage.getItem("login_id"),
-            sendTo: "admin",
-            source: "",
+            content: '고객센터에 문의하기',
+            contentType: '메세지',
+            sendBy: localStorage.getItem('login_id'),
+            sendTo: 'admin',
+            source: '',
           },
           {
             headers: {
-              Authorization: `Bearer ` + localStorage.getItem("token"),
-              "Content-Type": "application/json",
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
             },
-          }
+          },
         )
-        .then(emitter.emit("chatShow"))
-        .catch((err) => console.log(err));
+        .then(emitter.emit('chatShow'))
+        .catch(err => console.log(err));
     };
 
     const btnClick = () => {
-      menu.classList.toggle("active");
-      icons.classList.toggle("active");
+      menu.classList.toggle('active');
+      icons.classList.toggle('active');
     };
 
     const searchBtn = () => {
-      let searchValue = document.getElementById("searchValue").value;
+      let searchValue = document.getElementById('searchValue').value;
       // if (
       //   window.location.href.includes('list') &&
       //   decodeURI(window.location.href)
@@ -258,7 +258,7 @@ export default {
       //   location.reload();
       // }
       router.push({
-        name: "MyList",
+        name: 'MyList',
         query: { searchValue: searchValue },
       });
     };
@@ -283,7 +283,7 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 /* :root { */
 /* --text-color:
   --background-color:
@@ -307,7 +307,7 @@ header {
 
 .navbar_bottom {
   border: #080808;
-  background-color: rgb(250, 250, 250);
+  /* background-color: rgb(250, 250, 250); */
 }
 
 .navbar_bottom ul li a {
@@ -322,10 +322,10 @@ a {
   text-decoration: none;
   color: rgb(0, 0, 0);
   /* font-family: 'Do Hyeon', sans-serif; */
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
-hr{
+hr {
   margin-top: 0;
   margin-bottom: 5px;
 }
@@ -334,9 +334,8 @@ hr{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fcfcfc;
+  /* background-color: #fcfcfc; */
   padding: 0px 12px;
-  
 }
 
 .navbar__logo {
