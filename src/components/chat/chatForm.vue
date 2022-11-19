@@ -1,8 +1,8 @@
 <template>
   <div class="form" v-if="chatValid">
-    <input class="btn" id="img-input" type="file" @change="submitImage" />
-    <label for="img-input" accept="image/*">
-      <i class="bi bi-image" style="color: grey"></i>
+    <input class="btn" id="img-input" type="file" @change="submitImage" >
+    <label class="imageButton" for="img-input" accept="image/*">
+        <i class="bi bi-image" style="color: grey"></i>
     </label>
     <input
       class="form__input"
@@ -115,6 +115,10 @@ export default {
 </script>
 
 <style scoped>
+
+.imageButton:hover{
+  cursor: pointer;
+}
 .form {
   display: flex;
   justify-content: space-between;
