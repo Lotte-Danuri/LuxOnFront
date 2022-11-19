@@ -1,6 +1,6 @@
 <template>
   <!-- FOOTER -->
-  <footer class="bg-dark bg-cover" style="">
+  <footer class="bg-dark bg-cover" style="margin-top: 100px">
     <div class="py-12 border-bottom border-gray-700">
       <div class="container" style="height: 200px">
         <div class="row justify-content-center">

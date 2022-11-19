@@ -11,6 +11,9 @@
       <div class="row" style="margin-top: 10%">
         <div class="col-12 col-md-7">
           <!-- List group -->
+          <div v-if="state.products.length == 0" class="cart_empty">
+            <!-- <h2>장바구니가 비어있습니다.</h2> -->
+          </div>
           <ul
             v-for="(product, index) in state.products"
             :key="index"
@@ -76,7 +79,7 @@
                             v-model="product.quantity"
                             type="text"
                             class="form-control"
-                            style="width: 40px"
+                            style="width: 40px; text-align: center"
                           />
                           <span
                             class="input-group-text"
@@ -130,7 +133,16 @@
           <!-- Button -->
           <button
             type="button"
-            class="btn w-100 btn-dark mb-2"
+            style="
+              margin-top: 20px;
+              margin-left: 20px;
+              width: 380px;
+              height: 50px;
+              background-color: black;
+              border-radius: 20px;
+              font-size: 15px;
+              color: white;
+            "
             @click="addOrder(state.products)"
           >
             주문하기
@@ -175,6 +187,11 @@ export default {
         .then(response => {
           console.log(response);
           state.products = response.data;
+          if (state.products.length == 0) {
+            Swal.fire('장바구니가 비어있습니다').then(() => {
+              router.push('/main');
+            });
+          }
         });
     });
 
@@ -250,6 +267,16 @@ export default {
       });
     };
 
+    const emptyProduct = products => {
+      if (this.products == null) {
+        Swal.fire('장바구니가 비어있습니다').then(() => {
+          router.push('/main');
+        });
+      }
+    };
+
+    window.scrollTo(0, 0);
+
     return {
       state,
       comma,
@@ -259,9 +286,14 @@ export default {
       calculatePrice,
       removeProduct,
       id,
+      emptyProduct,
     };
   },
 };
 </script>
 
-<style></style>
+<style>
+.cart_empty {
+  text-align: center;
+}
+</style>

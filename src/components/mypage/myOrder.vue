@@ -305,6 +305,8 @@ export default {
       });
     };
 
+    window.scrollTo(0, 0);
+
     return { state, comma, pushNft, sendChat, formatDatetime };
   },
 };

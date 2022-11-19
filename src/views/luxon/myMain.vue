@@ -170,7 +170,7 @@
     <div style="margin-left: 35%">
       <br />
       <p style="color: goldenrod; font-size: 40px">
-        NFT 인증서 명품 검수 프로그램
+        NFT 보증서 명품 검수 프로그램
       </p>
       <p style="color: white; font-size: 20px; margin-left: 10%">
         럭셔리 쇼핑의 디테일, LUX ON
@@ -203,7 +203,7 @@
           <div class="container_grid">
             <div
               class="item color5"
-              v-for="(recommend, i) in productList.slice(0, 4)"
+              v-for="(recommend, i) in recommendList.slice(0, 4)"
               :key="i"
             >
               <router-link
@@ -226,7 +226,7 @@
           <div class="container_grid">
             <div
               class="item color5"
-              v-for="(recommend, i) in productList.slice(4, 8)"
+              v-for="(recommend, i) in recommendList.slice(4, 8)"
               :key="i"
             >
               <router-link
@@ -363,14 +363,14 @@
             </div>
             <div class="item color7">
               <img
-                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/143/00/221000000298143.jpg?cVer=15104557&RS=400&SP=1"
+                src="https://image.sivillage.com/upload/C00001/dspl/banner/1010/419/00/221100000305419.jpg?cVer=11103932&RS=400&SP=1"
                 alt="image"
               />
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">Luxury</h1>
-                  <p style="color: white; margin-top: 20px">Lux</p>
+                  <h1 style="font-size: 50px">시즌</h1>
+                  <p style="color: white; margin-top: 20px">Season</p>
                 </div>
               </div>
             </div>
@@ -382,8 +382,8 @@
               <div>
                 <div class="coupon-text">
                   <h2>Coupon</h2>
-                  <h1 style="font-size: 50px">시즌</h1>
-                  <p style="color: white; margin-top: 20px">Season</p>
+                  <h1 style="font-size: 50px">Luxury</h1>
+                  <p style="color: white; margin-top: 20px">Luxury</p>
                 </div>
               </div>
             </div>
@@ -440,7 +440,13 @@
             >
               <div
                 class="rank_num"
-                style="width: 30px; height: 30px; background-color: black"
+                :class="{ red: isRed }"
+                :id="`${index}`"
+                :style="
+                  index < 3
+                    ? 'background-color: MediumVioletRed; width:30px; height:30px;'
+                    : 'background-color: black; width:30px; height:30px;'
+                "
               >
                 {{ index + 1 }}
               </div>
@@ -620,17 +626,20 @@ export default {
   data() {
     return {
       productList: [],
+      recommendList: [],
       bestList: [],
     };
   },
   created() {
     this.getProductList();
     window.addEventListener('scroll', this.handleScroll);
-    if (localStorage.token) {
-      this.getBestList();
-    }
+    this.getBestList();
+    // this.fisRed();
   },
   methods: {
+    fisRed() {
+      document.getElementById('0').style.backgroundColor = red;
+    },
     bestBtn() {
       this.$swal(
         '클릭수와 주문수에대해 상품전체갯수*0.5 한것의 순위를 각각 뽑고 각각 뽑은 순위가 서로 겹치는 상품에 대한 배열을 만든다음에 그 배열에서 상품전환율로 rank 오름차순처리한다.',
@@ -642,17 +651,59 @@ export default {
     async getProductList() {
       this.productList = await this.$api('/product/products');
     },
+    // async getRecommendList() {
+    //   try {
+    //     const response = await axios.get(
+    //       'https://sbbro.xyz/api/recommend/recommends/list/',
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ` + localStorage.getItem('token'),
+    //         },
+    //       },
+    //     );
+    //     this.recommendList = response.data;
+    //     if (this.recommendList.length) {
+    //       this.recommendList.push(this.bestList);
+    //       console.log('test' + this.bestList);
+    //       console.log(this.recommendList);
+    //     }
+    //     console.log('recommendLength' + this.recommendList.length);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // },
     async getBestList() {
       try {
         const response = await axios.get(
           'https://sbbro.xyz/api/product/products/best/list',
-          {
-            headers: {
-              Authorization: `Bearer ` + localStorage.getItem('token'),
-            },
-          },
+          // {
+          //   headers: {
+          //     Authorization: `Bearer ` + localStorage.getItem('token'),
+          //   },
+          // },
         );
         this.bestList = response.data;
+        try {
+          const response = await axios.get(
+            'https://sbbro.xyz/api/recommend/recommends/list/',
+            {
+              headers: {
+                Authorization: `Bearer ` + localStorage.getItem('token'),
+              },
+            },
+          );
+          this.recommendList = response.data;
+          console.log(this.recommendList);
+        } catch (err) {
+          console.log(err);
+        }
+        if (this.recommendList.length < 8) {
+          for (let i = 0; i < this.bestList.length; i++) {
+            this.recommendList.push(
+              JSON.parse(JSON.stringify(this.bestList[i])),
+            );
+          }
+        }
       } catch (err) {
         console.log(err);
       }
@@ -715,6 +766,11 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+.red {
+  color: red;
+}
+
 a {
   text-decoration: none;
   /* font-family: 'Do Hyeon', sans-serif; */
@@ -893,7 +949,7 @@ a {
   background-color: rgb(238, 238, 238);
   width: 250px;
   height: 400px;
-  margin-bottom: 90px;
+  margin-bottom: 110px;
 }
 
 .product_grid div img {
@@ -908,6 +964,8 @@ a {
 }
 
 .rank_num {
+  width: 30px;
+  height: 30px;
   position: absolute;
   background-color: black;
   color: white;

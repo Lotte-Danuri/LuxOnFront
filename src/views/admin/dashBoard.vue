@@ -21,18 +21,21 @@
   <main>
     <div class="zero_grid">
       <div>
-        <span class="material-icons-sharp"> today 주문량</span>
-        <h1>148</h1>
+        <span class="material-icons-sharp"> dvr 주문량 </span>
+        <h1>{{ this.orderTotal }}</h1>
       </div>
       <div>
-        <span class="material-icons-sharp"> poll 클릭 수</span>
-        <h1>3,600</h1>
+        <span class="material-icons-sharp"> ads_click 클릭 수 </span>
+        <h1>{{ this.clickTotal }}</h1>
       </div>
       <div>
-        <span class="material-icons-sharp"> cloud_queue 좋아요</span>
-        <h1>1,210</h1>
+        <span class="material-icons-sharp"> favorite_border 좋아요 </span>
+        <h1>{{ this.likeTotal }}</h1>
       </div>
     </div>
+    <!-- <div>
+      {{ chartList }}
+    </div> -->
     <div class="first_grid">
       <div style="width: 80%; margin-left: 10%; height: 90%">
         <canvas id="myChart2"></canvas>
@@ -47,58 +50,26 @@ import { useRoute, useRouter } from 'vue-router';
 export default {
   data() {
     return {
-      categoryList: [],
-      categorySecondList: [],
-      categoryThirdList: [],
-      productList: [],
-      firstClickValue: '',
-      secondClickValue: '',
-      thirdClickValue: '',
-      fistValue: '',
-      secondValue: '',
-      thirdValue: '',
-      productCheckVmodel: [],
-      productCheckList: [],
-      couponName: '',
-      couponContent: '',
-      discountRate: 0.0,
-      startDate: '',
-      endDate: '',
-      productIdList: [],
       myChart: '',
       router: useRouter(),
       userName: localStorage.getItem('userName'),
+      recommendProductList: [],
+      likeTotal: 0,
+      clickTotal: 0,
+      orderTotal: 0,
+      dateList: [],
+      chartList: [],
+      dayList: [],
+      today: new Date(),
     };
   },
   created() {
-    this.getCategoryList();
+    this.getRecommendProductList();
+    this.getdayList();
+    this.getChartList();
+    // console.log('day' + this.dayList);
   },
   mounted() {
-    let firstClickId = parseInt(this.firstValue);
-    let secondClickId = parseInt(this.secondValue);
-    let thirdClickId = parseInt(this.thirdValue);
-    console.log(this.firstValue, this.secondValue, this.thirdValue);
-    axios
-      .post(
-        'https://sbbro.xyz/api/product/sellers/products/category',
-        {
-          stordId: localStorage.getItem('store_id'),
-          categoryFirstId: firstClickId,
-          categorySecondId: secondClickId,
-          categoryThirdId: thirdClickId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-      .then(response => {
-        console.log(response.data);
-        this.productList = response.data;
-      });
-
     var xValues = [
       11.12,
       11.13,
@@ -112,102 +83,139 @@ export default {
       11.21,
     ];
 
-    new Chart('myChart2', {
-      type: 'bar',
-      data: {
-        labels: xValues,
-        datasets: [
-          {
-            data: [6, 14, 10, 10, 10, 11, 13, 22, 78, 24],
-            backgroundColor: 'black',
-            fill: true,
-            label: '주문량',
-          },
-          {
-            data: [160, 170, 170, 390, 200, 270, 400, 300, 300, 400],
-            backgroundColor: '#666666',
-            fill: true,
-            label: '클릭수',
-          },
-          {
-            data: [300, 200, 200, 300, 300, 400, 200, 100, 200, 100],
-            backgroundColor: '#CCCCCC',
-            label: '좋아요',
-          },
-        ],
-      },
-      options: {
-        plugins: {
-          legend: {
-            display: true,
-            labels: {
-              // This more specific font property overrides the global property
-              font: {
-                size: 14,
+    setTimeout(() => {
+      new Chart('myChart2', {
+        type: 'bar',
+        data: {
+          labels: xValues,
+          datasets: [
+            {
+              data: [
+                this.chartList[9][0][0],
+                this.chartList[8][0][0],
+                this.chartList[7][0][0],
+                this.chartList[6][0][0],
+                this.chartList[5][0][0],
+                this.chartList[4][0][0],
+                this.chartList[3][0][0],
+                this.chartList[2][0][0],
+                this.chartList[1][0][0],
+                this.chartList[0][0][0],
+              ],
+              backgroundColor: 'black',
+              fill: true,
+              label: '주문량',
+            },
+            {
+              data: [
+                this.chartList[9][0][1],
+                this.chartList[8][0][1],
+                this.chartList[7][0][1],
+                this.chartList[6][0][1],
+                this.chartList[5][0][1],
+                this.chartList[4][0][1],
+                this.chartList[3][0][1],
+                this.chartList[2][0][1],
+                this.chartList[1][0][1],
+                this.chartList[0][0][1],
+              ],
+              backgroundColor: '#666666',
+              fill: true,
+              label: '클릭수',
+            },
+            {
+              data: [
+                this.chartList[9][0][2],
+                this.chartList[8][0][2],
+                this.chartList[7][0][2],
+                this.chartList[6][0][2],
+                this.chartList[5][0][2],
+                this.chartList[4][0][2],
+                this.chartList[3][0][2],
+                this.chartList[2][0][2],
+                this.chartList[1][0][2],
+                this.chartList[0][0][2],
+              ],
+              backgroundColor: '#CCCCCC',
+              label: '좋아요',
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                // This more specific font property overrides the global property
+                font: {
+                  size: 14,
+                },
               },
             },
           },
         },
-      },
-    });
+      });
+    }, '3000');
   },
   methods: {
-    async getCategoryList() {
-      this.categoryList = await this.$api('/product/categories');
-      console.log(this.categoryList);
+    getdayList() {
+      let dayList = [];
+      for (let i = 1; i < 12; i++) {
+        dayList.push(this.today.setDate(this.today.getDate() - i));
+      }
+      this.dayList = dayList;
+      // console.log(this.dayList);
     },
-    changeCategoryFirst(event) {
-      this.firstClickValue = event.target.value;
-      if (this.firstClickValue == -1) {
-        this.firstValue = '';
-      } else {
-        this.categorySecondList =
-          this.categoryList[this.firstClickValue].categorySecondDtoList;
-        this.firstValue = this.categoryList[this.firstClickValue].id;
+    async getChartList() {
+      for (let i = 0; i < 11; i++) {
+        await this.getDateList(this.dayList[i + 1], this.dayList[i]);
+      }
+      // console.log(this.chartList);
+    },
+    async getDateList(startDate, endDate) {
+      try {
+        const response = await axios.post(
+          'https://sbbro.xyz/api/product/sellers/products/chance',
+          {
+            storeId: localStorage.getItem('store_id'),
+            startDate: new Date(startDate),
+            endDate: new Date(endDate),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+              'Content-Type': 'application/json',
+            },
+          },
+        );
+        let dproductList = response.data;
+        // console.log(startDate + '/' + endDate + '/' + dproductList);
+        let forderTotal = 0;
+        let fclickTotal = 0;
+        let flikeTotal = 0;
+        let chartList = [];
+        for (let i = 0; i < dproductList.length; i++) {
+          forderTotal += JSON.parse(JSON.stringify(dproductList[i].orderCount));
+          fclickTotal += JSON.parse(JSON.stringify(dproductList[i].clickCount));
+          flikeTotal += JSON.parse(JSON.stringify(dproductList[i].likeCount));
+          // console.log(dproductList[i].likeCount);
+        }
+        chartList.push([forderTotal, fclickTotal, flikeTotal]);
+        // console.log(chartList);
+        // return chartList;
+        this.chartList.push(chartList);
+      } catch (err) {
+        console.log(err);
       }
     },
-    changeCategorySecond(event) {
-      this.secondClickValue = event.target.value;
-      if (this.secondClickValue == -1) {
-        this.secondValue = '';
-      } else {
-        this.categoryThirdList =
-          this.categorySecondList[this.secondClickValue].categoryThirdDtoList;
-        this.secondValue =
-          this.categoryList[this.firstClickValue].categorySecondDtoList[
-            this.secondClickValue
-          ].id;
-      }
-    },
-    changeCategoryThird(event) {
-      this.thirdClickValue = event.target.value;
-      if (this.thirdClickValue == -1) {
-        this.thirdValue = '';
-      } else {
-        this.thirdValue =
-          this.categoryList[this.firstClickValue].categorySecondDtoList[
-            this.secondClickValue
-          ].categoryThirdDtoList[this.thirdClickValue].id;
-      }
-    },
-    calc() {
-      if (document.querySelector('.myCheckbox').checked) {
-        console.log(this.id);
-      }
-    },
-    productSearch() {
-      let firstClickId = parseInt(this.firstValue);
-      let secondClickId = parseInt(this.secondValue);
-      let thirdClickId = parseInt(this.thirdValue);
-      console.log(this.firstValue, this.secondValue, this.thirdValue);
+    async getRecommendProductList() {
       axios
         .post(
-          'https://sbbro.xyz/api/product/sellers/products/category',
+          'https://sbbro.xyz/api/product/sellers/products/chance',
           {
-            stordId: localStorage.getItem('store_id'),
-            categoryFirstId: firstClickId,
-            categorySecondId: secondClickId,
-            categoryThirdId: thirdClickId,
+            storeId: localStorage.getItem('store_id'),
+            startDate: new Date(1663062510835),
+            endDate: new Date(1668678510835),
           },
           {
             headers: {
@@ -217,8 +225,25 @@ export default {
           },
         )
         .then(response => {
-          console.log(response.data);
-          this.productList = response.data;
+          this.recommendProductList = response.data;
+          console.log(this.recommendProductList);
+          let flikeTotal = 0;
+          let fclickTotal = 0;
+          let forderTotal = 0;
+          for (let i = 0; i < this.recommendProductList.length; i++) {
+            flikeTotal += JSON.parse(
+              JSON.stringify(this.recommendProductList[i].likeCount),
+            );
+            fclickTotal += JSON.parse(
+              JSON.stringify(this.recommendProductList[i].clickCount),
+            );
+            forderTotal += JSON.parse(
+              JSON.stringify(this.recommendProductList[i].orderCount),
+            );
+          }
+          this.likeTotal = flikeTotal;
+          this.clickTotal = fclickTotal;
+          this.orderTotal = forderTotal;
         });
     },
     logout() {

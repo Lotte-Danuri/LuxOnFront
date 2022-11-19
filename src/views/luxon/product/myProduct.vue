@@ -132,19 +132,67 @@
         </div>
         <div id="product_review" style="margin-top: 50px">
           <div
-            style="margin-bottom: 20px; border: solid 1px gray; width: 800px"
+            style="
+              margin-bottom: 20px;
+              padding: 10px;
+              border: solid 3px gray;
+              width: 800px;
+            "
           >
+            <div style="display: grid; grid-template-columns: 13% 20% 20%">
+              <div style="">
+                <img src="@/assets/logo/logo_white_6.png" style="width: 50px" />
+              </div>
+              <h3>{{ state.login_id }}</h3>
+            </div>
+            <br />
             <input
+              id="input_title"
               placeholder="제목을 입력해 주세요"
-              style="width: 200px; height: 30px; border: 1px solid black"
+              style="
+                width: 200px;
+                height: 30px;
+                border: 2px solid black;
+                border-radius: 10px;
+              "
             />
-            {{ state.login_id }}
             <br />
             <br />
             <input
+              id="input_review"
               placeholder="리뷰를 입력해 주세요"
-              style="width: 200px; height: 30px; border: 1px solid black"
+              style="
+                width: 500px;
+                height: 40px;
+                border: 2px solid black;
+                border-radius: 10px;
+              "
             />
+            <br />
+            <br />
+            <div style="display: grid; grid-template-columns: 50% 50%">
+              <input
+                class="form-control"
+                multiple="multiple"
+                type="file"
+                id="file-upload"
+                ref="serveImage"
+                style="width: 400px"
+              />
+              <button
+                style="
+                  margin-left: 10px;
+                  color: white;
+                  background-color: black;
+                  border-radius: 10px;
+                  width: 60px;
+                  height: 40px;
+                "
+                @click="submit_review"
+              >
+                작성
+              </button>
+            </div>
           </div>
           <!-- <hr style="width: 80%" /> -->
           <div v-for="review in state.reviews" :key="review">
@@ -156,35 +204,11 @@
                 margin-bottom: 0px;
               "
             >
-              <div
-                style="
-                  display: grid;
-                  grid-template-columns: 20% 20% 20% 20% 20%;
-                "
-              >
-                <img
-                  src="@/assets/img/star-images-9454.png"
-                  style="width: 20px"
-                />
-                <img
-                  src="@/assets/img/star-images-9454.png"
-                  style="width: 20px"
-                />
-                <img
-                  src="@/assets/img/star-images-9454.png"
-                  style="width: 20px"
-                />
-                <img
-                  src="@/assets/img/star-images-9454.png"
-                  style="width: 20px"
-                />
-                <img
-                  src="@/assets/img/star-images-9454.png"
-                  style="width: 20px"
-                />
+              <div style="">
+                <img src="@/assets/logo/logo_white_6.png" style="width: 50px" />
               </div>
               <div>
-                <p>{{ review.memberDto.name }}</p>
+                <p>{{ review.memberDto.name.slice(0, 2) }}**</p>
               </div>
               <div>
                 <p>
@@ -226,12 +250,13 @@ import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import LikeButton from '@/components/button/likeButton.vue';
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance, ref } from 'vue';
 
 export default {
   components: { LikeButton },
   setup() {
     const router = useRouter();
+    const serveImage = ref(null);
     const state = reactive({
       productCode: '',
       products: [],
@@ -430,13 +455,47 @@ export default {
     const getReviews = async () => {
       try {
         const response = await axios.get(
-          'https://sbbro.xyz/api/review/code/' + 3112301010,
+          'https://sbbro.xyz/api/review/code/' + state.productCode,
         );
         console.log('getReviews', response);
         state.reviews = response.data;
       } catch (err) {
         console.log(err);
       }
+    };
+
+    const submit_review = async () => {
+      const formdata = new FormData();
+      formdata.append('title', document.getElementById('input_title').value);
+      formdata.append(
+        'contents',
+        document.getElementById('input_review').value,
+      );
+      formdata.append('productCode', state.productCode);
+
+      const file_length = serveImage.value.files.length;
+
+      var object = {};
+      formdata.forEach((value, key) => (object[key] = value));
+
+      const fd = new FormData();
+      const js2 = JSON.stringify(object);
+      const blob = new Blob([js2], { type: 'application/json' });
+      fd.append('reviewDto', blob);
+      for (let i = 0; i < file_length; i++) {
+        fd.append('image', serveImage.value.files[i]);
+      }
+
+      console.log(fd);
+
+      await axios
+        .post('https://sbbro.xyz/api/review/', fd, {
+          headers: {
+            Authorization: `Bearer ` + localStorage.getItem('token'),
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(res => console.log(res.data));
     };
 
     const getBrand = async () => {
@@ -513,6 +572,8 @@ export default {
       click_review,
       click_detail,
       globalProperties,
+      serveImage,
+      submit_review,
     };
   },
 };
@@ -690,8 +751,38 @@ input[type='radio']:checked + label {
 }
 
 .review_first div {
-  height: 20px;
+  height: 50px;
   margin-right: 20px;
   /* border-right: 1px gray solid; */
+}
+
+.filebox .upload-name {
+  display: inline-block;
+  height: 40px;
+  padding: 0 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 78%;
+  color: #999999;
+}
+
+.filebox label {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #fff;
+  vertical-align: middle;
+  background-color: #999999;
+  cursor: pointer;
+  height: 40px;
+  margin-left: 10px;
+}
+
+.filebox input[type='file'] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
 }
 </style>

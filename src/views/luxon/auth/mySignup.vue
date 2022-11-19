@@ -124,25 +124,6 @@ birthDate: this.birthDate -->
             <span>판매자</span>
           </label>
         </div>
-        <!-- {{ state.rolePicked }} -->
-        <!-- <div>
-          <label>
-            <input
-              type="radio"
-              v-bind:value="state.role1"
-              v-model="state.rolePicked"
-            />
-            일반회원
-          </label>
-          <label>
-            <input
-              type="radio"
-              v-bind:value="state.role2"
-              v-model="state.rolePicked"
-            />
-            판매자
-          </label>
-        </div> -->
         <br />
         <button
           @click="signUp"
@@ -163,6 +144,7 @@ birthDate: this.birthDate -->
 import { reactive } from 'vue';
 import axios from 'axios';
 import router from '@/router';
+import Swal from 'sweetalert2';
 
 export default {
   setup() {
@@ -176,8 +158,8 @@ export default {
       birthday: '',
       male: '남자',
       female: '여자',
-      role1: '1',
-      role2: '2',
+      role1: '0',
+      role2: '1',
       rolePicked: '',
       bigaddress: '',
       smalladdress: '',
@@ -205,7 +187,8 @@ export default {
             .then(response => {
               console.log(response);
             });
-          console.log(response);
+          // console.log(response);
+          Swal.fire('회원이 되신걸 축하합니다!');
           router.push('/login');
         });
     };
@@ -233,7 +216,7 @@ export default {
   grid-template-rows: 100%;
 }
 .signDiv {
-  background-color: rgb(245, 245, 245);
+  /* background-color: rgb(245, 245, 245); */
   width: 80%;
   display: absolute;
   left: 60%;
