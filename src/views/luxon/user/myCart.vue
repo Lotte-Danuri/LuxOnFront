@@ -5,10 +5,10 @@
       <div class="row">
         <div class="col-12">
           <!-- Heading -->
-          <h1 class="mb-10 text-center">Shopping Cart</h1>
+          <h2 class="mb-10 text-center">장바구니</h2>
         </div>
       </div>
-      <div class="row" style="margin-top: 10%">
+      <div class="row" style="margin-top: 5%">
         <div class="col-12 col-md-7">
           <!-- List group -->
           <div v-if="state.products.length == 0" class="cart_empty">
@@ -90,10 +90,10 @@
                         </div>
                       </div>
                     </div>
-                    <!-- Remove -->
+                        <!-- Remove -->
                     <a @click="removeProduct(index)" style="margin-left: 10px">
                       <i class="fa-solid fa-trash"></i>&nbspremove
-                    </a>
+                        </a>
                   </div>
                 </div>
               </div>
@@ -135,7 +135,7 @@
             type="button"
             style="
               margin-top: 20px;
-              width: 350px;
+              width: 100%;
               height: 50px;
               background-color: black;
               border-radius: 20px;
@@ -153,12 +153,12 @@
 </template>
 
 <script>
-import { computed, reactive } from 'vue';
-import { getCurrentInstance } from 'vue';
-import { onBeforeMount } from 'vue';
-import axios from 'axios';
-import Swal from 'sweetalert2';
-import { useRouter } from 'vue-router';
+import { computed, reactive } from "vue";
+import { getCurrentInstance } from "vue";
+import { onBeforeMount } from "vue";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -171,24 +171,24 @@ export default {
     });
 
     onBeforeMount(async () => {
-      if (localStorage.getItem('token') == null) {
-        Swal.fire('로그인 해주세요').then(() => {
-          router.push('/login');
+      if (localStorage.getItem("token") == null) {
+        Swal.fire("로그인 해주세요").then(() => {
+          router.push("/login");
         });
       }
 
       await axios
-        .get('https://sbbro.xyz/api/member/cart', {
+        .get("https://sbbro.xyz/api/member/cart", {
           headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
+            Authorization: `Bearer ` + localStorage.getItem("token"),
           },
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           state.products = response.data;
           if (state.products.length == 0) {
-            Swal.fire('장바구니가 비어있습니다').then(() => {
-              router.push('/main');
+            Swal.fire("장바구니가 비어있습니다").then(() => {
+              router.go(-1);
             });
           }
         });
@@ -203,7 +203,7 @@ export default {
       return totalPrice;
     };
 
-    const totalQuantity = products => {
+    const totalQuantity = (products) => {
       var totalQuantity = 0;
       for (var i in products) {
         totalQuantity += products[i].quantity;
@@ -216,29 +216,29 @@ export default {
       if (product.quantity < 1) product.quantity = 1;
     };
 
-    const removeProduct = index => {
+    const removeProduct = (index) => {
       Swal.fire({
-        title: '삭제하시겠습니까?',
-        text: '',
-        icon: 'warning',
+        title: "삭제하시겠습니까?",
+        text: "",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '네',
-        cancelButtonText: '아니요',
-      }).then(result => {
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "네",
+        cancelButtonText: "아니요",
+      }).then((result) => {
         if (result.isConfirmed) {
           axios
-            .delete('https://sbbro.xyz/api/member/cart', {
+            .delete("https://sbbro.xyz/api/member/cart", {
               data: {
                 id: state.products[index].id,
               },
               headers: {
-                Authorization: `Bearer ` + localStorage.getItem('token'),
+                Authorization: `Bearer ` + localStorage.getItem("token"),
               },
             })
             .then(() => {
-              Swal.fire('장바구니에서 삭제되었습니다.', '', 'success');
+              Swal.fire("장바구니에서 삭제되었습니다.", "", "success");
               state.products = state.products.filter(function (product) {
                 return product.id != state.products[index].id;
               });
@@ -247,17 +247,17 @@ export default {
       });
     };
 
-    const addOrder = products => {
+    const addOrder = (products) => {
       Swal.fire({
-        title: '주문 하시겠습니까?',
-        icon: 'success',
+        title: "주문 하시겠습니까?",
+        icon: "success",
         showCancelButton: true,
-        confirmButtonText: '네',
-        cancelButtonText: '아니요',
-      }).then(result => {
+        confirmButtonText: "네",
+        cancelButtonText: "아니요",
+      }).then((result) => {
         if (result.isConfirmed) {
           router.push({
-            name: 'initOrder',
+            name: "initOrder",
             params: {
               products: JSON.stringify(state.products),
             },
@@ -266,10 +266,10 @@ export default {
       });
     };
 
-    const emptyProduct = products => {
+    const emptyProduct = (products) => {
       if (this.products == null) {
-        Swal.fire('장바구니가 비어있습니다').then(() => {
-          router.push('/main');
+        Swal.fire("장바구니가 비어있습니다").then(() => {
+          router.go(-1);
         });
       }
     };

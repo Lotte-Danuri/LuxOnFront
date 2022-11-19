@@ -58,7 +58,7 @@
               <router-link :to="{ name: 'cart' }">
                 <!-- <i class="fa-solid fa-bag-shopping"></i> -->
                 <span class="material-symbols-outlined"> shopping_cart </span>
-                <p>쇼핑백</p>
+                <p>장바구니</p>
               </router-link>
             </li>
           </ul>
