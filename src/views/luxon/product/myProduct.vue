@@ -10,23 +10,17 @@
             <div style="display: flex; justify-content: space-between">
               <p>상품코드 {{ state.productCode }}</p>
               <button style="background-color: transparent">
-                <like-button
-                  style="background-color: transparent"
-                  v-bind:productCode="state.productCode"
-                ></like-button>
+                <like-button style="background-color: transparent" v-bind:productCode="state.productCode"></like-button>
               </button>
             </div>
-            <div
-              class="brand_info"
-              @click="
-                router.push({
-                  path: '/store',
-                  query: {
-                    brandId: state.brand.id,
-                  },
-                })
-              "
-            >
+            <div class="brand_info" @click="
+              router.push({
+                path: '/store',
+                query: {
+                  brandId: state.brand.id,
+                },
+              })
+            ">
               <img class="brand_thumnail" :src="state.brand.imageUrl" />
               <div class="brand_name">
                 <h1>{{ state.brand.name }}</h1>
@@ -42,28 +36,14 @@
           <br />
           <hr />
 
-          <div
-            class=""
-            style="margin-top: 20px; margin-bottom: 10px; margin-left: 30px"
-          >
+          <div class="" style="margin-top: 20px; margin-bottom: 10px; margin-left: 30px">
             <div class="size_div" style="">
-              <div
-                v-for="(product, index) in state.products"
-                v-bind:key="index"
-                class="form-check form-check-inline form-check-size mb-2"
-              >
-                <input
-                  :id="'문자열' + index"
-                  v-model="state.selectedStoreIndex"
-                  type="radio"
-                  class="form-check-input"
-                  name="sizeRadio"
-                  :value="index"
-                  data-toggle="form-caption"
-                  data-target="#sizeCaption"
-                />
+              <div v-for="(product, index) in state.products" v-bind:key="index"
+                class="form-check form-check-inline form-check-size mb-2">
+                <input :id="'문자열' + index" v-model="state.selectedStoreIndex" type="radio" class="form-check-input"
+                  name="sizeRadio" :value="index" data-toggle="form-caption" data-target="#sizeCaption" />
                 <label class="form-check-label" :for="'문자열' + index">{{
-                  product.storeName
+                    product.storeName
                 }}</label>
               </div>
             </div>
@@ -72,22 +52,16 @@
           <div class="countClass">
             <div class="count">
               <button class="minus_Btn" @click="minusBtn">-</button>
-              <input
-                id="countValue"
-                :value="state.quantity"
-                style="text-align: center"
-              />
+              <input id="countValue" :value="state.quantity" style="text-align: center" />
               <button class="plus_Btn" @click="plusBtn">+</button>
             </div>
             <div>
-              <h2
-                style="
+              <h2 style="
                   margin-left: 35%;
                   margin-top: 2%;
                   font-weight: bold;
                   color: black;
-                "
-              >
+                ">
                 {{ comma(state.sumPrice) }} 원
               </h2>
             </div>
@@ -100,10 +74,7 @@
                 add_shopping_cart장바구니
               </span>
             </button>
-            <button
-              @click="initOrder"
-              style="background-color: black; color: white"
-            >
+            <button @click="initOrder" style="background-color: black; color: white">
               바로구매
             </button>
             <button @click="sendChat" style="background-color: white">
@@ -122,23 +93,17 @@
         </nav>
         <hr style="width: 80%" />
         <div id="product_detail">
-          <div
-            style="margin-right: 20%"
-            v-for="productImg in state.products[0]?.imageList"
-            v-bind:key="productImg"
-          >
+          <div style="margin-right: 20%" v-for="productImg in state.products[0]?.imageList" v-bind:key="productImg">
             <img :src="productImg" alt="/" />
           </div>
         </div>
         <div id="product_review" style="margin-top: 50px">
-          <div
-            style="
+          <div style="
               margin-bottom: 20px;
               padding: 10px;
               border: solid 3px gray;
               width: 800px;
-            "
-          >
+            ">
             <div style="display: grid; grid-template-columns: 13% 20% 20%">
               <div style="">
                 <img src="@/assets/logo/logo_white_6.png" style="width: 50px" />
@@ -146,64 +111,44 @@
               <h3>{{ state.login_id }}</h3>
             </div>
             <br />
-            <input
-              id="input_title"
-              placeholder="제목을 입력해 주세요"
-              style="
+            <input id="input_title" placeholder="제목을 입력해 주세요" style="
                 width: 200px;
                 height: 30px;
                 border: 2px solid black;
                 border-radius: 10px;
-              "
-            />
+              " />
             <br />
             <br />
-            <input
-              id="input_review"
-              placeholder="리뷰를 입력해 주세요"
-              style="
+            <input id="input_review" placeholder="리뷰를 입력해 주세요" style="
                 width: 500px;
                 height: 40px;
                 border: 2px solid black;
                 border-radius: 10px;
-              "
-            />
+              " />
             <br />
             <br />
             <div style="display: grid; grid-template-columns: 50% 50%">
-              <input
-                class="form-control"
-                multiple="multiple"
-                type="file"
-                id="file-upload"
-                ref="serveImage"
-                style="width: 400px"
-              />
-              <button
-                style="
+              <input class="form-control" multiple="multiple" type="file" id="file-upload" ref="serveImage"
+                style="width: 400px" />
+              <button style="
                   margin-left: 10px;
                   color: white;
                   background-color: black;
                   border-radius: 10px;
                   width: 60px;
                   height: 40px;
-                "
-                @click="submit_review"
-              >
+                " @click="submit_review">
                 작성
               </button>
             </div>
           </div>
           <!-- <hr style="width: 80%" /> -->
           <div v-for="review in state.reviews" :key="review">
-            <div
-              class="review_first"
-              style="
+            <div class="review_first" style="
                 display: grid;
                 grid-template-columns: 12% 10% 30%;
                 margin-bottom: 0px;
-              "
-            >
+              ">
               <div style="">
                 <img src="@/assets/logo/logo_white_6.png" style="width: 50px" />
               </div>
@@ -213,9 +158,9 @@
               <div>
                 <p>
                   {{
-                    globalProperties.$formatDatetime(
-                      new Date(review.createdDate),
-                    )
+                      globalProperties.$formatDatetime(
+                        new Date(review.createdDate),
+                      )
                   }}
                 </p>
               </div>
@@ -230,10 +175,7 @@
               </p>
             </div>
             <div>
-              <img
-                style="width: 100px; height: 100px"
-                :src="review.thumbnailImage"
-              />
+              <img style="width: 100px; height: 100px" :src="review.thumbnailImage" />
             </div>
             <hr style="width: 80%" />
           </div>
@@ -298,12 +240,12 @@ export default {
               if (globalProperties.$isLogin() == false) {
                 axios.get(
                   `https://sbbro.xyz/api/recommend/recommends/click/unlogin/` +
-                    product.id,
+                  product.id,
                 );
               } else {
                 axios.get(
                   `https://sbbro.xyz/api/recommend/recommends/click/login/` +
-                    product.id,
+                  product.id,
                   {
                     headers: {
                       Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -495,14 +437,24 @@ export default {
             'Content-Type': 'multipart/form-data',
           },
         })
-        .then(res => console.log(res.data));
+        .then(res => {
+          console.log(res.data);
+
+          Swal.fire({
+            title: '리뷰 작성이 완료되었습니다!',
+            icon: 'success',
+            showCancelButton: true,
+          }).then(result => {
+            getReviews()
+          });
+        });
     };
 
     const getBrand = async () => {
       await axios
         .get(
           'https://sbbro.xyz/api/member/store/brand/' +
-            state.products[0].brandId,
+          state.products[0].brandId,
           {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -601,7 +553,7 @@ input[type='radio'] {
   margin: 10px;
 }
 
-input[type='radio'] + label {
+input[type='radio']+label {
   display: inline-block;
   margin: -2px;
   padding: 8px 19px;
@@ -616,14 +568,16 @@ input[type='radio'] + label {
   white-space: nowrap;
 }
 
-input[type='radio']:checked + label {
+input[type='radio']:checked+label {
   background-color: #000000;
   color: white;
 }
+
 .list_contents {
   margin-left: 25%;
   width: 1100px;
 }
+
 .div_top {
   margin-right: 20%;
   display: grid;
@@ -679,6 +633,7 @@ input[type='radio']:checked + label {
   display: flex;
   margin-left: 10px;
 }
+
 .count input {
   width: 50px;
   height: 35px;
@@ -724,22 +679,26 @@ input[type='radio']:checked + label {
   display: grid;
   grid-template-columns: 40% 30%;
 }
+
 .click_nav button {
   background-color: transparent;
   font-size: 40px;
   font-weight: bold;
   color: gray;
 }
+
 .brand_info {
   color: black;
   display: flex;
 }
+
 .brand_name {
   align-self: center;
   margin-left: 20px;
   font-size: large;
   margin-bottom: 5px;
 }
+
 .brand_thumnail {
   border-radius: 50%;
   width: 60px;
