@@ -155,19 +155,22 @@ export default {
           },
         },
       });
-    }, '3000');
+    }, '4000');
   },
   methods: {
     getdayList() {
+      // console.log('today' + this.today);
       let dayList = [];
-      for (let i = 1; i < 12; i++) {
-        dayList.push(this.today.setDate(this.today.getDate() - i));
+      for (let i = 0; i < 12; i++) {
+        dayList.push(new Date().setDate(new Date().getDate() - i));
       }
       this.dayList = dayList;
-      // console.log(this.dayList);
+      // console.log(this.today);
+      // console.log(this.today.setDate(this.today.getDate() - 1));
+      console.log(this.dayList);
     },
     async getChartList() {
-      for (let i = 0; i < 11; i++) {
+      for (let i = 0; i < 10; i++) {
         await this.getDateList(this.dayList[i + 1], this.dayList[i]);
       }
       // console.log(this.chartList);
