@@ -10,17 +10,23 @@
             <div style="display: flex; justify-content: space-between">
               <p>상품코드 {{ state.productCode }}</p>
               <button style="background-color: transparent">
-                <like-button style="background-color: transparent" v-bind:productCode="state.productCode"></like-button>
+                <like-button
+                  style="background-color: transparent"
+                  v-bind:productCode="state.productCode"
+                ></like-button>
               </button>
             </div>
-            <div class="brand_info" @click="
-              router.push({
-                path: '/store',
-                query: {
-                  brandId: state.brand.id,
-                },
-              })
-            ">
+            <div
+              class="brand_info"
+              @click="
+                router.push({
+                  path: '/store',
+                  query: {
+                    brandId: state.brand.id,
+                  },
+                })
+              "
+            >
               <img class="brand_thumnail" :src="state.brand.imageUrl" />
               <div class="brand_name">
                 <h1>{{ state.brand.name }}</h1>
@@ -36,14 +42,28 @@
           <br />
           <hr />
 
-          <div class="" style="margin-top: 20px; margin-bottom: 10px; margin-left: 30px">
+          <div
+            class=""
+            style="margin-top: 20px; margin-bottom: 10px; margin-left: 30px"
+          >
             <div class="size_div" style="">
-              <div v-for="(product, index) in state.products" v-bind:key="index"
-                class="form-check form-check-inline form-check-size mb-2">
-                <input :id="'문자열' + index" v-model="state.selectedStoreIndex" type="radio" class="form-check-input"
-                  name="sizeRadio" :value="index" data-toggle="form-caption" data-target="#sizeCaption" />
+              <div
+                v-for="(product, index) in state.products"
+                v-bind:key="index"
+                class="form-check form-check-inline form-check-size mb-2"
+              >
+                <input
+                  :id="'문자열' + index"
+                  v-model="state.selectedStoreIndex"
+                  type="radio"
+                  class="form-check-input"
+                  name="sizeRadio"
+                  :value="index"
+                  data-toggle="form-caption"
+                  data-target="#sizeCaption"
+                />
                 <label class="form-check-label" :for="'문자열' + index">{{
-                    product.storeName
+                  product.storeName
                 }}</label>
               </div>
             </div>
@@ -52,16 +72,22 @@
           <div class="countClass">
             <div class="count">
               <button class="minus_Btn" @click="minusBtn">-</button>
-              <input id="countValue" :value="state.quantity" style="text-align: center" />
+              <input
+                id="countValue"
+                :value="state.quantity"
+                style="text-align: center"
+              />
               <button class="plus_Btn" @click="plusBtn">+</button>
             </div>
             <div>
-              <h2 style="
+              <h2
+                style="
                   margin-left: 35%;
                   margin-top: 2%;
                   font-weight: bold;
                   color: black;
-                ">
+                "
+              >
                 {{ comma(state.sumPrice) }} 원
               </h2>
             </div>
@@ -74,7 +100,10 @@
                 add_shopping_cart장바구니
               </span>
             </button>
-            <button @click="initOrder" style="background-color: black; color: white">
+            <button
+              @click="initOrder"
+              style="background-color: black; color: white"
+            >
               바로구매
             </button>
             <button @click="sendChat" style="background-color: white">
@@ -93,12 +122,16 @@
         </nav>
         <hr style="width: 80%" />
         <div id="product_detail">
-          <div style="margin-right: 20%" v-for="productImg in state.products[0]?.imageList" v-bind:key="productImg">
+          <div
+            style="margin-right: 20%"
+            v-for="productImg in state.products[0]?.imageList"
+            v-bind:key="productImg"
+          >
             <img :src="productImg" alt="/" />
           </div>
         </div>
         <div id="product_review" style="margin-top: 50px">
-          <div style="
+          <!-- <div style="
               margin-bottom: 20px;
               padding: 10px;
               border: solid 3px gray;
@@ -141,14 +174,17 @@
                 작성
               </button>
             </div>
-          </div>
+          </div> -->
           <!-- <hr style="width: 80%" /> -->
           <div v-for="review in state.reviews" :key="review">
-            <div class="review_first" style="
+            <div
+              class="review_first"
+              style="
                 display: grid;
                 grid-template-columns: 12% 10% 30%;
                 margin-bottom: 0px;
-              ">
+              "
+            >
               <div style="">
                 <img src="@/assets/logo/logo_white_6.png" style="width: 50px" />
               </div>
@@ -158,9 +194,9 @@
               <div>
                 <p>
                   {{
-                      globalProperties.$formatDatetime(
-                        new Date(review.createdDate),
-                      )
+                    globalProperties.$formatDatetime(
+                      new Date(review.createdDate),
+                    )
                   }}
                 </p>
               </div>
@@ -175,7 +211,10 @@
               </p>
             </div>
             <div>
-              <img style="width: 100px; height: 100px" :src="review.thumbnailImage" />
+              <img
+                style="width: 100px; height: 100px"
+                :src="review.thumbnailImage"
+              />
             </div>
             <hr style="width: 80%" />
           </div>
@@ -240,12 +279,12 @@ export default {
               if (globalProperties.$isLogin() == false) {
                 axios.get(
                   `https://sbbro.xyz/api/recommend/recommends/click/unlogin/` +
-                  product.id,
+                    product.id,
                 );
               } else {
                 axios.get(
                   `https://sbbro.xyz/api/recommend/recommends/click/login/` +
-                  product.id,
+                    product.id,
                   {
                     headers: {
                       Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -445,7 +484,7 @@ export default {
             icon: 'success',
             showCancelButton: true,
           }).then(result => {
-            getReviews()
+            getReviews();
           });
         });
     };
@@ -454,7 +493,7 @@ export default {
       await axios
         .get(
           'https://sbbro.xyz/api/member/store/brand/' +
-          state.products[0].brandId,
+            state.products[0].brandId,
           {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -553,7 +592,7 @@ input[type='radio'] {
   margin: 10px;
 }
 
-input[type='radio']+label {
+input[type='radio'] + label {
   display: inline-block;
   margin: -2px;
   padding: 8px 19px;
@@ -568,7 +607,7 @@ input[type='radio']+label {
   white-space: nowrap;
 }
 
-input[type='radio']:checked+label {
+input[type='radio']:checked + label {
   background-color: #000000;
   color: white;
 }
