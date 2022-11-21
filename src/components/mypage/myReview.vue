@@ -1,19 +1,20 @@
 <template>
   <div class="mypage col-12 col-md-9 col-lg-8 offset-lg-1">
-    <h2>리뷰 작성</h2>
+    <h2 style="text-align: center">리뷰 작성</h2>
     <br />
 
     <div
       style="
         margin-bottom: 20px;
+        margin-left: 10%;
         padding: 10px;
-        border: solid 3px gray;
+        border: solid 0px black;
         width: 800px;
       "
     >
       <div style="display: grid; grid-template-columns: 13% 20% 20%">
         <div style="">
-          <img src="@/assets/logo/logo_white_6.png" style="width: 50px" />
+          <!-- <img src="@/assets/logo/logo_white_6.png" style="width: 50px" /> -->
         </div>
         <h3>{{ state.login_id }}</h3>
       </div>
@@ -22,10 +23,11 @@
         id="input_title"
         placeholder="제목을 입력해 주세요"
         style="
-          width: 200px;
-          height: 30px;
-          border: 2px solid black;
-          border-radius: 10px;
+          width: 470px;
+          height: 50px;
+          margin-left: 20%;
+          border: 1px solid black;
+          /* border-radius: 10px; */
         "
       />
       <br />
@@ -34,10 +36,11 @@
         id="input_review"
         placeholder="리뷰를 입력해 주세요"
         style="
-          width: 500px;
-          height: 40px;
-          border: 2px solid black;
-          border-radius: 10px;
+          width: 470px;
+          height: 160px;
+          margin-left: 20%;
+          border: 1px solid black;
+          /* border-radius: 10px; */
         "
       />
       <br />
@@ -49,15 +52,15 @@
           type="file"
           id="file-upload"
           ref="serveImage"
-          style="width: 400px"
+          style="width: 400px; margin-left: 40%"
         />
         <button
           style="
-            margin-left: 10px;
+            margin-left: 110px;
             color: white;
             background-color: black;
-            border-radius: 10px;
-            width: 60px;
+            /* border-radius: 10px; */
+            width: 130px;
             height: 40px;
           "
           @click="submit_review"
