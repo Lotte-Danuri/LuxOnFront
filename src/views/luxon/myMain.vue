@@ -1009,4 +1009,14 @@ a {
 .data_grid h3 {
   font-weight: bold;
 }
+
+.cls_brandName {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 18px;
+}
+
+.cls_productName {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+}
 </style>

@@ -25,7 +25,7 @@
                 <!-- Text -->
                 <p class="mb-lg-0 fs-sm fw-bold">
                   <time datetime="2019-10-01">
-                    {{ order.orderDate }}
+                    {{ formatDatetime(new Date(order.orderDate)) }}
                   </time>
                 </p>
               </div>
@@ -48,7 +48,7 @@
                 <div
                   v-for="o in order.orderDataDtoList"
                   v-bind:key="o"
-                  style="height: 200px"
+                  style="height: 220px"
                 >
                   <div>
                     <div class="row">
@@ -97,7 +97,7 @@
                           <button
                             style="
                               width: 200px;
-                              height: 50px;
+                              height: 40px;
                               margin-top: 5%;
                               margin-bottom: 0px;
                               background-color: black;
@@ -111,7 +111,7 @@
                         <button
                           style="
                             width: 200px;
-                            height: 50px;
+                            height: 40px;
                             margin-top: 10px;
                             margin-bottom: 0px;
                             background-color: black;
@@ -127,7 +127,7 @@
                         <button
                           style="
                             width: 200px;
-                            height: 50px;
+                            height: 40px;
                             margin-top: 10px;
                             margin-bottom: 0px;
                             background-color: black;
@@ -138,6 +138,28 @@
                         >
                           NFT 증명서
                         </button>
+                        <router-link
+                          :to="{
+                            path: '/mypage/review',
+                            query: {
+                              productCode: o.productCode,
+                            },
+                          }"
+                        >
+                          <button
+                            style="
+                              width: 200px;
+                              height: 40px;
+                              margin-top: 10px;
+                              margin-bottom: 0px;
+                              background-color: black;
+                              color: white;
+                              border-radius: 5px;
+                            "
+                          >
+                            리뷰작성
+                          </button>
+                        </router-link>
                       </div>
                     </div>
                   </div>
@@ -164,6 +186,8 @@ import { useRouter } from 'vue-router';
 
 export default {
   setup() {
+    const formatDatetime =
+      getCurrentInstance().appContext.config.globalProperties.$formatDatetime;
     const emitter =
       getCurrentInstance().appContext.config.globalProperties.$emitter;
     const router = useRouter();
@@ -303,9 +327,20 @@ export default {
       });
     };
 
+    const pushReview = async order => {
+      router.push({
+        name: 'review',
+        params: {
+          orderId: order.id,
+          userId: state.orderList[0].buyerId,
+          productId: order.productId,
+        },
+      });
+    };
+
     window.scrollTo(0, 0);
 
-    return { state, comma, pushNft, sendChat };
+    return { state, comma, pushNft, pushReview, sendChat, formatDatetime };
   },
 };
 </script>

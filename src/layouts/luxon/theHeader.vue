@@ -61,6 +61,13 @@
                 <p>장바구니</p>
               </router-link>
             </li>
+            <li id="seller_btn" style="display: none">
+              <router-link to="/admin/dashboard">
+                <!-- <i class="fa-solid fa-bag-shopping"></i> -->
+                <span class="material-icons-sharp"> storefront </span>
+                <p>판매자페이지</p>
+              </router-link>
+            </li>
           </ul>
 
           <!-- <a href="#" class="navbar__toogleBtn" @click="btnClick">
@@ -152,10 +159,14 @@ export default {
     const state = reactive({
       localStorage: '',
       searchValue: '',
+      link_seller: false,
     });
 
     onMounted(() => {
       state.localStorage = localStorage;
+      if (localStorage.getItem('role') == 1) {
+        document.getElementById('seller_btn').style.display = 'block';
+      }
       if (localStorage.getItem('login_id') !== null) {
         const firebaseConfig = {
           apiKey: 'AIzaSyAHFnEL7qoOi2fQB9opoZeOFFy9MUH7GDM',

@@ -95,7 +95,7 @@
           "
         />
 
-        <div class="chat__yourmessage__product">
+        <div class="chat__mymessage__product">
           <div
             class="product_name"
             @click="

@@ -120,6 +120,11 @@ const routes = [
             component: () => import('@/components/mypage/myNft.vue'),
           },
           {
+            path: 'review',
+            name: 'review',
+            component: () => import('@/components/mypage/myReview.vue'),
+          },
+          {
             path: 'nftlist',
             name: 'nftlist',
             component: () => import('@/components/mypage/myNftList.vue'),
@@ -127,7 +132,7 @@ const routes = [
           {
             path: 'coupon',
             name: 'coupon',
-            component: () => import('@/components/mypage/myCoupon.vue')
+            component: () => import('@/components/mypage/myCoupon.vue'),
           },
           {
             path: 'myinfo',

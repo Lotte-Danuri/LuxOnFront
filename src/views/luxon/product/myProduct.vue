@@ -131,14 +131,12 @@
           </div>
         </div>
         <div id="product_review" style="margin-top: 50px">
-          <div
-            style="
+          <!-- <div style="
               margin-bottom: 20px;
               padding: 10px;
               border: solid 3px gray;
               width: 800px;
-            "
-          >
+            ">
             <div style="display: grid; grid-template-columns: 13% 20% 20%">
               <div style="">
                 <img src="@/assets/logo/logo_white_6.png" style="width: 50px" />
@@ -146,54 +144,37 @@
               <h3>{{ state.login_id }}</h3>
             </div>
             <br />
-            <input
-              id="input_title"
-              placeholder="제목을 입력해 주세요"
-              style="
+            <input id="input_title" placeholder="제목을 입력해 주세요" style="
                 width: 200px;
                 height: 30px;
                 border: 2px solid black;
                 border-radius: 10px;
-              "
-            />
+              " />
             <br />
             <br />
-            <input
-              id="input_review"
-              placeholder="리뷰를 입력해 주세요"
-              style="
+            <input id="input_review" placeholder="리뷰를 입력해 주세요" style="
                 width: 500px;
                 height: 40px;
                 border: 2px solid black;
                 border-radius: 10px;
-              "
-            />
+              " />
             <br />
             <br />
             <div style="display: grid; grid-template-columns: 50% 50%">
-              <input
-                class="form-control"
-                multiple="multiple"
-                type="file"
-                id="file-upload"
-                ref="serveImage"
-                style="width: 400px"
-              />
-              <button
-                style="
+              <input class="form-control" multiple="multiple" type="file" id="file-upload" ref="serveImage"
+                style="width: 400px" />
+              <button style="
                   margin-left: 10px;
                   color: white;
                   background-color: black;
                   border-radius: 10px;
                   width: 60px;
                   height: 40px;
-                "
-                @click="submit_review"
-              >
+                " @click="submit_review">
                 작성
               </button>
             </div>
-          </div>
+          </div> -->
           <!-- <hr style="width: 80%" /> -->
           <div v-for="review in state.reviews" :key="review">
             <div
@@ -495,7 +476,17 @@ export default {
             'Content-Type': 'multipart/form-data',
           },
         })
-        .then(res => console.log(res.data));
+        .then(res => {
+          console.log(res.data);
+
+          Swal.fire({
+            title: '리뷰 작성이 완료되었습니다!',
+            icon: 'success',
+            showCancelButton: true,
+          }).then(result => {
+            getReviews();
+          });
+        });
     };
 
     const getBrand = async () => {
@@ -620,10 +611,12 @@ input[type='radio']:checked + label {
   background-color: #000000;
   color: white;
 }
+
 .list_contents {
   margin-left: 25%;
   width: 1100px;
 }
+
 .div_top {
   margin-right: 20%;
   display: grid;
@@ -679,6 +672,7 @@ input[type='radio']:checked + label {
   display: flex;
   margin-left: 10px;
 }
+
 .count input {
   width: 50px;
   height: 35px;
@@ -724,22 +718,26 @@ input[type='radio']:checked + label {
   display: grid;
   grid-template-columns: 40% 30%;
 }
+
 .click_nav button {
   background-color: transparent;
   font-size: 40px;
   font-weight: bold;
   color: gray;
 }
+
 .brand_info {
   color: black;
   display: flex;
 }
+
 .brand_name {
   align-self: center;
   margin-left: 20px;
   font-size: large;
   margin-bottom: 5px;
 }
+
 .brand_thumnail {
   border-radius: 50%;
   width: 60px;
