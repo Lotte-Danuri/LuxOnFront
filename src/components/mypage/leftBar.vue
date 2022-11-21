@@ -25,7 +25,7 @@
       <div class="menu">
         <p class="menu-title">나의 활동정보</p>
         <ul>
-          <li><a>상품리뷰</a></li>
+          <!-- <li><a>상품리뷰</a></li> -->
           <li>
             <router-link to="/mypage/like">
               <a>찜</a>
