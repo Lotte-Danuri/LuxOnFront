@@ -179,7 +179,7 @@ export default {
     async getCouponList() {
       axios
         .get(
-          'https://sbbro.xyz/api/product/admin/coupons/' +
+          'http://localhost:8000/product/admin/coupons/' +
           localStorage.getItem('store_id'),
           {
             headers: {
@@ -197,7 +197,7 @@ export default {
     CouponToFollower() {
       axios
         .post(
-          'https://sbbro.xyz/api/member/mycoupon/all',
+          'http://localhost:8000/member/mycoupon/all',
           {
             storeId: localStorage.getItem('store_id'),
             couponList: this.couponCheckVmodel,
@@ -230,7 +230,7 @@ export default {
       if (this.userCheckVmodel.length < 2) {
         axios
           .post(
-            'https://sbbro.xyz/api/chat/chatRoom/chat',
+            'http://localhost:8000/chat/chatRoom/chat',
             {
               id: null,
               content: '쿠폰이 도착했습니다',
@@ -265,7 +265,7 @@ export default {
       } else {
         axios
           .post(
-            'https://sbbro.xyz/api/chat/chatRoom/chats',
+            'http://localhost:8000/chat/chatRoom/chats',
             {
               id: null,
               content: '쿠폰이 도착했습니다',
@@ -307,7 +307,7 @@ export default {
       this.nickName = document.getElementById('nickName').value;
       axios
         .post(
-          'https://sbbro.xyz/api/auth/info',
+          'http://localhost:8000/auth/info',
           {
             name: this.nickName,
           },

@@ -18,6 +18,7 @@
       >
         {{ msg.content }}
       </div>
+
       <div
         class="chat__mymessage__image"
         v-else-if="msg.contentType == '이미지'"
@@ -241,9 +242,14 @@
       <ChatRecommend
         class="chat__yourmessage__product"
         v-else-if="msg.contentType == '추천'"
-        :chatData="msg"
       >
       </ChatRecommend>
+      <ChatAutoMessage
+        class="chat__mymessage__paragraph"
+        v-else-if="msg.contentType == '자동응답'"
+        :chatData="msg"
+      >
+      </ChatAutoMessage>
     </div>
     <div
       v-else
@@ -491,7 +497,12 @@
             :chatData="msg"
           >
           </ChatRecommend>
-
+          <ChatAutoMessage
+            class="chat__yourmessage__paragraph"
+            v-else-if="msg.contentType == '자동응답'"
+            :chatData="msg"
+          >
+          </ChatAutoMessage>
           <p class="chat__yourmessage__time">
             {{ msg.createdAt.substr(11, 5) }}
           </p>
@@ -508,6 +519,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'vue-router';
 import ChatRecommend from '@/components/chat/chatRecommend.vue';
+import ChatAutoMessage from '@/components/chat/chatAutoMessage.vue';
 
 export default {
   setup() {
@@ -525,6 +537,7 @@ export default {
   props: ['msg', 'prev'],
   components: {
     ChatRecommend,
+    ChatAutoMessage,
   },
   data() {
     return {
@@ -587,7 +600,7 @@ export default {
     },
     async getCouponInfo(couponId) {
       await axios
-        .get('https://sbbro.xyz/api/product/coupons/' + couponId, {
+        .get('http://localhost:8000/product/coupons/' + couponId, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',
@@ -599,7 +612,7 @@ export default {
     async getCoupon(couponId) {
       await axios
         .post(
-          'https://sbbro.xyz/api/member/mycoupon/person',
+          'http://localhost:8000/member/mycoupon/person',
           { id: couponId },
           {
             headers: {
@@ -612,7 +625,7 @@ export default {
     },
     async getProduct(productId) {
       await axios
-        .get('https://sbbro.xyz/api/product/products/' + productId, {
+        .get('http://localhost:8000/product/products/' + productId, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',
@@ -623,7 +636,7 @@ export default {
     },
     async getSaleProduct(source) {
       await axios
-        .get('https://sbbro.xyz/api/product/products/' + source[0], {
+        .get('http://localhost:8000/product/products/' + source[0], {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',
@@ -632,7 +645,7 @@ export default {
         .then(res => (this.product = res))
         .catch(err => console.log(err));
       await axios
-        .get('https://sbbro.xyz/api/product/coupons/' + source[1], {
+        .get('http://localhost:8000/product/coupons/' + source[1], {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',
@@ -643,7 +656,7 @@ export default {
     },
     async getPromotion(promotionId) {
       await axios
-        .get('https://sbbro.xyz/api/member/promotion/' + promotionId, {
+        .get('http://localhost:8000/member/promotion/' + promotionId, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',
@@ -655,7 +668,7 @@ export default {
     async insertCart(productId) {
       axios
         .post(
-          'https://sbbro.xyz/api/member/cart',
+          'http://localhost:8000/member/cart',
           {
             productId: productId,
             quantity: 1,
@@ -689,7 +702,7 @@ export default {
         console.log(productList);
         await productList.forEach(async product => {
           await axios
-            .get('https://sbbro.xyz/api/product/products/list/' + product, {
+            .get('http://localhost:8000/product/products/list/' + product, {
               headers: {
                 Authorization: `Bearer ` + localStorage.getItem('token'),
                 contentType: 'application/json',

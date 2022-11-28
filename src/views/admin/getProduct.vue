@@ -194,7 +194,7 @@ export default {
     async getProductList() {
       axios
         .get(
-          'https://sbbro.xyz/api/product/sellers/products/' +
+          'http://localhost:8000/product/sellers/products/' +
             localStorage.getItem('store_id'),
           {
             headers: {
@@ -250,7 +250,7 @@ export default {
       let inputProductName = document.getElementById('inputProductName').value;
       axios
         .post(
-          'https://sbbro.xyz/api/product/sellers/products/category',
+          'http://localhost:8000/product/sellers/products/category',
           {
             stordId: localStorage.getItem('store_id'),
             categoryFirstId: firstClickId,
@@ -278,7 +278,7 @@ export default {
     deleteProduct(productId) {
       var id = parseInt(productId);
       axios
-        .delete('https://sbbro.xyz/api/product/sellers/products', {
+        .delete('http://localhost:8000/product/sellers/products', {
           data: {
             id: id,
           },
@@ -296,7 +296,7 @@ export default {
     async getBrand(storeId) {
       try {
         const response = await axios.get(
-          'https://sbbro.xyz/api/member/store/name/' + storeId,
+          'http://localhost:8000/member/store/name/' + storeId,
           {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),

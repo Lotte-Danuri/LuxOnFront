@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue';
 
 // const path = require('path');
 
-// const target = 'https://sbbro.xyz/api/product';
+// const target = 'http://localhost:8000/product';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],

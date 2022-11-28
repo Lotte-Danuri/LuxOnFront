@@ -184,7 +184,7 @@ export default {
     async getBrandStores() {
       await axios
         .get(
-          'https://sbbro.xyz/api/member/store/stores/' +
+          'http://localhost:8000/member/store/stores/' +
             this.$route.query.brandId,
           {
             headers: {
@@ -199,7 +199,7 @@ export default {
     async getBrand() {
       await axios
         .get(
-          'https://sbbro.xyz/api/member/store/brand/' +
+          'http://localhost:8000/member/store/brand/' +
             this.$route.query.brandId,
           {
             headers: {
@@ -214,7 +214,7 @@ export default {
     async getBrandProduct() {
       await axios
         .post(
-          'https://sbbro.xyz/api/product/products/brand',
+          'http://localhost:8000/product/products/brand',
           {
             brandId: this.$route.query.brandId,
             categoryFirstId: this.firstValue,
@@ -240,7 +240,7 @@ export default {
       if (!this.followBool) {
         await axios
           .post(
-            'https://sbbro.xyz/api/member/follow',
+            'http://localhost:8000/member/follow',
             {
               storeId: this.selectedStoreId,
             },
@@ -257,7 +257,7 @@ export default {
           });
       } else {
         await axios
-          .delete('https://sbbro.xyz/api/member/follow', {
+          .delete('http://localhost:8000/member/follow', {
             data: { storeId: this.selectedStoreId, id: this.followId },
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -273,7 +273,7 @@ export default {
     sendMessage: async function () {
       await axios
         .post(
-          'https://sbbro.xyz/api/chat/chatRoom/chat',
+          'http://localhost:8000/chat/chatRoom/chat',
           {
             id: null,
             content: this.brand.name + ' 문의',
@@ -296,7 +296,7 @@ export default {
     async getFollow() {
       await axios
         .get(
-          'https://sbbro.xyz/api/member/follow/member/' + this.selectedStoreId,
+          'http://localhost:8000/member/follow/member/' + this.selectedStoreId,
           {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),

@@ -51,7 +51,7 @@ export default {
     const checkLike = async () => {
       await axios
         .post(
-          'https://sbbro.xyz/api/member/likes/check',
+          'http://localhost:8000/member/likes/check',
           {
             productCode: props.productCode,
           },
@@ -77,7 +77,7 @@ export default {
       if (state.buttonCheck == false) {
         await axios
           .post(
-            'https://sbbro.xyz/api/member/likes',
+            'http://localhost:8000/member/likes',
             {
               productCode: props.productCode,
             },
@@ -94,7 +94,7 @@ export default {
           });
       } else {
         await axios
-          .delete('https://sbbro.xyz/api/member/likes', {
+          .delete('http://localhost:8000/member/likes', {
             data: {
               productCode: props.productCode,
             },

@@ -257,7 +257,7 @@ export default {
       console.log(this.firstValue, this.secondValue, this.thirdValue);
       axios
         .post(
-          'https://sbbro.xyz/api/product/sellers/products/category',
+          'http://localhost:8000/product/sellers/products/category',
           {
             stordId: localStorage.getItem('store_id'),
             categoryFirstId: firstClickId,
@@ -320,7 +320,7 @@ export default {
       console.log(localStorage.getItem('store_id'));
       axios
         .post(
-          'https://sbbro.xyz/api/product/admin/coupons',
+          'http://localhost:8000/product/admin/coupons',
           {
             storeId: localStorage.getItem('store_id'),
             name: this.couponName,

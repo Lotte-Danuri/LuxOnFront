@@ -125,7 +125,7 @@ export default {
       console.log(fd);
 
       await axios
-        .post('https://sbbro.xyz/api/review/', fd, {
+        .post('http://localhost:8000/review/', fd, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             'Content-Type': 'multipart/form-data',

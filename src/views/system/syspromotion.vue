@@ -142,7 +142,7 @@ export default {
   methods: {
     getMember: async function (value) {
       await axios
-        .get('https://sbbro.xyz/api/auth/all/0', {
+        .get('http://localhost:8000/auth/all/0', {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',
@@ -167,7 +167,7 @@ export default {
     },
     getPromotion: async function () {
       await axios
-        .get('https://sbbro.xyz/api/member/promotion/all', {
+        .get('http://localhost:8000/member/promotion/all', {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             'Content-Type': 'application/json',
@@ -180,7 +180,7 @@ export default {
       this.selectedPromotions.forEach(async function (promotion) {
         await axios
           .post(
-            'https://sbbro.xyz/api/chat/chatRoom/chats',
+            'http://localhost:8000/chat/chatRoom/chats',
             {
               id: null,
               content: content,

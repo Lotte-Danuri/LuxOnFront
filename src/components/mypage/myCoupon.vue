@@ -1,15 +1,21 @@
 <template>
   <div class="mypage col-12 col-md-9 col-lg-8 offset-lg-1">
     <h2>쿠폰 조회</h2>
-    <br>
+    <br />
 
     <div class="list-group">
-      <a v-for="coupon in state.coupons" :key="coupon" href="#" class="list-group-item list-group-item-action" aria-current="true">
+      <a
+        v-for="coupon in state.coupons"
+        :key="coupon"
+        href="#"
+        class="list-group-item list-group-item-action"
+        aria-current="true"
+      >
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{coupon.name}}</h5>
+          <h5 class="mb-1">{{ coupon.name }}</h5>
         </div>
-        <p class="mb-1">{{coupon.contents}}</p>
-        <small>{{coupon.startDate}} - {{coupon.endDate}}</small>
+        <p class="mb-1">{{ coupon.contents }}</p>
+        <small>{{ coupon.startDate }} - {{ coupon.endDate }}</small>
       </a>
     </div>
   </div>
@@ -18,12 +24,12 @@
 </template>
 
 <script>
-import { reactive } from "vue";
-import { onBeforeMount } from "vue";
-import axios from "axios";
-import { getCurrentInstance } from "vue";
-import Swal from "sweetalert2";
-import { useRoute, useRouter } from "vue-router";
+import { reactive } from 'vue';
+import { onBeforeMount } from 'vue';
+import axios from 'axios';
+import { getCurrentInstance } from 'vue';
+import Swal from 'sweetalert2';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   setup() {
@@ -31,35 +37,39 @@ export default {
     const router = useRouter();
 
     const state = reactive({
-      coupons : []
-    })
+      coupons: [],
+    });
 
     onBeforeMount(async () => {
-      await getCoupons()
-    })
+      await getCoupons();
+    });
 
     const getCoupons = async () => {
       try {
-        const response = await axios.get("https://sbbro.xyz/api/member/mycoupon/all", {
-          headers: {
-            Authorization: `Bearer ` + localStorage.getItem('token'),
+        const response = await axios.get(
+          'http://localhost:8000/member/mycoupon/all',
+          {
+            headers: {
+              Authorization: `Bearer ` + localStorage.getItem('token'),
+            },
           },
-        })
-        console.log(response.data)
+        );
+        console.log(response.data);
         state.coupons = response.data;
-        console.log('data', state.coupons)
+        console.log('data', state.coupons);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
+    };
 
-    return { state, };
+    return { state };
   },
 };
 </script>
 
 <style>
-.pc-wrap {}
+.pc-wrap {
+}
 
 .mypage {
   background-color: #fff;

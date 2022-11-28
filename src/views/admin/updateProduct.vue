@@ -166,7 +166,7 @@ export default {
       this.productId = route.query.productId;
       axios
         .get(
-          'https://sbbro.xyz/api/product/products/'+this.productId,
+          'http://localhost:8000/product/products/'+this.productId,
         )
         .then(response => {
           this.product=response.data;
@@ -208,7 +208,7 @@ export default {
       }
 
       axios
-        .post('https://sbbro.xyz/api/product/sellers/products/update', fd, {
+        .post('http://localhost:8000/product/sellers/products/update', fd, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             'Content-Type': 'multipart/form-data',
