@@ -96,7 +96,7 @@ export default {
   methods: {
     getMember: async function (value) {
       await axios
-        .get('https://sbbro.xyz/api/auth/all/0', {
+        .get('http://localhost:8000/auth/all/0', {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',
@@ -125,7 +125,7 @@ export default {
       console.log(selectedMembers);
       await axios
         .post(
-          'https://sbbro.xyz/api/recommend/recommends/member/list',
+          'http://localhost:8000/recommend/recommends/member/list',
           selectedMembers,
           {
             headers: {
@@ -141,7 +141,7 @@ export default {
         rec.productCode.length != 0
           ? await axios
               .post(
-                'https://sbbro.xyz/api/chat/chatRoom/chat',
+                'http://localhost:8000/chat/chatRoom/chat',
                 {
                   id: null,
                   content: content,

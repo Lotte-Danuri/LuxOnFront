@@ -7,22 +7,41 @@
     <br />
     <div class="product hide-scroll">
       <ul class="product__list thum--4 gap--mid">
-        <li class="product__item" v-for="product in state.products" v-bind:key="product">
+        <li
+          class="product__item"
+          v-for="product in state.products"
+          v-bind:key="product"
+        >
           <div class="product__thum gray">
-            <router-link :to="{
-              name: 'nft',
-              params: { userId: state.userInfo.id, productId: product.productId, orderId : product.orderId },
-            }">
-              <img :src="product.image" :alt="product.productName"
-                onError="this.src='https://image.sivillage.com/upload/C00001/common/noimg.jpg?RS=300&SP=1'" />
+            <router-link
+              :to="{
+                name: 'nft',
+                params: {
+                  userId: state.userInfo.id,
+                  productId: product.productId,
+                  orderId: product.orderId,
+                },
+              }"
+            >
+              <img
+                :src="product.image"
+                :alt="product.productName"
+                onError="this.src='https://image.sivillage.com/upload/C00001/common/noimg.jpg?RS=300&SP=1'"
+              />
             </router-link>
           </div>
           <a class="product__data" onclick="">
             <p class="product__data-brand">{{ product.brandName }}</p>
-            <router-link :to="{
-              name: 'nft',
-              params: { userId: state.userInfo.id, productId: product.productId, orderId : product.orderId },
-            }">
+            <router-link
+              :to="{
+                name: 'nft',
+                params: {
+                  userId: state.userInfo.id,
+                  productId: product.productId,
+                  orderId: product.orderId,
+                },
+              }"
+            >
               <p class="product__data-name">
                 {{ product.name }}
               </p>
@@ -57,32 +76,35 @@ export default {
       await getNftProducts();
     });
 
-    const getNftProducts = async()=>{
-      try{
-        const response = await axios.post('https://sbbro.xyz/v2/nft/api/nft/list',{
-          userId : state.userInfo.id
-        })
-        console.log('getNftProducts',response)
-        state.products = response.data
-      }catch(err){
-        console.log(err)
+    const getNftProducts = async () => {
+      try {
+        const response = await axios.post(
+          'https://sbbro.xyz/v2/nft/api/nft/list',
+          {
+            userId: state.userInfo.id,
+          },
+        );
+        console.log('getNftProducts', response);
+        state.products = response.data;
+      } catch (err) {
+        console.log(err);
       }
-    }
+    };
 
     const getUserData = async () => {
       try {
-        const response = await axios
-          .get('https://sbbro.xyz/api/member/members', {
+        const response = await axios.get(
+          'http://localhost:8000/member/members',
+          {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
             },
-          })
+          },
+        );
         console.log(response);
         state.userInfo = response.data;
-      } catch {
-
-      }
-    }
+      } catch {}
+    };
 
     return { state, comma };
   },
@@ -184,19 +206,30 @@ export default {
   height: 120px;
 }
 
-.module-cody-recom__tab .product__list.type-w80px .product__thum>a {
+.module-cody-recom__tab .product__list.type-w80px .product__thum > a {
   position: relative;
 }
 
-.module-cody-recom__tab .product__list.type-w80px .product__thum>a.active img {
+.module-cody-recom__tab
+  .product__list.type-w80px
+  .product__thum
+  > a.active
+  img {
   opacity: 1;
 }
 
-.module-cody-recom__tab .product__list.type-w80px .product__thum>a.active .module-cody-recom__bedge {
+.module-cody-recom__tab
+  .product__list.type-w80px
+  .product__thum
+  > a.active
+  .module-cody-recom__bedge {
   background: #d99c63;
 }
 
-.module-cody-recom__tab .product__list.type-w80px .product__thum>a.active::after {
+.module-cody-recom__tab
+  .product__list.type-w80px
+  .product__thum
+  > a.active::after {
   position: absolute;
   top: 0;
   left: 0;
@@ -207,7 +240,7 @@ export default {
   content: '';
 }
 
-.module-cody-recom__tab .product__list.type-w80px .product__thum>a img {
+.module-cody-recom__tab .product__list.type-w80px .product__thum > a img {
   opacity: 0.5;
 }
 
@@ -228,8 +261,8 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-.product__thum>a,
-.product__thum>.no-click {
+.product__thum > a,
+.product__thum > .no-click {
   justify-content: center;
 }
 

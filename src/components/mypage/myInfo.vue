@@ -161,7 +161,7 @@ export default {
       console.log(state.id, state.name, state.phone, state.address);
       axios
         .post(
-          'https://sbbro.xyz/api/member/info',
+          'http://localhost:8000/member/info',
           {
             name: state.name,
             phoneNumber: state.phone,

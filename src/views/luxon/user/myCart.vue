@@ -179,7 +179,7 @@ export default {
       }
 
       await axios
-        .get('https://sbbro.xyz/api/member/cart', {
+        .get('http://localhost:8000/member/cart', {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
           },
@@ -230,7 +230,7 @@ export default {
       }).then(result => {
         if (result.isConfirmed) {
           axios
-            .delete('https://sbbro.xyz/api/member/cart', {
+            .delete('http://localhost:8000/member/cart', {
               data: {
                 id: state.products[index].id,
               },

@@ -654,7 +654,7 @@ export default {
     // async getRecommendList() {
     //   try {
     //     const response = await axios.get(
-    //       'https://sbbro.xyz/api/recommend/recommends/list/',
+    //       'http://localhost:8000/recommend/recommends/list/',
     //       {
     //         headers: {
     //           Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -675,7 +675,7 @@ export default {
     async getBestList() {
       try {
         const response = await axios.get(
-          'https://sbbro.xyz/api/product/products/best/list',
+          'http://localhost:8000/product/products/best/list',
           // {
           //   headers: {
           //     Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -685,7 +685,7 @@ export default {
         this.bestList = response.data;
         try {
           const response = await axios.get(
-            'https://sbbro.xyz/api/recommend/recommends/list/',
+            'http://localhost:8000/recommend/recommends/list/',
             {
               headers: {
                 Authorization: `Bearer ` + localStorage.getItem('token'),

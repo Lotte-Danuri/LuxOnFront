@@ -75,7 +75,7 @@ export default {
     },
     getRoomDatas: async function () {
       await axios
-        .get('https://sbbro.xyz/api/chat/user/' + this.userId, {
+        .get('http://localhost:8000/chat/user/' + this.userId, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',
@@ -87,7 +87,7 @@ export default {
     outBtn: async function () {
       await axios
         .delete(
-          'https://sbbro.xyz/api/chat/user/' +
+          'http://localhost:8000/chat/user/' +
             this.userId +
             '/' +
             this.selectedChatRoom.chatRoomId,
@@ -104,7 +104,7 @@ export default {
     getChatDatas: async function (val) {
       await axios
         .get(
-          'https://sbbro.xyz/api/chat/chatRoom/chats/' +
+          'http://localhost:8000/chat/chatRoom/chats/' +
             this.userId +
             '/' +
             val,
@@ -121,7 +121,7 @@ export default {
     getNewMessages: async function (val) {
       await axios
         .get(
-          'https://sbbro.xyz/api/chat/chatRoom/newChats/' +
+          'http://localhost:8000/chat/chatRoom/newChats/' +
             this.userId +
             '/' +
             val,
@@ -150,7 +150,7 @@ export default {
       };
       if (type == '메세지') {
         await axios
-          .post('https://sbbro.xyz/api/chat/chatRoom/chat', data, {
+          .post('http://localhost:8000/chat/chatRoom/chat', data, {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
               contentType: 'application/json',
@@ -169,7 +169,7 @@ export default {
         fd.append('chatVo', blob);
         fd.append('imageFile', file);
         await axios
-          .post('https://sbbro.xyz/api/chat/chatRoom/image', fd, {
+          .post('http://localhost:8000/chat/chatRoom/image', fd, {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
               contentType: 'multipart/form-data',

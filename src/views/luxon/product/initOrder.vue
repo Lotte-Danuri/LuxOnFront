@@ -286,7 +286,7 @@ export default {
       for (var index in products.value) {
         await axios
           .post(
-            'https://sbbro.xyz/api/member/mycoupon/product',
+            'http://localhost:8000/member/mycoupon/product',
             {
               productId: products.value[index].productDto.id,
             },
@@ -307,7 +307,7 @@ export default {
     const setReserveCoupon = async () => {
       try {
         const response = await axios.get(
-          'https://sbbro.xyz/api/product/coupons/' + reserveCouponId.value,
+          'http://localhost:8000/product/coupons/' + reserveCouponId.value,
           {
             headers: {
               Authorization: `Bearer ` + localStorage.getItem('token'),
@@ -326,7 +326,7 @@ export default {
 
     const getUserData = async () => {
       await axios
-        .get('https://sbbro.xyz/api/member/members', {
+        .get('http://localhost:8000/member/members', {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
           },
@@ -389,7 +389,7 @@ export default {
           }
           axios
             .post(
-              `https://sbbro.xyz/api/order/orders/pays`,
+              `http://localhost:8000/order/orders/pays`,
               {
                 buyerId: state.userInfo.id,
                 totalPrice: totalPrice(),

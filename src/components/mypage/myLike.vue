@@ -107,7 +107,7 @@ export default {
     });
     onBeforeMount(() => {
       axios
-        .post('https://sbbro.xyz/api/member/like', null, {
+        .post('http://localhost:8000/member/like', null, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             'Content-Type': 'application/json',

@@ -1,5 +1,9 @@
 <template>
-  <button class="socialButton" @click="naverLogin" style="background-color: transparent;">
+  <button
+    class="socialButton"
+    @click="naverLogin"
+    style="background-color: transparent"
+  >
     <img
       src="//cdn-fo.sivillage.com/fo/assets/comm/image/icon_sns_naver.png?cVer=202211090622"
       style="width: 60px; height: 60px"
@@ -14,7 +18,7 @@ export default {
   methods: {
     naverLogin() {
       axios
-        .get('https://sbbro.xyz/api/auth/oauth/code/naver')
+        .get('http://localhost:8000/auth/oauth/code/naver')
         .then(response => {
           console.log(response);
           window.location.href = response.data;
@@ -27,7 +31,7 @@ export default {
       localStorage.setItem('userinfo', route.query.code);
       axios
         .get(
-          'https://sbbro.xyz/api/auth/oauth/token?code=' +
+          'http://localhost:8000/auth/oauth/token?code=' +
             route.query.code +
             '&service=naver',
         )
@@ -37,7 +41,7 @@ export default {
           localStorage.setItem('userName', response.data.encodedName);
           localStorage.setItem('login_id', response.data.loginId);
           axios
-            .post('https://sbbro.xyz/api/chat/user', {
+            .post('http://localhost:8000/chat/user', {
               userId: response.data.loginId,
               userName: response.data.encodedName,
             })

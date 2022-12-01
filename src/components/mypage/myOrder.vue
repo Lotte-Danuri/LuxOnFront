@@ -207,7 +207,7 @@ export default {
       }
 
       axios
-        .get('https://sbbro.xyz/api/member/products', {
+        .get('http://localhost:8000/member/products', {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
           },
@@ -220,7 +220,7 @@ export default {
     const sendChat = (pName, storeId, source) => {
       axios
         .post(
-          'https://sbbro.xyz/api/chat/chatRoom/chat',
+          'http://localhost:8000/chat/chatRoom/chat',
           {
             id: null,
             content: pName + ' 상품 문의',

@@ -9,7 +9,9 @@
       <ul class="product__list thum--4 gap--mid">
         <li class="product__item">
           <div class="product__thum gray">
-            <button style="border : none;"><i class="fa-regular fa-heart"></i></button>
+            <button style="border: none">
+              <i class="fa-regular fa-heart"></i>
+            </button>
             <a
               href="javascript:void(0);"
               onclick="overpass.tracking.link({  goods_no : '2209554217', sale_shop_divi_cd : '11', sale_shop_no : '2201046636', tr_yn : '', conts_form_cd : '100', conts_dist_no : '2209554217', conts_divi_cd : '20', rel_no : '2209554217', rel_divi_cd : '10', openwinyn : '', disp_ctg_no : '', layer_yn : 'N', jajuYn : 'N'});"
@@ -43,9 +45,9 @@
 <script>
 import axios from 'axios';
 export default {
-    created(){
-        axios.get("https://sbbro.xyz/api/member/products")
-    }
+  created() {
+    axios.get('http://localhost:8000/member/products');
+  },
 };
 </script>
 
@@ -160,7 +162,7 @@ export default {
   bottom: 0;
   box-sizing: border-box;
   border: 1px solid #d99c63;
-  content: "";
+  content: '';
 }
 .module-cody-recom__tab .product__list.type-w80px .product__thum > a img {
   opacity: 0.5;

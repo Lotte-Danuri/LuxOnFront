@@ -80,7 +80,7 @@ export default {
 
     const login = () => {
       axios
-        .post('https://sbbro.xyz/api/auth/login', {
+        .post('http://localhost:8000/auth/login', {
           id: state.id,
           password: state.password,
         })

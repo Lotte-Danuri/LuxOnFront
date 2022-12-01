@@ -267,7 +267,7 @@ export default {
 
     const getProduct = () => {
       axios
-        .get('https://sbbro.xyz/api/product/products/list/' + state.productCode)
+        .get('http://localhost:8000/product/products/list/' + state.productCode)
         .then(response => {
           console.log('getProduct', response);
           if (response.status == 200) {
@@ -278,12 +278,12 @@ export default {
             state.products.forEach(product => {
               if (globalProperties.$isLogin() == false) {
                 axios.get(
-                  `https://sbbro.xyz/api/recommend/recommends/click/unlogin/` +
+                  `http://localhost:8000/recommend/recommends/click/unlogin/` +
                     product.id,
                 );
               } else {
                 axios.get(
-                  `https://sbbro.xyz/api/recommend/recommends/click/login/` +
+                  `http://localhost:8000/recommend/recommends/click/login/` +
                     product.id,
                   {
                     headers: {
@@ -405,7 +405,7 @@ export default {
 
       axios
         .post(
-          'https://sbbro.xyz/api/member/cart',
+          'http://localhost:8000/member/cart',
           {
             productId: state.products[state.selectedStoreIndex].id,
             quantity: state.quantity,
@@ -436,7 +436,7 @@ export default {
     const getReviews = async () => {
       try {
         const response = await axios.get(
-          'https://sbbro.xyz/api/review/code/' + state.productCode,
+          'http://localhost:8000/review/code/' + state.productCode,
         );
         console.log('getReviews', response);
         state.reviews = response.data;
@@ -470,7 +470,7 @@ export default {
       console.log(fd);
 
       await axios
-        .post('https://sbbro.xyz/api/review/', fd, {
+        .post('http://localhost:8000/review/', fd, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             'Content-Type': 'multipart/form-data',
@@ -492,7 +492,7 @@ export default {
     const getBrand = async () => {
       await axios
         .get(
-          'https://sbbro.xyz/api/member/store/brand/' +
+          'http://localhost:8000/member/store/brand/' +
             state.products[0].brandId,
           {
             headers: {
@@ -512,7 +512,7 @@ export default {
       }
       axios
         .post(
-          'https://sbbro.xyz/api/chat/chatRoom/chat',
+          'http://localhost:8000/chat/chatRoom/chat',
           {
             id: null,
             content:

@@ -196,7 +196,7 @@ export default {
             if (currentToken) {
               axios
                 .post(
-                  'https://sbbro.xyz/api/chat/user/fcmToken',
+                  'http://localhost:8000/chat/user/fcmToken',
                   {
                     userId: localStorage.getItem('login_id'),
                     fcmToken: currentToken,
@@ -232,13 +232,13 @@ export default {
     const sendMessage = async () => {
       await axios
         .post(
-          'https://sbbro.xyz/api/chat/chatRoom/chat',
+          'http://localhost:8000/chat/chatRoom/chat',
           {
             id: null,
             content: '고객센터에 문의하기',
-            contentType: '메세지',
-            sendBy: localStorage.getItem('login_id'),
-            sendTo: 'admin',
+            contentType: '자동응답',
+            sendBy: 'admin',
+            sendTo: localStorage.getItem('login_id'),
             source: '',
           },
           {

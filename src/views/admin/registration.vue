@@ -142,7 +142,7 @@ export default {
   mounted() {
     axios
       .post(
-        'https://sbbro.xyz/api/product/sellers/products/category',
+        'http://localhost:8000/product/sellers/products/category',
         {
           stordId: localStorage.getItem('store_id'),
         },
@@ -207,7 +207,7 @@ export default {
       }
 
       axios
-        .post('https://sbbro.xyz/api/product/sellers/products', fd, {
+        .post('http://localhost:8000/product/sellers/products', fd, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             'Content-Type': 'multipart/form-data',
@@ -218,7 +218,7 @@ export default {
           console.log(formdata);
           axios
             .post(
-              'https://sbbro.xyz/api/product/sellers/products/category',
+              'http://localhost:8000/product/sellers/products/category',
               {
                 stordId: localStorage.getItem('store_id'),
               },

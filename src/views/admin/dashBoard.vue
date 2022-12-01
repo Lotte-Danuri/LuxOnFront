@@ -178,7 +178,7 @@ export default {
     async getDateList(startDate, endDate) {
       try {
         const response = await axios.post(
-          'https://sbbro.xyz/api/product/sellers/products/chance',
+          'http://localhost:8000/product/sellers/products/chance',
           {
             storeId: localStorage.getItem('store_id'),
             startDate: new Date(startDate),
@@ -214,7 +214,7 @@ export default {
     async getRecommendProductList() {
       axios
         .post(
-          'https://sbbro.xyz/api/product/sellers/products/chance',
+          'http://localhost:8000/product/sellers/products/chance',
           {
             storeId: localStorage.getItem('store_id'),
             startDate: new Date(1663062510835),

@@ -103,7 +103,7 @@ export default {
   methods: {
     searchRole: async function (value) {
       await axios
-        .get('https://sbbro.xyz/api/auth/all/' + value, {
+        .get('http://localhost:8000/auth/all/' + value, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',
@@ -125,7 +125,7 @@ export default {
     sendMessages: function (content) {
       axios
         .post(
-          'https://sbbro.xyz/api/chat/chatRoom/chats',
+          'http://localhost:8000/chat/chatRoom/chats',
           {
             id: null,
             content: content,

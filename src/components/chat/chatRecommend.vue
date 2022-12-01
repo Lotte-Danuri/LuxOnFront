@@ -39,7 +39,7 @@ export default {
     console.log(productList);
     productList.forEach(async product => {
       await axios
-        .get('https://sbbro.xyz/api/product/products/list/' + product, {
+        .get('http://localhost:8000/product/products/list/' + product, {
           headers: {
             Authorization: `Bearer ` + localStorage.getItem('token'),
             contentType: 'application/json',

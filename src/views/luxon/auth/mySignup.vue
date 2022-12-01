@@ -256,7 +256,7 @@ export default {
     const signUp = () => {
       state.address = state.bigaddress + state.smalladdress;
       axios
-        .post('https://sbbro.xyz/api/auth/users', {
+        .post('http://localhost:8000/auth/users', {
           id: state.id,
           password: state.password,
           name: state.name,
@@ -268,7 +268,7 @@ export default {
         })
         .then(response => {
           axios
-            .post('https://sbbro.xyz/api/chat/user', {
+            .post('http://localhost:8000/chat/user', {
               userId: state.id,
               userName: state.name,
             })

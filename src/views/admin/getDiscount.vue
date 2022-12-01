@@ -249,7 +249,7 @@ export default {
       console.log(this.firstValue, this.secondValue, this.thirdValue);
       axios
         .post(
-          'https://sbbro.xyz/api/product/sellers/products/category',
+          'http://localhost:8000/product/sellers/products/category',
           {
             stordId: localStorage.getItem('store_id'),
             categoryFirstId: firstClickId,
@@ -280,7 +280,7 @@ export default {
       this.nickName = document.getElementById('nickName').value;
       axios
         .post(
-          'https://sbbro.xyz/api/auth/info',
+          'http://localhost:8000/auth/info',
           {
             name: this.nickName,
           },
@@ -328,7 +328,7 @@ export default {
 
       axios
         .post(
-          'https://sbbro.xyz/api/product/admin/coupons',
+          'http://localhost:8000/product/admin/coupons',
           {
             storeId: localStorage.getItem('store_id'),
             name: "특별할인",
@@ -354,7 +354,7 @@ export default {
 
           axios
             .post(
-              'https://sbbro.xyz/api/chat/chatRoom/chat',
+              'http://localhost:8000/chat/chatRoom/chat',
               {
                 id: null,
                 content: '특별할인 쿠폰입니다',
